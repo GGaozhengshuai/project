@@ -1,0 +1,29 @@
+<table class="orangestyle table" id="ccTable">
+    <thead>
+    <tr>
+        <th>站点</th>
+        <th><font style="color: red;">*</font>省</th>
+        <th><font style="color: red;">*</font>市</th>
+        <th><font style="color: red;">*</font>收货人姓名</th>
+        <th>固定电话</th>
+        <th><font style="color: red;">*</font>手机号码</th>
+        <th><font style="color: red;">*</font>详细地址</th>
+        <th>邮编</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody ng-class="addressList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in addressList">
+        <td>{{list.station}}</td>
+        <td>{{list.province  | province:countryData}}</td>
+        <td>{{list.city | province:countryData}}</td>
+        <td>{{list.contact}}</td>
+        <td>{{list.phone}}</td>
+        <td>{{list.mobile}}</td>
+        <td>{{list.address}}</td>
+        <td>{{list.postcode}}</td>
+        <td><a href="" ng-click="selectAddress(list)">选择</a></td>
+    </tr>
+    <tr class="tip"><td colspan="10">该订单当前无可放货的物料</td></tr>
+    </tbody>
+</table>

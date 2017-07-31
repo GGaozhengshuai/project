@@ -1,0 +1,25 @@
+<h3 class="genTitle"><em></em><span>产品占用</span></h3>
+<ul class="generNav">
+    <li class="active"><a href="javascript:;">产品占用</a></li>
+</ul>
+
+<div id="mainView">
+    <div class="viewTable ng-scope">
+        <ul>
+            <li><strong>流水号：</strong><span>{{ORDER_DATA.SQDH}}</span></li>
+            <li><strong>申请日期：</strong><span>{{ORDER_DATA.ZSQRQ}}</span></li>
+            <li><strong>申请人：</strong><span>{{ORDER_DATA.AUFUSER0}}</span></li>
+            <li><strong>物料编码：</strong><span>{{ORDER_DATA.MATNR}}</span></li>
+            <li><strong>占用数量：</strong><span>{{ORDER_DATA.ZMOUNT}}</span></li>
+            <li><strong>占用人：</strong><span>{{ORDER_DATA.ZZYR}}</span></li>
+            <li><strong>客户编码：</strong><span>{{ORDER_DATA.KUNNR}}</span></li>
+            <li><strong>客户名称：</strong><span>{{ORDER_DATA.NAME1}}</span></li>
+            <li><strong>库存地点：</strong><span>{{LGORT}}</span></li>
+            <li class="list_con"><strong>申请原因：</strong><span>{{ORDER_DATA.SQYY}}</span></li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+    <div class="gerSub">
+        <a class="subSave"  ng-if="ORDER_DATA.ZSTATUS == 'RE' ? true : false " href="index.html#/occupyOrderEdit/{{ORDER_DATA.SQDH}}">编辑</a>
+    </div>
+</div>

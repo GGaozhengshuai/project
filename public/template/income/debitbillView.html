@@ -1,0 +1,122 @@
+<h3 class="genTitle"><em></em>
+    <span>票据台账</span>
+    <span ng-if="activeTab == 2">审批详情</span>
+</h3>
+<ul class="generNav">
+  <li ng-class="{active:activeTab == 1}"><a href="javascript:void(0);" ng-mousedown='htTab(1)'>票据信息</a></li>
+  <li ng-class="{active:activeTab == 2}"><a href="javascript:void(0);" ng-mousedown='htTab(2)'>审批详情</a></li>
+</ul>
+
+<div id="mainView">
+    <div ng-if="activeTab == 1" >
+    <!--<table class="orangestyle table" style="width: 150%;">
+        <thead>
+        <tr>
+            <th>票据种类</th>
+            <th>票据单号</th>
+            <th>客户名称</th>
+
+            <th>客户编码</th>
+           &lt;!&ndash; <th>出票人全称</th>
+            <th>付款银行</th>&ndash;&gt;
+            <th>票据金额</th>
+            <th>贴息金额</th>
+            <th>背书次数</th>
+            <th>出票日期</th>
+            <th>到期日期</th>
+            <th>收票日期</th>
+            <th>备注</th>
+            <th>收票商务</th>
+            <th>预计托收日期</th>
+            <th>票据状态</th>
+        </tr>
+        </thead>
+        <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+        <tr>
+            <td>
+                {{dataList.ZPTYPE}}
+            </td>
+            <td>{{dataList.ZPJDH}}</td>
+            <td>{{dataList.NAME1}}</td>
+            <td>{{dataList.KUNNR}}</td>
+            &lt;!&ndash;<td>{{list.ZCPR}}</td>
+            <td>{{list.ZFKYH}}</td>&ndash;&gt;
+            <td>{{dataList.ZAMOUNT | currency : '￥'}}</td>
+            <td>{{dataList.ZTXJE | currency : '￥'}}</td>
+            <td>{{dataList.ZBSCS}}</td>
+            <td>{{dataList.ZCPDAT}}</td>
+            <td>{{dataList.ZDQDAT}}</td>
+            <td>{{dataList.ZSPDAT}}</td>
+            <td title="{{dataList.ZBZ}}">{{dataList.ZBZ | cutfield:true:10:'...'}}</td>
+            <td>{{dataList.ZSPSW}}</td>
+            <td>{{dataList.ZTSDAT}}</td>
+            <td>{{dataList.ZPJZT}}</td>
+        </tr>
+        </tbody>
+    </table>-->
+        <div ng-if="!table" class="loading-text grid">
+            <span ng-if="loadData">数据载入中...</span>
+            <span ng-if="!loadData">查询不到数据</span>
+        </div>
+        <div ng-if="table" ui-grid="table"  ui-grid-resize-columns ui-grid-auto-resize class="grid"></div>
+    </div>
+    <div class="applyLog" ng-if="activeTab == 2">
+        <table>
+            <thead>
+            <tr>
+                <th class="th1">审批人</th>
+                <th class="th2">审批时间</th>
+                <th class="th3">审批状态</th>
+                <th class="th4">审批意见</th>
+            </tr>
+            </thead>
+            <tbody ng-repeat="list in processlog">
+            <tr  ng-show="$index==(processlog.length-1)"><td ng-class="$index%2?'blueBack':'orgBack'" colspan="4">新建审批流</td></tr>
+            <tr  ng-show="$index!=(processlog.length-1)"><td ng-class="$index%2?'blueBack':'orgBack'" colspan="4">第{{processlog.length-1-$index}}次变更审批流</td></tr>
+            <tr ng-repeat="item in list.processlog">
+                <td>{{item.sender.name}}</td>
+                <td>{{item.createDate | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td>{{item.operation}}</td>
+                <td>{{item.content.comment}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--<h4 class="genH4">关联收款计划单列表</h4>
+&lt;!&ndash;<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>销售合同编码/销售订单编码：</strong>
+                    <input class="text" type="text" name="VBELN"  ng-init="VBELN=''" ng-model="VBELN" placeholder="">
+                </td>
+                <td>
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>&ndash;&gt;
+<table class="orangestyle table">
+    <thead>
+    <tr>
+        <th>销售订单号</th>
+        <th>收款计划单号</th>
+        <th ng-hide="true">SAP计划单号</th>
+        <th>收款计划金额</th>
+        <th>分配金额</th>
+    </tr>
+    </thead>
+    <tbody ng-class="receivableList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in receivableList">
+        <td>{{list.VBELN}}</td>
+        <td>{{list.ZJHDBHK}}</td>
+        <td ng-hide="true">{{list.ZJHDBH}}</td>
+        <td>{{list.ZJE}}</td>
+        <td>{{list.ZYSWS}}</td>
+    </tr>
+    </tbody>
+</table>-->
+<!--<pagination conf="paginationConf"></pagination>-->

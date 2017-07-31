@@ -1,0 +1,42 @@
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong style="width:68px;">流水号</strong>
+                    <input class="text" style="width:125px;" type="text" name="ZMZSBH"  ng-init="ZMZSBH=''" ng-model="$parent.ZMZSBH" placeholder="请输入流水号">
+                </td>
+                <td>
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<table class="orangestyle table">
+    <thead>
+    <tr>
+        <th>流水号</th>
+        <th>原始金额</th>
+        <th>可用冲抵金额</th>
+      <!--  <th>采购订单号</th>-->
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in dataList">
+        <td>{{list.ZLSH}}</td>
+        <td>{{list.ZJE.toFixed(2)}}</td>
+        <td>{{list.left.toFixed(2)}}</td>
+       <!-- <td>{{list.ZSQNO}}</td>-->
+        <td>
+            <a href="javascript:;" ng-click="cusSelect(list.ZLSH, list.left.toFixed(2),list.ZJE.toFixed(2))">选择</a>
+        </td>
+    </tr>
+    <tr ng-show="dataList.length > 0">
+        <td colspan="5">注释：可用冲抵金额为0的数据不显示</td>
+    </tr>
+    <tr class="tip"><td colspan="4">没有查到流水号</td></tr>
+    </tbody>
+</table>
+<pagination conf="paginationConf" manual="true"></pagination>

@@ -1,0 +1,45 @@
+<div class="genSearch">
+    <table>
+        <tr>
+            <td>
+                <strong style="width:130px;">使用返点总金额</strong>
+                <input class="text" type="number" ng-model="$parent.fdTotal" placeholder="请输入使用返点总金额">
+            </td>
+            <td>
+                <!--<input type="button" value="确定" class="searchbtn2" ng-click="$parent.fdBoxSub()">-->
+            </td>
+        </tr>
+    </table>
+</div>
+<table class="orangestyle table" id="fdTable">
+    <thead>
+    <tr>
+        <th>操作</th>
+        <th>返点编号</th>
+        <th>生效日期</th>
+        <th>失效日期</th>
+        <th>返点名称</th>
+        <th>返点说明</th>
+        <th>返点金额</th>
+        <th>可用余额</th>
+        <th>激励受益类型</th>
+    </tr>
+    </thead>
+    <tbody ng-class="fDList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in fDList" class="list">
+        <td fdId="{{list._id}}"><input ng-click="fdCheck($index,list.code)" type="checkbox" name="1"/></td>
+        <td>{{list.code}}</td>
+        <td>{{list.bonusinfo.start | date: 'yyyy-MM-dd '}}</td>
+        <td>{{list.bonusinfo.end | date: 'yyyy-MM-dd '}}</td>
+        <td>{{list.bonusbase.source}}</td>
+        <td title="{{list.bonusbase.note}}">{{list.bonusbase.note | cutfield:true:8:'..'}}</td>
+        <td>{{list.bonusmoney.total}}</td>
+        <td>{{list.bonusmoney.free}}</td>
+        <td>{{list.bonusbase.benefit}}</td>
+    </tr>
+    <tr class="tip"><td colspan="8">没有查到</td></tr>
+    </tbody>
+</table>
+<!--<div class="gerSub">
+    <a href="javascript:;" ng-click="$parent.fdBoxSub()">确定</a>
+</div>-->

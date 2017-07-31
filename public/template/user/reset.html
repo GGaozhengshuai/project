@@ -1,0 +1,23 @@
+<h3 class="genTitle genTitleBot"><em></em><span>重置密码</span></h3>
+<div class="cusCont">
+    <div class="generForm">
+        <form novalidate name="myForm">
+            <ul>
+                <li class="gerSub">
+                    <strong>姓名：</strong>
+                    <input class="text" ng-readonly="true" ng-click="userBox()" name="username" ng-model="ORDER_DATA.user.name" type="text" placeholder="请选择人员"/>
+                    <input type="hidden" value="" ng-model="ORDER_DATA.user.id"/>
+                    <input type="hidden" value="" ng-model="ORDER_DATA.user.login"/>
+                    <button ng-click="resetPwd()" class="subSave viewBtn" style="float: left; margin-left: 15px;margin-top: -2px;" >重置</button>
+                </li>
+            </ul>
+            <!--<div class="gerSub">
+                <button ng-click="addData(ORDER_DATA, 'save')" class="subSave" >保存</button>
+                <button ng-click="addData(ORDER_DATA, 'apply')" class="subApply" >保存并提交</button>
+            </div>-->
+        </form>
+    </div>
+</div>
+<div id="userBox" class="dialog cusBox" title="选择人员" ng-include="'template/user/userBox.html'" ng-controller="userListBoxCtrl"></div>
+
+

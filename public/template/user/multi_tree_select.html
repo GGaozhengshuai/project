@@ -1,0 +1,44 @@
+<form novalidate name="selForm">
+    <ul>
+        <li>
+            <div style="height: 360px; padding: 10px 0px 10px 0px; overflow: auto; border:1px solid #ccc; background-color: #fff;">
+                <div treecontrol
+                     class="tree-classic"
+                     tree-model="groupsTreeModel"
+                     on-selection="showSelected(node)"
+                     options="treeOptions"
+                     selected-node="treeselected"
+                     expanded-nodes="treeexpandedNodes"
+                >{{node.text}}</div>
+            </div>
+            <span class="errTip ng-hide" ng-show="selForm.category.$dirty && selForm.category.$error.required">必填</span>
+        </li>
+
+        <li class="gerSub" style="padding: 0px; margin-top: .5em;">
+            <button ng-click="selectTypeFn()" class="subSave">确定</button>
+        </li>
+    </ul>
+</form>
+
+
+
+<!-- <form novalidate name="selForm">
+    <ul class="ct">
+        <li>
+            <div style="height: 360px; padding: 10px; overflow: auto; border:1px solid #ccc; background-color: #fff;">
+                <div treecontrol
+                     class="tree-classic"
+                     tree-model="groupsTreeModel"
+                     options="treeOptions"
+                     selected-nodes="treeselected"
+                     expanded-nodes="treeexpandedNodes"
+                >{{node.text}}</div>
+            </div>
+            <span class="errTip ng-hide" ng-show="selForm.category.$dirty && selForm.category.$error.required">必填</span>
+        </li>
+
+        <li class="gerSub">
+            <button ng-click="selectTypeFn()" class="subSave">确定</button>
+        </li>
+    </ul>
+</form> -->

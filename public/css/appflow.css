@@ -1,0 +1,22 @@
+/*********************/
+/*2017-5-5 By Loupei*/
+/********************/
+.hide { display: none;}
+
+.leftWrap {width: 200px;height:800px; background-color: #6666FF ;float: left;padding: 15px;}
+
+.contentWrap {width:85%; margin:0 auto;}
+.mainContainerWrap { background-color: #fff ; width: 100%; overflow: auto;}
+.mainContainer {position: relative;}
+.topBox { padding: 40px 0 10px 0; border-bottom: 2px solid #1C5E9A;}
+.topBox select { height: 34px; width: 350px; }
+
+.line {position: absolute;border: 0px;height: 2px;}
+.tip {position: absolute;border: 0;}
+.arrow {border-width:10px; border-style: solid; border-color: transparent; border-top-color: #EEB67D; margin-top: 10px; margin-left: 1px;}
+
+.node {position: absolute; color: #fff; border-radius: 8px; padding: 5px; line-height: 16px; text-align: center; background-color: #1C81DB; word-break: break-all; word-wrap: break-word;}
+.start { background-color: #EA3F35; }
+.end { background-color: #EC944D; }
+
+.goTop { position: fixed; right: 20px; bottom:20px;width:40px; height:40px; background:url(../img/top.png) 0 0 no-repeat; background-size:100%;}

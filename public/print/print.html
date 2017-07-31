@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>打印</title>
+    <script type="text/javascript" src="/js/lib/jquery/jquery-1.11.3.js"></script>
+    <link rel="stylesheet" href="/css/print.css">
+</head>
+<body style="text-align: center;">
+<div>
+    <iframe src="" style="margin:0 auto;" scrolling="no" id="external-frame"></iframe>
+</div>
+
+<div id="printbtn" style="display:none;"><button onclick="print()">打印</button></div>
+<script>
+    var ifm = window.frames[0]
+    function print(){ifm.print()}
+    function ready(){
+    console.log('ready')
+    setIframeHeight(document.getElementById('external-frame'));
+    $('#printbtn').show();
+    }
+    function setIframeHeight(iframe) {
+        if (iframe) {
+            var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
+            if (iframeWin.document.body) {
+                iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
+            }
+        }
+    };
+    window.onload = function(){
+        var str = window.location.search;
+        var uri = str.substring(0 ,str.indexOf('&'));
+        var param = str.substr(uri.length + 1)
+        uri = uri.substr(5) + '?' + param;
+        ifm.location.href = uri;
+//        ifm.onload = function(){
+//            ready();
+//        }
+//        ifm.location.href = '/template/check/printpurchase.html';
+    }
+</script>
+</body>
+</html>

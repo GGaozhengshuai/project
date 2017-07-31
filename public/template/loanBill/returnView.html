@@ -1,0 +1,109 @@
+<h3 class="genTitle"><em></em>
+  <span>借出单还回</span>
+  <span ng-if="activeTab == 2">审批详情</span>
+</h3>
+<ul class="generNav">
+  <li ng-class="{active:activeTab == 1}"><a href="javascript:void(0);" ng-mousedown='htTab(1)'>借出单还回</a></li>
+  <li ng-class="{active:activeTab == 2}"><a href="javascript:void(0);" ng-mousedown='htTab(2)'>审批详情</a></li>
+</ul>
+
+<div id="mainView">
+    <div class="viewTable ng-scope">
+      <div ng-if="activeTab == 1">
+        <ul>
+            <li><strong>还回单编号：</strong><span>{{ORDER_DATA.pdreturn.rtcode}}</span></li>
+            <li><strong>销售订单编号：</strong><span>{{ORDER_DATA.pdreturn.rtZJCDH}}</span></li>
+            <li><strong>借出单编号：</strong><span>{{ORDER_DATA.code}}</span></li>
+            <li><strong>借出单销售订单号：</strong><span>{{ORDER_DATA.ZJCDH}}</span></li>
+            <li><strong>借货人：</strong><span>{{ORDER_DATA.user.name}}</span></li>
+          <li><strong>实际借出客户：</strong><span>{{ORDER_DATA.client.realname}}</span></li>
+          <li><strong>发货人：</strong><span>{{ORDER_DATA.pdreturn.shipper}}</span></li>
+            <li><strong>发货地点：</strong><span>{{ORDER_DATA.pdreturn.shipperaddr}}</span></li>
+            <li><strong>产品线：</strong><span>{{ORDER_DATA.lendbase.productline}}</span></li>
+            <li><strong>运输方式：</strong><span>{{transferway}}</span></li>
+            <li><strong>发货人联系方式：</strong><span>{{ORDER_DATA.pdreturn.shippertel}}</span></li>
+            <li><strong>发货时间：</strong><span>{{ORDER_DATA.pdreturn.shipdate | date: 'yyyy-MM-dd'}}</span></li>
+            <li><strong>预计到货时间：</strong><span>{{ORDER_DATA.pdreturn.estimatetime | date: 'yyyy-MM-dd'}}</span></li>
+            <li class="list_con"><strong>备注：</strong><span>{{ORDER_DATA.pdreturn.rtdesc}}</span></li>
+        </ul>
+        <div class="addTable">
+            <h5>交货地点和联系人</h5>
+            <table class="tab_data">
+                <thead class="tab_header">
+                <tr>
+                    <th>收货人姓名</th>
+                    <th>手机号</th>
+                    <th>固定电话</th>
+                    <th>省</th>
+                    <th>市</th>
+                    <th>详细地址</th>
+                    <th>邮编</th>
+                </tr>
+                </thead>
+                <tbody class="tab_body">
+                <tr ng-repeat="list in ORDER_DATA.pdreturn.rtreceivers">
+                    <td>{{list.name}}</td>
+                    <td>{{list.phone}}</td>
+                    <td>{{list.tel}}</td>
+                    <!--<td>{{list.province ? getField(countryData, 'CODE',list.province).TITLE : list.province}}</td>-->
+                    <!--<td>{{list.city ? getField(countryData, 'CODE',list.city).TITLE : list.city}}</td>-->
+                    <td>{{list.province | province:countryData}}</td>
+                    <td>{{list.city | province:countryData}}</td>
+                    <td>{{list.address}}</td>
+                    <td>{{list.zipcode}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="addTable">
+            <h5>产品信息</h5>
+            <table class="tab_data">
+                <thead class="tab_header">
+                <tr>
+                    <th>内部物料编码</th>
+                    <th>原厂物料编码</th>
+                    <th>型号</th>
+                    <th>描述</th>
+                    <th>借货数量</th>
+                    <th>未还数量</th>
+                    <th>本次还回数量</th>
+                </tr>
+                </thead>
+                <tbody class="tab_body">
+                <tr ng-repeat="list in ORDER_DATA.pdreturn.products">
+                    <td>{{list.code}}</td>
+                    <td>{{list.productcode}}</td>
+                    <td>{{list.productnumber}}</td>
+                    <td>{{list.des}}</td>
+                    <td>{{list.outnum}}</td>
+                    <td>{{list.notreturn}}</td>
+                    <td>{{list.currentreturn}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <br/><br/>
+      </div>
+      <div class="applyLog" ng-if="activeTab == 2">
+        <table>
+          <thead>
+          <tr>
+            <th class="th1">审批人</th>
+            <th class="th2">审批时间</th>
+            <th class="th3">审批状态</th>
+            <th class="th4">审批意见</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="list in processlog">
+            <td>{{list.sender.name}}</td>
+            <td>{{list.createDate | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td>{{list.operation}}</td>
+            <td>{{list.content.comment}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="clear"></div>
+</div>

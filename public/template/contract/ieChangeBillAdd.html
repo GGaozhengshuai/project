@@ -1,0 +1,412 @@
+<h3 class="genTitle genTitleBot"><em></em><span>进出口销售合同清单变更</span></h3>
+<div id="tabs">
+    <ul class="generNav" ng-init="ht.activeTab = 1">
+        <li ng-class="{active:ht.activeTab == 1}"><a href="javascript:;" ng-mousedown = 'htTab(1)'>进出口销售合同清单</a></li>
+        <li ng-class="{active:ht.activeTab == 3}"><a href="javascript:;" ng-mousedown = 'htTab(3)' >成本分析</a></li>
+    </ul>
+    <div class="cusCont tab_cont">
+        <div class="" ng-show="ht.activeTab == 1">
+            <div class="generForm">
+                <form novalidate name="invoiceForm">
+                    <ul class="noMargin">
+                        <li class="tli">
+                            <strong>合同编号：</strong>
+                            <input ng-disabled="true" ng-model="ORDER_DATA.contractno" type="text" placeholder=""/>
+                        </li>
+                        <li class="tli">
+                            <strong>客户名称：</strong>
+                            <input ng-disabled="true" ng-model="ORDER_DATA.stomer" type="text" placeholder=""/>
+                        </li>
+                        <li class="tli">
+                            <strong>退货金额(负数)：</strong>
+                            <input ng-init="ORDER_DATA.returngoodsmoney='0'" ng-model="ORDER_DATA.returngoodsmoney" type="text" placeholder="请输入退货金额"/>
+                        </li>
+                        <li class="tli">
+                            <strong>补货金额：</strong>
+                            <input ng-init="ORDER_DATA.addgoodsmoney='0'" ng-model="ORDER_DATA.addgoodsmoney" type="text" placeholder="请输入补货金额"/>
+                        </li>
+                        <li class="tli" ng-if="is2body == '是'">
+                            <strong>调整后内部结算金额：</strong>
+                            <input  ng-model="ORDER_DATA.interiooney" type="text" placeholder=""/>
+                        </li>
+                        <!--<li class="tli">&lt;!&ndash;原销售合同金额-退货金额+补货金额&ndash;&gt;
+                            <strong>调整后合同金额：</strong>
+                            <input ng-disabled="true" ng-model="ORDER_DATA.allmoney" value="" type="text" placeholder=""/>
+                        </li>-->
+                        <li class="clear"></li>
+                        <li class="list_con">
+                            <strong>备注：</strong>
+                            <textarea  ng-model="ORDER_DATA.remark"></textarea>
+                        </li>
+                    </ul>
+                    <div class="addTable">
+                        <h5>清单变更明细</h5>
+                        <div class="czAddBtn">
+                            <a href="doc/qdmb2.xlsx" class="downloadmb">下载模板</a>
+                            <input excle-Updata="{{excleConf}}" get-upload-callback="getUploadCallback(uploadCallData)" ng-model="excleWlData"/>
+                            <p style="text-align:right; color:red; line-height:30px;">重新上传数据会覆盖原有的数据</p>
+                        </div>
+                        <table>
+                            <tr>
+                                <th><font>*</font>类型</th>
+                                <th><font>*</font>内部物料编码</th>
+                                <th><font>*</font>原厂物料编码</th>
+                                <th><font>*</font>描述</th>
+                                <th><font>*</font>型号</th>
+                                <th><font>*</font>数量</th>
+                                <th><font>*</font>单价</th>
+                                <th><font>*</font>金额小计</th>
+                                <th>操作</th>
+                            </tr>
+                            <tr ng-repeat="list in excleWlData.right.MatchAdd" class="list">
+                                <td>补货</td>
+                                <td>
+                                    <input ng-disabled="true" ng-model="list.goodscode" type="text" value=""/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="true" ng-model="list.sourcegoodscode" type="text" value=""/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="true" ng-model="list.desc" type="text" value=""/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="true" ng-model="list.version" type="text" value=""/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="true" ng-model="list.changeCount" type="text"/>
+                                </td>
+                                <td>
+                                    <input class="unitprice" ng-disabled="true" ng-model="list.unitprice"  type="text" value=""/>
+                                </td>
+                                <td ng-class="invoiceForm['thesum'+$index+'bu'].$dirty && invoiceForm['thesum'+$index+'bu'].$error.numtwo && !invoiceForm['thesum'+$index+'bu'].$focused ? 'hasErrTip' : ''">
+                                    <input ng-Focus numtwo-Validation name="thesum{{$index}}bu" ng-blur="unitpriceFun('MatchAdd',$index,list.thesum,list.changeCount)" ng-required="true" ng-model="list.thesum"  type="text" value=""/>
+                                    <p class="errTip" ng-if="invoiceForm['thesum'+$index+'bu'].$dirty && invoiceForm['thesum'+$index+'bu'].$error.numtwo&&!invoiceForm['thesum'+$index+'bu'].$focused ">请输入最多两位小数的非负数</p>
+                                </td>
+                                <td><a href="javascript:;" ng-click="comeDel($index,'MatchAdd')">删除</a></td>
+                            </tr>
+                            <tr ng-repeat="list in excleWlData.right.MatchSubtract" class="list">
+                                <td>退货 </td>
+                                <td>
+                                    <input ng-disabled="true" ng-model="list.goodscode" type="text" value=""/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="true" ng-model="list.sourcegoodscode" type="text" value=""/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="true" ng-model="list.desc" type="text" value=""/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="true" ng-model="list.version" type="text" value=""/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="true" ng-model="list.changeCount" type="text"/>
+                                </td>
+                                <td>
+                                    <input class="unitprice" ng-disabled="true" ng-model="list.unitprice"  type="text" value=""/>
+                                </td>
+                                <td ng-class="invoiceForm['thesum'+$index].$dirty && invoiceForm['thesum'+$index].$error.numtwofs && !invoiceForm['thesum'+$index].$focused ? 'hasErrTip' : ''">
+                                    <input ng-Focus numtwofs-Validation name="thesum{{$index}}" ng-blur="unitpriceFun('MatchSubtractClass',$index,list.thesum,list.changeCount)" ng-required="true" ng-model="list.thesum"  type="text" value=""/>
+                                    <p class="errTip" ng-if="invoiceForm['thesum'+$index].$dirty && invoiceForm['thesum'+$index].$error.numtwofs&&!invoiceForm['thesum'+$index].$focused ">请输入最多两位小数的负数</p>
+                                </td>
+                                <td><a href="javascript:;" ng-click="comeDel($index,'MatchSubtract')">删除</a></td>
+                            </tr>
+                            <tr ng-repeat="list in excleWlData.error.noMatch" class="list errTip">
+                                <td>无此物料</td>
+                                <td>
+                                    <input ng-disabled="true" ng-model="list.goodscode" type="text" value=""/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="true" ng-model="list.sourcegoodscode" type="text" value=""/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="true" ng-model="list.desc" type="text" value=""/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="true" ng-model="list.version" type="text" value=""/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="true" ng-model="list.changeCount" type="text"/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="true" ng-model="list.unitprice" type="text" value=""/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="true" type="text" ng-model="list.thesum"/>
+                                </td>
+                                <td><a href="javascript:;" ng-click="comeDel($index,'noMatch')">删除</a></td>
+                            </tr>
+                            <tr ng-repeat="list in excleWlData.error.errMatchSubtract" class="list errTip">
+                                <td>{{list.msg}}</td>
+                                <td>
+                                    <input ng-disabled="true" ng-model="list.goodscode" type="text" value=""/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="true" ng-model="list.sourcegoodscode" type="text" value=""/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="true" ng-model="list.desc" type="text" value=""/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="true" ng-model="list.version" type="text" value=""/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="true" ng-model="list.changeCount" type="text"/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="true" ng-model="list.unitprice" type="text" value=""/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="true" type="text" ng-model="list.thesum"/>
+                                </td>
+                                <td><a href="javascript:;" ng-click="comeDel($index,'errMatchSubtract')">删除</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="gerSub">
+                        <a back-Button href="javascript:;">返回</a>
+                        <button ng-click="addData(ORDER_DATA, 'save')" ng-class="invoiceForm.$invalid == true ? 'displaySub' : 'subSave'" ng-disabled="invoiceForm.$invalid || invoRready" class="subSave">保存并填写成本分析</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="ng-hide" ng-show="ht.activeTab == 3">
+            <div style="padding-top:10px;" class="czAddBtn">
+                <a class="viewBtn" target="_blank" href="/index.html#/iecontractView?id={{oldId}}">查看原成本分析</a>
+            </div>
+            <div class="generForm">
+                <form novalidate name="cbfxForm">
+
+                    <h4 class="genH4">利润</h4>
+                    <!--转口-->
+                    <div class="addTable" ng-if="cbfxZk"> <!--ng-if='cbfxZk'-->
+                        <table>
+                            <tr>
+                                <th></th>
+                                <th>利润（外币）</th>
+                                <th>合约利润率</th>
+                            </tr>
+                            <tr>
+                                <td>公司利润</td>
+                                <td>{{zkLirunWbi}}</td><!--销售合同金额-采购合同金额-->
+                                <td>{{zkHeyuelirunlv}}%</td><!--利润（外币）/销售合同金额-->
+                            </tr>
+                        </table>
+                    </div>
+                    <!--出口-->
+                    <div class="addTable" ng-if='cbfxCk'> <!--ng-if='cbfxCk'-->
+                        <table>
+                            <tr>
+                                <th></th>
+                                <th>利润（外币）</th>
+                                <th>利润（RMB）</th>
+                                <th>合约利润率</th>
+                            </tr>
+                            <tr>
+                                <td>公司利润(含退税)</td>
+                                <td><!--{{foreign_tax}}--></td>
+                                <td>{{RMB_tax}}</td>
+                                <td>{{ratio_tax}}%</td>
+                            </tr>
+                            <tr>
+                                <td>公司利润(不含退税)</td>
+                                <td>{{foreign}}</td>
+                                <td>{{RMB}}</td>
+                                <td>{{ratio}}%</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4 class="genH4" ng-if='cbfxCk'>成本分析</h4>
+                    <div class="addTable" ng-if='cbfxCk'><!--ng-if='cbfxCk'-->
+                        <table style="margin-top:10px;">
+                            <tr>
+                                <th>税率</th>
+                                <th>合同金额（外币）</th>
+                                <th>合同金额（RMB）</th>
+                                <th>预估成本（外币）</th>
+                                <th>预估成本（RMB）</th>
+                                <th>外采成本</th>
+                                <th>配套采购</th>
+                                <th>第三方服务</th>
+                            </tr>
+                            <tr ng-repeat="list in othercost" class="list">
+                                <td>{{list.thetype}}%
+                                    <input ng-disabled="true" ng-model="list.thetype" type="hidden"/>
+                                    <input ng-disabled="true" ng-model="list.contractId" type="hidden"/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="true" ng-model="list.money" type="text"/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="true" ng-model="list.moneyRMB" type="text"/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="true" ng-model="list.predictorderscost" type="text"/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="true" ng-model="list.orderscostRMB" type="text"/>
+                                </td>
+                                <td>
+                                    <input ng-model="list.outorderost" type="text"/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="cpIf" ng-model="list.mating" type="text"/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="cpIf" ng-model="list.third" type="text"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!--其他合同类型-->
+                    <div class="addTable" ng-if="cbfxOther">
+                        <table>
+                            <tr>
+                                <th></th>
+                                <th>毛利（含税)</th>
+                                <th>毛利（不含税)</th>
+                                <th>合约利润率</th>
+                            </tr>
+                            <tr>
+                                <td>公司利润</td>
+                                <td><!--{{foreign_tax}}-->{{moHanshui}}</td>
+                                <td><!--{{RMB}}-->{{moBuHanshui}}</td>
+                                <td><!--{{ratio}}-->{{heYuelirun}}%</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4 class="genH4" ng-if='cbfxOther'>成本分析</h4>
+                    <div class="addTable" ng-if="cbfxOther">
+                        <table style="margin-top:10px;">
+                            <tr>
+                                <th>税率</th>
+                                <th>合同金额（含税）</th>
+                                <th>预估成本汇总</th>
+                                <th>外采成本</th>
+                                <th>配套采购</th>
+                                <th>第三方服务</th>
+                            </tr>
+                            <tr ng-repeat="list in othercost" class="list">
+                                <td>{{list.thetype}}%
+                                    <input ng-disabled="true" ng-model="list.thetype" type="hidden"/>
+                                    <input ng-disabled="true" ng-model="list.contractId" type="hidden"/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="true" ng-model="list.money" type="text"/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="true" ng-model="list.orderscost" type="text"/>
+                                </td>
+                                <td>
+                                    <input ng-model="list.outorderost" type="text"/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="cpIf" ng-model="list.mating" type="text"/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="cpIf" ng-model="list.third" type="text"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4 class="genH4">费用明细</h4>
+                    <ul class="noMargin">
+                        <li class="tli">
+                            <strong><font>*</font>采购币种：</strong>
+                            <select ng-disabled="currencyDisable" ng-model="CBFX.outpurchasecurrency" ng-required="true"
+                                    name="outpurchasecurrency">
+                                <option value="">请选择</option>
+                                <option value="CNY">人民币</option>
+                                <option value="EUR">欧元</option>
+                                <option value="USD">美元</option>
+                                <option value="CHF">瑞士法郎</option>
+                                <option value="HKD">港币</option>
+                                <option value="JPY">日元</option>
+                            </select>
+                            <!--<input ng-disabled="true" ng-model="CBFX.outpurchasecurrency" type="text" placeholder=""/>-->
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>实时汇率：</strong>
+                            <input feifs-Validation ng-required="true" ng-model="CBFX.exchangerate" type="text"
+                                   placeholder=""/>
+                            <a class="aBtn" ng-click="getExchangerate(CBFX.outpurchasecurrency)" href="javascript:;">获取实时汇率</a>
+                        </li>
+                        <li class="tli">
+                            <strong>销售合同金额：</strong>
+                            <input ng-disabled="true" ng-model="CBFX.contractmoney" type="text" placeholder=""/>
+                        </li>
+                        <li class="tli">
+                            <strong>采购成本：</strong>
+                            <input ng-disabled="true" ng-model="CBFX.outpurchasecost" type="text" placeholder=""/>
+                        </li>
+
+                        <li class="tli">
+                            <strong><font>*</font>银行费：</strong>
+                            <input ng-required="true" ng-model="CBFX.bankfee" type="text" placeholder=""/>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>代理费：</strong>
+                            <input ng-required="true" ng-model="CBFX.proxyfee" type="text" placeholder=""/>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>国际运费：</strong>
+                            <input ng-required="true" ng-model="CBFX.outtrance" type="text" placeholder=""/>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>报关杂费：</strong>
+                            <input ng-required="true" ng-model="CBFX.duties2" type="text" placeholder=""/>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>保险费：</strong>
+                            <input ng-required="true" ng-model="CBFX.insurance" type="text" placeholder=""/>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>国内运费：</strong>
+                            <input ng-required="true" ng-model="CBFX.intrance" type="text" placeholder=""/>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>其他：</strong>
+                            <input ng-required="true" ng-model="CBFX.otherfee" type="text" placeholder=""/>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>押汇利息：</strong>
+                            <input ng-required="true" ng-model="CBFX.documentaryinterest" type="text" placeholder=""/>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>关税：</strong>
+                            <input ng-required="true" ng-model="CBFX.duties" type="text" placeholder=""/>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>增值税：</strong>
+                            <input ng-required="true" ng-model="CBFX.addedtax" type="text" placeholder=""/>
+                        </li>
+                        <li class="tli" ng-if="cbfxOther"><!--ng-if="cbfxOther"-->
+                            <strong>综合汇率：</strong>
+                            <input ng-disabled="true" ng-model="CBFX.generalrate" type="text" placeholder=""/>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>厂家服务：</strong>
+                            <input ng-required="true" ng-model="CBFX.factoryservice" type="text" placeholder=""/>
+                        </li>
+                        <li class="tli" ng-if="cbfxOther"><!--ng-if="cbfxOther"-->
+                            <strong>内部合同结算金额：</strong>
+                            <input ng-disabled="true" ng-model="CBFX.interiooney" type="text" placeholder=""/>
+                        </li>
+                        <li class="tli" ng-if="cbfxZk"> <!--ng-if="cbfxZk"-->
+                            <strong>成本：</strong>
+                            <input ng-disabled="true" ng-model="CBFX.cost" type="text" placeholder=""/>
+                        </li>
+                        <li class="tli" ng-if="cbfxCk"> <!--ng-if="cbfxCk"-->
+                            <strong><font>*</font>预计退税金额：</strong>
+                            <input ng-required="true" ng-model="CBFX.predictbacktax" type="text" placeholder=""/>
+                        </li>
+                    </ul>
+                    <div class="gerSub">
+                        <a href="index.html#/iecontractOrder">返回</a>
+                        <button ng-click="addqdData(CBFX,'save')" ng-class="cbfxForm.$invalid == true ? 'displaySub' : 'subSave'" class="subSave">保存草稿</button>
+                        <button ng-click="addqdData(CBFX,'apply')" ng-class="cbfxForm.$invalid == true ? 'displaySub' : 'subApply'" ng-disabled="cbfxForm.$invalid || invoRready">保存并提交</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,77 @@
+<!--<div class="mainright">-->
+<div class="item">开证付汇</div>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>开证付汇申请号</strong>
+                    <input class="text" type="text" name="ZKZFH"  ng-init="ZKZFH=''" ng-model="ZKZFH" placeholder="请输入申请单号">
+                </td>
+                <td>
+                    <strong>付款主体</strong>
+                    <select ng-model="ZFKZT" ng-init="ZFKZT=''">
+                        <option value="">请选择</option>
+                        <option value="中建材信息技术股份有限公司">中建材信息技术股份有限公司</option>
+                        <option value="中建材集团进出口公司">中建材集团进出口公司</option>
+                        <option value="中国建材（香港）有限公司">中国建材（香港）有限公司</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>供应商名称</strong>
+                    <input class="text" type="text" name="NAME1"  ng-init="NAME1=''"  ng-model="NAME1" placeholder="请输入供应商名称">
+                </td>
+
+                <td>
+                    <strong>申请人</strong>
+                    <input class="text" type="text" name="ZZDR"  ng-init="ZZDR=''"  ng-model="ZZDR" placeholder="请输入供应商名称">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>申请时间</strong>
+                    <input class="text Wdate" date-Picker type="text" name="ZSQRQ"  ng-init="ZSQRQ=''"  ng-model="ZSQRQ" placeholder="请选择申请时间">
+                </td>
+                <td>
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+                    <a ng-if="opprev.issueOrder_add" class="searchbtn2 searchbtn2bot addBtn" href="/index.html#/issueOrderAdd">新建开证付汇</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<div class="item">查询结果</div>
+<table class="orangestyle table">
+    <thead>
+    <tr>
+        <th>开证付汇申请号</th>
+        <th>付款主体</th>
+        <th>供应商名称</th>
+        <th>币别</th>
+        <th>开证付汇金额</th>
+        <th>申请人</th>
+        <th>申请时间</th>
+        <th style="width: 85px;">操作</th>
+    </tr>
+    </thead>
+    <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in dataList">
+        <td><a class="underline" target="_blank" href="index.html#/issueOrderView/{{list.ZKZFH}}">{{list.ZKZFH}}</a></td>
+        <td>{{list.ZFKZT}}</td>
+        <td>{{list.NAME1 + list.NAME2}}</td>
+        <td>{{list.ZBB | getName:ZBB:'name':'code'}}</td>
+        <td>{{list.ZKZFHJE | number : 2}}</td>
+        <td>{{list.ZZDR}}</td>
+        <td>{{list.ZSQRQ | date: 'yyyy-MM-dd'}}</td>
+        <td class="czBtn">
+            <a ng-if="opprev.issueOrder_change" class="handleBtn editBtn" target="_blank"  ng-click="Ifchange(list.ZKZFH)" title="变更"></a>
+            <a class="handleBtn printBtn" href="/print/printest.html?uri=/kzfh/printview&ZKZFH={{list.ZKZFH}}&ZFKLX={{list.ZFKLX}}" target="_blank" title="打印"></a>
+            <a class="handleBtn detailBtn" target="_blank" href="index.html#/issueOrderView/{{list.ZKZFH}}" title="详情"></a>
+        </td>
+    </tr>
+    <tr class="tip"><td colspan="8">没有查到开证付汇</td></tr>
+    </tbody>
+</table>
+<pagination conf="paginationConf"></pagination>

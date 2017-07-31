@@ -1,0 +1,75 @@
+<h3 class="genTitle"><em></em><span>维修采购</span></h3>
+<ul class="generNav">
+    <li class="active"><a href="javascript:;">维修采购详情</a></li>
+</ul>
+
+<div id="mainView">
+    <div class="czAddBtn">
+        <a href="javascript:;" ng-click="viewPurchase1()" class="changhtBtn">查看采购申请</a>
+        <a target="_blank" href="/print/printest.html?uri=/wxpo/printview&EBELN={{purchaseList.EBELN}}" ng-if="ifPoheader" class="viewBtn">打印</a>
+    </div>
+    <div class="viewTable ng-scope">
+        <ul>
+            <li><strong>采购订单号：</strong><span>{{purchaseList.EBELN}}</span></li>
+            <li><strong>采购凭证日期：</strong><span>{{purchaseList.BEDAT}}</span></li>
+            <li><strong>操作标识：</strong><span>{{{'I':'新增','U':'修改','D':'作废'}[purchaseList.ZOPERATION] || purchaseList.ZOPERATION}}</span></li>
+            <li><strong>采购订单凭证类型：</strong><span>{{enumObj.BSART[purchaseList.BSART]}}</span></li>
+            <li><strong>供应商订单号：</strong><span>{{purchaseList.ZZPO}}</span></li>
+            <li><strong>供应商名称：</strong><span>{{purchaseList.NAME1 + purchaseList.NAME2}}</span></li>
+            <li><strong>产品线：</strong><span>{{enumObj.ZZCP[purchaseList.ZZCP]}}</span></li>
+            <li><strong>项目名称：</strong><span>{{purchaseList.ZZXM}}</span></li>
+            <li><strong>二级经销商名称：</strong><span>{{purchaseList.ZZEJ}}</span></li>
+            <li><strong>最终客户名称：</strong><span>{{purchaseList.ZZKH}}</span></li>
+            <li><strong>运输方式：</strong><span>{{purchaseList.ZZYS}}</span></li>
+            <li><strong>付款方式：</strong><span>{{purchaseList.ZZFK}}</span></li>
+            <!--<li><strong>贸易条款：</strong><span>{{purchaseList.ZZMY}}</span></li>-->
+            <li><strong>付款条款：</strong><span>{{purchaseList.ZTERM}}</span></li>
+            <li><strong>公司代码：</strong><span>{{enumObj.BUKRS[purchaseList.BUKRS]}}</span></li>
+            <li><strong>采购组织：</strong><span>{{enumObj.EKORG[purchaseList.EKORG]}}</span></li>
+            <li><strong>采购组：</strong><span>{{enumObj.EKGRP[purchaseList.EKGRP]}}</span></li>
+            <li><strong>供应商编号：</strong><span>{{purchaseList.LIFNR}}</span></li>
+            <!--<li><strong>交货口岸：</strong><span>{{purchaseList.ZZFJ}}</span></li>-->
+            <li class="list_con"><strong>合同原金额：</strong><span>{{purchaseList.ZZZJY}}</span></li>
+            <li class="list_con"><strong>合同总金额：</strong><span>{{purchaseList.ZZZJY - purchaseList.ZZSBFD + purchaseList.ZZFWFD}}</span></li>
+            <li class="list_con"><strong>设备使用返点金额：</strong><span>{{purchaseList.ZZSBFD}}</span></li>
+            <li class="list_con"><strong>服务使用返点金额：</strong><span>{{purchaseList.ZZFWFD}}</span></li>
+            <li><strong>币别：</strong><span>{{enumObj.WAERS[purchaseList.WAERS]}}</span></li>
+            <li class="list_con"><strong>创建者：</strong><span>{{purchaseList.ERNAM}}</span></li>
+        </ul>
+        <table class="tab_data">
+            <thead class="tab_header">
+            <tr>
+                <th>行项目</th>
+                <th>物料编码</th>
+                <th>物料描述</th>
+                <th>维修数量</th>
+                <th>单位</th>
+                <th>成本单价</th>
+                <th>批次号</th>
+                <th>发货日期</th>
+                <th>库存地点</th>
+            </tr>
+            </thead>
+            <tbody class="tab_body">
+            <tr ng-repeat="list in dataList">
+                <td>{{list.EBELP}}</td>
+                <td>{{list.MATNR}}</td>
+                <td>{{list.MAKTX}}</td>
+                <td>{{list.ERFMG}}</td>
+                <td>{{list.ERFME}}</td>
+                <td>{{list.VERPR | currency : '￥'}}</td>
+                <td>{{list.CHARG}}</td>
+                <td>{{list.BDTER}}</td>
+                <td>{{enumObj.LGORT[list.LGORT]}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <pagination conf="paginationConf"></pagination>
+
+    <div class="apCot" ng-if="apCot" >
+        <div ng-include="'template/common/apply.html'"></div>
+    </div>
+</div>
+<div id="approversDialog" class="dialog cusBox" title="选择下一审批人" ng-include="'template/common/approvers.html'" ></div>
+<div id="chsBox" class="dialog cusBox" title="查看采购申请" ng-include="'template/purchase/OpurchaseList.html'"></div>

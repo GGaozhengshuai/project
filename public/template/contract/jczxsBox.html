@@ -1,0 +1,71 @@
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>借出编号</strong>
+                    <input style="width:210px;" class="text" type="text" ng-init="$parent.code=''" ng-model="$parent.code" placeholder="请输入借出单编号">
+                </td>
+                <!--<td>
+                    <strong>客户名称</strong>
+                    <input style="width:210px;" class="text" type="text" ng-model="$parent.clientname" placeholder="请输入客户名称">
+                </td>
+            </tr>
+            <tr>
+                <td></td>-->
+                <td>
+                    <input type="button" value="查询" class="searchbtn2" ng-click="jczxsSearch()">
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<table class="orangestyle table tsTable" id="jczxsTable">
+    <thead>
+    <tr>
+        <th class="thw2">借出单编号</th>
+        <th class="thw3">借货单申请人</th>
+        <th class="thw4">销售人员</th>
+        <th class="thw5">借出客户名称</th>
+        <th class="thw6">操作</th>
+    </tr>
+    </thead>
+    <tbody ng-class="jczxsList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in jczxsList" class="list">
+        <td colspan="5" class="fTd">
+            <table>
+                <td class="thw2">{{list.code}}</td>
+                <td class="thw3">{{list.creator.creator}}</td>
+                <td class="thw4">{{list.user.name}}</td>
+                <td class="thw5">{{list.client.name}}</td>
+                <td class="thw6">
+                    <a href="index.html#/loanBillView?id={{list._id}}" target="_blank">查看详细清单</a>
+                </td>
+            </table>
+            <table class="zTable">
+                <tr>
+                    <th><span ng-click="allCheck($event)" class="allCheck"></span><!--<input class="allCheck" type="checkbox" name="1"/>--></th>
+                    <th>内部物料编码</th>
+                    <th>原厂物料编码</th>
+                    <th>型号</th>
+                    <th>描述</th>
+                    <th>未还数量</th>
+                    <th>数量</th>
+                    <th>单价</th>
+                </tr>
+                <tr ng-repeat="zlist in list.products" class="ztrList">
+                    <td><span ng-click="zCheck($event)" class="zCheck"></span><!--<input class="zCheck" type="checkbox" name="2"/>--></td>
+                    <td>{{zlist.goodscode}}</td>
+                    <td>{{zlist.sourcegoodscode}}</td>
+                    <td>{{zlist.version}}</td>
+                    <td>{{zlist.des}}</td>
+                    <td>{{zlist.notreturn}}</td>
+                    <td><input ng-blur="wlListBlur(zlist.notreturn,zlist.num)" ng-init="zlist.num=0" ng-model="zlist.num" ng-required="true" class="djInput jczxsNum" type="text" value=""/></td>
+                    <td><input class="djInput" type="text" ng-model="zlist.djInput" ng-init="zlist.djInput=0" value=""/><input type="hidden" value="{{zlist.purchaseprice}}"/> </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr class="tip"><td colspan="5">没有借出单</td></tr>
+    </tbody>
+</table>

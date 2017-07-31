@@ -1,0 +1,90 @@
+<div class="item">银行授信报表</div>
+<form novalidate name="invoiceForm">
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>银行授信报表</strong>
+                   <!-- <select name="" id="" ng-model="type" ng-init="type=''">
+                        <option value="">请选择</option>
+                        <option value="1">未到期银行授信报表</option>
+                        <option value="2">银行授信额度使用情况（银行）</option>
+                    </select>-->
+                    <select name="" ng-init="type=''" ng-model="type">
+                        <option value="">请选择</option>
+                        <option value="1">中建材信息财务</option>
+                        <option value="2">中建材信息商务</option>
+                        <option value="3">中建材进出口财务</option>
+                        <option value="4">中建材进出口商务</option>
+                        <option value="5">中建材香港财务</option>
+                        <option value="6">中建材香港商务</option>
+                        <option value="7">银行授信额度使用情况（银行）</option>
+                    </select>
+                </td>
+                <td>
+                    <strong>查询日期</strong>
+                    <input class="text Wdate" type="text" date-Picker name="date"  ng-init="date=''" ng-model="date" placeholder="">
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search(type,date)">
+                    <a class="searchbtn2 searchbtn2bot viewBtn" ng-if="opprev.bankExport_export" ng-click="exportexcal(type,date)">导出</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<div class="item">查询结果</div>
+<div ng-if="!table" class="loading-text grid">
+    <span ng-if="loadData">数据载入中...</span>
+    <span ng-if="!loadData">查询不到数据</span>
+</div>
+<div class="bankExportTableBox" ng-show="oneTable">
+
+    <div ng-if="table" ui-grid="table" ui-grid-selection ui-grid-resize-columns ui-grid-pinning ui-grid-auto-resize class="grid"></div>
+   <!-- <table class="orangestyle table" style="height:100%;">
+        <thead>
+        <tr>
+            <th>银行授信申请号</th>
+            <th>授信银行</th>
+            <th>授信金额</th>
+            <th>未到期授信金额</th>
+            <th>授信种类</th>
+            <th>到期日</th>
+            <th ng-if="swIf">付款单未关联金额</th>
+            <th ng-if="swIf">关联的付款申请号</th>
+        </tr>
+        </thead>
+        <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+        <tr ng-repeat="list in dataList">
+            <td>{{list.code}}</td>
+            <td>{{list.bank.name}}</td>
+            <td>{{list.creditmoney | currency:'￥'}}</td>
+            <td>{{(list.creditmoney - list.tqhhjeSum)| currency:'￥'}}</td>
+            <td>{{list.credittype}}</td>
+            <td>{{list.duedate | date: 'yyyy-MM-dd'}}</td>
+            <td ng-if="swIf">{{list.fksqinfo[0].whxje}}</td>
+            <td ng-if="swIf">{{list.fksqinfo[0].ZSQNO}}</td>
+        </tr>
+        <tr class="tip"><td colspan="10">没有查到</td></tr>
+        </tbody>
+    </table>-->
+
+</div>
+<div class="item" ng-show="twoTable">{{dataDate}}</div>
+<div class="bankExportTableBox" ng-show="twoTable" >
+    <div ng-if="table" ui-grid="table" ui-grid-selection ui-grid-resize-columns ui-grid-pinning ui-grid-auto-resize class="grid"></div>
+   <!-- <table class="orangestyle table" style="width:200%;">
+        <thead>
+            <tr><th ng-repeat="list in dataThead track by $index">{{list}}</th></tr>
+        </thead>
+        <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+        <tr ng-repeat="item in dataList" ng-hide="$index<2">
+            <td ng-repeat="item2 in item track by $index">{{$index ? (item2 | number:2) : item2}}</td>
+        </tr>
+        <tr class="tip"><td colspan="10">没有查到</td></tr>
+        </tbody>
+    </table>-->
+</div>

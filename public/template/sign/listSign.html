@@ -1,0 +1,31 @@
+<h3 class="genTitle"><em></em><span>签报单</span></h3>
+<ul class="generNav">
+    <li class="active"><a href="javascript:;">签报单</a></li>
+</ul>
+
+<div id="mainView">
+    <div class="viewTable ng-scope">
+        <ul>
+            <li><strong>签报单号：</strong><span>{{ORDER_DATA.code}}</span></li>
+            <li><strong>签报人：</strong><span>{{ORDER_DATA.signpeople}}</span></li>
+            <li><strong>签报类型：</strong><span>{{ORDER_DATA.signtype}}</span></li>
+            <li><strong>签报部门：</strong><span>{{ORDER_DATA.signdept}}</span></li>
+            <li><strong>金额：</strong><span>{{ORDER_DATA.money | number:2}}</span></li>
+            <li><strong>申请人：</strong><span>{{ORDER_DATA.creator}}</span></li>
+            <li><strong>申请日期：</strong><span>{{ORDER_DATA.createdate| date: 'yyyy-MM-dd '}}</span></li>
+            <li class="list_con"><strong class="fl">会签单位：</strong><pre class="pre"><span>{{ORDER_DATA.signunit}}</span></pre></li>
+            <li class="list_con"><strong class="fl">签报标题：</strong><pre class="pre"><span>{{ORDER_DATA.signtitle}}</span></pre></li>
+            <li class="list_con"><strong class="fl">签报内容：</strong><pre class="pre"><span>{{ORDER_DATA.signcontent}}</span></pre></li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+
+
+    <div class="gerSub">
+        <a class="subSave" href="index.html#/signOrderEdit?processId={{processId}}&nodeId={{nodeId}}" ng-if="editBtn">编辑</a>
+    </div>
+    <div class="apCot" ng-if="apCot">
+        <div ng-include="'template/common/apply.html'"></div>
+    </div>
+
+</div>

@@ -1,0 +1,316 @@
+*{margin:0 auto;font-family: 'SimHei' ;}
+html { font-size: 12px;}
+ul{list-style: none;}
+i, em, b { font-style: normal; font-weight: normal;}
+pre {
+    white-space: pre; /* CSS2 */
+    white-space: pre-wrap; /* CSS 2.1 */
+    white-space: pre-line; /* CSS 3 (and 2.1 as well, actually) */
+    word-wrap: break-word; /* IE */
+}
+.fontSizeBig,
+.fontSizeBig *{ font-size: 14px; font-weight: bold; font-family: "Microsoft YaHei", "宋体", "微软雅黑", Arial, Georgia, Verdana, serif; }
+/*头部logo*/
+.header{position: relative; padding-top: 36px;}
+.header .headerBackground{border:1px solid #ddd; border-width:21px 0;}
+.header .headerLogo img{position: absolute;top:28px;left:31px; height: 54px;}
+
+.contentWrap { padding: 0 40px;}
+/*标题*/
+.titleBarcode{ padding: 20px 0 15px; overflow: hidden;}
+.titleBarcode .title{float: left;}
+.title p{ font-size: 26px; line-height: 40px;}
+.title2 p { font-size: 16px; margin: 28px 0 10px;}
+.titleBarcode .barcode{float: right;}
+.titleBarcode .barcode img{height:50px;}
+.titleBarcode .barcode p{text-align:center;}
+
+.content{border:1px solid #ccc; overflow: hidden;}
+.cont_left{width:60%;float: left;margin-top:10px; overflow: hidden; height: 100%}
+.cont_left p{line-height: 30px;margin:0 10px;border-bottom:1px solid #ccc;font-size:14px;}
+.cont_right{width:40%;float: right;}
+.contlist { overflow: hidden; border-left:1px solid #ccc; padding-left: 10px;margin: 10px 10px 10px 0;}
+.contlist li { border-bottom:1px solid #ccc;font-size:14px;line-height: 25px;}
+.content .clear{border: none;}
+.contisize{height:150px;border:1px solid #ccc;border-top:none; padding: 0;}
+.contisize .contisizeTitle{height:30px;border-bottom:1px solid #ccc; line-height:30px; margin:0 10px;font-size:14px;}
+.contisize li { overflow: hidden; padding-top: 10px;}
+.contisize .subtit{float: left; height:110px; margin-left: 10px;margin-top: 5px;font-size:14px;}
+.contisize .conr{height:110px;margin-top: 5px;font-size:14px;}
+.ExamTitle{height:30px;margin-top:40px;margin-bottom: 10px;}
+
+/*签报中间 签报内容 怕其他模块改错了*/
+.contisize1{min-height:150px;border:1px solid #ccc;border-top:none; padding: 0;}
+.contisize1 .contisizeTitle{height:30px;border-bottom:1px solid #ccc; line-height:30px; margin:0 10px;font-size:14px;}
+.contisize1 li { overflow: hidden; padding-top: 10px;}
+.contisize1 .subtit1{float: left;  margin-left: 10px;margin-top: 5px;font-size:14px;}
+.contisize1 .conr1{min-height:110px;margin-top: 5px;font-size:14px;padding: 10px;text-indent:2em;}
+/*审批列表*/
+.spcontent { position: relative; padding-top: 5px;}
+.spcontent table{ width:100%;border-collapse:collapse;/*font-size:14px;*/ position: relative; z-index: 1;border:1px solid #aaa;}
+.spcontent th { text-align: left; height: 26px; line-height: 26px; padding: 0; padding-left: 10px; border: 0;}
+.spcontent table tr{border-collapse:collapse;}
+/*.spcontent td{ padding:0;padding-left: 10px;line-height: 24px;  border:1px solid #ddd; vertical-align: text-top;}*/
+.spcontent td { vertical-align:text-top;/*border: 1px solid #aaa; border-width: 0 1px;*/padding: 0 3px;  text-align: left; box-shadow: 0 1px; line-height: 24px; }
+.tablebg { position: absolute; width: 100%; z-index: 0; border:1px solid #ddd; border-width:14px 0;}
+
+
+
+
+table {width:100%;border-collapse:collapse;}
+/* 内容列表1 */
+.bd {border:1px solid #aaa; padding:0 10px; position: relative;}
+/*.listTable td { display: table;border-collapse: collapse; width: 50%;}*/
+.listTable td,
+.listhead td { border-bottom:1px solid #aaa; line-height: 18px; width: 50%; padding: 3px 0; }
+.listTable td * { display: table-cell;}
+.listTable td div b { display: block;}
+.listTable td div b * { display: inline;}
+
+.listTable .last td { border:0;}
+.listTable span { /*width: 115px;*/word-break: keep-all;}
+.onechild td { display: table;border-collapse: collapse; width: 200%; line-height: 30px;}
+.onechild td * { display: table-cell;}
+.onechild span { word-break: keep-all;}
+.list2 li { overflow: hidden; line-height: 30px;}
+.list2 li  i{margin-left: 40%;}
+.list2 .list2Title { line-height: 24px;}
+.list2 th { height: 23px; line-height: 23px;}
+.sum { margin-bottom: 10px;}
+.sum .bg{ border:1px solid #eee; border-width: 14px 0;}
+.sum p { z-index: 1; float: right; padding-right: 10px;}
+
+.other { padding: 0; margin-top: 20px;}
+.other li { line-height: 40px;}
+
+.smNote{border:1px solid #aaa;height:112px;border-top:none;}
+.smNote .ltext{float: left;padding:0.5% 0 0 1%;}
+.smNote .rcont{/*width:88%;float: left;*//*word-wrap: break-word;*/}
+.smNote .rcont pre span{width:90%;float: left;padding:0.5% 0 0 0.7%;word-wrap: break-word;word-break: break-all;}
+
+/*采购订单*/
+.purOrderWrap .listTable td { line-height: 24px; padding: 0;}
+
+/* 付款申请 */
+.paymentWrap .spcontent { padding: 0;}
+
+/* 报销单打印样式 */
+.reimburseWrap { padding: 78px 70px; }
+.reimburseBox { padding: 5px 0; }
+.reimburse { font-size: 13px; padding: 15px 0; overflow: hidden; }
+.dashImg { width: 2000px; height: 2px; float: left; padding-bottom: 1px;}
+.reimburseWrap .dashImgBox { width: 100%; height: 2px; padding: 0; margin: 0; overflow-x: hidden;  }
+/*.reimburse {
+    -moz-border-image:url(http://www.zhangxinxu.com/study/image/dashed_red.png) 6 repeat;
+    !*Chrome & Safari*!
+    -webkit-border-image:url(http://www.zhangxinxu.com/study/image/dashed_red.png) 6 repeat;
+    !*Opera*!
+    border-image:url(http://www.zhangxinxu.com/study/image/dashed_red.png) 6 repeat;
+}*/
+.reimburse .titleBarcode { padding: 0 0 10px;}
+.reimburse .barcode img { height: 40px;}
+.reimburse td { height: 24px;}
+.reimburse .title p { font-size:18px; }
+.reimburse .title2 p { font-size: 14px; margin: 5px 0;}
+.reimburse td span { display: inline-block; width:49%;}
+.reimburse td i { display: inline-block; padding-bottom: 3px; width: 50%; margin-right: 1%; border-bottom: 1px solid #000;}
+.hasone td { width: 328%;}
+.hasone td span { width: 18%;}
+.hasone td i { width: 82%; margin: 0;}
+
+table.list td { padding: 0; margin: 0;}
+table.list td span { width: 36%;}
+table.listtd i.with64 { width: 64%;}
+table.list td b { width: 64%; border-bottom: 1px solid #000;display: inline-block; padding-bottom: 3px;}
+table.list td .with100 { width: 100%; margin:0;}
+.othereimburse { overflow: hidden; margin: 0; margin-top: 5px;}
+.othereimburse li { float: right; width: 50%; line-height: 30px; }
+.othereimburse .leftLi { width: 40%; margin-left: 10%; }
+.othereimburse span { float: left;}
+.othereimburse i { display: block; margin-left: 115px; height: 30px; border-bottom:  1px solid #000;}
+.othereimburse .with35 { width: 35%;}
+.othereimburse .with35 i { margin-left: 85px;}
+.clfTable th { font-weight: normal;border: 1px solid #000}
+.clfTable td { border: 1px solid #000; text-align: center;}
+.clfTable { margin-bottom: 5px;}
+.spBox { position: relative; margin-top: 10px; min-height: 26px;}
+.spBox p {
+    position: absolute;
+    left: 0;
+    top:0;
+}
+.spTbBox { margin-left: 80px;}
+.spTbBox td { vertical-align: text-top}
+
+.bankcredit .list td span { width: auto;}
+
+/*销售申请表contract*/
+.contractWrap .titleBarcode {padding:0;}
+.contractWrap .titleBarcode img { height: 40px;}
+.contractWrap td { font-size: 12px;}
+/*.contractWrap .twoNote { min-height: 126px;}*/
+.contractWrap .twoNote tr { border: 0}
+.contractWrap .twoNote td { vertical-align:text-top;border: 1px solid #aaa; padding: 0 3px; border-width: 0 1px; text-align: left; box-shadow: 0 1px; line-height: 20px;}
+.contractTitle{padding: 0 40px;}
+.contractTitle .titleBarcode { padding-top: 20px;}
+.contractTitle p{ line-height: 18px;}
+.contractTitle p i{display: inline-block; padding-right: 10px;}
+.contract_cont{padding: 0 40px;font-size: 12px; /*min-height: 682px;*/}
+.contractTitle h2 { margin: 5px 0;}
+.contract_cont table{border:1px solid #aaa;}
+.contract_cont table .trclear{border-bottom:1px solid #fff;}
+.contract_cont table tr td{ border:1px solid #aaa; padding: 0 3px; text-align: left;}
+.contract_cont table tr td{/*padding: 2px;*/ line-height: 18px;}
+.contract_cont .contractDate tr:nth-child(1){border-top:none;background: #ccc;}
+.contract_cont .contractDate tr:nth-child(2){border-top:none;background: #ccc;}
+.contract_cont .contractDate tr td{border:1px solid #aaa;text-align: center;}
+.contract_cont .serviceTable tr .tdhead{border:1px solid #aaa;}
+.marginDiv{margin-top:30px;}
+.pageCon{  min-height: 20.6cm;width: 29.3cm;padding: 0.2cm;margin: 1cm auto 0;border: 1px #D3D3D3 solid;border-radius: 5px;background: white;}
+/*h1, h2, h3, h4, h5 {
+    page-break-after: avoid;
+    page-break-before: always;
+}
+.break_before {  page-break-before: always; }
+.break_after { page-break-after: always; }*/
+
+
+.twoNote{padding: 0 40px; min-height: 84px;}
+.twoNote table{border:1px solid #aaa;margin-top: 10px;}
+.twoNote table tr{border:1px solid #aaa;}
+.twoNote table tr:nth-child(1){border:1px solid #aaa;background: #ccc;}
+.twoNote table tr td{text-align: center;line-height: 20px;padding: 5px 10px; vertical-align: text-top;}
+
+.approveDiv{padding: 0 40px; font-size:14px;}
+.approveDiv table{border: 1px solid #aaa;}
+.approveDiv table tr td{text-align: left;line-height: 18px;padding: 9px 10px;}
+
+.break_before { page-break-before: always; }
+.contractWrap .contractPage1 {min-height: 18.9cm; }
+
+
+/*华为产品购销*/
+.contractSize{font-size: 9pt;}
+.contractSize table { text-align: center;}
+.contractSize .header{overflow: hidden; padding: 0;}
+.contractSize .header h2{text-align: center;}
+.contractSize .header ul{margin-top: 30px;padding: 0; overflow: hidden;}
+.contractSize .header ul li{width: 50%;float: left;margin-bottom: 10px;}
+
+.hwcontent{clear:both;margin-top: 1.5em;}
+.hwservicecontent{margin-top: 1.8em;}
+.hwcontent ul{padding: 0;}
+.hwcontent ul li{width:100%;}
+.hwcontent ul li i span{border-bottom: 1px solid #000;width: 150px;}
+.hwcontent li { display: table;}
+.hwcontent li strong{ display:table-cell;width: 20px;line-height: 24px;}
+.hwcontent ul li i{line-height: 24px;}
+.hwcontent ul li p {line-height: 24px;}
+.hwcontent td,
+.hwcontent th { height: 23px; line-height: 23px; padding: 0}
+.hwcontent .w60 { width: 60%; margin:0 auto;}
+.hwcontent ul li p span{display: inline;border-bottom: 1px solid #000; padding:0 5px 2px;/*width: 150px;*/}
+.baseInfo ul li i span{display: inline-block;min-width: 80px; width: auto;}
+.hwcontent .underLine{ display: inline; padding:0 5px 2px; width: auto; min-width: 150px;}
+.hwcontent .left2em { margin-left: 2em;}
+.hwcontent ul .clear{clear: both;}
+/*.hwcontent ul .clear strong{display: inline-block;}*/
+.hwcontent ul .clear p{ display: table; width: 100%; }
+.hwcontent ul .clear p em{display:table-cell; width: 28px; /* line-height: 30px;*/}
+.hwcontent ul .subsubli p em { padding-left: 2em; width: 34px; }
+.hwcontent ul .clear p i a{text-decoration: none;color: #000;display: inline-block;/*width:80%;*/}
+
+
+.footerSign{margin-top:50px;}
+.footerSign ul{padding: 0; overflow: hidden;}
+.footerSign ul li{width: 50%;line-height: 30px;float: left;}
+
+.contractOne{clear: both;}
+.contractOne{padding: 0 40px;}
+.contractOne h2,
+.contractTwo h2,
+.contractThree h2{text-align: center; padding-top: 20px;}
+.contractOne ul{margin-top: 20px;padding: 0; overflow: hidden;}
+.contractOne ul li{width: 50%;float: left;margin-bottom: 10px;}
+
+.contractTwo{clear: both; }
+/*.contractTwo{padding: 0 40px;}*/
+.contractTwo h2{text-align: center; margin-bottom: 43px;}
+.contractTwo p{ /*line-height: 30px; margin-top: 10px;*/ line-height: 24px;}
+.tableBox table p { height: 26px;}
+.contractTwo table{border: 1px solid #aaa;}
+/*.contractTwo table tr{margin-top:50px;}*/
+.contractTwo table th{/*background: #eee;*/border: 1px solid #aaa; box-shadow: 0 1px; height:28px; font-weight: normal;}
+.contractTwo td,
+.spcontent td,
+.mkinvoiceTb td { vertical-align:text-top;border: 1px solid #aaa; padding: 0 3px; border-width: 0 1px; text-align: left; box-shadow: 0 1px;/* height: 22px;*/ line-height: 24px; }
+.mkinvoiceTb td { line-height: 21px;}
+.mkinvoiceTb { margin-top: 2px;}
+.contractThree{clear: both;}
+/*.contractThree{padding:  0 40px;}*/
+.contractThree h2{text-align: center; }
+.contractThree p{text-indent: 2em;margin-top:50px;line-height: 30px;}
+.contractThree p span{display: inline-block;border-bottom:1px solid #000;width: 300px;}
+
+.footer{clear: both;padding: 0 40px; overflow: hidden;}
+.footer .footerL{float: left;width:50%;}
+.footer .footerR{float: right;width:50%;}
+.footer .footerR p{line-height: 30px;}
+/*.pageH {padding-top: 60px;}*/
+/*.pageH {  min-height: 28cm;}
+.pageH2 { min-height: 56cm;}*/
+.pageH {  /*height: 29.67cm;*/ height: 840.5pt; overflow: hidden;/* background-color: #00c7c8;*/ position: relative; z-index: 999; }
+/*.pageH { height: 29.62cm; overflow: hidden; background-color: #00c7c8; position: relative; z-index: 999; }*/
+.showWrap { height: 90%; /*margin-top: 9%;*/ margin-top:50pt; overflow: hidden; padding: 0 48pt;}
+/*.showWrap { height: 88%; margin-top:5.9%; overflow: hidden; padding: 0 48pt;}*/
+.morePage .header h2,
+.morePage h2 {padding-top: 0;}
+@media print {
+    .pageH,
+    .pageH2 { padding: 0; margin: 0; border:0;  overflow: hidden;}
+}
+
+/* 服务协议 */
+.serviceContractBox .header ul li{margin-bottom: 10px; width: 100%;}
+.pService { text-align: right; line-height: 40px; padding-right: 2em; padding-bottom: 10px;}
+.shuiyin  { position:absolute; top:0; z-index:-100; width: 100%; display: none; text-align: center;}
+.shuiyin img { display: inline; /*width:390px;*/ width: 480px;}
+.shuiyin img:nth-of-type(odd) { margin-top: 120px;}
+.shuiyin img:nth-of-type(even) { margin-bottom: 120px;}
+.hasshuiyin .shuiyin {display: block;}
+
+/*借款单打印样式*/
+.loanManage { font-size: 14px; padding: 0 160px;}
+.loanManage .title { text-align: center; width: 100%;}
+.loanManage .alignRightBox { text-align: right; margin-top: 80px;}
+.loanManage .alignRightBox i { padding-bottom: 3px; border-bottom: 1px solid #000;}
+.loanManage td { height: 50px;}
+.loanManage td span { float: left; font-size: 12px;}
+.loanManage .amountWrap span { font-size: 14px; }
+.loanManage td i { display: block; padding-bottom: 3px; margin-left: 90px; margin-right: 10px; border-bottom: 1px solid #000;}
+.loanManage .wMax i { margin-left: 130px;}
+.loanManage .sptabletitle { width: 550px; margin-left: 90px; }
+.loanManage .sptabletitle td { font-size: 12px; height: 40px; border:0;}
+.loanManage .other { text-align: right; margin-top: 40px;}
+.loanManage .other i { display: inline-block; width: 150px; padding-bottom: 5px;}
+.loanManage .other span { padding-right: 20px;}
+
+
+.commonprint .showWrap { padding: 0; }
+.commonprint .pageH { height: 29.62cm; }
+.commonprint .pageH .showWrap {  height: 94%;margin-top:5.9%; }
+.commonprint .pageH:first-child .showWrap  {padding: 0; margin: 0;}
+
+/*.commonprint .pageH {height: 29.67cm;}*/
+.contractWrap .title2 p { margin: 7px 0 5px;}
+.contractWrap .contractTitle2 { margin-top: 0;}
+.contractWrap .pageH {height: 19.9cm; margin: 1cm 0 0; overflow: hidden;}
+.contractWrap .pageH .showWrap { /*margin: 1cm 0 0;*/ height: 18.9cm; margin: 0; padding: 0;}
+/*.contractWrap .pageH:first-child {height: 20.92cm; }*/
+.contractWrap .spcontent td { line-height: 17px;}
+.contractWrap .contractTitle h2 { margin:0; font-size: 14px; line-height: 18px;}
+.contractWrap .spcontent th { height: 20px; line-height: 20px; padding: 0; padding-left: 10px; border: 0;}
+.contractWrap .spcontent .tablebg { border-width:10px 0; }
+
+
+

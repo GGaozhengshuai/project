@@ -1,0 +1,111 @@
+<h3 class="genTitle genTitleBot"><em></em><span>进销项开票变更</span></h3>
+<div class="cusCont">
+    <div class="generForm">
+        <div class="genTitle2">
+            <div>
+                <strong>销项待开数据</strong>
+            </div>
+        </div>
+        <!--<form novalidate name="invoiceForm">-->
+        <ul>
+            <li class="tli" ng-if="wljdatapower">
+                <strong class="jxxwidth">{{todo_it_fx.text}}发票额(万元)：</strong>
+                <input type="number" placeholder="请输入发票额(万元)" ng-model="todo_it_fx.amount">
+            </li>
+            <li class="tli" ng-if="wljdatapower">
+                <strong class="jxxwidth">{{todo_it_xm.text}}发票额(万元)：</strong>
+                <input type="number" placeholder="请输入发票额(万元)" ng-model="todo_it_xm.amount">
+            </li>
+            <li class="tli" ng-if="wljdatapower">
+                <strong class="jxxwidth">{{todo_it_other.text}}发票额(万元)：</strong>
+                <input type="number" placeholder="请输入发票额(万元)" ng-model="todo_it_other.amount">
+            </li>
+            <li class="tli" ng-if="yxydatapower">
+                <strong class="jxxwidth">{{todo_yl.text}}发票额(万元)：</strong>
+                <input type="number" placeholder="请输入发票额(万元)" ng-model="todo_yl.amount">
+            </li>
+            <li class="tli" ng-if="yxydatapower">
+                <strong class="jxxwidth">{{todo_hz.text}}发票额(万元)：</strong>
+                <input type="number" placeholder="请输入发票额(万元)" ng-model="todo_hz.amount">
+            </li>
+            <!--<li class="tli">-->
+                <!--<strong class="jxxwidth">销项待开合计发票额(万元)：</strong>-->
+                <!--<input type="text" ng-disabled="true" placeholder="请输入发票额(万元)">-->
+            <!--</li>-->
+        </ul>
+
+
+        <div class="genTitle2">
+            <div>
+                <strong>进项数据</strong>
+            </div>
+        </div>
+        <ul>
+            <li class="tli" ng-if="yhldatapower">
+                <strong class="jxxwidth">{{got_cw.text}}发票额(万元)：</strong>
+                <input type="number" placeholder="请输入发票额(万元)" ng-model="got_cw.amount">
+            </li>
+            <li class="tli" ng-if="wljdatapower">
+                <strong class="jxxwidth">{{got_hw_sw.text}}发票额(万元)：</strong>
+                <input type="number" placeholder="请输入发票额(万元)" ng-model="got_hw_sw.amount">
+            </li>
+            <li class="tli" ng-if="wljdatapower">
+                <strong class="jxxwidth">{{pending_hw.text}}发票额(万元)：</strong>
+                <input type="number" placeholder="请输入发票额(万元)" ng-model="pending_hw.amount">
+            </li>
+            <li class="tli" ng-if="wljdatapower">
+                <strong class="jxxwidth">{{processing_hw.text}}发票额(万元)：</strong>
+                <input type="number" placeholder="请输入发票额(万元)" ng-model="processing_hw.amount">
+            </li>
+            <li class="tli" ng-if="wljdatapower">
+                <strong class="jxxwidth">{{committed_hw.text}}发票额(万元)：</strong>
+                <input type="number" placeholder="请输入发票额(万元)" ng-model="committed_hw.amount">
+            </li>
+            <li class="tli" ng-if="sxydatapower">
+                <strong class="jxxwidth">{{expect_zgs.text}}发票额(万元)：</strong>
+                <input type="number" placeholder="请输入发票额(万元)" ng-model="expect_zgs.amount">
+            </li>
+            <li class="tli" ng-if="yxydatapower">
+                <strong class="jxxwidth">{{expect_yl.text}}发票额(万元)：</strong>
+                <input type="number" placeholder="请输入发票额(万元)" ng-model="expect_yl.amount">
+            </li>
+            <li class="tli" ng-if="lgqdatapower">
+                <strong class="jxxwidth">{{expect_nbq.text}}发票额(万元)：</strong>
+                <input type="number" placeholder="请输入发票额(万元)" ng-model="expect_nbq.amount">
+            </li>
+            <!--<li class="tli">-->
+                <!--<strong class="jxxwidth">预计进项发票合计发票额(万元)：</strong>-->
+                <!--<input type="text" ng-disabled="true" placeholder="请输入发票额(万元)">-->
+            <!--</li>-->
+        </ul>
+
+
+        <div class="genTitle2">
+            <div>
+                <strong>汇总</strong>
+            </div>
+        </div>
+        <ul>
+            <li class="tli" ng-if="wljdatapower || yxydatapower">
+                <strong class="jxxwidth">{{confirmed.text}}发票额(万元)：</strong>
+                <input type="number" placeholder="请输入发票额(万元)" ng-model="confirmed.amount">
+            </li>
+            <!--<li class="tli">-->
+                <!--<strong class="jxxwidth">{{heji_jxx.text}} 发票额(万元)：</strong>-->
+                <!--<input type="text" ng-disabled="true" placeholder="请输入发票额(万元)" ng-model="heji_jxx.amount">-->
+            <!--</li>-->
+            <li class="tli"></li>
+            <li class="tli"></li>
+        </ul>
+
+        <!--</form>-->
+
+
+        <div class="gerSub">
+            <a href="index.html#/outPutlist">返回</a>
+            <button ng-click="save()" class="subSave">保存</button>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+

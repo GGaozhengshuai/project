@@ -1,0 +1,297 @@
+<h3 class="genTitle genTitleBot"><em></em><span>销售线索</span></h3>
+<div id="tabs">
+    <ul class="generNav" ng-init="ht.activeTab = 1">
+        <li ng-class="{active:ht.activeTab == 1}"><a href="javascript:;" ng-mousedown='htTab(1)'>销售线索新建</a></li>
+        <li ng-class="{active:ht.activeTab == 2}"><a href="javascript:;" ng-mousedown='htTab(2)'>销售线索跟踪表</a></li>
+        <li ng-class="{active:ht.activeTab == 3}"><a href="javascript:;" ng-mousedown='htTab(3)'>产品信息</a></li>
+    </ul>
+    <div class="cusCont tab_cont">
+        <div class="" ng-show="ht.activeTab == 1">
+            <div class="generForm">
+                <form novalidate name="modelForm">
+                    <h4 class="genH4">基本信息</h4>
+                    <ul class="noMargin">
+                        <li class="tli">
+                            <strong>销售线索号：</strong>
+                            <input ng-model="ORDER_DATA.sellclueno" type="text" ng-disabled="true" placeholder="系统自动生成"/>
+                        </li>
+                        <li class="tli">
+                            <strong>日期：</strong>
+                            <input ng-model="ORDER_DATA.createdate" ng-disabled="true" type="text" placeholder=""/>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>销售人员：</strong>
+                            <input ng-readonly="true" ng-click="userBox('salsUser')" ng-required="true" ng-model="ORDER_DATA.salesclerk" type="text" placeholder="请选择姓名"/>
+                            <span class="errTip ng-hide" ng-show="modelForm.salesclerk.$dirty&&modelForm.salesclerk.$error.required">必填</span>
+
+                        </li>
+                        <li class="tli">
+                            <strong>部门：</strong>
+                            <input ng-readonly="true" ng-model="ORDER_DATA.department" type="text" placeholder=""/>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>产品线：</strong>
+                            <input ng-required="true" ng-model="ORDER_DATA.productline" name="productline" ui-autocomplete="productOption" type="text" placeholder="请输入产品线"/>
+                            <span class="errTip ng-hide" ng-show="modelForm.productline.$dirty && modelForm.productline.$error.required">必填</span>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>项目名称：</strong>
+                            <input ng-model="ORDER_DATA.projectname" required type="text" name="projectname" placeholder=""/>
+                            <span class="errTip ng-hide" ng-show="modelForm.projectname.$dirty && modelForm.projectname.$error.required">必填</span>
+
+                        </li>
+                        <li class="tli">
+                            <strong>客户名称：</strong>
+                            <input ng-model="ORDER_DATA.cusname" type="text" ng-readonly="true" ng-click="customerBox()" placeholder=""/>
+                        </li>
+                        <li class="tli">
+                            <strong><font ng-if="cusMust">*</font>客户信息说明：</strong>
+                            <input ng-model="ORDER_DATA.cusinfo" type="text" placeholder="" name="cusinfo" ng-required="cusMust"/>
+                            <span class="errTip ng-hide" ng-show="modelForm.cusinfo.$dirty && modelForm.cusinfo.$error.required">必填</span>
+
+                        </li>
+                        <li class="tli">
+                            <strong>最终用户：</strong>
+                            <input ng-model="ORDER_DATA.lastuser" type="text" placeholder=""/>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>预计合同金额：</strong>
+                            <input ng-model="ORDER_DATA.contractamount" name="contractamount" required float-Validation  type="text" placeholder=""/>
+                            <span class="errTip ng-hide" ng-show="modelForm.contractamount.$dirty && modelForm.contractamount.$error.required">必填</span>
+                            <span class="errTip ng-hide" ng-show="modelForm.contractamount.$dirty && modelForm.contractamount.$error.floattwo">最多两位小数</span>
+
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>预估利润率%：</strong>
+                            <input ng-model="ORDER_DATA.forecastprofit" name="forecastprofit" float-Validation required type="text" placeholder=""/>
+                            <span class="errTip ng-hide" ng-show="modelForm.forecastprofit.$dirty && modelForm.forecastprofit.$error.required">必填</span>
+                            <span class="errTip ng-hide" ng-show="modelForm.forecastprofit.$dirty && modelForm.forecastprofit.$error.floattwo">最多两位小数</span>
+
+                        </li>
+                        <li class="tli">
+                            <strong>下单金额：</strong>
+                            <input ng-model="ORDER_DATA.ordermoney" name="ordermoney" float-Validation type="text" placeholder=""/>
+                            <span class="errTip ng-hide" ng-show="modelForm.ordermoney.$dirty && modelForm.ordermoney.$error.floattwo">最多两位小数</span>
+
+                        </li>
+                        <li class="tli">
+                            <strong><font ng-if="tradeShow">*</font>行业：</strong>
+                            <select ng-model="ORDER_DATA.trade" name="trade" ng-required="tradeShow">
+                                <option value="">请选择</option>
+                                <option value="党及社会团体">党及社会团体</option>
+                                <option value="政府">政府</option>
+                                <option value="广电">广电</option>
+                                <option value="军队">军队</option>
+                                <option value="财税">财税</option>
+                                <option value="司法">司法</option>
+                                <option value="公安">公安</option>
+                                <option value="金融">金融</option>
+                                <option value="能源">能源</option>
+                                <option value="交通">交通</option>
+                                <option value="制造">制造</option>
+                                <option value="教育">教育</option>
+                                <option value="医疗">医疗</option>
+                                <option value="邮政">邮政</option>
+                                <option value="媒体">媒体</option>
+                                <option value="服务业">服务业</option>
+                                <option value="农林业">农林业</option>
+                            </select>
+                            <span class="errTip ng-hide" ng-show="modelForm.trade.$dirty && modelForm.trade.$error.required">必填</span>
+
+                        </li>
+                        <li class="tli">
+                            <strong><font ng-if="tradeShow">*</font>细分行业：</strong>
+                            <input ng-model="ORDER_DATA.tradedetail" type="text" placeholder=""/>
+                        </li>
+                        <li class="tli">
+                            <strong>关联销售单据：</strong>
+                            <input ng-model="ORDER_DATA.billsales" type="text" placeholder="请选择销售合同号" ng-blur="billsalesBox(ORDER_DATA.billsales,$event)"/>
+                        </li>
+                        <li class="tli">
+                            <strong>销售金额：</strong>
+                            <input ng-model="ORDER_DATA.salesamount" type="text" placeholder=""/>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>项目进度：</strong>
+                            <select ng-model="ORDER_DATA.projectschedule"
+                                    ng-change="scheduleChange(ORDER_DATA.projectschedule)" required name="projectschedule">
+                                <option value="">请选择</option>
+                                <option value="得到信息">得到信息</option>
+                                <option value="项目确认">项目确认</option>
+                                <option value="项目中标">项目中标</option>
+                                <option value="初步确认商务条件">初步确认商务条件</option>
+                                <option value="厂商特价审批">厂商特价审批</option>
+                                <option value="销售合同签订">销售合同签订</option>
+                                <option value="项目丢失">项目丢失</option>
+                            </select>
+                            <span class="errTip ng-hide" ng-show="modelForm.projectschedule.$dirty && modelForm.projectschedule.$error.required">必填</span>
+
+                        </li>
+                        <li class="tli">
+                            <strong>项目进度%：</strong>
+                            <input ng-model="ORDER_DATA.proscheduleprecent" type="text" placeholder=""
+                                   ng-readonly="true"/>
+                        </li>
+                        <li class="list_con">
+                            <strong>项目进度说明：</strong>
+                            <textarea ng-model="ORDER_DATA.proscheduledeclare" ng-readonly="true"></textarea>
+                        </li>
+                        <li class="list_con">
+                            <strong>项目说明：</strong>
+                            <textarea ng-model="ORDER_DATA.prodeclare"></textarea>
+                        </li>
+                        <li class="list_con" ng-if="declareShow">
+                            <strong><font ng-if="declareShow">*</font>项目丢失说明：</strong>
+                            <textarea ng-model="ORDER_DATA.declareformisspro" ng-required="declareShow"></textarea>
+                        </li>
+                        <li class="tli">
+                            <strong>关联采购单据：</strong>
+                            <input ng-model="ORDER_DATA.purchase" type="text" placeholder="请选择采购订单号" ng-blur="purchaseBox(ORDER_DATA.purchase,$event)"/>
+                        </li>
+                        <li class="tli">
+                            <strong>采购金额：</strong>
+                            <input ng-model="ORDER_DATA.purchaseamount" type="text" placeholder=""/>
+                        </li>
+
+                        <li class="tli">
+                            <strong><font>*</font>预计交货日期:</strong>
+                            <input class="text Wdate" type="text" name="estimateddeliverydate" required date-Picker
+                                   ng-model="ORDER_DATA.estimateddeliverydate" placeholder="">
+                            <span class="errTip ng-hide" ng-show="modelForm.estimateddeliverydate.$dirty && modelForm.estimateddeliverydate.$error.required">必填</span>
+
+                        </li>
+                        <li class="tli">
+                            <strong>预计下单日期:</strong>
+                            <input class="text Wdate" type="text" name="estimatedorderdate" date-Picker
+                                   ng-model="ORDER_DATA.estimatedorderdate" placeholder="">
+                        </li>
+
+                        <li class="tli">
+                            <strong>预约签约日期:</strong>
+                            <input class="text Wdate" type="text" name="signingdate" date-Picker
+                                   ng-model="ORDER_DATA.signingdate" placeholder="">
+                        </li>
+                        <li class="tli">
+                            <strong>销售技术支持人员：</strong>
+                            <input ui-autocomplete="technicisOption" ng-model="ORDER_DATA.technicistname" type="text"
+                                   placeholder=""/>
+                        </li>
+                        <li class="tli">
+                            <strong>状态：</strong>
+                            <input ng-model="ORDER_DATA.state" ng-disabled="true"
+ type="text" placeholder=""/>
+                        </li>
+                    </ul>
+                    <div class="gerSub">
+                        <a href="index.html#/sellclueOrder">返回</a>
+                        <button ng-click="addData('model','save')" class="subSave">保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="ng-hide" ng-show="ht.activeTab == 2">
+            <div class="generForm">
+                <br/>
+                <form novalidate name="selltraceForm">
+                    <div class="addTable">
+                        <table>
+                            <tr>
+                                <th>登录人姓名</th>
+                                <th>更新日期</th>
+                                <th>工作内容</th>
+                                <th><font>*</font>工作内容详细说明</th>
+                                <th>工作执行日期</th>
+                                <th><a href="javascript:;" ng-click="sellclueBoxAdd()" title="添加" class="btnAdd"></a></th>
+                            </tr>
+                            <tr ng-repeat="list in sellclueList">
+                                <td>
+                                    <input ng-model="list.username" ng-disabled="true" type="text" value=""/>
+                                </td>
+                                <td>
+                                    <input ng-model="list.updatedate" ng-disabled="true" type="text" value=""/>
+                                </td>
+                                <td>
+                                    <input ng-model="list.workcontent" type="text" value=""/>
+                                </td>
+                                <td>
+                                    <input ng-model="list.workinfo" name="workinfo{{$index}}" type="text" value="" required/>
+                                    <p class="errTip" ng-if="selltraceForm['workinfo'+$index].$dirty && selltraceForm['workinfo'+$index].$error.required">必填</p>
+
+                                </td>
+                                <td>
+                                    <input class="text Wdate" type="text" name="workdate" date-Picker ng-model="list.workdate" placeholder="">
+                                </td>
+                                <td>
+                                    <a href="javascript:;" ng-click="sellclueDel($index)">删除</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="gerSub">
+                        <button ng-click="addData('selltrace','save')" class="subSave">保存
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="ng-hide" ng-show="ht.activeTab ==3">
+            <br/>
+
+            <div class="generForm">
+                <form novalidate name="productinfoForm">
+                    <div class="addTable">
+                        <table>
+                            <tr>
+                                <th>产品线</th>
+                                <th>产品型号</th>
+                                <th>型号描述</th>
+                                <th><font>*</font>数量</th>
+                                <th>预估金额小计</th>
+                                <th><a href="javascript:;" ng-click="productinfoAdd()" title="添加" class="btnAdd"></a></th>
+                            </tr>
+                            <tr ng-repeat="list in productinfoList">
+                                <!--<td>
+                                    <input ng-model="list.productline" type="text" value="" ng-readonly="true"
+                                           ng-click="productinBox($index)"/>
+                                </td>-->
+                                <td>
+                                    <input ng-model="list.productline" type="text" value="" ng-readonly="true"
+                                           />
+                                </td>
+                                <td>
+                                    <select ng-model="list.producttype1" ng-options="c.val1 for c in producttypeData"
+                                            ng-click="producttypeClick(list.producttype1,$index)">
+                                        <option value="">--请选择--</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input ng-model="list.typedescribe" ng-readonly="true" type="text" value=""/>
+                                </td>
+                                <td>
+                                    <input required ng-model="list.number" name="number{{$index}}" type="text" value=""/>
+                                    <p class="errTip" ng-if="productinfoForm['number'+$index].$dirty && productinfoForm['number'+$index].$error.required">必填</p>
+
+                                </td>
+                                <td>
+                                    <input ng-model="list.expectamount" type="text" value=""/>
+                                </td>
+                                <td><a href="javascript:;" ng-click="productinfoDel($index)">删除</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="gerSub">
+                        <button ng-click="addData('productinfo','save')" class="subSave">保存
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="productlineBox" class="dialog cusBox" title="产品线" ng-include="'template/sellclue/productinBox.html'"></div>
+<div id="cusBox" class="dialog cusBox" title="选择客户" ng-include="'template/sellclue/cusBox.html'"
+     ng-controller="cusBoxCtrl"></div>
+<div id="productinBox" class="dialog cusBox" title="选择产品线" ng-include="'template/sellclue/productinBox.html'"></div>
+<div  id="userBox" class="dialog cusBox" title="选择人员">
+    <div ng-if="openDialog"   ng-include="'template/contract/userBox.html'" ng-controller="contarctUserBoxCtrl"></div>
+</div>

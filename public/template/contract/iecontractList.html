@@ -1,0 +1,139 @@
+<!--<div class="mainright">-->
+    <div class="item">进出口销售合同</div>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>合同编号</strong>
+                    <input class="text" type="text" name="contractno"  ng-init="contractno=''" ng-model="contractno" placeholder="请输入合同编号">
+                </td>
+                <td>
+                    <strong>客户名称</strong>
+                    <input class="text" type="text" name="stomer"  ng-init="stomer=''" ng-model="stomer" placeholder="请输入客户名称">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>项目类型</strong>
+                    <select ng-model="projecttype">
+                        <option value="">请选择</option>
+                        <option value="进口代理">进口代理</option>
+                        <option value="进口销售">进口销售</option>
+                        <option value="进口代理转口">进口代理转口</option>
+                        <option value="代理投标">代理投标</option>
+                        <option value="代理投标转口">代理投标转口</option>
+                        <option value="GE分销">GE分销</option>
+                        <option value="分销">分销</option>
+                        <option value="出口">出口</option>
+                        <option value="转口">转口</option>
+                    </select>
+                </td>
+                <td>
+                    <strong>商务人员</strong>
+                    <input class="text" type="text" name="tradername" ng-model="tradername" placeholder="请输入商务人员">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>销售订单号</strong>
+                    <input class="text" type="text" name="salesorderid"  ng-init="salesorderid=''" ng-model="salesorderid" placeholder="请输入销售订单号">
+                </td>
+                <td>
+                    <strong>销售人员</strong>
+                    <input class="text" type="text" name="salesname"  ng-init="salesname=curUser" ng-model="salesname" placeholder="请输入销售人员">
+                </td>
+
+            </tr>
+            <tr>
+                <td>
+                    <strong>部门</strong>
+                    <select ng-model="salesorgid" ng-options="m._id as m.orgname for m in getSalesorgnanme">
+                        <option value="">请选择</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+                    <a ng-if="opprev.iecontractOrder_add" class="searchbtn2 searchbtn2bot addContractbtn addContractbtn" href="/index.html#/iecontractAdd">新建进出口合同</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+    <div class="item">查询结果</div>
+<div class="tableWrap">
+    <div class="tableLeft" style="margin-right: 100px;">
+    <table class="orangestyle table" style="width: 125%">
+        <thead>
+        <tr>
+            <th><span>合同编号</span></th>
+            <th><span>客户名称</span></th>
+            <th><span>合同类型</span></th>
+            <th class="right"><span>合同金额</span></th>
+            <th><span>开票税率</span></th>
+            <th><span>销售人员</span></th>
+            <th><span>部门</span></th>
+            <!--<th>合同状态</th>-->
+            <th><span>全部放货</span></th>
+            <th><span>已放货部分</span></th>
+            <th><span>创建时间</span></th>
+            <!--<th><span>是否打印</span></th>-->
+            <!--<th width="90px">操作</th>-->
+        </tr>
+        </thead>
+        <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+            <tr ng-repeat="list in dataList">
+                <td><span><a title="{{list.contractbase.contractno}}" class="underline" target="_blank" href="index.html#/iecontractView?id={{list._id}}">{{list.contractbase.contractno}}</a></span></td>
+                <td><span title="{{list.contractbase.stomer}}">{{list.contractbase.stomer | cutfield:true:14:'...'}}</span></td>
+                <td class="center"><span>{{list.contractbase.contracttype}}</span></td>
+                <td class="right"><span>{{list.contractbase.contractmoney | number : 2}}</span></td>
+                <td><span>{{list.contractbase.receipttype}}</span></td>
+                <td><span>{{list.contractbase.salesname}}</span></td>
+                <td><span>{{list.contractbase.salesorgnanme}}</span></td>
+                <!--<td>{{list.contractbase.status}}</td>-->
+                <td class="center"><span>{{list.LFSTK=="C"?"是":"否"}}</span></td>
+                <td class="center">
+                    <span ng-if="list.FKSTK=='A'">未开票</span>
+                    <span ng-if="list.FKSTK=='B'">部分开票</span>
+                    <span ng-if="list.FKSTK=='C'">全部开票</span>
+                </td>
+                <td><span>{{list.contractbase.createdate | date: 'yyyy-MM-dd HH:mm:ss'}}</span></td>
+                <!--<td><span class="center">{{list.hasprint ? '是' : '否'}}</span></td>-->
+                <!--<td class="czBtn">
+                    <a class="handleBtn invoiceBtn" ng-class="list.FKSTK=='C' ? 'visibhidden' : ''"  href='javascript:;' ng-click="ikpShow($index,list.contractbase.stomerid)" title="开票"></a>
+
+                    &lt;!&ndash;<a target="_blank" href="index.html#/iecontractView?id={{list._id}}">查看</a>&ndash;&gt;
+                    <a class="handleBtn applyPrintBtn" target="_blank" href="/print/printlandscape.html?uri=/contract/printview&contractno={{list.contractbase.contractno}}&type=c5" title="申请表打印"></a>
+                    <a class="handleBtn detailBtn" target="_blank" href="index.html#/iecontractView?id={{list._id}}" title="详情"></a>
+                </td>-->
+            </tr>
+            <tr class="tip"><td colspan="10"><span>没有查到进出口销售合同</span></td></tr>
+        </tbody>
+    </table>
+    </div>
+    <div class="tableHandler" style="width: 100px;">
+        <table class="orangestyle table">
+            <thead>
+            <tr>
+                <th><span>操作</span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="list in dataList">
+
+                <td>
+                    <div class="handlerBox">
+                        <a class="handleBtn invoiceBtn" ng-hide="list.FKSTK=='C'"  href='javascript:;' ng-click="opprev.iecontractOrder_invoice && ikpShow($index,list.contractbase.stomerid)" title="开票"></a>
+                        <span class="handleBtn invoiceBtn disabled ng-hide" ng-show="list.FKSTK=='C'"></span>
+
+                        <!--<a target="_blank" href="index.html#/iecontractView?id={{list._id}}">查看</a>-->
+                        <a class="handleBtn applyPrintBtn" target="_blank" href="/print/printlandscape.html?uri=/contract/printview&contractno={{list.contractbase.contractno}}&type=c5" title="申请表打印"></a>
+                        <a class="handleBtn detailBtn" target="_blank" href="index.html#/iecontractView?id={{list._id}}" title="详情"></a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    </div>
+    <pagination conf="paginationConf"></pagination>

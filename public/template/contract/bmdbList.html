@@ -1,0 +1,49 @@
+<div class="item">{{cusName}}-未释放部门担保</div>
+<div style="overflow-x:scroll; width: 100%;height: 100%">
+    <table class="orangestyle table" id="occTable">
+        <thead>
+        <tr id="list">
+            <th>部门担保申请号</th>
+            <th>申请人</th>
+            <th>申请部门</th>
+            <th>销售合同号</th>
+            <th>客户名称</th>
+            <th>销售人员</th>
+            <th>销售部门</th>
+            <th>担保金额</th>
+            <th>未释金额</th>
+            <th>部门担保额度</th>
+            <th>部门担保剩余额度</th>
+            <th>日期</th>
+            <th>是否释放</th>
+            <th>释放日期</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+        <tr ng-repeat="list in dataList" class="list">
+            <td>{{list.code}}</td>
+            <td>{{list.proposer}}</td>
+            <td>{{list.orgname}}</td>
+            <td ng-show="false">{{list.orgid}}</td>
+            <td>{{list.contractno}}</td>
+            <td>{{list.stomer}}</td>
+            <td>{{list.salesname}}</td>
+            <td>{{list.salesorgname}}</td>
+            <td>{{list.assuremoney}}</td>
+            <td>{{list.assuremoney-list.freemoney}}</td>
+            <td>{{list.deptlimit}}</td>
+            <td>{{list.deptunused}}</td>
+            <td>{{list.creatdate | date: 'yyyy-MM-dd '}}</td>
+            <td>{{list.isfree}}</td>
+            <td>{{list.freedate| date: 'yyyy-MM-dd '}}</td>
+            <td>
+                <a target="_blank" ng-href="index.html#/deptassureView/{{list._id}}">查看</a>
+            </td>
+        </tr>
+        <tr class="tip"><td colspan="14">没有查到此部门担保号</td></tr>
+        </tbody>
+    </table>
+</div>
+<pagination conf="paginationConf"></pagination>
+</div>

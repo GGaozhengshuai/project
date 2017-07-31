@@ -1,0 +1,85 @@
+<h3 class="genTitle"><em></em><span>采购申请查询</span></h3>
+<form>
+  <div class="genSearch">
+    <table>
+      <tr>
+        <td>
+          <strong>采购申请号</strong>
+          <input class="text" type="text" name="BANFN" ng-init="BANFN=''" ng-model="BANFN" placeholder="请输入采购申请号">
+        </td>
+        <td>
+          <strong>供应商订单号</strong>
+          <input class="text" type="text" name="ZZPO" ng-init="ZZPO=''" ng-model="ZZPO" placeholder="请输入供应商订单号">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>供应商名称</strong>
+          <input class="text" type="text" name="ZZQY" ng-init="ZZQY=''" ng-model="ZZQY" placeholder="请输入供应商名称">
+        </td>
+        <td>
+          <strong>销售员</strong>
+          <input class="text" type="text" name="ZZSQR" ng-init="ZZSQR=''" ng-model="ZZSQR" placeholder="请输入销售员">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>类型</strong>
+          <select ng-model="BSART" ng-options="v as t for (v,t) in enumBSART">
+            <option value="">请选择</option>
+          </select>
+        </td>
+        <td>
+          <strong>是否审批完成</strong>
+          <select ng-model="ZZSPZT">
+            <option value="">请选择</option>
+            <option value="3">是</option>
+            <option value="2">否</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>项目名</strong>
+          <input class="text" type="text" name="ZZXM" ng-init="ZZXM=''" ng-model="ZZXM" placeholder="请输入项目名">
+        </td>
+        <td>
+          <strong>二级经销商名称</strong>
+          <input class="text" type="text" name="ZZEJ" ng-init="ZZEJ=''" ng-model="ZZEJ" placeholder="二级经销商名称">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>提交日期</strong>
+          <input type="text" class="text Wdate" date-Picker ng-init="ZSUBMIT_DATE=''" ng-model="ZSUBMIT_DATE"/>
+        </td>
+        <td>
+          <a class="searchbtn2 viewBtn" href="" ng-click="printFn($event)" target="_blank">打印</a>
+          <input type="button" value="查询" class="searchbtn2 searchbtn2bot" ng-click="search()">
+          <!-- <a class="searchbtn2 searchbtn2bot" href="/index.html#/contractOrderAdd">新建销售合同</a>
+           <a class="searchbtn2 searchbtn2bot" href="/index.html#/contractDraft">我的草稿</a>-->
+        </td>
+      </tr>
+    </table>
+  </div>
+</form>
+<div class="item">查询结果</div>
+<div ng-if="!table" class="loading-text grid">
+  <span ng-if="loadData">数据载入中...</span>
+  <span ng-if="!loadData">查询不到数据</span>
+</div>
+<div ng-if="table" ui-grid="table" ui-grid-selection ui-grid-resize-columns ui-grid-pinning ui-grid-auto-resize class="grid"></div>
+<script type="text/ng-template" id="purchaseAction.html">
+  <div class="actionBtnGroup">
+    <a class="handleBtn orderBtn ng-hide" ng-click="grid.appScope.tqxdPur(row.entity.BANFN)" ng-show="row.entity.rlflag && row.entity.userflag && row.entity.ZZTQXD != '1' && row.entity.ZZSPZT == '1'" href="javascript:;" ng-if="grid.appScope.opprev.purchaseList_place" title="下单申请"></a>
+    <a class="handleBtn orderBtn disabled" ng-hide="(row.entity.rlflag && row.entity.userflag && row.entity.ZZTQXD != '1' && row.entity.ZZSPZT == '1') || (row.entity.rlflag && row.entity.userflag && row.entity.ZZTQXD == '1'  && row.entity.ZZSPZT != '3')" href="javascript:;" ng-if="grid.appScope.opprev.purchaseList_place" title="下单申请"></a>
+    <a class="handleBtn cancelOrderBtn" ng-click="grid.appScope.qxxdPur(row.entity.BANFN)" ng-class="row.entity.rlflag && row.entity.userflag && row.entity.ZZTQXD == '1'  && row.entity.ZZSPZT != '3' ? '' : 'ng-hide'" href="javascript:;" title="取消下单"></a>
+    <a class="handleBtn claimBtn ng-hide" ng-click="grid.appScope.claim(row.entity.BANFN)" ng-show="row.entity.rlflag && !row.entity.ZSQRID && '1' == row.entity.ZZSPZT" href="javascript:;" ng-if="grid.appScope.opprev.purchaseList_claim" title="认领"></a>
+    <a class="handleBtn claimBtn disabled" ng-hide="(row.entity.rlflag && !row.entity.ZSQRID && '1' == row.entity.ZZSPZT || row.entity.rlflag && row.entity.userflag && row.entity.ZZSPZT == '1')" href="javascript:;" ng-if="grid.appScope.opprev.purchaseList_claim" title="认领"></a>
+    <a class="handleBtn cancelClaimBtn" ng-click="grid.appScope.cancleClaim(row.entity.BANFN)" ng-class="row.entity.rlflag && row.entity.userflag && row.entity.ZZSPZT == '1' ? '' : 'ng-hide'" href="javascript:;" title="取消认领"></a>
+    <a class="handleBtn detailBtn" target="_blank" href="index.html#/purchaseView/{{row.entity.BANFN}}" title="详情"></a>
+  </div>
+</script>
+<pagination conf="paginationConf"></pagination>
+<div id="cusBox" class="dialog cusBox" title="填写提前下单原因" ng-include="'template/purchase/note.html'" ng-controller="cuxboxCtrl"></div>
+<div id="tqxdBox" class="dialog cusBox" title="" ng-include="'template/purchase/tqxdBox.html'"></div>

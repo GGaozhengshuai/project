@@ -1,0 +1,93 @@
+<!--<div class="mainright">-->
+    <div class="item">产品占用</div>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>物料编码</strong>
+                    <input class="text" type="text" name="MATNR"  ng-init="MATNR=''" ng-model="MATNR" placeholder="请输入编码号">
+                </td>
+                <td>
+                    <strong>库存地点</strong>
+                    <select ng-model="LGORT" ng-init="LGORT=''" ng-options="m.code as m.name for m in stockType.LGORT">
+                        <option value="">请选择</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>申请人</strong>
+                    <input class="text" type="text" name="AUFUSER0"  ng-init="AUFUSER0=''"  ng-model="AUFUSER0" placeholder="请输入申请人">
+                </td>
+                <td>
+                    <strong>客户名称</strong>
+                    <input class="text" type="text" name="NAME1"  ng-init="NAME1=''"  ng-model="NAME1" placeholder="请输入客户名称">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>占用人</strong>
+                    <input class="text" type="text" name="ZZYR"  ng-init="ZZYR=''"  ng-model="ZZYR" placeholder="请输入占用人">
+                </td>
+                <td>
+                    <strong>是否释放</strong>
+                    <select ng-model="isrelease" ng-init="isrelease='否'">
+                        <option value="是">是</option>
+                        <option value="否">否</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+                    <a class="searchbtn2 searchbtn2bot addBtn" href="/index.html#/occupyOrderAdd" ng-if="opprev.occupancyOrder_add">新建产品占用</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+    <div class="item">查询结果</div>
+    <div class="ng-scope">
+    <table class="orangestyle table" id="occTable">
+        <thead>
+        <tr>
+            <th>流水号</th>
+            <th>物料编码</th>
+            <th>占用数量</th>
+            <th>剩余占用数量</th>
+            <th>客户编码</th>
+            <th>客户名称</th>
+            <th>占用人</th>
+            <th>库房名称</th>
+            <th>申请人</th>
+            <th>申请日期</th>
+            <th style="width: 65px;">操作</th>
+        </tr>
+        </thead>
+        <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+            <tr ng-repeat="list in dataList" class="list">
+                <td>{{list.SQDH}}</td>
+                <td>{{list.MATNR}}</td>
+                <td>{{list.ZMOUNT}}</td>
+                <td>{{list.ZMOUNT - list.ZSFSL - list.ZSFS2 - list.ZSFS3}}</td>
+                <td>{{list.KUNNR}}</td>
+                <td title="{{list.NAME1}}">{{list.NAME1| cutfield:true:6:'...'}}</td>
+                <td>{{list.ZZYRMS}}</td>
+                <td title="{{list.LGORT | getName:stockType.LGORT:'name':'code'}}">{{list.LGORT | getName:stockType.LGORT:'name':'code'| cutfield:true:6:'...'}}</td>
+                <td>{{list.AUFUSER0}}</td>
+                <td>{{list.ZSQRQ | date: 'yyyy-MM-dd'}}</td>
+                <td class="czBtn">
+                    <a class="handleBtn releaseBtn" ng-hide="list.ZSTATUS!=='RE' || list.ZMOUNT-list.ZSFSL-list.ZSFS2- list.ZSFS3==0 || (permissions == false && username !== list.AUFUSER0) && opprev.occupancyOrder_free" ng-click="delete(list.SQDH, $index)" href="javascript:;" title="释放"></a>
+                    <a class="handleBtn releaseBtn disabled ng-hide" ng-show="list.ZSTATUS!=='RE' || list.ZMOUNT-list.ZSFSL-list.ZSFS2- ist.ZSFS3==0 || (permissions == false && username !== list.AUFUSER0) && opprev.occupancyOrder_free" href="javascript:;" title="释放"></a>
+                    <a class="handleBtn editBtn" target="_blank" ng-hide="list.ZSTATUS!=='RE' || list.ZMOUNT-list.ZSFSL-list.ZSFS2-list.ZSFS3==0 && opprev.occupancyOrder_change" href="index.html#/occupyOrderEdit/{{list.SQDH}}" title="变更"></a>
+                    <a class="handleBtn editBtn disabled ng-hide" target="_blank" ng-show="list.ZSTATUS!=='RE' || list.ZMOUNT-list.ZSFSL-list.ZSFS2-list.ZSFS3==0 && opprev.occupancyOrder_change" title="变更"></a>
+                </td>
+            </tr>
+            <tr class="tip"><td colspan="10">没有查到产品占用信息</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <pagination conf="paginationConf"></pagination>
+

@@ -1,0 +1,64 @@
+<!--<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>内部编码</strong>
+                    <input class="text" type="text" ng-init="$parent.MATNR=''" ng-model="$parent.MATNR" placeholder="请输入内部物料编码">
+                </td>
+                <td>
+                    <strong>原厂编码</strong>
+                    <input type="text" ng-init="$parent.BISMT=''"  ng-model="$parent.BISMT" class="text" placeholder="请输入原厂物料编码">
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>-->
+<form name="myForm">
+<table class="orangestyle table" id="wlBox2Table">
+    <thead>
+    <tr>
+        <th><input type="checkbox" ng-model="$parent.checkAll" ng-click="allCheck($event)"></th>
+        <th>内部物料编码</th>
+        <th>原厂物料编码</th>
+        <th>型号</th>
+        <th>描述</th>
+        <th>借货数量</th>
+        <th>未还数量</th>
+        <th>本次还回数量</th>
+        <!--<th>操作</th>-->
+    </tr>
+    </thead>
+    <tbody ng-class="retrunProduct.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in retrunProduct" ng-if="list.outnum && list.outnum!=0">
+        <td><input ng-click="updateSelection($event,list.POSNR, $index)" class="checkBox" name="checkbox{{$index}}" type="checkbox" ng-checked="checkAll"/></td>
+        <td>{{list.code}}</td>
+        <td>{{list.productcode}}</td>
+        <td>{{list.productnumber}}</td>
+        <td>{{list.des}}</td>
+        <td>{{list.outnum}}</td>
+        <td>{{list.notreturn}}</td>
+        <td>
+            <input integer-Validation ng-blur="comReturn(list.notreturn,list.currentreturn)" type="number" name="currentreturn" style="width:50px;" ng-model="list.currentreturn" value=""/>
+            <p style="color: red;" class="errTip ng-hide" ng-show="myForm.currentreturn.$dirty && myForm.currentreturn.$error.integer">正整数</p>
+        </td>
+        <!--<td>
+            <a href="javascript:;" ng-click="reproSelect(list.code, list.productcode, list.productnumber, list.des, list.outnum, list.notreturn, list.currentreturn)">选择</a>
+        </td>-->
+    </tr>
+    <tr class="tip"><td colspan="7">没有查到此物料</td></tr>
+    </tbody>
+</table>
+
+<div class="gerSub">
+    <button ng-click="reproSelect()" class="subSave">确定</button>
+</div>
+</form>
+<!--
+<pagination conf="paginationConf"></pagination>-->

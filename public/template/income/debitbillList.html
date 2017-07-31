@@ -1,0 +1,117 @@
+<div class="item">票据台账查询</div>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>票据种类：</strong>
+                    <select ng-model="ZPTYPE" ng-init="ZPTYPE=''">
+                        <option value="">请选择</option>
+                        <option value="支票">支票</option>
+                        <option value="银行承兑汇票">银行承兑汇票</option>
+                        <option value="商业承兑汇票">商业承兑汇票</option>
+                        <option value="电子银行承兑汇票">电子银行承兑汇票</option>
+                        <option value="电子商业承兑汇票">电子商业承兑汇票</option>
+                        <option value="银行汇票">银行汇票</option>
+                    </select>
+                </td>
+                <td>
+                    <strong>客户名称:</strong>
+                    <input class="text" type="text" name="NAME1"  ng-init="NAME1=''" ng-model="NAME1" placeholder="请输入客户名称">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>票据状态：</strong>
+                    <select ng-model="	ZPJZT" ng-init="ZPJZT=''">
+                        <option value="">请选择</option>
+                        <option value="商务已收票">商务已收票</option>
+                        <option value="财务已收票">财务已收票</option>
+                        <option value="已托收">已托收</option>
+                        <option value="已退票">已退票</option>
+                        <option value="已取走">已取走</option>
+                        <option value="银行已到账">银行已到帐</option>
+                        <option value="贴现">贴现</option>
+                        <option value="背书">背书</option>
+                        <option value="已作废">已作废</option>
+                    </select>
+                </td>
+                <td>
+                    <strong>收票商务：</strong>
+                    <input class="text" type="text" name="ZSPSW"  ng-init="ZSPSW=''" ng-model="ZSPSW" placeholder="">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>票据单号：</strong>
+                    <input class="text" type="text" name="ZPJDH"  ng-init="ZPJDH=''" ng-model="ZPJDH" placeholder="">
+                </td>
+                <td>
+                    <strong>收票日期：</strong>
+                    <input type="text" style="width: 125px;" class="text Wdate" ng-readonly="true" date-Picker  name="dateStar" ng-init="dateStar=''" ng-model="dateStar"/>
+                    <span>到</span>
+                    <input type="text" style="width: 125px;float: none;" class="text Wdate" ng-readonly="true" date-Picker  name="dateEnd" ng-init="dateEnd=''" ng-model="dateEnd"/>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+                    <a class="searchbtn2 searchbtn2bot addBtn" href="/index.html#/debitbillAdd" ng-if="opprev.debitbillList_add">添加票据</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<div class="item">查询结果</div>
+<!--<table class="orangestyle table">
+    <thead>
+    <tr>
+        <th>票据单号</th>
+        <th>票据种类</th>
+        <th>客户名称</th>
+        <th>票据金额</th>
+        <th>到期日期</th>
+        <th>收票日期</th>
+        <th>备注</th>
+        <th>收票商务</th>
+        <th>票据状态</th>
+        <th style="width: 30px;">操作</th>
+    </tr>
+    </thead>
+    <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in dataList">
+        <td title="{{list.ZPJDH}}"><a class="underline" target="_blank" href="index.html#/debitbillView/{{list.ZPJDH}}"> {{list.ZPJDH}}</a></td>
+        <td>{{list.ZPTYPE}}</td>
+        <td><span title="{{list.NAME1}}">{{list.NAME1 | cutfield:true:9:'...'}}</span></td>
+        <td>{{list.ZAMOUNT| currency : '￥'}}</td>
+        <td>{{list.ZDQDAT| date:'yyyy-MM-dd'}}</td>
+        <td>{{list.ZSPDAT | date:'yyyy-MM-dd'}}</td>
+        <td><span title="{{list.ZBZ}}">{{list.ZBZ | cutfield:true:10:'...'}}</span></td>
+        <td>{{list.ZSPSW}}</td>
+        <td>{{list.ZPJZT}}</td>
+        <td class="czBtn">
+            <a class="handleBtn editBtn" target="_blank" href="index.html#/debitbillEdit/{{list.ZPJDH}}" ng-show="list.ZPJZT=='商务已收票'" ng-if="opprev.debitbillList_change" title="修改"></a>
+            <span class="handleBtn editBtn disabled ng-hide" ng-hide="list.ZPJZT=='商务已收票'" ng-if="opprev.debitbillList_change"></span>
+
+            <a class="handleBtn detailBtn" target="_blank" href="index.html#/debitbillView/{{list.ZPJDH}}" title="详情"> </a>
+        </td>
+    </tr>
+    <tr class="tip"><td colspan="10">没有查到票据台账</td></tr>
+    </tbody>
+</table>-->
+<div ng-if="!table" class="loading-text grid">
+    <span ng-if="loadData">数据载入中...</span>
+    <span ng-if="!loadData">查询不到数据</span>
+</div>
+<div ng-if="table" ui-grid="table"  ui-grid-resize-columns ui-grid-auto-resize class="grid">
+</div>
+<script type="text/ng-template" id="debitbillAction.html">
+    <div class="actionBtnGroup">
+        <a class="handleBtn editBtn" target="_blank" href="index.html#/debitbillEdit/{{row.entity.ZPJDH}}"  ng-show="row.entity.ZPJZT =='商务已收票'" ng-if="grid.appScope.opprev.debitbillList_change" title="修改"></a>
+        <span class="handleBtn editBtn disabled ng-hide" ng-hide="row.entity.ZPJZT =='商务已收票'" ng-if="grid.appScope.opprev.debitbillList_change" ></span>
+        <a class="handleBtn detailBtn" target="_blank" href="index.html#/debitbillView/{{row.entity.ZPJDH}}" title="详情"></a>
+        </div>
+</script>
+<pagination conf="paginationConf"></pagination>
+

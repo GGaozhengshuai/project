@@ -1,0 +1,117 @@
+<h3 class="genTitle genTitleBot"><em></em><span>数据角色</span></h3>
+
+<div class="generForm">
+    <table class="orangestyle table">
+        <tr>
+            <th>英文名称</th>
+            <th>中文名称</th>
+            <th>描述</th>
+            <th><a href="javascript:;" style="height:25px;" ng-click="addItem('Parent')" class="btnAdd" title="添加" ></a></th>
+        </tr>
+        <tr ng-repeat="list in addList">
+            <td><input type="text" ng-model="list.name"/></td>
+            <td><input type="text" ng-model="list.text"/></td>
+            <td><input type="text" ng-model="list.des"/></td>
+            <td>
+                <a href="" ng-click="itemSave(list,$index,'Parent')">保存</a>
+                <!--<a href="">修改</a>-->
+                <!--<a href="">删除</a>-->
+            </td>
+        </tr>
+        <tr ng-repeat="list in dataList">
+            <td ng-click="viewline(list)"><a href="" class="underline">{{list.name}}</a></td>
+            <td ng-click="viewline(list)"><a href="" class="underline">{{list.text}}</a></td>
+            <td>{{list.des}}</td>
+            <td>
+                <a href="" ng-click="itemUpdata(list)">修改</a>
+                <a href="" ng-click="itemDel(list._id)">删除</a>
+            </td>
+        </tr>
+
+    </table>
+</div>
+
+<div id="xzbox" class="dialog xzbox">
+    <div class="addTable">
+        <table class="orangestyle table">
+            <thead>
+                <tr>
+                    <th>英文名称</th>
+                    <th>中文名称</th>
+                    <th style="width: 96px;"><a href="javascript:;" style="height:25px;" ng-click="addItem('subset')" class="btnAdd" title="添加"></a></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="list in smaddlist">
+                    <td><input type="text" ng-model="list.name"/></td>
+                    <td><input type="text" ng-model="list.text"/></td>
+
+                </tr>
+                <tr ng-repeat="list1 in list.prevs">
+                    <td>
+                        <input type="text" ng-show="!readonly[$index]" ng-model="list1.name"/>
+                        <a ng-click="viewPrevs(list, $index)" href="" class="underline" ng-show="readonly[$index]">{{list1.name}}</a>
+                    </td>
+                    <td>
+
+                        <input type="text" ng-show="!readonly[$index]" ng-model="list1.text"/>
+                        <a href="" ng-click="viewPrevs(list, $index)" class="underline" ng-show="readonly[$index]">{{list1.text}}</a>
+                        <!--<input type="text" ng-readonly="readonly[$index]" ng-class="!readonly[$index] ? 'editable' : 'noedit'" ng-model="list1.text" value="{{list1.text}}"/>-->
+                    </td>
+                    <td>
+                        <a href="" ng-click="edit($index)">修改</a>
+                        <a href="" ng-click="subSave($index)">删除</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--添加二级信息-->
+<div id="xz2box" class="dialog xzbox">
+    <div class="addTable">
+        <table class="orangestyle table">
+            <thead>
+                <tr>
+                    <th>英文名称</th>
+                    <th style="width: 96px;"><a href="javascript:;" style="height:25px;" ng-click="addItem('subPrevs')" class="btnAdd" title="添加"></a></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="list in smaddlist2">
+                    <td><input type="text" ng-model="list.name"/></td>
+                    <td>
+                        <a href="" ng-click="delNewdata($index,'smaddlist2')">删除</a>
+                    </td>
+                </tr>
+                <tr ng-repeat="list1 in paramsObj track by $index">
+                    <td>
+                        <input type="text" ng-readonly="readonly2[$index]" ng-class="!readonly2[$index] ? 'editable' : 'noedit'" ng-model="list1.name" value="{{list1.name}}"/>
+                    </td>
+                    <td>
+                        <a href="" ng-click="edit($index,'2')">修改</a>
+                        <a href="" ng-click="subSave($index,paramsObj)">删除</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div id="changebox" class="dialog changebox">
+    <table class="orangestyle table">
+        <thead>
+        <tr>
+            <th>英文名称</th>
+            <th>中文名称</th>
+            <th>描述</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{name}}</td>
+            <td><input type="text" ng-model="text"/></td>
+            <td><input type="text" ng-model="des"/></td>
+        </tr>
+        </tbody>
+    </table>
+</div>

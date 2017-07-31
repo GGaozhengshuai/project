@@ -1,0 +1,38 @@
+
+<h3 class="genTitle genTitleBot"><em></em><span>产品信息基本数据维护</span></h3>
+<div class="cusCont">
+    <div class="generForm">
+        <form novalidate name="invoiceForm">
+            <div class="hGener">
+                <a class="dwonTem downloadmb" href="/doc/xsxscpxx.xlsx">下载模板</a>
+                <input excle-Uploadify btnname="导入" url="/sellclue/uploadfile"  excleData="Filedata" excleError="fileError" ng-model="Filedata"/>
+                <button ng-click="addData(Filedata,fileError)"class="dwonTem"  >保存</button>
+            </div>
+            <div class="addTable">
+                <table id="cgList"  style="text-align: center">
+                    <tr>
+                        <th style="text-align: center">区别</th>
+                        <th style="text-align: center">产品线</th>
+                        <th style="text-align: center">产品型号</th>
+                        <th style="text-align: center">型号描述</th>
+                        <th style="text-align: center">操作</th>
+                    </tr>
+                    <tr ng-repeat="list in Filedata" class="list">
+                        <td>正确</td>
+                       <td>{{list[0]}}</td>
+                       <td>{{list[1]}}</td>
+                       <td>{{list[2]}}</td>
+                       <td></td>
+                    </tr>
+                    <tr ng-repeat="list in fileError" class="list">
+                        <td>错误</td>
+                        <td>{{list[0]}}</td>
+                        <td>{{list[1]}}</td>
+                        <td>{{list[2]}}</td>
+                        <td><a href="" ng-click="del($index)">删除</a></td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+    </div>
+</div>

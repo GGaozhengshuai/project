@@ -1,0 +1,124 @@
+<h3 class="genTitle"><em></em>
+    <span>银行授信</span>
+    <span ng-if="activeTab == 2">审批详情</span>
+</h3>
+
+<ul class="generNav">
+  <li ng-class="{active:activeTab == 1}"><a href="javascript:void(0);" ng-mousedown='htTab(1)'>银行授信</a></li>
+  <li ng-class="{active:activeTab == 2}"><a href="javascript:void(0);" ng-mousedown='htTab(2)'>审批详情</a></li>
+</ul>
+
+<div id="mainView">
+    <div class="czAddBtn">
+      <a ng-if="yinh1If" ng-click="blBanksxBox()" href="javascript:;" class="viewBtn">办理银行授信</a>
+      <a ng-if="yinh2If" ng-click="tqhkBox()" href="javascript:;" class="addBtn">提前还款</a>
+      <a ng-if="yinh3If" class="backupBtn" ng-click="bhtqthBox()" href="javascript:;">保函提前退回</a>
+    </div>
+    <div ng-if="activeTab == 1">
+    <div class="viewTable ng-scope">
+        <ul>
+            <li><strong>银行授信流水号：</strong><span>{{ORDER_DATA.code}}</span></li>
+            <li><strong>授信品种：</strong><span>{{ORDER_DATA.credittype}}</span></li>
+            <li><strong>申请主体：</strong><span>{{{1000:"中建材信息技术股份有限公司",9000:"中建材集团进出口公司",9001:"中国建材（香港）有限公司"}[ORDER_DATA.creditbody]}}</span></li>
+            <li><strong>授信金额：</strong><span>{{ORDER_DATA.creditmoney | currency : '￥'}}</span></li>
+            <li><strong>业务员：</strong><span>{{ORDER_DATA.username}}</span></li>
+            <li><strong>业务部门：</strong><span>{{ORDER_DATA.orgname}}</span></li>
+            <li><strong>货币种类：</strong><span>{{moneycountry[ORDER_DATA.moneycountry]}}</span></li>
+            <li><strong>应交银行保证金：</strong><span>{{ORDER_DATA.margin}}</span></li>
+            <li><strong>申请日期：</strong><span>{{ORDER_DATA.timestamp | date: 'yyyy-MM-dd HH:mm:ss'}}</span></li>
+            <li><strong>资金占用部门：</strong><span>{{{'1000':'信息产品事业群','2000':'合作业务部','3000':'医疗产品部','9900':'综合'}[ORDER_DATA.ZBM]}}</span></li>
+            <li ng-if="ifBhBot"><strong>合同项目名称：</strong><span>{{ORDER_DATA.project}}</span></li>
+            <li ng-if="ifBh"><strong>供应商名称：</strong><span title="{{ORDER_DATA.ZSKDW}}">{{ORDER_DATA.ZSKDW}}</span></li>
+            <li ng-if="ifBhBot"><strong>客户名称：</strong><span>{{ORDER_DATA.stomer}}</span></li>
+            <li ng-if="ifBhBot"><strong>保函类型：</strong><span>{{ORDER_DATA.loitype}}</span></li>
+            <li ng-if="ifBhBot"><strong>销售合同号：</strong><span>{{ORDER_DATA.contractno}}</span></li>
+            <li ng-if="ifBhBot"><strong>销售合同金额：</strong><span>{{ORDER_DATA.contractmoney | currency : '￥'}}</span></li>
+            <li><strong>授信业务期限(天)：</strong><span>{{ORDER_DATA.limitdays}}</span></li>
+            <li><strong>授信业务办理银行：</strong><span>{{ORDER_DATA.bank.name}}</span></li>
+            <li><strong>申请人：</strong><span>{{ORDER_DATA.creator.name}}</span></li>
+            <li class="clear"></li>
+            <li class="list_con"><strong>备注：</strong><span>{{ORDER_DATA.remark}}</span></li>
+            <li class="list_con"><strong>上传附件：</strong><a href="{{ORDER_DATA.attachment}}" style="text-decoration:underline">{{ORDER_DATA.bankfj}}</a></span></li>
+        </ul>
+        <div class="addTable" ng-if="ifBh">
+            <h5>付款单</h5>
+            <table class="tab_data">
+                <thead class="tab_header">
+                <tr>
+                    <th>付款申请号</th>
+                    <th>供应商名称</th>
+                    <th>付款方式</th>
+                    <th>实际付款金额</th>
+                    <th>资金占用部门</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody class="tab_body">
+                <tr ng-repeat="list in bankFkList">
+                    <td>{{list.ZSQNO}}</td>
+                    <td>{{list.ZSKDW}}</td>
+                    <td>{{list.ZFKFS}}</td>
+                    <td>{{list.ZSJFKJE | currency : '￥'}}</td>
+                    <td>{{{'1000':'信息产品事业群','2000':'合作业务部','3000':'医疗产品部','9900':'综合'}[list.ZBM]}}</td>
+                    <td>
+                        <a target="_blank" href="index.html#/paymentOrderView/{{list.ZSQNO}}">详细</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <ul>
+            <li><strong style="width:200px;">部门已使用银行授信额度：</strong><span>{{ORDER_DATA.deptused | currency : '￥'}}</span></li>
+            <li><strong style="width:200px;">部门可用银行授信额度：</strong><span>{{ORDER_DATA.deptunused | currency : '￥'}}</span></li>
+            <li><strong style="width:200px;">银行已使用人民币授信额度：</strong><span>{{ORDER_DATA.usedrmb | currency : '￥'}}</span></li>
+            <li><strong style="width:200px;">银行可用人民币授信额度：</strong><span>{{ORDER_DATA.unusedrmb | currency : '￥'}}</span></li>
+            <li><strong>开立日：</strong><span>{{ORDER_DATA.opendate | date: 'yyyy-MM-dd'}}</span></li>
+            <li><strong>到期日：</strong><span>{{ORDER_DATA.duedate | date: 'yyyy-MM-dd'}}</span></li>
+            <li><strong>额度转回日期：</strong><span>{{ORDER_DATA.moneybackdate | date: 'yyyy-MM-dd'}}</span></li>
+            <li ng-if="ifBh"><strong>提前还款总金额：</strong><span>{{ORDER_DATA.hkzje | currency : '￥'}}</span></li>
+        </ul>
+        <div class="addTable" ng-if="ifBh">
+            <table class="tab_data">
+                <thead class="tab_header">
+                <tr>
+                    <th>提前还款金额</th>
+                    <th>提前还款时间</th>
+                    <th>登记人</th>
+                </tr>
+                </thead>
+                <tbody class="tab_body">
+                <tr ng-repeat="list in tqhkList">
+                    <td>{{list.returnmoney}}</td>
+                    <td>{{list.returndate  | date: 'yyyy-MM-dd'}}</td>
+                    <td>{{list.auditorname}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+    <div class="applyLog" ng-if="activeTab == 2">
+        <table>
+            <thead>
+            <tr>
+                <th class="th1">审批人</th>
+                <th class="th2">审批时间</th>
+                <th class="th3">审批状态</th>
+                <th class="th4">审批意见</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="list in processlog">
+                <td>{{list.sender.name}}</td>
+                <td>{{list.createDate | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td>{{list.operation}}</td>
+                <td>{{list.content.comment}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="blBanksxBox" class="dialog cusBox" title="办理银行授信" ng-include="'template/bankCredit/blBanksxBox.html'"></div>
+<div id="tqhkBox" class="dialog cusBox" title="提前还款" ng-include="'template/bankCredit/tqhkBox.html'"></div>
+<div id="bhtqthBox" class="dialog cusBox" title="保函提前退回" ng-include="'template/bankCredit/bhtqthBox.html'"></div>

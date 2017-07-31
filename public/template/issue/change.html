@@ -1,0 +1,159 @@
+<h3 class="genTitle genTitleBot"><em></em><span>开证付汇申请变更</span></h3>
+<div class="cusCont">
+    <div class="generForm">
+        <form novalidate name="invoiceForm">
+            <div class="genTitle2">
+                <div>
+                    <strong>基本信息</strong>
+                </div>
+            </div>
+            <ul>
+                <li class="tli">
+                    <strong><font>*</font>付款类型：</strong>
+                    <select ng-model="ORDER_DATA.ZFKLX" ng-disabled="true" name="ZFKLX">
+                        <option value="">请选择</option>
+                        <option value="开证">开证</option>
+                        <option value="付汇">付汇</option>
+                    </select>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>付款主体：</strong>
+                    <select ng-model="ORDER_DATA.ZFKZT" ng-disabled="true" name="ZFKZT">
+                        <option value="">请选择</option>
+                        <option value="中建材信息技术股份有限公司">中建材信息技术股份有限公司</option>
+                        <option value="中建材集团进出口公司">中建材集团进出口公司</option>
+                        <option value="中国建材（香港）有限公司">中国建材（香港）有限公司</option>
+                    </select>
+                </li>
+                <li class="tli"><strong><font>*</font>供应商名称：</strong><input ng-disabled="true" ng-click="customerBox()" ng-required="true" ng-model="ORDER_DATA.NAME1" name="NAME1" type="text" placeholder="请选择客户名称"/>
+                </li>
+                <li class="tli"><strong><font>*</font>供应商编号：</strong><input ng-disabled="true" ng-model="ORDER_DATA.LIFNR" name="LIFNR" type="text" placeholder=""/></li>
+                <li class="tli">
+                    <strong><font>*</font>付款方式：</strong>
+                    <select ng-model="ORDER_DATA.ZFKFS" ng-disabled="true" name="ZFKFS">
+                        <option value="">请选择</option>
+                        <option value="即期信用证">即期信用证</option>
+                        <option value="远期30天信用证">远期30天信用证</option>
+                        <option value="远期45天信用证">远期45天信用证</option>
+                        <option value="远期60天信用证">远期60天信用证</option>
+                        <option value="远期90天信用证">远期90天信用证</option>
+                        <option value="备付信用证">备付信用证</option>
+                        <option value="前TT">前TT</option>
+                        <option value="后TT">后TT</option>
+                    </select>
+                </li>
+                <!--<li class="tli"><strong><font>*</font>付汇汇率：</strong><input ng-required="true" ng-model="ORDER_DATA.ZFHHL" ng-blur="moneyhl(ORDER_DATA.ZFHHL)" type="text" placeholder="保留两位小数"/>-->
+                <li class="tli">
+                    <strong><font>*</font>付汇汇率：</strong><input ng-disabled="true" ng-model="ORDER_DATA.ZFHHL" name="ZFHHL" ng-Focus numtwo-Validation type="text" placeholder="保留两位小数"/>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>开证付汇银行：</strong>
+                    <select ng-model="ORDER_DATA.ZKZBANK" ng-disabled="true" name="ZKZBANK">
+                        <option value="">请选择</option>
+                        <option value="中国银行">中国银行</option>
+                        <option value="工商银行">工商银行</option>
+                        <option value="招商银行">招商银行</option>
+                        <option value="平安银行">平安银行</option>
+                        <option value="北京银行">北京银行</option>
+                        <option value="汇丰银行">汇丰银行</option>
+                        <option value="交通银行">交通银行</option>
+                        <option value="建设银行">建设银行</option>
+                        <option value="农业银行">农业银行</option>
+                        <option value="宁波银行">宁波银行</option>
+                        <option value="澳新银行">澳新银行</option>
+                        <option value="渤海银行">渤海银行</option>
+                        <option value="浙商银行">浙商银行</option>
+                        <option value="江苏银行">江苏银行</option>
+                    </select>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>开证付汇金额:</strong>
+                    <input type="text" ng-model="ZKZFHJE" ng-disabled="true" placeholder="自动取开证付汇金额合计值，只读"/>
+                </li>
+
+                <li class="tli">
+                    <strong><font>*</font>币种：</strong>
+                    <select ng-model="ORDER_DATA.ZBB" ng-disabled="true" name="ZBB" ng-options="v.code as v.name for v in enumZBB.ZBB">
+                        <option ></option>
+                    </select>
+                </li>
+
+                <!--<li class="tli"><strong><font>*</font>开证付汇金额：</strong><input ng-required="true" ng-model="ORDER_DATA.ZKZFHJE" type="text" placeholder="此值是下面列表本次开证付汇金额的总值后台计算 只展示"/></li>-->
+                <li class="clear"></li>
+                <li><strong><font>*</font>收款情况：</strong><textarea ng-disabled="true" ng-model="ORDER_DATA.ZSKQK" name="ZSKQK"></textarea></li>
+                <li><strong>备注：</strong><textarea ng-model="ORDER_DATA.ZBZ" ng-disabled="true"></textarea></li>
+            </ul>
+            <div class="genTitle2">
+                <div>
+                    <strong>开证付汇财务信息</strong>
+                </div>
+            </div>
+            <ul>
+                <li class="tli"><strong>公司名称（英文）：</strong><input  ng-model="ORDER_DATA.ZGSMC" ng-disabled="true" type="text" placeholder=""/></li>
+                <li class="tli"><strong>银行名称（英文）：</strong><input  ng-model="ORDER_DATA.ZYHMC" ng-disabled="true" type="text" placeholder=""/></li>
+                <li class="tli"><strong>银行地址（英文）：</strong><input  ng-model="ORDER_DATA.ZYHDZ" ng-disabled="true" type="text" placeholder=""/></li>
+                <li class="tli"><strong>银行账号：</strong><input  ng-model="ORDER_DATA.ZYHZH" type="text" ng-disabled="true" placeholder=""/></li>
+                <li class="tli"><strong>SWIFT CODE：</strong><input  ng-model="ORDER_DATA.ZSWIFTCODE" ng-disabled="true" type="text" placeholder=""/></li>
+                <li class="clear"></li>
+                <li><strong>财务其他信息：</strong><textarea ng-model="ORDER_DATA.ZQTXX" ng-disabled="true"></textarea></li>
+            </ul>
+            <div class="addTable">
+                <div class="genTitle2">
+                    <div>
+                        <strong>关联的采购订单信息</strong>
+                    </div>
+                </div>
+                <table id="cgList">
+                    <tr>
+                        <th>采购订单号<br>(境外供应商)</th>
+                        <th>销售订单号<br>(最终客户)</th>
+                        <th>最终客户名称</th>
+                        <th>采购订单号<br>(双主体之间)</th>
+                        <th>销售订单号<br>(双主体之间)</th>
+                        <th>订单总金额</th>
+                        <th>已开证付汇金额</th>
+                        <th><font>*</font>本次开证付汇金额</th>
+                        <th>修改开证付汇金额</th>
+                    </tr>
+                    <tr ng-repeat="list in glCgList" class="list">
+                        <td>
+                            <input ng-model="list.EBELN" type="text" ng-disabled="true"/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.VBELN" type="text" value=""/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.ZHKMC" type="text" value=""/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.ZEBELN" type="text" value=""/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.ZVBELN" type="text" value=""/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.ZDDZJE" type="text" value=""/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.ZYKZFHJE" type="text" value=""/>
+                        </td>
+                        <td>
+                            <input ng-model="list.ZKZFHJE" ng-disabled="true" type="text" value="" required/>
+                        </td>
+                        <td>
+                            <input onkeyup="value=value.replace(/[^\-?\d.]/g,'')" ng-Focus keepnumber-Validation name="bgje{{$index}}" type="text" ng-model="list.bgje" type="text"/>
+                            <p class="errTip" ng-if="invoiceForm['bgje'+$index].$dirty && invoiceForm['bgje'+$index].$error.keepnum&&!invoiceForm['bgje'+$index].$focused">最多两位小数的非负数</p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="gerSub">
+                <a href="index.html#/issueOrder">返回</a>
+                <button ng-click="addData(ORDER_DATA, 'save')"  ng-class="invoiceForm.$invalid == true ? 'displaySub' : 'subSave'" ng-disabled="invoiceForm.$invalid || invoRready">保存</button>
+                <button ng-click="addData(ORDER_DATA, 'apply')"  ng-class="invoiceForm.$invalid == true ? 'displaySub' : 'subSave'" ng-disabled="invoiceForm.$invalid || invoRready">保存并提交</button>
+            </div>
+        </form>
+    </div>
+</div>
+

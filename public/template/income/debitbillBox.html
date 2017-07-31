@@ -1,0 +1,45 @@
+<div class="genSearch">
+    <table>
+        <tr>
+            <td>
+                <strong style="width:125px">销售订单编号：</strong>
+                <input style="width:222px" class="text" type="text" name="VBELN"  ng-init="$parent.VBELN=''" ng-model="$parent.VBELN" placeholder="">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+            </td>
+        </tr>
+    </table>
+</div>
+<form name="dataForm">
+    <table class="orangestyle table" id="ccTable">
+        <thead>
+        <tr>
+            <th></th>
+            <th>客户名称</th>
+            <th>销售订单号</th>
+            <th>收款计划单号</th>
+            <th ng-hide="true">SAP计划单号</th>
+            <th>收款计划金额</th>
+        </tr>
+        </thead>
+        <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+        <tr ng-repeat="list in dataList" class="list">
+            <td><input ng-click="contractSelect($index)" class="checkBox" name="checkbox" type="checkbox" /></td>
+            <td>{{list.NAME1}}</td>
+            <td>{{list.VBELN}}</td>
+            <td >{{list.ZJHDBHK}}</td>
+            <td ng-hide="true">{{list.ZJHDBH}}</td>
+            <td>{{list.ZJE}}</td>
+        </tr>
+        <tr class="tip"><td colspan="4">没有查到数据</td></tr>
+        </tbody>
+    </table>
+    <pagination conf="paginationConf"></pagination>
+    <div class="gerSub">
+        <a href="javascript:;" ng-click="$parent.deCancle()" class="closeBtn">关闭</a>
+        <button  class="subSave" ng-click="$parent.deSelect()">确定</button>
+    </div>
+</form>

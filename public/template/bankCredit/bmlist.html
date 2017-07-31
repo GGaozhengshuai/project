@@ -1,0 +1,78 @@
+<div class="genSearch">
+    <table>
+        <tr>
+            <td>
+                <a class="searchbtn2 searchbtn2bot addBtn" href="javascript:;" ng-click="addBkBox()" ng-if="opprev.bmBankCredit_add">添加部门银行授信额度</a>
+                <a class="searchbtn2 searchbtn2bot" href="index.html#/bankCreditOrder">返回</a>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="item">部门银行授信额度</div>
+<table class="orangestyle table">
+    <thead>
+    <tr>
+        <th>部门名称</th>
+        <th>已分配银行授信额度</th>
+        <th>已使用银行授信额度</th>
+        <th>可用银行授信额度</th>
+        <th>申请人</th>
+        <th style="width: 30px;">操作</th>
+    </tr>
+    </thead>
+    <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in dataList">
+        <td>{{list.orgname}}</td>
+        <td>{{list.deptlimit | currency:'￥'}}</td>
+        <td>{{list.deptused | currency:'￥'}}</td>
+        <td>{{list.deptunused | currency:''}}</td>
+        <td>{{list.username}}</td>
+        <td class="czBtn padL12" style="width:100px;">
+            <a class="handleBtn editBtn" target="_blank" href="" ng-click="bankedClick(list)" title="变更"></a>
+            <a class="handleBtn delBtn" href="javascript:;" ng-click="bkDelet(list._id,$index)" ng-if="opprev.bmBankCredit_delete" title="删除"></a>
+        </td>
+    </tr>
+    <tr class="tip"><td colspan="7">没有查到银行授信额度</td></tr>
+    </tbody>
+</table>
+<pagination conf="paginationConf"></pagination>
+<div id="bmBox" class="dialog cusBox" title="添加银行授信" ng-include="'template/bankCredit/bmBox.html'"></div>
+<div id="emBox" class="emBox" title="选择部门" style="display:none">
+    <div class="employeeTip">
+        <h5>
+            <span><a ng-click="getEmployee()" href="javascript:;">中建材信息技术</a>&gt</span>
+            <span ng-repeat="list in employeeNav"><a ng-click="getEmployee(list._id,list.orgname)" href="javascript:;">{{list.orgname}}</a>&gt</span>
+        </h5>
+        <ul>
+            <li ng-repeat="list in employeeList">
+                <a  ng-click="getEmployee(list._id,list.orgname)" href="javascript:;">{{list.orgname}}（{{list.grandsoncount}}）</a>
+            </li>
+            <li><a ng-click="getEmployee1(orgname)" ng-show="employeeList.length > 1 ?true:false" href="javascript:;">综合（0）</a></li>
+        </ul>
+    </div>
+</div>
+
+<div id="bmchBox" class="dialog bmchBox" title="变更银行授信">
+    <div class="generForm boxForm">
+        <form novalidate name="invoiceForm">
+            <ul>
+                <li>
+                    <strong><font>*</font>部门名称：</strong>
+                    <input ng-disabled="true" ng-readonly="true" required ng-model="orgname" ng-click="employee()" type="text" placeholder="请选择部门"/>
+                    <input type="hidden" name="orgid"  ng-init="orgId=''" ng-model="orgid">
+                </li>
+                <li>
+                    <strong><font>*</font>已分配银行授信额度：</strong>
+                    <input integer-Validation ng-Change required ng-model="deptlimit" name="deptlimit" type="number" placeholder="请填写额度"/>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.deptlimit.$dirty && invoiceForm.deptlimit.$error.integer && !invoiceForm.deptlimit.$focused">请输入正整数</span>
+                </li>
+            </ul>
+            <div class="gerSub">
+                <a href="javascript:;" ng-click="bmclose()" class="closeBtn">关闭</a>
+                <button ng-click="changeSaveCli()"  ng-class="invoiceForm.$invalid == true ? 'displaySub' : 'subSave'" ng-disabled="invoiceForm.$invalid || invoRready">变更</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+

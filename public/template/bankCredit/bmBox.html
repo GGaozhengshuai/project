@@ -1,0 +1,21 @@
+<div class="generForm boxForm">
+    <form novalidate name="invoiceForm">
+        <ul>
+            <li>
+                <strong><font>*</font>部门名称：</strong>
+                <input ng-readonly="true" required ng-model="$parent.orgname" ng-click="employee()" type="text" placeholder="请选择部门"/>
+                <input type="hidden" name="orgid"  ng-init="orgId=''" ng-model="orgid">
+            </li>
+            <li>
+                <strong><font>*</font>已分配银行授信额度：</strong>
+                <input integer-Validation ng-Change required ng-model="$parent.deptlimit" name="deptlimit" type="number" placeholder="请填写额度"/>
+                <span class="errTip ng-hide" ng-show="invoiceForm.deptlimit.$dirty && invoiceForm.deptlimit.$error.integer && !invoiceForm.deptlimit.$focused">请输入正整数</span>
+            </li>
+        </ul>
+        <div class="gerSub">
+            <a href="javascript:;" ng-click="bmCancel()" class="closeBtn">关闭</a>
+            <button ng-click="addData()"  ng-class="invoiceForm.$invalid == true ? 'displaySub' : 'subSave'" ng-disabled="invoiceForm.$invalid || invoRready">添加</button>
+        </div>
+    </form>
+</div>
+

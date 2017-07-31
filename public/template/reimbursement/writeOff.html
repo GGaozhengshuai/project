@@ -1,0 +1,97 @@
+
+<div class="item">报销单冲销</div>
+<form name="myForm">
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong><font>*</font>会计凭证号：</strong>
+                    <input class="text" type="text" placeholder="" ng-model="certcode" ng-init="certcode=''" name="certcode">
+                </td>
+                <td>
+                    <strong><font>*</font>会计年度：</strong>
+                    <input class="text" type="text" placeholder="" ng-model="certyear" ng-init="certyear=''" name="certyear">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="button" value="查询" class="searchbtn2" ng-click="searchFn()">
+                    <input type="button" value="冲销" class="searchbtn2 searchbtn2bot backupBtn" ng-click="chargeoffFn()">
+                </td>
+            </tr>
+
+        </table>
+    </div>
+</form>
+
+<div class="item">查询结果</div>
+    <table class="orangestyle table">
+        <thead>
+        <tr>
+        <tr>
+            <!--<th width="20px"><input type="checkbox" ng-model="checkAll" ng-click="allCheck($event)"></th>-->
+            <th>流水号</th>
+            <th>报销人</th>
+            <th>报销部门</th>
+            <th>报销申请日期</th>
+            <th>附件<br>张数</th>
+            <th>费用<br>种类</th>
+            <th>费用期间-<br>起始月份</th>
+            <th>截止<br>月份</th>
+            <th>报销金额汇总</th>
+            <th>实际财务<br>应付金额</th>
+            <th>财务标<br>记时间</th>
+            <th>业务标<br>记时间</th>
+            <th>会计<br>凭证号</th>
+            <!--<th>制单人</th>-->
+        </tr>
+        </tr>
+        </thead>
+        <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+        <tr ng-repeat="list in dataList">
+            <!--<td><input ng-click="updateSelection($event,list.code, list.cuscode)" class="checkBox"-->
+                       <!--name="checkbox{{$index}}" type="checkbox" ng-checked="checkAll"/></td>-->
+            <td>{{list.code}}</td>
+            <td>{{list.user.name}}</td>
+            <td>{{list.department.name}}</td>
+            <td>{{list.applydate | date: 'yyyy-MM-dd'}}</td>
+            <td>{{list.cost.attanum}}</td>
+            <td>{{list.cost.costtype}}</td>
+            <td>{{list.cost.fromdate}}</td>
+            <td>{{list.cost.enddate}}</td>
+            <td>{{list.cost.amount|number:2}}</td>
+            <td>{{list.finance.due|number:2}}</td>
+            <td>{{list.finance.financedate | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td>{{list.finance.businessdate | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td>{{list.finance.certcode}}</td>
+            <!--<td>{{list.zdr}}</td>-->
+        </tr>
+        <tr class="tip">
+            <td colspan="17">没有查到报销单</td>
+        </tr>
+        </tbody>
+    </table>
+<div class="dialog" title="冲销" id="chargeoffDialog">
+    <form novalidate name="userForm" class="generForm">
+        <ul class="ct">
+            <li class="ct_strip">
+                <strong ><font>*</font>日期：</strong>
+                <input style="width: auto;" type="text" class="text Wdate" dateParam='{"maxDate": "%y-%M-%d"}' date-Picker ng-readonly="true" ng-init="chargeoffdate=today" ng-model="chargeoffdate" ng-required="true" name="chargeoffdate" placeholder="请选择日期">
+                <span class="errTip ng-hide" ng-show="userForm.chargeoffdate.$dirty && userForm.chargeoffdate .$error.required">必填</span>
+            </li>
+            <li class="ct_strip">
+                <strong ><font>*</font>冲销原因：</strong>
+                <select style="width: 160px;" ng-model="reason" ng-init="reason=''" name="reason" ng-required="true">
+                    <option value="">请选择</option>
+                    <option value="01">当前期间回转</option>
+                    <option value="02">关闭期间回转</option>
+                </select>
+                <span class="errTip ng-hide" ng-show="userForm.reason.$dirty && userForm.reason .$error.required">必填</span>
+            </li>
+            <li class="gerSub">
+                <a href="" ng-click="cancelFn()" class="closeBtn">取消</a>
+                <button ng-click="chargeoffConfirmFn()" class="subSave">冲销</button>
+            </li>
+        </ul>
+    </form>
+</div>

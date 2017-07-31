@@ -1,0 +1,134 @@
+<div class="item">采购订单执行状态</div>
+<form novalidate name="purForm">
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>供应商名称：</strong>
+                    <input class="text" type="text" name="NAME"  ng-init="NAME=''" ng-model="NAME" placeholder="">
+                </td>
+                <td>
+                    <strong>采购订单号：</strong>
+                    <input type="text" name="EBELN" ng-init="EBELN=''"  ng-model="EBELN" class="text" placeholder="">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>供应商订单号：</strong>
+                    <input class="text" type="text" name="ZZPO"  ng-init="ZZPO=''" ng-model="ZZPO" placeholder="">
+                </td>
+                <td>
+                    <strong>创建者：</strong>
+                    <input type="text" name="ERNAM" ng-init="ERNAM=''"  ng-model="ERNAM" class="text" placeholder="">
+                </td>
+            </tr>
+            <tr>
+                <!--<td class="minSelectIpt">
+                    <strong>未付金额：</strong>
+                    <select ng-model="ORDER_DATA.BUKRS" ng-init="ORDER_DATA.BUKRS='等于'" >
+                        <option value="大于">大于</option>
+                        <option value="等于">等于</option>
+                    </select>
+                    <input type="text" name="ZWFJE" ng-init="ZWFJE=''"  ng-model="ZWFJE" class="text" placeholder="">
+                </td>-->
+                <td>
+                    <strong>订单类型：</strong>
+                    <select ng-model="BSART" ng-init="BSART=''" ng-options="m.code as m.name for m in orderenum.BSART">
+                        <option value="">请选择</option>
+                    </select>
+                </td>
+                <td>
+                    <strong>采购组织：</strong>
+                    <select ng-model="EKORG" ng-init="EKORG=''" ng-options="m.code as m.name for m in orderenum.EKORG">
+                        <option value="">请选择</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="button" value="查询" class="searchbtn2"  ng-click="search()">
+                    <input ng-if="opprev.purOrder_pay" type="button" value="付款申请" class="searchbtn2 searchbtn2bot addBtn" ng-click="paymentBox()">
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<div class="item">查询结果</div>
+<div class="tableWrap">
+    <div class="tableLeft">
+        <table class="orangestyle table" id="occTable" style="width: 150%">
+            <thead>
+            <tr>
+
+                <th width="20px"><span><input type="checkbox" id="allCheck" ng-model="all" ng-click="allCheck(dataList)"></span></th>
+                <th><span>采购订单号</span></th>
+                <th><span>采购组织</span></th>
+                <th><span>供应商名称</span></th>
+                <th><span>供应商订单号</span></th>
+                <th><span>订单类型</span></th>
+                <th><span>产品线</span></th>
+                <th><span>订单金额</span></th>
+                <th><span>未付金额</span></th>
+                <th><span>运输方式</span></th>
+                <th><span>创建者</span></th>
+                <!--<th>操作</th>-->
+            </tr>
+            </thead>
+            <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+            <tr ng-repeat="list in dataList" class="list">
+                <td><span><input ng-click="checkSelect($index,list.LIFNR,list.EBELN,list.NAME1)" class="checkBox" name="checkbox" type="checkbox" ng-checked="all" ng-disabled="list.ZWFJE==0"/></span></td>
+                <td title="{{list.EBELN}}"><span><a class="underline" target="_blank" ng-if="list.EKORG != '9000' && list.EKORG != '9001' && list.BSART != 'ZB6' && list.BSART != 'ZB7' && list.BSART != 'ZB8'" href="index.html#/purOrderView/{{list.EBELN}}"> {{list.EBELN}}</a>
+                    <a class="underline" target="_blank" ng-if="list.EKORG == '9000' || list.EKORG == '9001'" href="index.html#/pojckView/{{list.EBELN}}"> {{list.EBELN}}</a>
+                    <a class="underline" target="_blank" ng-if="list.BSART == 'ZB6' || list.BSART == 'ZB7' || list.BSART == 'ZB8'" href="index.html#/purMaintainView/{{list.EBELN}}"> {{list.EBELN}}</a></span></td>
+
+                <td><span>{{enumobj.EKORG[list.EKORG]}}</span></td>
+                <td><span title="{{list.NAME1 + list.NAME2}}">{{list.NAME1 + list.NAME2 | cutfield:true:12:'...'}}</span></td>
+                <td><span>{{list.ZZPO}}</span></td>
+                <td><span>{{enumobj.BSART[list.BSART]}}</span></td>
+                <td><span>{{enumobj.ZZCP[list.ZZCP]}}</span></td>
+                <td><span>{{list.ZZZJY | number : 2}}</span></td>
+                <td><span>{{list.ZWFJE | number : 2}}</span></td>
+                <td><span>{{list.ZZYS}}</span></td>
+                <td><span>{{list.ERNAM}}</span></td>
+               <!-- <td>
+                    <a class="handleBtn printBtn" ng-if="list.EKORG != '9000' && list.EKORG != '9001' && list.BSART != 'ZB6' && list.BSART != 'ZB7' && list.BSART != 'ZB8'" href="/print/printest.html?uri=/poheader/printview&EBELN={{list.EBELN}}" target="_blank" title="打印"></a>     &lt;!&ndash;采购订单打印&ndash;&gt;
+                    <a class="handleBtn printBtn" ng-if="list.BSART == 'ZB6' || list.BSART == 'ZB7' || list.BSART == 'ZB8'" href="/print/printest.html?uri=/wxpo/printview&EBELN={{list.EBELN}}" target="_blank" title="打印"></a>   &lt;!&ndash;维修采购订单打印&ndash;&gt;
+                    <a class="handleBtn printBtn" ng-if="list.EKORG == '9000'" href="/print/printest.html?uri=/pojck/printview&EBELN={{list.EBELN}}" target="_blank" title="打印"></a>   &lt;!&ndash;进出口采购订单打印&ndash;&gt;
+                    <a class="handleBtn detailBtn" target="_blank" ng-if="list.EKORG != '9000' && list.EKORG != '9001' && list.BSART != 'ZB6' && list.BSART != 'ZB7' && list.BSART != 'ZB8'" href="index.html#/purOrderView/{{list.EBELN}}" title="详情"></a>
+                    <a class="handleBtn detailBtn" target="_blank" ng-if="list.EKORG == '9000' || list.EKORG == '9001'" href="index.html#/pojckView/{{list.EBELN}}" title="详情"></a>
+                    <a class="handleBtn detailBtn" target="_blank" ng-if="list.BSART == 'ZB6' || list.BSART == 'ZB7' || list.BSART == 'ZB8'" href="index.html#/purMaintainView/{{list.EBELN}}" title="详情"></a>
+                </td>-->
+            </tr>
+            <tr class="tip"><td colspan="11"><span>没有查到此采购订单</span></td></tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="tableHandler">
+        <table class="orangestyle table">
+            <thead>
+            <tr>
+                <th><span>操作</span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="list in dataList">
+
+                <td>
+                    <div class="handlerBox">
+                    <a class="handleBtn printBtn" ng-if="list.EKORG != '9000' && list.EKORG != '9001' && list.BSART != 'ZB6' && list.BSART != 'ZB7' && list.BSART != 'ZB8'" href="/print/printht.html?uri=/poheader/printview&EBELN={{list.EBELN}}" target="_blank" title="打印"></a>     <!--采购订单打印-->
+                    <a class="handleBtn printBtn" ng-if="list.BSART == 'ZB6' || list.BSART == 'ZB7' || list.BSART == 'ZB8'" href="/print/printht.html?uri=/wxpo/printview&EBELN={{list.EBELN}}" target="_blank" title="打印"></a>   <!--维修采购订单打印-->
+                    <a class="handleBtn printBtn" ng-if="list.EKORG == '9000'" href="/print/printht.html?uri=/pojck/printview&EBELN={{list.EBELN}}" target="_blank" title="打印"></a>   <!--进出口采购订单打印-->
+                    <a class="handleBtn detailBtn" target="_blank" ng-if="list.EKORG != '9000' && list.EKORG != '9001' && list.BSART != 'ZB6' && list.BSART != 'ZB7' && list.BSART != 'ZB8'" href="index.html#/purOrderView/{{list.EBELN}}" title="详情"></a>
+                    <a class="handleBtn detailBtn" target="_blank" ng-if="list.EKORG == '9000' || list.EKORG == '9001'" href="index.html#/pojckView/{{list.EBELN}}" title="详情"></a>
+                    <a class="handleBtn detailBtn" target="_blank" ng-if="list.BSART == 'ZB6' || list.BSART == 'ZB7' || list.BSART == 'ZB8'" href="index.html#/purMaintainView/{{list.EBELN}}" title="详情"></a>
+
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<pagination conf="paginationConf"></pagination>

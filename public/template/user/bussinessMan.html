@@ -1,0 +1,133 @@
+<div class="item">销售-商务对应维护</div>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>销售部门</strong>
+                    <input type="text" name="selected_orgname" class="busInp" ng-readonly="true" placeholder="请输入部门" ng-click="employee('select')" ng-model="selected_orgname">
+                    <input type="hidden" name="selected_orgid" class="ct_input" ng-model="selected_orgid">
+                </td>
+                <td>
+                    <strong>销售小组</strong>
+                    <select name="" ng-model="selected_saleGrp" class="busSel" ng-options="m.name for m in sel_saleGrpArr">
+                        <option value="">请选择</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>商务</strong>
+                    <select name="" ng-model="selected_busman" class="busSel" ng-options="m.name for m in busmanList">
+                        <option value="">请选择</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search_list()">
+                    <a class="searchbtn2 searchbtn2bot addBtn" href="javascript: void(0);" ng-click="clickAdd()">新增</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<div class="item">查询结果</div>
+<table class="orangestyle table">
+    <thead>
+    <tr>
+        <th width="15%">一级部门</th>
+        <th width="15%">二级部门</th>
+        <th width="15%">三级部门</th>
+        <th width="15%">销售小组</th>
+        <th width="10%">对应商务</th>
+        <th width="10%">操作</th>
+    </tr>
+    </thead>
+    <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+        <tr ng-repeat="list in dataList">
+            <td width="15%">{{list.orglevel1.orgname}}</td>
+            <td width="15%">{{list.orglevel2.orgname}}</td>
+            <td width="15%">{{list.orglevel3.orgname}}</td>
+            <td width="15%">{{list.salegroup.value}}</td>
+            <td width="10%">{{list.busi.name}}</td>
+            <td width="10%" class="padOL12">
+                <a class="handleBtn delBtn" ng-click="delbusi(list.busi._id, list.salegroup.code)" title="删除"></a>
+                <a class="handleBtn editBtn" ng-click="editbusi(list)" title="变更"></a>
+            </td>
+        </tr>
+        <tr class="tip"><td colspan="6">没有查到商务</td></tr>
+    </tbody>
+</table>
+<pagination manual="true" conf="paginationConf"></pagination>
+<div id="add_orgbox" class="dialog" title="选择部门">
+    <div class="employeeTip">
+        <h5>
+            <span><a ng-click="getEmployee('add')" href="javascript:;">中建材信息技术</a>&gt</span>
+            <span ng-repeat="list in employeeNav"><a ng-click="getEmployee('add',list._id,list.orgname)" href="javascript:;">{{list.orgname}}</a>&gt</span>
+        </h5>
+        <ul>
+            <li ng-repeat="list in employeeList"><a  ng-click="getEmployee('add',list._id,list.orgname)" href="javascript:;">{{list.orgname}}（{{list.grandsoncount}}）</a></li>
+        </ul>
+    </div>
+</div>
+<div id="select_orgbox" class="dialog" title="选择部门">
+    <div class="employeeTip">
+        <h5>
+            <span><a ng-click="getEmployee('select')" href="javascript:;">中建材信息技术</a>&gt</span>
+            <span ng-repeat="list in employeeNav"><a ng-click="getEmployee('select',list._id,list.orgname)" href="javascript:;">{{list.orgname}}</a>&gt</span>
+        </h5>
+        <ul>
+            <li ng-repeat="list in employeeList"><a  ng-click="getEmployee('select',list._id,list.orgname)" href="javascript:;">{{list.orgname}}（{{list.grandsoncount}}）</a></li>
+        </ul>
+    </div>
+</div>
+<div id="addbox" class="embox" title="新增" style="display: none;">
+    <div class="generForm">
+        <form novalidate name="invoiceForm">
+            <ul>
+                <li class="tli">
+                    <strong>销售部门：</strong>
+                    <input type="text" name="add_orgname" ng-readonly="true" class="ct_input" placeholder="请输入部门" ng-click="employee('add')" ng-model="add_orgname">
+                    <input type="hidden" name="add_orgid" class="ct_input" ng-model="add_orgid">
+                </li>
+                <li class="tli">
+                    <strong>销售小组：</strong>
+                    <select name="" ng-model="add_saleGrp" ng-options="m.name for m in add_saleGrpArr">
+                        <option value="">请选择</option>
+                    </select>
+                </li>
+                <li class="tli">
+                    <strong>商务：</strong>
+                    <select name="" ng-model="add_busman" ng-options="m.name for m in busmanList">
+                        <option value="">请选择</option>
+                    </select>
+                </li>
+            </ul>
+        </form>
+    </div>
+</div>
+<div id="editbox" class="embox" title="变更" style="display: none;">
+    <div class="generForm">
+        <form novalidate name="invoiceForm">
+            <ul>
+                <li class="tli">
+                    <strong>销售部门：</strong>
+                    <input type="text" name="edit_orgname" ng-readonly="true" class="ct_input" ng-model="edit_orgname">
+                    <input type="hidden" name="edit_orgid" class="ct_input" ng-model="edit_orgid">
+                </li>
+                <li class="tli">
+                    <strong>销售小组：</strong>
+                    <!-- <select name="" ng-model="add_saleGrp" ng-options="m.name for m in add_saleGrpArr">
+                        <option value="">请选择</option>
+                    </select> -->
+                    <input type="text" name="edit_saleGrp" ng-readonly="true" class="ct_input" ng-model="edit_saleGrp">
+                </li>
+                <li class="tli">
+                    <strong>商务：</strong>
+                    <select name="" ng-model="edit_busman" ng-options="m.name for m in busmanList">
+                        <option value="">请选择</option>
+                    </select>
+                </li>
+            </ul>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong style="width: 100px">销售人员：</strong>
+                    <input style="width: 250px" ng-blur="salesClick(salesclerk1)"  class="text" ng-model="$parent.salesclerk1" type="text"
+                           placeholder="请填写姓名"/>
+                </td>
+                <td>
+                    <strong>部门：</strong>
+                    <input ng-readonly="true" ng-model="$parent.department1" class="text" type="text" placeholder=""/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="gerSub">
+        <button  class="subSave" ng-click="$parent.sellclueSelect(salesclerk1,department1)">确定</button>
+    </div>
+</form>

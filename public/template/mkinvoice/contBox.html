@@ -1,0 +1,29 @@
+<table class="orangestyle table">
+    <tbody ng-class="contList.length > 0 ? 'meg' : 'noMegTip'">
+   <!-- <div ng-if="sdef.selectby=='退货订单号'">退货订单号</div>
+    <span ng-if="sdef.selectby=='销售合同号'">销售订单号</span>-->
+    <tr  ng-repeat="recode in recodeAll" ng-if="sdef.selectby=='退货订单号'">
+        <td>退货订单号:</td>
+        <td><input type="text" ng-model="recode" ng-disabled="true"/></td>
+        <td>
+            <a  href="javascript:;" ng-click="VBELNSelect(recode)">选择</a>
+        </td>
+    </tr>
+    <tr  ng-repeat="recode in recodeAll" ng-if="sdef.selectby=='销售合同号'">
+        <td>销售订单号:</td>
+        <td><input type="text" ng-model="recode" ng-disabled="true"/></td>
+        <td>
+            <a  href="javascript:;" ng-click="VBELNSelect(recode)">选择</a>
+        </td>
+    </tr>
+    <tr ng-if="sdef.selectby=='销售合同号'&&list.nbjsddh">
+        <td>双主体订单号:</td>
+        <td><input type="text" ng-model="list.nbjsddh" ng-disabled="true"/></td>
+        <td>
+            <a  href="javascript:;" ng-click="nbjsddhSelect(list.nbjsddh)">选择</a>
+        </td>
+    </tr>
+    <tr ng-if="!list"><td colspan="3">没有查到</td></tr>
+    </tbody>
+</table>
+<!--<pagination conf="paginationConf"></pagination>-->

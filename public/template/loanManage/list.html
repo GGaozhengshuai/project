@@ -1,0 +1,159 @@
+<div class="item">借款管理</div>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>借款单编号</strong>
+                    <input class="text" type="text" placeholder="请输入借款单编号" ng-model="code" ng-init="code=''" name="code">
+                </td>
+                <td>
+                    <strong>资金性质</strong>
+                    <select ng-model="fin">
+                        <option value="">请选择</option>
+                        <option value="现金">现金</option>
+                        <option value="支票">支票</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <strong>借款部门</strong>
+                    <input class="text" type="text" placeholder="请输入借款部门" ng-model="department" ng-init="department=''" name="orgname">
+                </td>
+                <td>
+                    <strong>借款人</strong>
+                    <input class="text" type="text" ng-model="username" ng-disabled="!financeFlag" name="username">
+                    <!--<input class="text" type="text" ng-model="username" name="username">-->
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>借款日期</strong>
+                    <input style="width: 125px" class="text Wdate" date-Picker ng-readonly="true" type="text"  placeholder="请输入日期" ng-init="star_time=''" ng-model="star_time">
+                    <span style="float: left; margin: 5px;">-</span>
+                    <input style="width: 125px" class="text Wdate" date-Picker ng-readonly="true" type="text"  placeholder="请输入日期" ng-init="end_time=''" ng-model="end_time">
+                </td>
+                <td>
+                    <strong>是否已还清</strong>
+                    <select ng-model="pay_off" ng-init="pay_off=''">
+                        <option value="">请选择</option>
+                        <option value="1">是</option>
+                        <option value="2">否</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>状态</strong>
+                    <select ng-model="status" ng-init="status='valid'">
+                        <option value="">请选择</option>
+                        <option value="valid">有效</option>
+                        <option value="invalid">作废</option>
+                    </select>
+                </td>
+                <td >
+                    <!--<a class="searchbtn2 viewBtn" href="" ng-click="printFn($event)" target="_blank" >打印</a>
+                    <a class="searchbtn2 searchbtn2bot exportBtn" href="javascript:;" ng-click="exportexcel()">导出</a>-->
+                    <input type="button" value="查询" class="searchbtn2 searchbtn2bot" ng-click="search()">
+                    <!--<input type="button" value="冲销" class="searchbtn2 searchbtn2bot distractBtn" ng-click="chargeoffFn()">-->
+                    <a ng-if="opprev.loanManageOrder_add" class="searchbtn2 searchbtn2bot addBtn" href="/index.html#/loanManageAdd">新建借款单</a>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+</form>
+
+<div class="item">查询结果</div>
+<div class="tableWrap">
+    <div class="tableLeft" style="margin-right: 123px;">
+        <table class="orangestyle table" style="width: 120%;">
+            <thead>
+            <tr>
+                <!--<th><span><input type="checkbox" ng-model="checkAll" id="allcheck" ng-click="allCheck($event)"></span></th>-->
+                <th><span>借款单编号</span></th>
+                <th><span>借款人</span></th>
+                <th><span>借款部门</span></th>
+                <th><span>资金性质</span></th>
+                <th class="right"><span>借款金额</span></th>
+                <th class="right"><span>本单未还金额</span></th>
+                <th><span>借款凭证号</span></th>
+                <th><span>借款日期</span></th>
+                <th class="right"><span>本单已还金额</span></th>
+                <th><span>还款凭证号</span></th>
+                <th><span>末次还款日期</span></th>
+                <!--<th>操作</th>-->
+            </tr>
+            </thead>
+            <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+            <tr ng-repeat="list in dataList">
+                <!--<td><span><input ng-click="updateSelection($event, list._id,list.code,list.info.status)" class="checkBox" name="checkbox{{$index}}" type="checkbox" ng-checked="checkAll"/></span></td>-->
+                <td><span><a class="underline" target="_blank" href="index.html#/loanManageView/{{list.info.code}}">{{list.info.code}}</a>
+                </span></td>
+                <td><span>{{list.info.user.name}}</span></td>
+                <td><span>{{list.info.department.name}}</span></td>
+                <td><span>{{list.info.fin.name}}</span></td>
+                <td class="right" title="{{list.info.brw_amount | currency : '￥'}}"><span>{{list.info.brw_amount | currency : '￥' | cutfield:true:13:'...'}}</span>
+                </td>
+                <td class="right" title="{{list.info.cur_brw | currency : '￥'}}"><span>{{list.info.cur_brw | currency : '￥' | cutfield:true:13:'...'}}</span>
+                </td>
+                <td><span>{{list.info.brw_sapsn}}</span></td>
+                <td><span>{{list.info.brw_date | date: 'yyyy-MM-dd'}}</span></td>
+                <td class="right" title="{{list.info.brw_amount-list.info.cur_brw | currency : '￥'}}">
+                    <span>{{(list.info.brw_amount-list.info.cur_brw) | currency : '￥' | cutfield:true:13:'...'}}</span>
+                </td>
+                <td class="right" title="{{list.info.rep_sapsns.join(',')}}"><span>{{list.info.rep_sapsns.join(',') | cutfield:false:11:'...'}}</span>
+                </td>
+                <td><span>{{list.repayment[list.repayment.length-1].rep_date | date: 'yyyy-MM-dd'}}</span></td>
+                <!--<td class="czBtn" ng-class="!financeFlag ? 'padL12' : ''">
+                    <a class="handleBtn loanMark" ng-if="opprev.loanManageOrder_mark && !list.info.brw_sapsn" title="借款标记"  href="index.html#/loanManageMark/{{list.info.code}}"></a>
+                    &lt;!&ndash;2017-2-9 修改逻辑 借款单进行冲销操作时，需判断借款单记录的借款凭证号不可为空，且还款凭证号必须为空，才可进行冲销操作&ndash;&gt;
+                    <a class="handleBtn writeOffBtn" ng-if="opprev.loanManageOrder_cancle && list.info.brw_sapsn && !list.info.rep_sapsns.length" title="借款冲销"  href="index.html#/loanManageWriteOff/{{list.info.code}}?certcode={{list.info.brw_sapsn}}" ></a>
+                    <a target="_blank" class="handleBtn detailBtn" href="index.html#/loanManageView/{{list.info.code}}" title="详情"></a>
+                    <a class="handleBtn printBtn" title="打印" href="/print/printlandscape.html?uri=/loan/printview&code={{list.info.code}}" target="_blank"></a>
+                </td>-->
+            </tr>
+            <tr class="tip">
+                <td colspan="17"><span>没有查到借款单</span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="tableHandler" style="width: 123px;">
+        <table class="orangestyle table">
+            <thead>
+            <tr>
+                <th><span>操作</span><!--<span style="visibility: hidden">占位</span>--></th>
+                <!--<th>制单人</th>-->
+            </tr>
+            </thead>
+            <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+            <tr ng-repeat="list in dataList">
+
+                <td class="czBtn">
+                    <div class="handlerBox">
+                        <a class="handleBtn invalidBtn"
+                           ng-class=" list.info.status=='invalid' || list.info.brw_sapsn ? 'disabled' : ''"
+                           title="{{list.info.status=='invalid'?'已作废': list.info.brw_sapsn ? '已生成借款凭证' : '作废'}}" target="_blank"
+                           ng-click="list.info.status=='invalid' || list.info.brw_sapsn ? '' : nullifyFn(list._id)"></a>
+                        <a class="handleBtn loanMark" ng-if="opprev.loanManageOrder_mark && !list.info.brw_sapsn"
+                           title="借款标记" href="index.html#/loanManageMark/{{list.info.code}}"></a>
+                        <!--2017-2-9 修改逻辑 借款单进行冲销操作时，需判断借款单记录的借款凭证号不可为空，且还款凭证号必须为空，才可进行冲销操作-->
+                        <a class="handleBtn writeOffBtn"
+                           ng-if="opprev.loanManageOrder_cancle && list.info.brw_sapsn && !list.info.rep_sapsns.length"
+                           title="借款冲销"
+                           href="index.html#/loanManageWriteOff/{{list.info.code}}?certcode={{list.info.brw_sapsn}}"></a>
+                        <a target="_blank" class="handleBtn detailBtn"
+                           href="index.html#/loanManageView/{{list.info.code}}" title="详情"></a>
+                        <a class="handleBtn printBtn" title="打印"
+                           href="/print/printlandscape.html?uri=/loan/printview&code={{list.info.code}}"
+                           target="_blank"></a>
+                    </div>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<pagination conf="paginationConf" manual="true"></pagination>

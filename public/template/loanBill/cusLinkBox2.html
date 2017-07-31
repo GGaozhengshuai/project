@@ -1,0 +1,31 @@
+<table class="orangestyle table">
+    <thead>
+    <tr>
+        <th>库房名称</th>
+        <th>收货人姓名</th>
+        <th>手机号</th>
+        <!--<th>固定电话</th>-->
+        <th style="width: 70px;">省</th>
+        <th style="width: 70px;">市</th>
+        <th>详细地址</th>
+        <th>邮编</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody ng-class="cusLinkList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in cusLinkList">
+        <td>{{list.KF_NAME}}</td>
+        <td>{{list.ZCNEE_NAME}}</td>
+        <td>{{list.ZCNEE_MOBILE}}</td>
+        <!--<td>{{list.ZCNEE_PHONE}}</td>-->
+        <td>{{list.ZCNEE_PROVINCE | province:countryData}}</td>
+        <td>{{list.ZCNEE_CITY | province:countryData}}</td>
+        <td>{{list.ZCNEE_ADDRESS}}</td>
+        <td>{{list.ZCNEE_PSTLZ}}</td>
+        <td>
+            <a href="javascript:;" ng-click="cusLinkSelect(list.ZCNEE_NAME, list.ZCNEE_MOBILE ,list.ZCNEE_PHONE, list.ZCNEE_PROVINCE, list.ZCNEE_CITY, list.ZCNEE_ADDRESS, list.ZCNEE_PSTLZ)">选择</a>
+        </td>
+    </tr>
+    <tr class="tip"><td colspan="8">没有查到</td></tr>
+    </tbody>
+</table>

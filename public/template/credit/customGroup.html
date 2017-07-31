@@ -1,0 +1,85 @@
+<div class="item">客户分组</div>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td class="minSelectIpt">
+                    <strong>客户名称</strong>
+                    <select ng-model="ORDER_DATA.type" ng-init="ORDER_DATA.type='cusname'" >
+                        <option value="cusname">总公司</option>
+                        <option value="sunname">子公司</option>
+                    </select>
+                    <input type="text" class="text" name="cusname" ng-init="ORDER_DATA.cusname=''" ng-model="ORDER_DATA.cusname">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="button" value="查询" class="searchbtn2" ng-click="searchFn()">
+                    <a ng-if="opprev.customGroup_add" class="searchbtn2 searchbtn2bot addBtn" ng-click="showAdd()">新增分组</a>
+                    <!--<a class="searchbtn2 searchbtn2bot defenseBtn" ng-disabled="selected.length" ng-class="selected.length ? '':'disabledbtn'" ng-click="cancelGroup()">取消分组</a>-->
+                    <a ng-if="opprev.customGroup_export" class="searchbtn2 searchbtn2bot exportBtn" target="_blank" href="/cuscredit/exportrela" >导出所有分组</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+
+<!--<div class="item">客户信用</div>-->
+<table class="orangestyle table">
+    <thead>
+    <tr>
+        <!--<th></th>-->
+        <th>总公司客户编码</th>
+        <th>总公司客户名称</th>
+        <th>子公司客户编码</th>
+        <th>子公司客户名称</th>
+        <th>授信额度</th>
+        <th style="width: 35px;">操作</th>
+    </tr>
+    </thead>
+    <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in dataList">
+        <!--<td><input class="checkBox" type="checkbox" ng-checked="isSelected(list.cuscode)" ng-click="updateSelection($event,list.cuscode,list.mothercode)" /></td>-->
+        <td>{{list.cuscode}}</td>
+        <td>{{list.cusname}}</td>
+        <td>{{list.suncode}}</td>
+        <td>{{list.sunname}}</td>
+        <td>{{list.creditmoney}}</td>
+        <td class="czBtn padL12">
+            <a ng-if="opprev.customGroup_cancle" class="handleBtn cancelGroupBtn" ng-click="cancelGroup(list, $index)" title="取消分组"></a>
+        </td>
+    </tr>
+    <tr class="tip"><td colspan="6">没有查到客户分组信息</td></tr>
+    </tbody>
+</table>
+<div id="dialog" class="dialog" title="新增分组" >
+
+    <form novalidate name="userForm" class="generForm">
+        <ul class="ct">
+            <li class="ct_strip">
+                <strong ><font>*</font>子公司客户名称：</strong>
+                <input ng-required="true" ng-readonly="true" name="sunname" ng-model="ORDER_NAME.sunname" ng-click="cusBoxSon()"
+                       type="text" placeholder="请选择子公司客户名称"/>
+                <input ng-model="ORDER_NAME.suncode" type="hidden" placeholder=""/>
+                <span class="errTip" ng-if="userForm.sunname.$dirty && userForm.sunname.$error.required">必填</span>
+                <span class="errTip" ng-if="wrong">{{wrongTxt}}</span>
+            </li>
+            <li class="ct_strip">
+                <strong><font>*</font>总公司客户名称：</strong>
+                <input ng-disabled="!ORDER_NAME.sunname" ng-required="true" ng-readonly="true" name="cusname" ng-model="ORDER_NAME.cusname" ng-click="cusBox()"
+                       type="text" placeholder="请先选择子公司客户名称"/>
+                <input type="hidden" ng-model="ORDER_NAME.cuscode">
+                <span class="errTip" ng-if="userForm.cusname.$dirty && userForm.cusname.$error.required">必填</span>
+                <span class="errTip" ng-if="wrongMother">{{wrongMotherTxt}}</span>
+            </li>
+            <li class="gerSub">
+                <button ng-click="addGroup(ORDER_NAME)" class="subSave">保存</button>
+            </li>
+
+        </ul>
+    </form>
+</div>
+<div id="cusBox" class="dialog cusBox" title="选择客户" ng-include="'template/credit/cusBox2.html'"
+           ng-controller="cusCusBoxCtrl"></div>
+<div id="cusBoxSon" class="dialog cusBox" title="选择客户" ng-include="'template/credit/cusBox.html'"
+     ng-controller="cusCusBoxCtrl"></div>

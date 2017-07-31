@@ -1,0 +1,128 @@
+<!--<div class="mainright">-->
+    <div class="item">费用申请单</div>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>申请流水号</strong>
+                    <input class="text" type="text" name="ZINORD"  ng-init="ZINORD=''" ng-model="ZINORD" placeholder="请输入流水号">
+                </td>
+                <td>
+                    <strong>费用申请单号</strong>
+                    <input class="text" type="text" name="AUFNR"  ng-init="useSname=''" ng-model="AUFNR" placeholder="请输入订单号">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>费用申请单类型</strong>
+                    <select ng-model="ZFYLX" >
+                        <option value="">--请选择--</option>
+                        <option ng-repeat="(x,y) in categorySel" value="{{x}}">{{y.text}}</option>
+                    </select>
+                    <!--<select ng-model="AUART">
+                        <option value="">请选择</option>
+                        <option value="ZJ01">市场费用</option>
+                        <option value="ZJ02">直接运营费用</option>
+                        <option value="ZJ03">项目前期费用</option>
+                        <option value="ZJ99">间接运营费用</option>
+                    </select>-->
+                </td>
+                <td>
+                    <strong>申请日期</strong>
+                    <input class="text Wdate" type="text" name="USER5" date-Picker ng-readonly="true"  ng-init="USER5=''" ng-model="USER5" placeholder="请选择日期">
+                </td>
+
+            </tr>
+            <tr>
+                <td>
+                    <strong>申请人</strong>
+                    <input type="text"  ng-readonly="true" ng-model="USER0" class="text" placeholder="请填写申请人">
+                </td>
+                <td>
+                    <strong>费用申请单状态</strong>
+                    <select ng-model="ASTNR">
+                        <option value="">请选择</option>
+                        <option value="01">完结</option>
+                        <option value="02">正常</option>
+                        <option value="03">作废</option>
+                    </select>
+                </td>
+
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+                    <a class="searchbtn2 searchbtn2bot addBtn" href="/index.html#/insideOrderAdd" ng-if="opprev.insideOrder_add">新建费用申请单</a>
+                    <!--<input type="button" value="添加员工" class="searchbtn2 searchbtn2bot" ng-click="search()">-->
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+    <div class="item">查询结果</div>
+<div class="tableWrap">
+    <div class="tableLeft" style="margin-right: 140px;">
+        <table class="orangestyle table" style="width:125%">
+            <thead>
+            <tr>
+                <th><span>费用申请单号</span></th>
+                <th><span>申请流水号</span></th>
+                <th><span>申请标题</span></th>
+                <th><span>费用申请单状态</span></th>
+                <th><span>总预算金额</span></th>
+                <th><span>未使用金额</span></th>
+                <th><span>费用申请单类型</span></th>
+                <th><span>申请人</span></th>
+                <th><span>部门</span></th>
+                <th><span>申请日期</span></th>
+            </tr>
+            </thead>
+            <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+            <tr ng-repeat="list in dataList">
+                <td><span><a class="underline" target="_blank" href="index.html#/insideOrderView/{{list.AUFNR}}">{{list.AUFNR}}</a></td>
+                <td><span>{{list.ZINORD}}</span></td>
+                <td title="{{list.ZSQNR}}"><span>{{list.ZSQNR | cutfield:true:10:'...'}}</span></td>
+                <td><span>{{{'01':'完结','02':'正常','03':'作废'}[list.ASTNR]}}</span></td>
+                <td><span>{{list.ZZJE | currency : '￥'}}</span></td>
+                <td><span>{{(list.count.total - (list.count.used + list.count.using)) | currency : '￥'}}</span></td>
+                <td><span>{{categorySel[list.ZFYLX.substr(0,2)].text}}-{{categorySel[list.ZFYLX.substr(0,2)].sub[list.ZFYLX.substr(2,2)].text}}{{list.ZFYLX.length > 4 ? '-'+ categorySel[list.ZFYLX.substr(0,2)].sub[list.ZFYLX.substr(2,2)].sub[list.ZFYLX.substr()].text : ''}}</span></td>
+                <td><span>{{list.USER0}}</span></td>
+                <td><span>{{list.USER6}}</span></td>
+                <td><span>{{list.USER5 | date: 'yyyy-MM-dd'}}</span></td>
+            </tr>
+            <tr class="tip"><td colspan="10"><span>没有查到费用申请单</span></td></tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="tableHandler" style="width: 150px;">
+        <table class="orangestyle table">
+            <thead>
+            <tr>
+                <th><span>操作</span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="list in dataList">
+                <td>
+                    <div class="handlerBox">
+                        <a class="handleBtn addBudgetBtn" target="_blank" href="index.html#/insideOrderEdit?sapid={{list.AUFNR}}" ng-hide="(list.ZZJYSJE && opprev.insideOrder_addmore) || list.ASTNR == '03' || list.ASTNR == '01'" title="追加预算"></a>
+                        <a class="handleBtn addBudgetBtn disabled ng-hide" ng-show="(list.ZZJYSJE && opprev.insideOrder_addmore) || list.ASTNR == '03' || list.ASTNR == '01'"  title="不允许追加预算"></a>
+                        <a class="handleBtn cancelClaimBtn" ng-show="list.ASTNR == '02' && opprev.insideOrder_end" ng-click="inSideEnd(list,'end')" href="javascript:;" title="完结"></a>
+                        <a class="handleBtn claimBtn" ng-show="list.ASTNR == '01' && opprev.insideOrder_exend" ng-click="inSideEnd(list,'cancel')" href="javascript:;" title="取消完结"></a>
+                        <a class="handleBtn claimBtn disabled" ng-show="list.ASTNR == '03' && opprev.insideOrder_exend" href="javascript:;" title="不允许完结操作"></a>
+                        <a class="handleBtn invalidBtn" href="" ng-show="list.ASTNR == '02' && opprev.insideOrder_void" ng-click="clickDel(list)" title="作废"></a>
+                        <a class="handleBtn invalidBtn disabled" href="" ng-show="(list.ASTNR == '01' || list.ASTNR == '03') && opprev.insideOrder_void" title="不允许作废"></a>
+                        <a class="handleBtn printBtn" href="/print/printht.html?uri=/interiorbills/printview&AUFNR={{list.AUFNR}}&ZINORD={{list.ZINORD}}" target="_blank" title="打印"></a>
+                        <a class="handleBtn detailBtn" target="_blank" href="index.html#/insideOrderView/{{list.AUFNR}}" title="查看"></a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<pagination conf="paginationConf"></pagination>
+

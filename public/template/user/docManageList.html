@@ -1,0 +1,93 @@
+<h3 class="genTitle"><em></em><span>文档管理</span></h3>
+<div class="ng-scope" ng-init="initPage();">
+    <form name="docmgrSearchForm">
+        <div class="genSearch">
+            <table>
+                <tr>
+                    <td>
+                        <strong>文档类型</strong>
+                        <select ng-model="selectedDocType" ng-options="y as x for (x,y) in doc_type">
+                            <option value="">请选择</option>
+                        </select>
+                    </td>
+                    <td>
+                        <strong>文档名</strong>
+                        <input name="doc_name" id="doc_name" ng-model="doc_name" type="text" class="text"
+                               placeholder="请输入文档名"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>销售部门</strong>
+                        <!--<input name="dep_name" id="dep_name" ng-model="dep_name" type="text" class="text"-->
+                               <!--placeholder="请输入部门" ng-model="dep"/>-->
+                        <select ng-model="dep_name" ng-options="m.orgname as m.orgname for m in getSalesorgnanme">
+                            <option value="">请选择</option>
+                        </select>
+                    </td>
+                    <td>
+                        <strong>上传者</strong>
+                        <input name="uploader_name" id="uploader_name" ng-model="uploader_name" type="text" class="text"
+                               placeholder="请输入上传者"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="doctd">
+                        <strong>文档内容</strong>
+                        <input class="text" style="width: 836px;" type="text" name="what" ng-model="what"
+                               ng-maxlength="100" ng-minlength="1" placeholder="请输入搜索内容，最多100个字符" limit-to="100"/>
+                        <!--<div role="alert">
+                            <span class="error" ng-show="docmgrForm.what.$error.maxlength">搜索内容不超过100个字符</span>
+                        </div>-->
+                        <!--<textarea name="what" id="what" ng-model="what" placeholder="请输入内容" ng-maxlength="100" ng-minlength="1" required> </textarea>-->
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input ng-model="searchBtn" type="button" value="查询" class="searchbtn2 searchbtn2bot" ng-click="search()">
+                        <a ng-model="uploadBtn" ng-if="opprev.docManage_upload" class="searchbtn2 searchbtn2bot addBtn" href="/index.html#/docManageUpload">上传文档</a>
+                        <input ng-model="downloadhBtn" type="button" value="批量下载" class="searchbtn2 searchbtn2bot addBtn" ng-click="downloaddocs()">
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+    <div class="item ng-scope">查询结果</div>
+    <table class="orangestyle table" id="billTable">
+        <thead class="tab_header">
+        <tr>
+            <th><input type="checkbox" id="allcheck" ng-model="all" ng-click="allCheck()"/></th>
+            <th>文档类型</th>
+            <th>文档名</th>
+            <th>部门</th>
+            <th>上传者</th>
+            <th>上传日期</th>
+            <th>文件大小</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+        <tr ng-repeat="doc in dataList" class="list">
+            <td><input type="checkbox" class="checkBox" name="checkbox" ng-checked="doc.checkAll" ng-click="checkSelect($index)"/></td>
+            <td>{{doc.dm_doc_type_name}}</td>
+            <td>{{doc.dm_doc_name}}</td>
+            <td>{{doc.dm_bill_orgname}}</td>
+            <td>{{doc.dm_uploader_name}}</td>
+            <td>{{doc.dm_upload_datetime}}</td>
+            <td>{{(doc.dm_doc_size)/1024/1024 | number:2}} MB</td>
+            <td class="czBtn">
+                <div class="handlerBox">
+                    <a class="handleBtn downloadbg" target='_self' href={{doc.dm_upload_file_path}} download="{{doc.dm_doc_name}}"></a>
+                </div>
+            </td>
+        </tr>
+        <tr class="tip">
+            <td colspan="6">{{ doc_info }}</td>
+        </tr>
+        </tbody>
+    </table>
+    </form>
+    <pagination conf="paginationConf" manual="true"></pagination>
+
+</div>

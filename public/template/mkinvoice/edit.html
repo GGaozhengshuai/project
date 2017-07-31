@@ -1,0 +1,422 @@
+<h3 class="genTitle genTitleBot"><em></em><span>开票申请编辑</span></h3>
+<div class="cusCont">
+    <div class="generForm">
+        <form novalidate name="mkinvoiceForm">
+            <h4 class="genH4">基本信息</h4>
+            <ul class="noMargin">
+                <li class="tli">
+                    <strong style="width: 200px">开票申请号：</strong>
+                    <input class="text" type="text" ng-disabled="true" ng-model="sdef.XBLNR" placeholder="">
+                </li>
+                <li class="tli">
+                    <strong style="width: 200px"><font>*</font>发票类型：</strong>
+                    <select required  ng-model="sdef.ZFPLX" ng-change="type(sdef.ZFPLX)" ng-disabled="mkinvoiceRready" name="ZFPLX">
+                        <option value="">请选择</option>
+                        <option value="增值税专用发票">增值税专用发票</option>
+                        <option value="增值税普通发票">增值税普通发票</option>
+                       <!-- <option value="服务发票">服务发票</option>-->
+                       <!-- <option value="资金往来专用发票">资金往来专用发票</option>-->
+                        <option value="收据">收据</option>
+                        <option value="服务费增值税普通发票">服务费增值税普通发票</option>
+                        <option value="服务费增值税专用发票">服务费增值税专用发票</option>
+                    </select>
+                    <span class="errTip ng-hide" ng-show="mkinvoiceForm.ZFPLX.$dirty && mkinvoiceForm.ZFPLX.$error.required">必填</span>
+
+                </li>
+                <li class="tli">
+                    <strong style="width: 200px"><font>*</font>客户名称：</strong>
+                    <input class="text" required  type="text" ng-model="sdef.cusname" name="cusname" placeholder="" ng-click="billingName(sdef.cusname,'cus')" ng-disabled="mkinvoiceRready">
+                    <span class="errTip ng-hide" ng-show="mkinvoiceForm.cusname.$dirty && mkinvoiceForm.cusname.$error.required">必填</span>
+
+                </li>
+                <li class="tli">
+                    <strong style="width: 200px"><font ng-show="requireShow">*</font>开票客户名称：</strong>
+                    <input class="text" ng-required="requireShow" type="text"  ng-model="sdef.NAME1" ng-disabled="true" name="NAME1" placeholder="" ng-click="billingName(sdef.cusname)">
+                    <span class="errTip ng-hide" ng-show="mkinvoiceForm.NAME1.$dirty && mkinvoiceForm.NAME1.$error.required">必填</span>
+
+                </li>
+                <li class="tli">
+                    <strong style="width: 200px"><font ng-show="requireShow">*</font>纳税人识别号：</strong>
+                    <input class="text" type="text" ng-required="requireShow" ng-model="sdef.nsrnum" name="nsrnum" placeholder="" ng-disabled="true">
+                    <span class="errTip ng-hide" ng-show="mkinvoiceForm.nsrnum.$dirty && mkinvoiceForm.nsrnum.$error.required">必填</span>
+
+                </li>
+                <li class="tli"><strong style="width: 200px"><font ng-show="requireShow">*</font>地址：</strong>
+                    <input class="text"ng-disabled="true" ng-required="requireShow"  type="text"  ng-model="sdef.adress" name="adress" placeholder="">
+                    <span class="errTip ng-hide" ng-show="mkinvoiceForm.adress.$dirty && mkinvoiceForm.adress.$error.required">必填</span>
+
+                </li>
+                <li class="tli">
+                    <strong style="width: 200px"><font ng-show="requireShow">*</font>电话：</strong>
+                    <input class="text" ng-disabled="true" name="tel"  ng-required="requireShow" type="tel"  ng-model="sdef.tel" placeholder="">
+                    <span class="errTip ng-hide" ng-show="mkinvoiceForm.tel.$dirty && mkinvoiceForm.tel.$error.required">必填</span>
+
+                </li>
+                <li class="tli">
+                    <strong style="width: 200px"><font ng-show="requireShow">*</font>开户行：</strong>
+                    <input class="text" ng-disabled="true" title="{{sdef.adress}}" ng-required="requireShow" type="text"  ng-model="sdef.bank" name="bank" placeholder="">
+                    <span class="errTip ng-hide" ng-show="mkinvoiceForm.bank.$dirty && mkinvoiceForm.bank.$error.required">必填</span>
+
+                </li>
+                <li class="tli">
+                    <strong style="width: 200px"><font ng-show="requireShow">*</font>帐号：</strong>
+                    <input class="text" ng-disabled="true" ng-required="requireShow" type="tel"  ng-model="sdef.account" name="account" placeholder="">
+                    <span class="errTip ng-hide" ng-show="mkinvoiceForm.account.$dirty && mkinvoiceForm.account.$error.required">必填</span>
+                </li>
+                <li class="tli" ng-hide="true">
+                    <strong style="width: 200px"><font>*</font>开票客户编码：</strong>
+                    <input class="text" ng-disabled="true" type="text"  ng-model="sdef.KUNNR" placeholder="" name="KUNNR">
+                </li>
+                <li class="tli">
+                    <strong style="width: 200px">发票总金额：</strong>
+                    <input class="text" ng-disabled="true" type="text"  ng-model="sdef.invoiceamount" placeholder="保留两位小数">
+                </li>
+                <li class="tli">
+                    <strong style="width: 200px">红色发票金额：</strong>
+                    <input class="text" ng-disabled="true" type="text"  ng-model="sdef.redinvoice" placeholder="保留两位小数">
+                </li>
+                <li class="tli">
+                    <strong style="width: 200px">返点冲抵应收金额/退货差额：</strong>
+                    <input class="text" ng-disabled="true" type="text"  ng-model="sdef.amountoffandchd" placeholder="">
+                </li>
+                <li class="clear"></li>
+                <li><strong style="width: 200px">收款情况：</strong>
+                    <textarea maxlength="200"  ng-model="sdef.recmy" name="recmy" ng-disabled="mkinvoiceRready" placeholder="200个字符"></textarea>
+                    <!--
+                                    <span class="errTip" ng-show="mkinvoiceForm.recmy.$error.maxlength">最多200个字符</span>
+                    -->
+                </li>
+                <li>
+                    <strong style="width: 200px">备注：</strong>
+                    <textarea maxlength="200"  ng-model="sdef.note" name="note" placeholder="200个字符" ng-disabled="mkinvoiceRready"></textarea>
+                    <!--
+                                        <span class="errTip" ng-show="mkinvoiceForm.note.$error.maxlength">最多200个字符</span>
+                    -->
+                </li>
+            </ul>
+            <div ng-show="contractShow">
+                <div class="addTable" ng-show="contractShow">
+                    <h4 class="genH4">列表信息</h4>
+                    <ul>
+                        <li class="tli">
+                            <select   ng-model="sdef.selectby"   name="selectby" ng-click="selectChange()">
+                                <option value="销售合同号">销售合同号</option>
+                                <option value="退货订单号">退货订单号</option>
+                            </select>
+                            <input class="text"  type="text"  ng-model="a.contNum" placeholder="请输入销售合同号">
+                            <div class="hGener">
+                                <a class="hBtn" href="javascript:;" ng-click="contNumBox(a.contNum)">查询</a>
+                            </div>
+                        </li>
+                        <li class="tli">
+                            <div class="hGener" style="float: right">
+                                <a class="hBtn" href="javascript:;" ng-click="sapTotal(glCgList,sdef)">计算SAP开票金额</a>
+                                <a class="hBtn" href="javascript:;" ng-click="htDel()">删除</a>
+                            </div>
+                        </li>
+                    </ul>
+                    <br/>
+                    <table>
+                        <tr>
+                            <th style="text-align: center;width: 2%"><input type="checkbox" id="allCheck" ng-model="all" ng-click="allCheck($event)"></th>
+
+                            <th ng-hide="true">销售订单号</th>
+                            <th ng-hide="true">客户编码</th>
+                            <th style="text-align: center;width: 9%">销售合同号</th>
+                            <th style="text-align: center;width: 7%">行项目号</th>
+                            <th style="text-align: center;width: 8%">物料编码</th>
+                            <th style="text-align: center;width: 8%">物料类型</th>
+
+                            <th style="text-align: center;width: 8%">未开数量</th>
+                            <th style="text-align: center;width: 8%">单价（含税）</th>
+                            <th style="text-align: center;width: 6%">退货数量</th>
+                            <th style="text-align: center;width: 6%">可开数量</th>
+                            <th style="text-align: center;width: 6%">需求数量</th>
+                            <th style="text-align: center;width: 8%">提前开票数量</th>
+                            <th style="text-align: center;width:8%">SAP开票金额</th>
+                            <th style="text-align: center;width: 8%">供应商订单号</th>
+                            <!-- <th ng-if='list.xsfpnum'>销售发票号</th>-->
+                            <!-- <th><button  ng-click="add()">添加</button></th>-->
+                            <!-- <th>操作</th>-->
+                        </tr>
+                    </table>
+                    <div style="overflow-y:auto;max-height:300px">
+                        <table>
+                            <tr ng-repeat="list in glCgList" class="list">
+                                <td ng-show="list.identShow" style="width:2% "><input ng-click="htSelection($event,list.contractno,$index)" class="checkBox" name="checkbox{{$index}}" type="checkbox" ng-checked="checkAll"/></td>
+
+                                <td ng-hide="true">
+                                    <input ng-model="list.VBELN" ng-disabled="true" type="text" value=""/>
+                                </td>
+                                <td ng-hide="true">
+                                    <input  type="text" ng-disabled="true" ng-model="list.KUNNR"   placeholder="" value="">
+                                </td>
+                                <td ng-show="list.identShow">
+                                    <input ng-class="sdef.selectby=='退货订单号'?'redColor':''" ng-model="list.contractno" ng-disabled="true" type="text" ng-click="contractBox()" value=""/>
+                                </td>
+                                <td ng-show="list.identShow">
+                                    <input ng-class="sdef.selectby=='退货订单号'?'redColor':''" title="{{list.POSNR}}" ng-model="list.POSNR" ng-disabled="true" type="text"  value=""/>
+                                </td>
+
+                                <td ng-show="list.identShow">
+                                    <input ng-class="sdef.selectby=='退货订单号'?'redColor':''" ng-disabled="true" ng-model="list.MATNR" type="text" value=""/>
+                                </td>
+                                <td ng-show="list.identShow">
+                                    <input ng-class="sdef.selectby=='退货订单号'?'redColor':''" ng-disabled="true" ng-model="list.MTART" type="text" value=""/>
+                                </td>
+                                <td ng-show="list.identShow">
+                                    <input ng-class="sdef.selectby=='退货订单号'?'redColor':''" ng-disabled="true" ng-model="list.KWMENG" type="text" value=""/>
+                                </td>
+                                <td ng-show="list.identShow">
+                                    <input ng-class="sdef.selectby=='退货订单号'?'redColor':''" ng-disabled="true" ng-model="list.KZWI1" type="text" value=""/>
+                                </td>
+                                <td ng-show="list.identShow">
+                                    <input ng-class="sdef.selectby=='退货订单号'?'redColor':''" ng-disabled="true" ng-model="list.thsl" type="text" value=""/>
+                                </td>
+                                <td ng-show="list.identShow">
+                                    <input ng-class="sdef.selectby=='退货订单号'?'redColor':''" ng-disabled="true" ng-model="list.ZKKSL" type="text" value=""/>
+                                </td>
+                                <td ng-show="list.identShow">
+                                    <input ng-class="sdef.selectby=='退货订单号'?'redColor':''"  ng-model="list.xqnum" type="text" name="xqnum{{$index}}" value="" ng-Focus lessthree-Validation ng-blur="xqnumNum(list.xqnum,list.ZKKSL,list.KZWI1,list.KWMENG,list.thsl,$index)"/>
+                                    <p class="errTip" ng-if="mkinvoiceForm['xqnum'+$index].$dirty && mkinvoiceForm['xqnum'+$index].$error.lessthree&&!mkinvoiceForm['xqnum'+$index].$focused">最多三位小数的正数</p>
+                                </td>
+                                <td ng-show="list.identShow">
+                                    <input ng-class="sdef.selectby=='退货订单号'?'redColor':''" ng-disabled="true" ng-model="list.tqkpno" type="text" value=""/>
+                                </td>
+                                <td ng-show="list.identShow">
+                                    <input ng-class="sdef.selectby=='退货订单号'?'redColor':''" ng-disabled="true" ng-model="list.sapinvoice" type="text" value=""/>
+                                </td>
+                                <td ng-show="list.identShow">
+                                    <input ng-class="sdef.selectby=='退货订单号'?'redColor':''" ng-disabled="true" ng-model="list.ZPC_NUM" type="text" value=""/>
+                                </td>
+                                <!--<td ng-if='list.xsfpnum'>
+                                    <input ng-disabled="true" ng-model="list.xsfpnum" type="text" value=""/>
+                                </td>-->
+                            </tr>
+                        </table>
+                    </div>
+                    <!--开票变更展示合同信息-->
+                    <table class="mkinvoiceTable">
+                        <tr>
+                            <th>合同编号</th>
+                            <th>合同类型</th>
+                            <th>订单状态</th>
+                            <th>放货金额</th>
+                            <th>末次放货时间</th>
+                        </tr>
+                        <tr ng-repeat="list in contractMsgList">
+                            <td>{{list.contractno}}</td>
+                            <td>{{list.contracttype}}</td>
+                            <td>{{{A:"未放货",B:"部分放货",C:"全部放货"}[list.LFSTK]}}</td>
+                            <td>{{list.zdfhje}}</td>
+                            <td>{{list.zdmcfhsj}}</td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <div ng-show="contractShow">
+                        <span>SAP开票金额合计:</span>
+                        <input type="text" ng-model="sdef.sumsapinvoice" ng-disabled="true"/>
+                        <span>放货金额合计:</span>
+                        <input type="text" ng-model="totalproductout" ng-disabled="true"/>
+                    </div>
+                </div>
+                <br/>
+                <ul ng-show="contractShow">
+                    <!--<li class="tli">
+                        <strong>含税金额总计：</strong>
+                        <input type="text" ng-model="sdef.sumhsje" ng-disabled="true"/>
+                    </li>-->
+                    <div class="clear"></div>
+                    <li class="tli">
+                        <strong style="width:216px"><font>*</font>发票清单是否和销售合同一致</strong>
+                        <select  ng-model="sdef.isfpandxsht" ng-required="(!requireShow)&&sdef.ZFPLX!='收据'" name="isfpandxsht" ng-change="agreen()" ng-disabled="mkinvoiceRready">
+                            <option value="">请选择</option>
+                            <option value="是">是</option>
+                            <option value="否">否</option>
+                        </select>
+                        <span class="errTip ng-hide" ng-show="mkinvoiceForm.isfpandxsht.$dirty && mkinvoiceForm.isfpandxsht.$error.required">必填</span>
+
+                    </li>
+                </ul>
+                <div class="addTable" ng-show="contractShow">
+                    <h4 class="genH4">发票信息</h4>
+                    <div class="hGener" ng-show="canDown">
+                        <a class="dwonTem" href="/doc/kpsqmb.xlsx" >下载发票模版</a>
+                        <input excle-Uploadify ng-disabled="mkinvoiceRready" btnname="上传发票清单" url="/mkinvoice/uploadfile" excleData="Filedata" ng-model="Filedata"/>
+                        <a class="dwonTem" href="" style="width:50px;" ng-click="xsfdDel()" ng-hide="Filedata.items.length>0">删除</a>
+                        <a class="dwonTem" href="" style="width:50px;" ng-click="invoiceAdd()" ng-hide="Filedata.items.length>0">添加</a>
+
+                    </div>
+                    <br/>
+
+                    <table >
+                        <tr>
+                            <th style="width:2%" ng-show="sdef.isfpandxsht=='否'&&Filedata.items.length==0">&nbsp;&nbsp;&nbsp;<input type="checkbox"  ng-model="all" ng-click="allDell($event)"></th>
+                            <th style="text-align: center">行项目号</th>
+                            <th style="text-align: center">物料编码</th>
+
+                            <th>产品名称</th>
+                            <th>规格型号</th>
+                            <th style="width: 7%">计量单位</th>
+                            <th style="width:10%">数量</th>
+                            <th style="text-align: center;width:10%">单价（含税）</th>
+                            <th style="width: 5%">税率</th>
+                            <th style="text-align: center;width:10%">含税金额</th>
+                            <th ng-show="Filedata.items.length>0">操作</th>
+                            <!--
+                                                    <th ng-if="sdef.isfpandxsht=='否'"><a href="javascript:;" ng-click="invoiceAdd()">添加</a></th>
+                            -->
+                        </tr>
+                    </table>
+                    <div style="overflow-y:auto;max-height:300px">
+                        <table id="cgList">
+                            <tr ng-repeat="list in invoiceCgList" class="list" ng-hide="Filedata.items.length>0">
+                                <td ng-show="list.identShow" style="width:2%" ng-show="sdef.isfpandxsht=='否'"><input type="checkbox" ng-click="checkDel($index)" name="checkbox{{$index}}"  ng-checked="all"/></td>
+                                <td ng-show="list.identShow">
+                                    <input ng-disabled="invoiceList" ng-model="list.POSNR" type="text" value=""/>
+                                </td>
+                                <td ng-show="list.identShow">
+                                    <input ng-disabled="invoiceList" ng-model="list.MATNR" type="text" value=""/>
+                                </td>
+
+                                <td ng-show="list.identShow">
+                                    <input ng-disabled="invoiceList" ng-model="list.ZZKPMS" ng-required="list.identShow" name="ZZKPMS{{$index}}" type="text" value=""/>
+                                    <p class="errTip" ng-if="mkinvoiceForm['ZZKPMS'+$index].$dirty && mkinvoiceForm['ZZKPMS'+$index].$error.required">必填</p>
+
+                                </td>
+                                <td ng-show="list.identShow">
+                                    <input ng-disabled="invoiceList" ng-model="list.ZZGKXH" type="text" value=""/>
+                                </td>
+                                <td ng-show="list.identShow" style="width:7%">
+                                    <input ng-disabled="invoiceList" ng-model="list.MEINS" type="text" value="" maxlength="3"/>
+                                </td>
+                                <td ng-show="list.identShow" style="width:10%">
+                                    <input ng-disabled="invoiceList" ng-model="list.xqnum" ng-Focus bigzero-Validation name="xqnum{{$index}}" type="text" value="" ng-blur="djChange($index)"/>
+                                    <p class="errTip" ng-if="mkinvoiceForm['xqnum'+$index].$dirty && mkinvoiceForm['xqnum'+$index].$error.bigzero&&!mkinvoiceForm['xqnum'+$index].$focused">最多两位小数的正数</p>
+                                    <p class="errTip" ng-if="mkinvoiceForm['xqnum'+$index].$dirty && mkinvoiceForm['xqnum'+$index].$error.required">必填</p>
+
+                                </td>
+                                <td ng-show="list.identShow" style="width:10%">
+                                    <input ng-disabled="invoiceList" ng-model="list.KZWI1" type="text" value=""/>
+                                </td>
+                                <td ng-show="list.identShow" style="width: 5%">
+                                    <input ng-disabled="true"  type="text" value="{{sdef.rate}}"/>
+                                </td>
+                                <td ng-show="list.identShow" style="width:10%">
+                                    <input ng-disabled="invoiceList" ng-Focus keepnumber-Validation name="hsje{{$index}}" ng-model="list.hsje" type="text" value="" ng-blur="djChange($index)"/>
+                                    <p class="errTip" ng-if="mkinvoiceForm['hsje'+$index].$dirty && mkinvoiceForm['hsje'+$index].$error.keepnum&&!mkinvoiceForm['hsje'+$index].$focused">最多两位小数的非负数</p>
+                                    <p class="errTip" ng-if="mkinvoiceForm['hsje'+$index].$dirty && mkinvoiceForm['hsje'+$index].$error.required">必填</p>
+                                </td>
+                                <!--<td ng-if="invoiceShow"><a href="javascript:;" ng-click="invoiceDel($index)">删除</a></td>-->
+                            </tr>
+                            <tr ng-repeat="list in Filedata.items" class="list">
+                                <td>
+                                    <input  ng-model="list.POSNR" type="text" value=""/>
+                                </td>
+                                <td>
+                                    <input  ng-model="list.MATNR" type="text" value=""/>
+                                </td>
+
+                                <td ng-show="false">
+                                    <input  ng-model="list.identShow" type="text" ng-value="true"/>
+                                <td>
+                                    <input  ng-model="list.ZZKPMS" required name="ZZKPMS{{$index}}" type="text" value=""/>
+                                    <p class="errTip" ng-if="mkinvoiceForm['ZZKPMS'+$index].$dirty && mkinvoiceForm['ZZKPMS'+$index].$error.required">必填</p>
+
+                                </td>
+                                <td>
+                                    <input  ng-model="list.ZZGKXH" type="text" value=""/>
+                                </td>
+                                <td style="width:5%">
+                                    <input  ng-model="list.MEINS" type="text" value=""/>
+                                </td>
+                                <td style="width:10%">
+                                    <input  ng-model="list.xqnum" type="text" value=""/>
+                                </td>
+                                <td style="width:10%">
+                                    <input  ng-model="list.KZWI1" type="text" value=""/>
+                                </td>
+                                <td style="width:5%">
+                                    <input ng-disabled="true" type="text" value="{{sdef.rate}}"/>
+                                </td>
+                                <td style="width:10%">
+                                    <input  ng-model="list.hsje" type="text" ng-value="(list.KZWI1*list.xqnum)|number:2"/>
+                                </td>
+                                <td><a href="javascript:;" ng-click="filedataDel($index)">删除</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="clear"></div>
+                    <div>
+                        <span>发票总金额:</span>
+                        {{(sdef.invoiceamount||sdef.redinvoice)| currency : '￥'}} </div>
+                    <div ng-show="saveDown" class="gerSub">
+                        <button ng-click="mkinvoic2Excel()" class="subSave" >下载发票清单</button>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <div class="addTable" ng-if="!contractShow">
+                <div class="genTitle2">
+                    <div>
+                        <strong>收据信息</strong>
+                    </div>
+                </div>
+                <br/>
+                <table>
+                    <tr>
+                        <th>销售合同号</th>
+                        <th>合同金额</th>
+                        <th>已开收据金额</th>
+                        <th><font>*</font>收据金额</th>
+                        <th><font>*</font>收据说明</th>
+                    </tr>
+                    <tr ng-repeat="list in recebillList" class="list">
+                        <td>
+                            <input  ng-model="list.contractno" type="text" name="contractno{{$index}}"  placeholder="请选择销售合同号" ng-click="billBox()"/>
+
+                        </td>
+                        <td>
+                            <input ng-disabled="true" name="htje{{$index}}" ng-model="list.htje" type="text" value=""/>
+                            <!--
+                                                        <p class="errTip" ng-if="mkinvoiceForm['htje'+$index].$dirty && mkinvoiceForm['htje'+$index].$error.required">必填</p>
+                            -->
+
+                        </td>
+                        <td>
+                            <input ng-disabled="true" name="yksjje{{$index}}" ng-model="list.yksjje" type="text" value=""/>
+                            <!--
+                                                        <p class="errTip" ng-if="mkinvoiceForm['yksjje'+$index].$dirty && mkinvoiceForm['yksjje'+$index].$error.required">必填</p>
+                            -->
+
+                        </td>
+
+                        <td>
+                            <input  ng-model="list.sjje" required type="text" value="" ng-Focus keepnumber-Validation  name="sjje{{$index}}"  ng-blur="sjjeNum(list.sjje,list.htje,list.yksjje,$index)"/>
+                            <p class="errTip" ng-if="mkinvoiceForm['sjje'+$index].$dirty && mkinvoiceForm['sjje'+$index].$error.keepnum&&!mkinvoiceForm['sjje'+$index].$focused">最多两位小数的非负数</p>
+                            <p class="errTip" ng-if="mkinvoiceForm['sjje'+$index].$dirty && mkinvoiceForm['sjje'+$index].$error.required">必填</p>
+
+                        </td>
+                        <td>
+                            <input  ng-model="list.sjsm" maxlength="80" name="sjsm{{$index}}"  required type="text" value=""/>
+                            <p class="errTip" ng-if="mkinvoiceForm['sjsm'+$index].$dirty && mkinvoiceForm['sjsm'+$index].$error.required">必填</p>
+
+                        </td>
+                    </tr>
+                </table>
+                <div class="clear"></div>
+                <br/>
+            </div>
+            <div class="gerSub">
+                <a href="index.html#/index" >返回</a>
+                <button ng-click="addData(sdef,glCgList,invoiceCgList,Filedata.items,recebillList, 'save')" class="subSave">保存</button>
+                <button ng-click="addData(sdef,glCgList,invoiceCgList,Filedata.items,recebillList, 'apply')"  class="subApply">保存并提交</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div id="nameBox" class="dialog cusBox" title="选择客户名称" ng-include="'template/mkinvoice/nameBox.html'" ng-controller="nameBoxCtrl"></div>
+<div id="cusBox" class="dialog cusBox" title="销售合同号" ng-include="'template/mkinvoice/cusBox.html'"></div>
+<div id="approversDialog" class="dialog cusBox" title="选择下一审批人" ng-include="'template/common/approvers.html'" ></div>
+<div id="contNum" class="dialog cusBox" title="" ng-include="'template/mkinvoice/contBox.html'"></div>
+<div id="billBox" class="dialog cusBox" title="销售合同号" ng-include="'template/mkinvoice/billBox.html'" ng-controller="billBoxCtrl"></div>

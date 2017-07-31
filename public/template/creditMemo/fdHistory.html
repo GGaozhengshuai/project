@@ -1,0 +1,14 @@
+<table class="orangestyle table">
+    <thead>
+    <tr>
+        <th>返点冲抵应收</th>
+        <th>返点冲抵应收金额</th>
+    </tr>
+    </thead>
+    <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in dataList">
+        <td>{{list.No}}</a></td>
+        <td>{{list.thisMoney |  currency : '￥'}}</td>
+    </tr>
+    </tbody>
+</table>

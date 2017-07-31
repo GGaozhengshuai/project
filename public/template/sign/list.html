@@ -1,0 +1,84 @@
+<div class="item">签报查询</div>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>签报单号</strong>
+                    <input type="text" class="text" name="code" ng-model="code" ng-init="code=''">
+                </td>
+                <td>
+                    <strong>签报类型</strong>
+                    <select ng-model="signtype" ng-init="signtype=''">
+                        <option value="">请选择</option>
+                        <option value="提前交货">提前交货</option>
+                        <option value="投标">投标</option>
+                        <option value="诉讼">诉讼</option>
+                        <option value="办公费用">办公费用</option>
+                        <option value="市场活动">市场活动</option>
+                        <option value="其他">其他</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>签报人</strong>
+                    <input type="text" class="text" name="signpeople" ng-init="signpeople=''" ng-model="signpeople">
+                </td>
+                <td>
+                    <strong>申请人</strong>
+                    <input ng-disabled="true" type="text" class="text" name="creator" ng-model="creator">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+                    <a ng-if="opprev.signOrder_add" class="searchbtn2 searchbtn2bot addBtn" href="/index.html#/signOrderAdd">新建签报单</a>
+                    <a class="searchbtn2 addBtn searchbtn2bot" href="" ng-click="printFn($event)" target="_blank" >打印</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+
+<div class="item">查询结果</div>
+<table class="orangestyle table">
+    <thead>
+    <tr>
+        <th width="20px"><input type="checkbox" ng-model="checkAll" id="allcheck" ng-click="allCheck($event)"></th>
+        <th>签报单号</th>
+        <th>签报类型</th>
+        <th>签报标题</th>
+        <th>签报部门</th>
+        <th>会签单位</th>
+        <th>签报人</th>
+        <th>申请人</th>
+        <th>是否打印</th>
+        <th width="50px">操作</th>
+        <!--<th>打印</th>-->
+    </tr>
+    </thead>
+    <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in dataList">
+        <td><input ng-click="updateSelection($event, list._id,list.code)" class="checkBox"
+                   name="checkbox{{$index}}" type="checkbox" ng-checked="checkAll"/></td>
+        <td>
+            <a target="_blank" class="underline" href="index.html#/signOrderView/{{list._id}}">{{list.code}}</a>
+        </td>
+        <td>{{list.signtype}}</td>
+        <td title="{{list.signtitle}}">{{list.signtitle | cutfield:true:10:'...'}}</td>
+        <td>{{list.signdept}}</td>
+        <td title="{{list.signunit}}">{{list.signunit| cutfield:true:10:'...'}}</td>
+        <td>{{list.signpeople}}</td>
+        <td>{{list.creator}}</td>
+        <td>{{list.hasprint ? '是' : '否'}}</td>
+        <td class="czBtn padL12">
+            <!--<a href="" ng-click="print()">打印</a>-->
+            <!--<a href="/print/print.html?uri=/sign/printview&_id={{list._id}}&code={{list.code}}" target="_blank">打印</a>-->
+            <a class="handleBtn detailBtn" href="index.html#/signOrderView/{{list._id}}" target="_blank" title="详情"></a>
+        </td>
+    </tr>
+    <tr class="tip"><td colspan="8">没有查到签报单</td></tr>
+    </tbody>
+</table>
+<pagination conf="paginationConf" manual="true"></pagination>

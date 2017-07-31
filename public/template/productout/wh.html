@@ -1,0 +1,124 @@
+<h3 class="genTitle genTitleBot"><em></em><span>放货信息维护</span></h3>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>单据编号</strong>
+                    <input class="text" type="text" name=""  ng-init="orderno=''" ng-change="billNum(orderno)" ng-keyup="myKeyup($event)" ng-model="orderno" placeholder="请输入单据编号">
+                </td>
+                <td>
+                    <strong>单据类型</strong>
+                    <select ng-model="type" ng-init="type='contract'">
+                        <option value="contract">销售合同</option>
+                        <option value="lend">借出单</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>客户名称</strong>
+                    <input class="text" type="text" name=""  ng-init="client=''" ng-model="client" placeholder="请输入客户名称">
+                </td>
+                <td>
+                    <strong>销售人员</strong>
+                    <input class="text" type="text" name=""  ng-init="sale=''" ng-model="sale" placeholder="请输入销售人员">
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<div class="item">查询结果</div>
+<!--<div ng-hide="showContract">-->
+    <table class="orangestyle table" id="ccTable" ng-if="showContract">
+        <thead>
+        <tr>
+            <th>合同编号</th>
+            <th>客户名称</th>
+            <th>合同类型</th>
+            <th>项目名称</th>
+            <th>合同金额</th>
+            <th>销售人员</th>
+            <th style="width: 90px;">操作</th>
+        </tr>
+        </thead>
+        <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+        <tr ng-repeat="list in dataList" class="list">
+            <td>{{list.contractno}}</td>
+            <td>{{list.client}}</td>
+            <td>{{list.ordertype}}</td>
+            <td title="{{list.project}}">{{list.project | cutfield:true:15:'...'}}</td>
+            <td>{{list.money  | currency : '￥'}}</td>
+            <td>{{list.sale}}</td>
+            <td class="czBtn">
+                <div class="handlerBox">
+                    <a ng-class="list.ordertype == '专有服务' ? 'handleBtn lendInfoBtn disabled':''" title="该类型的销售合同不支持放货"></a>
+                    <a ng-class="list.ordertype == '专有服务' ? 'handleBtn productOrderBtn disabled':''" title="该类型的销售合同不支持放货"></a>
+                    <a ng-if="opprev.productoutWhAdd" ng-class="list.ordertype != '专有服务' ?  'handleBtn lendInfoBtn':''" ng-click="searchtest(list.code,list.ordercode,'cargooutinfo')" title="放货信息维护"></a>
+                    <!--<a ng-show="(opprev.productoutOrder_add && list.ordertype !== '分销')|| (opprev.productoutOrder_add && list.gylpower == true)" ng-class="list.ordertype != '专有服务' ?  'handleBtn productOrderBtn':''" ng-click="searchtest(list.code,list.ordercode,'productout')" title="生成放货单"></a>-->
+                    <!--<a ng-hide="(opprev.productoutOrder_add && list.ordertype !== '分销')|| (opprev.productoutOrder_add && list.gylpower == true)" ng-class="list.ordertype != '专有服务' ?  'handleBtn productOrderBtn disabled':''" title="请联系相关人员提交放货申请"></a>-->
+                    <a ng-if="opprev.productoutOrder_add" ng-class="list.ordertype != '专有服务' ?  'handleBtn productOrderBtn':''" ng-click="searchtest(list.code,list.ordercode,'productout')" title="生成放货单"></a>
+                </div>
+            </td>
+        </tr>
+        <tr class="tip"><td colspan="10">没有查到销售合同</td></tr>
+        </tbody>
+    </table>
+    <table class="orangestyle table" ng-if="showloanBill">
+    <thead>
+    <tr>
+        <th>借出单号</th>
+        <th>借出客户名称</th>
+        <th>产品线</th>
+        <th>借货人</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in dataList" class="list">
+        <td>{{list.code}}</td>
+        <td>{{list.client}}</td>
+        <td>{{list.productline}}</td>
+        <td>{{list.sale}}</td>
+        <td class="czBtn">
+            <div class="handlerBox">
+                <a ng-if="opprev.productoutWhAdd" class="handleBtn lendInfoBtn" ng-click="searchtest(list.code,list.ordercode,'cargooutinfo')" title="放货信息维护"></a>
+                <a ng-if="opprev.productoutOrder_add" class="handleBtn productOrderBtn" ng-click="searchtest(list.code,list.ordercode,'productout')" title="生成放货单"></a>
+            </div>
+        </td>
+    </tr>
+    <tr class="tip"><td colspan="10">没有查到借出单</td></tr>
+    </tbody>
+    </table>
+    <pagination conf="paginationConf"></pagination>
+<!--</div>
+<div ng-hide="showloanBill">
+    <table class="orangestyle table">
+        <thead>
+        <tr>
+            <th>借出单号</th>
+            <th>借出客户名称</th>
+            <th>产品线</th>
+            <th>借货人</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+        <tr ng-repeat="list in dataList" class="list">
+            <td>{{list.code}}</td>
+            <td>{{list.client}}</td>
+            <td>{{list.productline}}</td>
+            <td>{{list.sale}}</td>
+            <td><a target="_blank" href="index.html#/productoutWhAdd/{{list.code}}">放货维护</a></td>
+        </tr>
+        <tr class="tip"><td colspan="10">没有查到借出单</td></tr>
+        </tbody>
+    </table>
+    <pagination conf="paginationConf"></pagination>
+</div>-->

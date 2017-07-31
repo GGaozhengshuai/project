@@ -1,0 +1,25 @@
+<div class="generForm boxForm">
+    <form novalidate name="invoiceForm">
+        <ul>
+            <li>
+                <strong><font>*</font>银行名称：</strong>
+                <input required ng-model="ORDER_DATA.bank" type="text" placeholder="请填写银行名称"/>
+            </li>
+            <li>
+                <strong><font>*</font>人民币授信额度：</strong>
+                <input integer-Validation ng-Change required ng-model="ORDER_DATA.rmblimit" name="rmblimit" type="number" placeholder="请填写额度"/>
+                <span class="errTip ng-hide" ng-show="invoiceForm.rmblimit.$dirty && invoiceForm.rmblimit.$error.integer && !invoiceForm.rmblimit.$focused">请输入正整数</span>
+            </li>
+            <li>
+                <strong><font>*</font>有效开始日期：</strong>
+                <input class="Wdate" date-Picker required ng-model="ORDER_DATA.startdate" type="text" placeholder="请选择时间" ng-change="rightDate(ORDER_DATA.startdate)"/>
+            </li>
+        </ul>
+
+
+        <div class="gerSub">
+            <a href="javascript:;" ng-click="bkCancel()" class="closeBtn">关闭</a>
+            <button ng-click="addData(ORDER_DATA)"  ng-class="invoiceForm.$invalid == true ? 'displaySub' : 'subSave'" ng-disabled="invoiceForm.$invalid || invoRready">添加</button>
+        </div>
+    </form>
+</div>

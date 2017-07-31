@@ -1,0 +1,105 @@
+<!--<div class="mainright">-->
+    <div class="item">员工查询</div>
+    <form>
+        <div class="genSearch">
+            <table>
+                <tr>
+                    <td>
+                        <div style="position: relative;">
+                            <strong>姓名</strong>
+                            <input class="text" type="text" name="useSname"  ng-init="useSname=''" ng-model="useSname" placeholder="请输入姓名">
+                        </div>
+                    </td>
+                    <td>
+                        <strong>部门</strong>
+                        <input type="text" ng-readonly="true" ng-click="employee()" ng-init="empViewName=''"  ng-model="empViewName" class="text" placeholder="请选择部门">
+                        <input type="hidden" name="orgId"  ng-init="orgId=''" ng-model="orgId">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>人员状态</strong>
+                        <select ng-init="'false'" ng-model="empType" class="busSel">
+                            <option value="false" ng-selected=true>未删除员工</option>
+                            <option value="true">已删除员工</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+                        <a class="searchbtn2 searchbtn2bot addBtn" href="/index.html#/listAdd">新建员工</a>
+                        <a class="searchbtn2 searchbtn2bot addBtn" href="/index.html#/onlineUsers">在线用户</a>
+                        <!--<input type="button" value="添加员工" class="searchbtn2 searchbtn2bot" ng-click="search()">-->
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </form>
+    <div class="item">查询结果</div>
+<table class="orangestyle table">
+        <thead>
+        <tr>
+            <!--<th>员工编号</th>-->
+            <th>用户名</th>
+            <th>姓名</th>
+            <th>部门</th>
+            <th>审批流角色</th>
+            <th>职位</th>
+            <!--<th>电话</th>-->
+            <!--<th>邮箱</th>-->
+            <th>销售小组</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+            <tr ng-repeat="list in dataList">
+                <!--<td>{{list._id}}</td>-->
+                <td><a class="underline" ng-href="index.html#/viewUser/{{list._id}}">{{list.login}}</a></td>
+                <td>{{list.name}}</td>
+                <td>{{list.orgname}}</td>
+                <td><span ng-repeat="role in list.roles">{{role.name}}</span></td>
+                <td>{{list.title}}</td>
+                <!--<td>{{list.phone}}</td>-->
+                <!--<td>{{list.email}}</td>-->
+                <td>{{list.belongaddr}}</td>
+                <td class="czBtn">
+                    <a class="handleBtn editBtn" target="_blank" ng-href="index.html#/listEdit/{{list._id}}" title="变更"></a>
+                    <a class="handleBtn detailBtn" ng-href="index.html#/viewUser/{{list._id}}" title="详情"></a>
+                    <a ng-if="list.status !== 'X'" class="handleBtn delBtn" ng-click="deleteUser(list._id,$index)" title="删除员工"></a>
+                    <a ng-if="list.status === 'X'" class="handleBtn releaseBtn" ng-click="activate(list._id,$index)" title="激活"></a>
+                </td>
+            </tr>
+            <tr class="tip"><td rowspan="7">没有查到此员工</td></tr>
+        </tbody>
+    </table>
+    <pagination conf="paginationConf"></pagination>
+
+<!--</div>-->
+<!--<div id="dialog" class="dialog" title="选择部门" >
+    <ul class="deptlist">
+        <li><a ng-click="getEmployee()" href="javascript:;">中建材集团</a><span>&gt</span></li>
+        <li ng-repeat="list in employeeNav"><a ng-click="getEmployee(list._id,list.orgname)" href="javascript:;">{{list.orgname}}</a><span>&gt</span></li>
+    </ul>
+    <div class="ct">
+
+        <a href="javascript:;" class="strip clearfix" ng-repeat="list in employeeList" pId="{{list.pid}}" id="{{list._id}}" ng-click="getEmployee(list._id,list.orgname)">
+            <span class="fl">{{list.orgname}}</span>
+            <span class="fr">&gt</span>
+        </a>
+
+    </div>
+</div>-->
+<div id="dialog" class="dialog" title="选择部门">
+    <div class="employeeTip">
+        <h5>
+            <span><a ng-click="getEmployee()" href="javascript:;">中建材信息技术</a>&gt</span>
+            <span ng-repeat="list in employeeNav"><a ng-click="getEmployee(list._id,list.orgname)" href="javascript:;">{{list.orgname}}</a>&gt</span>
+        </h5>
+        <ul>
+            <li ng-repeat="list in employeeList"><a  ng-click="getEmployee(list._id,list.orgname)" href="javascript:;">{{list.orgname}}（{{list.grandsoncount}}）</a></li>
+        </ul>
+    </div>
+</div>
+<div id="delDialog" class="dialog" title="同时删除权限?">
+    <div class="checkSelect"><label><input type="checkbox" ng-model="delete_extra.busi_roles">菜单权限</label></div>
+    <div class="checkSelect"><label><input type="checkbox" ng-model="delete_extra.roles">审批流权限</label></div>
+</div>

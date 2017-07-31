@@ -1,0 +1,125 @@
+<div class="item">到货管理</div>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>供应商订单号</strong>
+                    <input type="text" class="text" name="" ng-model="supplierid" ng-init="supplierid=''">
+                </td>
+                <td>
+                    <strong>货运单号</strong>
+                    <input type="text" class="text" name="" ng-model="transportid" ng-init="transportid=''">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>状态</strong>
+                    <select ng-model="status" ng-init="status=''">
+                        <option value="">请选择</option>
+                        <option value="预约提货">预约提货</option>
+                        <option value="提货完成">提货完成</option>
+                        <option value="到货登记">到货登记</option>
+                        <option value="上架完成">上架完成</option>
+                        <option value="过账完成">过账完成</option>
+                        <option value="作废">作废</option>
+                    </select>
+                </td>
+                <td>
+                    <strong>预计到厂时间</strong>
+                    <input style="width: 125px" class="text Wdate" date-Picker ng-readonly="true" type="text"  placeholder="请输入日期" ng-model="dateStar" ng-init="dateStar=''">
+                    <span style="float: left; margin: 5px;">-</span>
+                    <input style="width: 125px" class="text Wdate" date-Picker ng-readonly="true" type="text"  placeholder="请输入日期" ng-model="dateEnd" ng-init="dateEnd=''">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="button" value="查询" class="searchbtn2 searchbtn2bot" ng-click="search()">
+                    <a class="searchbtn2 searchbtn2bot addBtn" href="/index.html#/arriveCargoinfoAdd">预约提货登记</a>
+                    <a class="searchbtn2 searchbtn2bot viewBtn" href="javascript:;" ng-click="ContainerNumberAdjustment()">箱数调整</a>
+                    <a class="searchbtn2 searchbtn2bot viewBtn" href="javascript:;" ng-click="DateRegister()">到库时间登记</a>
+                    <a class="searchbtn2 searchbtn2bot addBtn" href="javascript:;" ng-click="cancellationClick()">作废</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+
+<div class="item">查询结果</div>
+<div ng-if="!table" class="loading-text grid">
+    <span ng-if="loadData">数据载入中...</span>
+    <span ng-if="!loadData">查询不到数据</span>
+</div>
+<div ng-if="table" ui-grid="table" ui-grid-selection ui-grid-resize-columns ui-grid-pinning ui-grid-auto-resize class="grid"></div>
+<pagination conf="paginationConf"></pagination>
+
+
+<!--到库时间登记-->
+<div id="DateRegister" class="dialog changebox" title="到库时间登记">
+    <div class="cusCont" style="min-height: 30px;padding-bottom: 20px;">
+        <div class="generForm">
+            <ul>
+                <li class="tli"><strong>实际到库时间：</strong><input type="text" class="Wdate" date-Picker ng-model="alertDate" in-init="alertDate=''"/></li>
+            </ul>
+        </div>
+    </div>
+
+    <table class="orangestyle table">
+        <thead>
+        <tr>
+            <th>货运单号</th>
+            <th>供应商订单号</th>
+            <th>项目名称</th>
+            <th>预约提货箱数</th>
+            <th>预计到厂时间</th>
+            <th>预约创建时间</th>
+            <th>实际到库时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="list in arriveList">
+            <td>{{list.transportid}}</td>
+            <td>{{list.supplierid}}</td>
+            <td>{{list.project}}</td>
+            <td>{{list.thnum}}</td>
+            <td>{{list.expectdate | date : 'yyyy-MM-dd'}}</td>
+            <td>{{list.createdate | date : 'yyyy-MM-dd'}}</td>
+            <td>{{list.actualdate | date : 'yyyy-MM-dd'}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<!--箱数调整-->
+<div id="theNumberBox" class="dialog changebox" title="箱数调整">
+    <table class="orangestyle table">
+        <thead>
+        <tr>
+            <th>货运单号</th>
+            <th>供应商订单号</th>
+            <th>项目名称</th>
+            <th>预约提货箱数</th>
+            <th>已到货箱数</th>
+            <th>已上架箱数</th>
+            <th>已过账箱数</th>
+            <th>状态</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="list in numberAdjustment">
+            <td>{{list.transportid}}</td>
+            <td>{{list.supplierid}}</td>
+            <td>{{list.project}}</td>
+            <td ng-class="list.thnumnew < list.dhnum ? 'hasErrhtTip' : ''"><input type="number" ng-model="list.thnumnew" class="text"/></td>
+            <td>{{list.dhnum}}</td>
+            <td>{{list.sjnum}}</td>
+            <td>{{list.gznum}}</td>
+            <td>{{list.status}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

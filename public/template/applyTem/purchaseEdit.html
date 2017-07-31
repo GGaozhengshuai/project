@@ -1,0 +1,77 @@
+<h3 class="genTitle"><em></em><span>编辑采购申请</span></h3>
+<ul class="generNav">
+    <li class="active"><a href="javascript:;">采购申请单</a></li>
+</ul>
+
+<div id="cusCont">
+    <div class="generForm">
+        <form novalidate name="invoiceForm">
+        <ul>
+            <li class="tli"><strong>采购申请号：</strong><span>{{purchaseList.BANFN}}</span></li>
+            <li class="tli"><strong>凭证日期：</strong><span>{{purchaseList.ERDAT}}</span></li>
+            <li class="tli"><strong>供应商订单号：</strong><span>{{purchaseList.ZZPO}}</span></li>
+            <li class="tli"><strong>采购申请凭证类型：</strong><span>{{enumBSART[purchaseList.BSART]}}</span></li>
+            <li class="tli"><strong>最终客户名称：</strong><span>{{purchaseList.ZZKH}}</span></li>
+            <li class="tli"><strong>项目名称：</strong><span>{{purchaseList.ZZXM}}</span></li>
+            <li class="tli"><strong>销售员：</strong><span>{{purchaseList.ZZSQR}}</span></li>
+            <li class="tli"><strong>供应商名称：</strong><span>{{purchaseList.ZZQY}}</span></li>
+            <li class="tli"><strong>采购组：</strong><span>{{enumEKGRP[purchaseList.EKGRP]}}</span></li>
+            <li class="tli"><strong>二级经销商名称：</strong><span>{{purchaseList.ZZEJ}}</span></li>
+            <!--<li class="tli"><strong>贸易条款：</strong><span>{{purchaseList.ZZMY}}</span></li>-->
+            <li class="tli"><strong>价格条款附加信息：</strong><span>{{purchaseList.ZZFJ}}</span></li>
+            <li class="tli"><strong>运输方式：</strong><span>{{purchaseList.ZZYS}}</span></li>
+            <li class="tli"><strong>付款方式：</strong><span>{{purchaseList.ZZFK}}</span></li>
+            <!--<li class="tli"><strong>预计销售利润(%)：</strong><span>{{purchaseList.ZZXS}}</span></li>-->
+            <li class="tli"><strong>预计交货日期：</strong><span>{{purchaseList.ZZJH}}</span></li>
+            <li class="tli"><strong>产品线：</strong><span>{{enumZZCP[purchaseList.ZZCP]}}</span></li>
+            <li class="tli"><strong>进货总金额：</strong><span>{{purchaseList.ZZZJY}}</span></li>
+            <li class="tli"><strong>进货设备金额：</strong><span>{{purchaseList.ZZSBK}}</span></li>
+            <li class="tli"><strong>进货服务金额：</strong><span>{{purchaseList.ZZFWK}}</span></li>
+            <li><strong>币别：</strong><span>{{enumWAERS[purchaseList.WAERS]}}</span></li>
+            <li class="tli"><strong>申请人：</strong><span>{{purchaseList.ERNAM}}</span></li>
+            <li class="tli"><strong>项目说明：</strong><span>{{purchaseList.note}}</span></li>
+            <li><strong>备注：</strong><textarea name="" ng-model="purchaseList.comment" id="" cols="30" rows="10"></textarea></li>
+        </ul>
+        </form>
+        <div style="margin:20px;"></div>
+        <div class="addTable">
+            <table class="tab_data">
+                <thead class="tab_header">
+                <tr>
+                    <th>行项目</th>
+                    <th>物料类型</th>
+                    <th>物料组</th>
+                    <th>物料编码</th>
+                    <th>物料描述</th>
+                    <th>数量</th>
+                    <th>单位</th>
+                    <th>税率</th>
+                    <th>估价</th>
+                </tr>
+                </thead>
+                <tbody class="tab_body">
+                <tr ng-repeat="list in dataList">
+                    <td>{{list.BNFPO}}</td>
+                    <td>{{enumObj.MTART[list.MTART]}}</td>
+                    <td>{{enumObj.MATKL[list.MATKL]}}</td>
+                    <td>{{list.MATNR}}</td>
+                    <td>{{list.TXZ01}}</td>
+                    <td>{{list.MENGE}}</td>
+                    <td>{{enumObj.MEINS[list.MEINS]}}</td>
+                    <td>{{enumObj.ZMWSKZ[list.ZMWSKZ]}}</td>
+                    <td>{{list.PREIS}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <pagination conf="paginationConf"></pagination>
+</div>
+<div class="gerSub">
+    <a href="index.html#/productoutWh">返回</a>
+    <button ng-click="addData(purchaseList, 'save')"  ng-class="invoiceForm.$invalid == true ? 'displaySub' : 'subSave'" ng-disabled="invoiceForm.$invalid || invoRready">保存</button>
+    <button ng-click="addData(purchaseList, 'apply')"  ng-class="invoiceForm.$invalid == true ? 'displaySub' : 'subApply'" ng-disabled="invoiceForm.$invalid || invoRready">保存并提交</button>
+    <!--<button ng-click="update(addInvo,'addInvoice')"  ng-class="myForm.$invalid == true ? 'displaySub' : 'subSave'" ng-disabled="invoiceForm.$invalid || invoRready">保存</button>
+    <button ng-click="update(addInvo,'addInvoice')"  ng-hide="invoApproveBtn" ng-class="myForm.$invalid == true ? 'displaySub' : 'subSave'" ng-disabled="invoiceForm.$invalid || invoRready">提交审批</button>
+--></div>
+

@@ -1,0 +1,53 @@
+<h3 class="genTitle"><em></em>
+  <span>借出续借</span>
+  <span ng-if="activeTab == 2">审批详情</span>
+</h3>
+<ul class="generNav">
+  <li ng-class="{active:activeTab == 1}"><a href="javascript:void(0);" ng-mousedown='htTab(1)'>借出续借</a></li>
+  <li ng-class="{active:activeTab == 2}"><a href="javascript:void(0);" ng-mousedown='htTab(2)'>审批详情</a></li>
+</ul>
+<div id="mainView">
+    <div class="viewTable ng-scope">
+      <div ng-if="activeTab == 1">
+        <ul>
+            <li><strong>借出单号：</strong><span>{{ORDER_DATA.code}}</span></li>
+            <!--<li><strong>申请日期：</strong><span>{{ORDER_DATA.lendbase.start}}</span></li>-->
+            <li><strong>申请日期：</strong><span>{{ORDER_DATA.pdrenew.timestamp | date:'yyyy-MM-dd'}}</span></li>
+            <li><strong>借货人：</strong><span>{{ORDER_DATA.user.name}}</span></li>
+            <li><strong>部门：</strong><span>{{ORDER_DATA.department.name}}</span></li>
+            <li><strong>事业部：</strong><span>{{ORDER_DATA.department.name2}}</span></li>
+            <li><strong>产品线：</strong><span>{{ORDER_DATA.lendbase.productline}}</span></li>
+            <li><strong>借出客户名称：</strong><span>{{ORDER_DATA.client.name}}</span></li>
+          <li><strong>实际借出客户：</strong><span>{{ORDER_DATA.client.realname}}</span></li>
+          <li><strong>借出起始日期：</strong><span>{{ORDER_DATA.lendbase.start}}</span></li>
+            <li><strong>借货天数：</strong><span>{{ORDER_DATA.lendbase.days}}</span></li>
+            <li><strong>预计归还日期：</strong><span>{{ORDER_DATA.lendbase.end}}</span></li>
+            <li><strong>已续借天数：</strong><span>{{ORDER_DATA.lendbase.renewdays}}</span></li>
+            <li><strong>本次续借天数：</strong><span>{{ORDER_DATA.pdrenew.rndays}}</span></li>
+            <li class="list_con"><strong>借货说明：</strong><span>{{ORDER_DATA.lendbase.des}}</span></li>
+            <li class="list_con"><strong>续借说明：</strong><span>{{ORDER_DATA.pdrenew.rndesc}}</span></li>
+        </ul>
+      </div>
+      <div class="applyLog" ng-if="activeTab == 2">
+        <table>
+          <thead>
+          <tr>
+            <th class="th1">审批人</th>
+            <th class="th2">审批时间</th>
+            <th class="th3">审批状态</th>
+            <th class="th4">审批意见</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="list in processlog">
+            <td>{{list.sender.name}}</td>
+            <td>{{list.createDate | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td>{{list.operation}}</td>
+            <td>{{list.content.comment}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="clear"></div>
+</div>

@@ -1,0 +1,81 @@
+<h3 class="genTitle genTitleBot"><em></em><span>编辑费用申请单</span></h3>
+<div class="cusCont">
+    <div class="generForm">
+        <form novalidate name="invoiceForm">
+            <ul>
+                <li class="tli">
+                    <strong>申请流水号：</strong>
+                    <input ng-model="ORDER_DATA.ZINORD" type="text" ng-disabled="commonEdit" placeholder=""/>
+                    <input ng-model="ORDER_DATA.processId" type="hidden" placeholder=""/>
+                </li>
+                <li class="tli" ng-if="draftStatue">
+                    <strong>费用申请单号：</strong>
+                    <input ng-model="ORDER_DATA.AUFNR" ng-disabled="dataEdit" type="text" placeholder=""/>
+                    <input ng-model="ORDER_DATA.type" type="hidden" placeholder=""/>
+                    <input ng-model="ORDER_DATA.sapid" type="hidden" placeholder=""/>
+                    <input ng-model="ORDER_DATA.MANDT" type="hidden" placeholder=""/>
+                    <input ng-model="ORDER_DATA.KOKRS" type="hidden" placeholder=""/>
+                    <input ng-model="ORDER_DATA.USER0" type="hidden" placeholder=""/>
+                    <input ng-model="ORDER_DATA.USER5" type="hidden" placeholder=""/>
+                    <input ng-model="ORDER_DATA.USER6" type="hidden" placeholder=""/>
+                </li>
+                <li class="tli">
+                    <strong>公司名称：</strong>
+                    <select ng-model="ORDER_DATA.BUKRS" ng-disabled="commonEdit" ng-options="m.code as m.name for m in BUKRS">
+                        <option value="">请选择</option>
+                    </select>
+                </li>
+                <li class="tli">
+                    <strong>成本中心：</strong>
+                    <input type="text" ng-disabled="dataEdit" value="{{ORDER_DATA.RESPCCTR | getName:costcenterSel :'text':'code'}}"/>
+                </li>
+                <li class="clear"></li>
+                <li>
+                    <strong><font>*</font>费用申请单类型：</strong>
+                    <select ng-disabled="dataEdit" ng-model="selectType.category" ng-change="selectType.costtype=''" name="category" ng-required="true">
+                        <option value="">--请选择--</option>
+                        <option ng-repeat="(x,y) in selectType.categorySel" value="{{x}}">{{y.text}}</option>
+                    </select>
+                    <select ng-disabled="dataEdit" ng-model="selectType.costtype" ng-required="true" name="costtype">
+                        <option value="">--请选择--</option>
+                        <option ng-repeat=" (x,y) in selectType.categorySel[selectType.category.split('-')[0]].sub" value="{{x}}">{{y.text}}</option>
+                    </select>
+                    <select ng-disabled="dataEdit" ng-model="selectType.fulltype" name="fulltype">
+                        <option value="">--请选择--</option>
+                        <option ng-repeat=" (x,y) in selectType.categorySel[selectType.category.split('-')].sub[selectType.costtype.split('-')].sub" value="{{x}}">{{y.text}}</option>
+                    </select>
+                    <!--<select ng-model="ORDER_DATA.AUART" ng-disabled="dataEdit">
+                        <option value="">请选择</option>
+                        <option value="ZJ01">市场费用</option>
+                        <option value="ZJ02">直接运营费用</option>
+                        <option value="ZJ03">项目前期费用</option>
+                        <option value="ZJ99">间接运营费用</option>
+                    </select>-->
+                </li>
+                <li class="tli"><strong><font>*</font>预算金额：</strong><input ng-disabled="dataEdit" ng-change="ysMoney(ORDER_DATA.ZSQJE)" ng-model="ORDER_DATA.ZSQJE" type="number" placeholder="保留两位小数"/></li>
+                <li class="tli" ng-if="draftStatue"><strong><font>*</font>追加预算金额：</strong><input ng-required="true" ng-model="ORDER_DATA.ZZJYSJE" ng-Focus numtwo-Validation name="ZZJYSJE" type="number" placeholder="保留两位小数"/>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.ZZJYSJE.$dirty && invoiceForm.ZZJYSJE.$error.numtwo && !invoiceForm.ZZJYSJE.$focused">保留两位小数</span>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.ZZJYSJE.$dirty && invoiceForm.ZZJYSJE.$error.required && !invoiceForm.ZZJYSJE.$focused">必填</span>
+                </li>
+                <li class="tli" ng-if="draftStatue">
+                    <strong><font>*</font>总预算金额：</strong>
+                    <input ng-disabled="dataEdit" value="{{(ORDER_DATA.ZSQJE*1+ORDER_DATA.ZZJYSJE*1).toFixed(2)}}" type="text" placeholder="保留两位小数"/>
+                </li>
+                <div class="clear"></div>
+                <li><strong><font>*</font>事由：</strong>
+                    <textarea ng-disabled="dataEdit" ng-model="ORDER_DATA.USER3.describe" required></textarea>
+                    <!--<span class="errTip" ng-show="invoiceForm.ZSQNR.$error.maxlength">超过40个字符</span>-->
+                </li>
+                <li ng-show="dataExplain"><strong>说明：</strong>
+                    <textarea name="USER3" ng-model="ORDER_DATA.USER3.instructions" placeholder=""></textarea>
+                   <!-- <span class="errTip" ng-show="invoiceForm.USER3.$error.maxlength">超过200个字符</span>-->
+                </li>
+            </ul>
+            <div class="gerSub">
+                <a href="index.html#/insideOrder">返回</a>
+                <button  ng-if="draftEdit" ng-click="addInside(ORDER_DATA, 'save')"  class="subSave">保存</button>
+                <button ng-click="addInside(ORDER_DATA, 'apply')" class="subApply">保存并提交</button>
+            </div>
+        </form>
+    </div>
+</div>

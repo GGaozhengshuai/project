@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+    </style>
+    <link rel="stylesheet" type="text/css" href="js/lib/uploadify/uploadify.css">
+    <script type="text/javascript" src="js/lib/jquery/jquery-1.11.3.js"></script>
+    <script type="text/javascript" src="js/lib/uploadify/jquery.uploadify.js"></script>
+    <script type="text/javascript">
+       /* function getCookie(key) {
+            if (document.cookie) {
+                var parts = document.cookie.split('; ');
+                for (var i = 0; i < parts.length; i++) {
+                    var vals = parts[i].split('=');
+                    if (vals[0] == key) {
+                        return vals[1];
+                    }
+                }
+                return "";
+            } else {
+                return "";
+            }
+        }*/
+        $(function () {
+            $('#file_upload').uploadify({
+                'swf': 'js/lib/uploadify/uploadify.swf',
+                'uploader': '/resource/uploadfile',
+                /*  'buttonImage':'img/contact.png',*/
+                'auto': 'true',
+                'multi': 'true',
+                'progressData	': 'percentage',
+                'formData': {'userid': 'test'},
+                'onUploadSuccess': function (file, data, response) {
+                    console.log(data);
+                    var a=JSON.parse(data);
+                    console.log(a.rst.attachment);
+                }
+            });
+        });
+
+    </script>
+</head>
+<body>
+<div>
+    <input type="file" name="file_upload" id="file_upload"/>
+</div>
+</body>
+</html>

@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="css/reset.css" rel="stylesheet">
+    <link href="js/lib/jquery-ui-1.11.4.custom/jquery-ui.css" rel="stylesheet">
+    <link href="css/common.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <script src="js/lib/jquery/jquery-1.11.3.js"></script>
+    <script src="js/lib/jquery-ui-1.11.4.custom/jquery-ui.js"></script>
+</head>
+<body>
+<div class="head">
+<div class="wrap">
+    <img src="img/headlogo.png">
+    <form>
+        <div class="search">
+            <input type="text" placeholder="请输入关键词" class="searchctn">
+            <input type="button" class="searchbtn">
+        </div>
+    </form>
+</div>
+<div class="nav">
+    <div class="wrap">
+        <ul class="navlist">
+            <li><a class="active" href="#">首页</a><span>/</span></li>
+            <li>
+                <a href="#">用户管理</a>
+                <span>/</span>
+                <ul class="subnavlist">
+                    <li class="triangle"></li>
+                    <li><a href="#">添加用户</a></li>
+                    <li><a href="#">查看用户</a></li>
+                    <li><a href="#">修改密码</a></li>
+                </ul>
+            </li>
+            <li><a href="#">合同管理</a><span>/</span></li>
+            <li><a href="#">企业邮箱</a><span>/</span></li>
+            <li><a href="#">系统设置</a><span>/</span></li>
+            <li><a href="#">个人设置</a></li>
+        </ul>
+        <span class="user">欢迎<span>WangleYali</span><a class="loginout">退出</a></span>
+    </div>
+</div>
+</div>
+<div class="main">
+    <div class="wrap">
+        <div class="mainleft">
+            <div class="item">创建工作流</div>
+            <ul class="workflow">
+                <li class="purple_gb"><a href="#">合同</a></li>
+                <li class="blue_gb"><a href="#">工作记录</a></li>
+                <li class="orange_gb"><a href="#">结案报告</a></li>
+                <li class="pink_gb"><a href="#">表单申请</a></li>
+                <li class="green_gb"><a href="#">创意新产品</a></li>
+                <li class="violet_gb"><a href="#">报销流程</a></li>
+            </ul>
+            <div class="item">
+                新闻公告
+                <a class="fr" href="#">更多<i class="plus"></i></a>
+            </div>
+            <div class="news">
+                <a href="#" class="strip clearfix">
+                    <span class="fl">12/11</span>
+                    <span class="fr">中资论的创业公司是一种能够有</span>
+                </a>
+                <a href="#" class="strip clearfix">
+                    <span class="fl">12/11</span>
+                    <span class="fr">中资论的创业公司是一种能够有</span>
+                </a>
+                <a href="#" class="strip clearfix">
+                    <span class="fl">12/11</span>
+                    <span class="fr">中资论的创业公司是一种能够有</span>
+                </a>
+                <a href="#" class="strip clearfix">
+                    <span class="fl">12/11</span>
+                    <span class="fr">中资论的创业公司是一种能够有</span>
+                </a>
+                <a  href="#" class="strip clearfix">
+                    <span class="fl">12/11</span>
+                    <span class="fr">中资论的创业公司是一种能够有</span>
+                </a>
+                <a href="#" class="strip clearfix">
+                    <span class="fl">12/11</span>
+                    <span class="fr">中资论的创业公司是一种能够有</span>
+                </a>
+            </div>
+            <div class="item">最近的工作</div>
+            <div class="news">
+                <a href="#" class="strip clearfix">
+                    <span class="fl">工作项目</span>
+                    <span class="fr">股市低迷之际企业并购的正确方式</span>
+                </a>
+                <a href="#" class="strip clearfix">
+                    <span class="fl">工作项目</span>
+                    <span class="fr">股市低迷之际企业并购的正确方式</span>
+                </a>
+                <a href="#" class="strip clearfix">
+                    <span class="fl">工作项目</span>
+                    <span class="fr">股市低迷之际企业并购的正确方式</span>
+                </a>
+                <a href="#" class="strip clearfix">
+                    <span class="fl">工作项目</span>
+                    <span class="fr">股市低迷之际企业并购的正确方式</span>
+                </a>
+            </div>
+        </div>
+        <div class="mainright">
+            <div class="item"><i class="leftborder"></i>创建工作流</div>
+
+            <ul class="deptlist">
+                <li><a href="#">中建材集团</a><span>&gt</span></li>
+                <li><a href="#">电子商务事业部</a><span>&gt</span></li>
+                <li><a href="#">物流仓库规划部</a><span>&gt</span></li>
+                <li class="active"><a href="#">人事部</a></li>
+            </ul>
+            <div class="left_wrap fl">
+                <div class="title_wrap clearfix">
+                    <span class="fl">中建材总部</span>
+                    <a class="fr" href="#" id="dept_add">新增同级部门</a>
+                </div>
+                <div class="content_wrap">
+                    <a href="#" class="strip">
+                        <span>人事部（5个子部门）</span>
+                        <span class="icons fr">
+                            <i class="icon add" title="增加部门"></i>
+                            <i class="icon edit" title="编辑部门"></i>
+                            <i class="icon delete" title="删除部门"></i>
+                        </span>
+                    </a>
+                    <a href="#" class="strip">
+                        <span>人事部（5个子部门）</span>
+                        <span class="icons fr">
+                            <i class="icon add" title="增加部门"></i>
+                            <i class="icon edit" title="编辑部门"></i>
+                            <i class="icon delete" title="删除部门"></i>
+                        </span>
+                    </a>
+                    <a href="#" class="strip">
+                        <span>人事部（5个子部门）</span>
+                        <span class="icons fr">
+                            <i class="icon add" title="增加部门"></i>
+                            <i class="icon edit" title="编辑部门"></i>
+                            <i class="icon delete" title="删除部门"></i>
+                        </span>
+                    </a>
+                    <a href="#" class="strip">
+                        <span>人事部（5个子部门）</span>
+                        <span class="icons fr">
+                            <i class="icon add" title="增加部门"></i>
+                            <i class="icon edit" title="编辑部门"></i>
+                            <i class="icon delete" title="删除部门"></i>
+                        </span>
+                    </a>
+                    <a href="#" class="strip">
+                        <span>人事部（5个子部门）</span>
+                        <span class="icons fr">
+                            <i class="icon add" title="增加部门"></i>
+                            <i class="icon edit" title="编辑部门"></i>
+                            <i class="icon delete" title="删除部门"></i>
+                        </span>
+                    </a>
+                    <a href="#" class="strip">
+                        <span>人事部（5个子部门）</span>
+                        <span class="icons fr">
+                            <i class="icon add" title="增加部门"></i>
+                            <i class="icon edit" title="编辑部门"></i>
+                            <i class="icon delete" title="删除部门"></i>
+                        </span>
+                    </a>
+                </div>
+                <i class="figure"></i>
+            </div>
+            <i class="icon rightpoint"></i>
+            <div class="right_wrap fr">
+                <div class="title_wrap clearfix">
+                    <span class="fl">部门人员汇总</span>
+                    <a class="fr" href="#" id="dept_addnew">新增部门员工</a>
+                </div>
+                <div class="content_wrap">
+                    <!--<div class="content_icon">-->
+                        <!--<i class="handpoint icon"></i>-->
+                        <!--<p>请选择具体部门</p>-->
+                    <!--</div>-->
+
+                    <div class="content_title clearfix">
+                        <span class="fl">姓名</span>
+                        <span class="fr">操作</span>
+                    </div>
+                    <a href="#" class="strip">
+                        <span>人事部（5个子部门）</span>
+                        <span class="fr">
+                            <i class="icon edit" title="编辑部门" ></i>
+                            <i class="icon delete" title="删除部门"></i>
+                        </span>
+                    </a>
+                    <a href="#" class="strip">
+                        <span>人事部（5个子部门）</span>
+                        <span class="fr">
+                            <i class="icon edit" title="编辑部门"></i>
+                            <i class="icon delete" title="删除部门"></i>
+                        </span>
+                    </a>
+                    <a href="#" class="strip">
+                        <span>人事部（5个子部门）</span>
+                        <span class="fr">
+                            <i class="icon edit" title="编辑部门"></i>
+                            <i class="icon delete" title="删除部门"></i>
+                        </span>
+                    </a>
+                    <a href="#" class="strip">
+                        <span>人事部（5个子部门）</span>
+                        <span class="fr">
+                            <i class="icon edit" title="编辑部门"></i>
+                            <i class="icon delete" title="删除部门"></i>
+                        </span>
+                    </a>
+                    <a href="#" class="strip">
+                        <span>人事部（5个子部门）</span>
+                        <span class="fr">
+                            <i class="icon edit" title="编辑部门"></i>
+                            <i class="icon delete" title="删除部门"></i>
+                        </span>
+                    </a>
+                    <a href="#" class="strip">
+                        <span>人事部（5个子部门）</span>
+                        <span class="fr">
+                            <i class="icon edit" title="编辑部门"></i>
+                            <i class="icon delete" title="删除部门"></i>
+                        </span>
+                    </a>
+                </div>
+            </div>
+
+
+            <!--<form>-->
+            <!--<div class="staff_search">-->
+                <!--<div class="label">姓名</div>-->
+                <!--<input type="text" name="name" class="name">-->
+                <!--<span class="label">部门</span>-->
+                <!--<input type="text" name="department" class="department">-->
+                <!--<i class="down"></i>-->
+                <!--<div class="dept_choose">-->
+                    <!--<div class="head clearfix">-->
+                        <!--<span class="fl">选择部门</span>-->
+                        <!--<i class="fr icon_close"></i>-->
+                    <!--</div>-->
+                    <!--<ul class="deptlist">-->
+                        <!--<li><a href="#">中建材集团</a><span>&gt</span></li>-->
+                        <!--<li><a href="#">电子商务事业部</a><span>&gt</span></li>-->
+                        <!--<li><a href="#">物流仓库规划部</a><span>&gt</span></li>-->
+                        <!--<li class="active"><a href="#">人事部</a></li>-->
+                    <!--</ul>-->
+                    <!--<div class="dept_wrap">-->
+                        <!--<a href="#" class="strip clearfix">-->
+                            <!--<span class="fl">集团总部（12）个子部门</span>-->
+                            <!--<span class="fr">&gt</span>-->
+                        <!--</a>-->
+                        <!--<a href="#" class="strip clearfix">-->
+                            <!--<span class="fl">集团总部（12）个子部门</span>-->
+                            <!--<span class="fr">&gt</span>-->
+                        <!--</a>-->
+
+                        <!--<a href="#" class="strip clearfix">-->
+                            <!--<span class="fl">集团总部（12）个子部门</span>-->
+                            <!--<span class="fr">&gt</span>-->
+                        <!--</a>-->
+                        <!--<a href="#" class="strip clearfix">-->
+                            <!--<span class="fl">集团总部（12）个子部门</span>-->
+                            <!--<span class="fr">&gt</span>-->
+                        <!--</a>-->
+                        <!--<a href="#" class="strip clearfix">-->
+                            <!--<span class="fl">集团总部（12）个子部门</span>-->
+                            <!--<span class="fr">&gt</span>-->
+                        <!--</a>-->
+                        <!--<a href="#" class="strip clearfix">-->
+                            <!--<span class="fl">集团总部（12）个子部门</span>-->
+                            <!--<span class="fr">&gt</span>-->
+                        <!--</a>-->
+                        <!--<a href="#" class="strip clearfix">-->
+                            <!--<span class="fl">集团总部（12）个子部门</span>-->
+                            <!--<span class="fr">&gt</span>-->
+                        <!--</a>-->
+                        <!--<a href="#" class="strip clearfix">-->
+                            <!--<span class="fl">集团总部（12）个子部门</span>-->
+                            <!--<span class="fr">&gt</span>-->
+                        <!--</a>-->
+                    <!--</div>-->
+                    <!--<div class="dept_btn"><input type="button" class="searchbtn" value="确定"></div>-->
+                <!--</div>-->
+                <!--<input type="button" value="查询" class="searchbtn">-->
+            <!--</div>-->
+            <!--</form>-->
+            <!--<div class="item">查询结果</div>-->
+            <!--<table class="orangestyle">-->
+                <!--<thead>-->
+                <!--<tr>-->
+                    <!--<th>员工编号</th>-->
+                    <!--<th>姓名</th>-->
+                    <!--<th>部门</th>-->
+                    <!--<th>职位</th>-->
+                    <!--<th>电话</th>-->
+                    <!--<th>邮箱</th>-->
+                <!--</tr>-->
+                <!--</thead>-->
+                <!--<tbody>-->
+                <!--<tr>-->
+                    <!--<td>12345</td>-->
+                    <!--<td>李学鳌</td>-->
+                    <!--<td>市场部</td>-->
+                    <!--<td>市场经理</td>-->
+                    <!--<td>13567654567</td>-->
+                    <!--<td>456211222@qq.com</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                    <!--<td>12345</td>-->
+                    <!--<td>李学鳌</td>-->
+                    <!--<td>市场部</td>-->
+                    <!--<td>市场经理</td>-->
+                    <!--<td>13567654567</td>-->
+                    <!--<td>456211222@qq.com</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                    <!--<td>12345</td>-->
+                    <!--<td>李学鳌</td>-->
+                    <!--<td>市场部</td>-->
+                    <!--<td>市场经理</td>-->
+                    <!--<td>13567654567</td>-->
+                    <!--<td>456211222@qq.com</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                    <!--<td>12345</td>-->
+                    <!--<td>李学鳌</td>-->
+                    <!--<td>市场部</td>-->
+                    <!--<td>市场经理</td>-->
+                    <!--<td>13567654567</td>-->
+                    <!--<td>456211222@qq.com</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                    <!--<td>12345</td>-->
+                    <!--<td>李学鳌</td>-->
+                    <!--<td>市场部</td>-->
+                    <!--<td>市场经理</td>-->
+                    <!--<td>13567654567</td>-->
+                    <!--<td>456211222@qq.com</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                    <!--<td>12345</td>-->
+                    <!--<td>李学鳌</td>-->
+                    <!--<td>市场部</td>-->
+                    <!--<td>市场经理</td>-->
+                    <!--<td>13567654567</td>-->
+                    <!--<td>456211222@qq.com</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                    <!--<td>12345</td>-->
+                    <!--<td>李学鳌</td>-->
+                    <!--<td>市场部</td>-->
+                    <!--<td>市场经理</td>-->
+                    <!--<td>13567654567</td>-->
+                    <!--<td>456211222@qq.com</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                    <!--<td>12345</td>-->
+                    <!--<td>李学鳌</td>-->
+                    <!--<td>市场部</td>-->
+                    <!--<td>市场经理</td>-->
+                    <!--<td>13567654567</td>-->
+                    <!--<td>456211222@qq.com</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                    <!--<td>12345</td>-->
+                    <!--<td>李学鳌</td>-->
+                    <!--<td>市场部</td>-->
+                    <!--<td>市场经理</td>-->
+                    <!--<td>13567654567</td>-->
+                    <!--<td>456211222@qq.com</td>-->
+                <!--</tr>-->
+                <!--</tbody>-->
+            <!--</table>-->
+            <!--<ul class="paging">-->
+                <!--<li><a href="#">首页</a></li>-->
+                <!--<li><a href="#">&lt&lt第一页</a></li>-->
+                <!--<li class="active"><a href="#">1</a></li>-->
+                <!--<li><a href="#">2</a></li>-->
+                <!--<li><a href="#">3</a></li>-->
+                <!--<li><a href="#">4</a></li>-->
+                <!--<li><a href="#">...</a></li>-->
+                <!--<li><a href="#">下一页&gt&gt</a></li>-->
+            <!--</ul>-->
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <div class="wrap">power by 中建材信息技术股份有限公司     Copyright@2007-2012 All Rights Reserved    备案号（京ICP备15030620号）</div>
+</div>
+<div class="layer"></div>
+<div id="dialog" class="dialog" title="新建部门" >
+    <div class="deptlist clearfix">
+        <span class="fl">所属部门：技术部</span>
+        <span class="fr"><i class="icon write"></i>更改部门</span>
+    </div>
+    <form>
+        <div class="ct">
+            <div class="ct_strip">
+                <span class="label">部门名称</span>
+                <input placeholder="请输入部门名称" type="text" name="department" class="ct_input">
+            </div>
+            <div class="ct_strip">
+                <span class="label">创建人</span>
+                <input  type="text" name="department" class="ct_input">
+            </div>
+            <div class="ct_strip">
+                <textarea placeholder="备注"></textarea>
+            </div>
+        </div>
+    </form>
+</div>
+<div id="dialog2" class="dialog" title="添加新员工资料" >
+    <div class="deptlist clearfix">
+        <span class="fl">所属部门：技术部</span>
+        <span class="fr"><i class="icon write"></i>更改部门</span>
+    </div>
+    <form>
+        <div class="ct">
+            <div class="ct_strip">
+                <span class="label">姓名</span>
+                <input type="text" name="name" class="ct_input">
+            </div>
+            <div class="ct_strip">
+                <span class="label">职位</span>
+                <input  type="text" name="position" class="ct_input">
+            </div>
+            <div class="ct_strip">
+                <span class="label">电话</span>
+                <input  type="text" name="phonenumber" class="ct_input">
+            </div>
+            <div class="ct_strip">
+                <span class="label">邮箱</span>
+                <input  type="text" name="email" class="ct_input">
+            </div>
+            <div class="ct_strip">
+                <textarea placeholder="备注"></textarea>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    $(document).on('click', '.department', function(){
+        $(".layer").show();
+        $(".dept_choose").show();
+    });
+    $(document).on('click', '.icon_close', function(){
+        $(".layer").hide();
+        $(".dept_choose").hide();
+    });
+    $("#dept_add").click(function( event ) {
+        $( "#dialog" ).dialog( "open" );
+        $(".layer").show();
+        event.preventDefault();
+    });
+    $("#dept_addnew").click(function( event ) {
+        $( "#dialog2" ).dialog( "open" );
+        $(".layer").show();
+        event.preventDefault();
+    });
+    $(document).on('click', '.ui-dialog .ui-dialog-titlebar-close', function(){
+        $(".layer").hide();
+    });
+
+    $( "#dialog" ).dialog({
+        autoOpen: false,
+        width: 400,
+        buttons: [
+            {
+                text: "取消",
+                class: "gray_bg",
+                click: function() {
+                    $( this ).dialog( "close" );
+                    $(".layer").hide();
+                }
+            },
+            {
+                text: "保存",
+                class: "red_bg",
+                click: function() {
+                    $( this ).dialog( "close" );
+                    $(".layer").hide();
+                }
+            }
+        ]
+    });
+    $( "#dialog2" ).dialog({
+        autoOpen: false,
+        width: 400,
+        buttons: [
+            {
+                text: "保存",
+                class: "red_bg",
+                click: function() {
+                    $( this ).dialog( "close" );
+                    $(".layer").hide();
+                }
+            }
+        ]
+    });
+</script>
+</body>
+</html>

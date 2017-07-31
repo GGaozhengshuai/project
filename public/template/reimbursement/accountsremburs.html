@@ -1,0 +1,20 @@
+<h3 class="genTitle"><em></em><span>报销单额度设置</span></h3>
+<ul class="generNav" ng-init="ht.activeTab = opprev.accountsremburs_company ? 1 : opprev.accountsremburs_department ? 2 : opprev.accountsremburs_staff ? 3 : 1">
+    <li ng-class="{active:ht.activeTab == 1}" ng-if="opprev.accountsremburs_company"><a href="javascript:;" ng-mousedown="ht.activeTab = 1">公司额度管理</a></li>
+    <li ng-class="{active:ht.activeTab == 2}" ng-if="opprev.accountsremburs_department" ><a href="javascript:;" ng-mousedown="ht.activeTab = 2">部门额度管理</a></li>
+    <li ng-class="{active:ht.activeTab == 3}" ng-if="opprev.accountsremburs_staff"><a href="javascript:;" ng-mousedown="ht.activeTab = 3">人员额度管理</a></li>
+</ul>
+
+<div id="mainView">
+    <div class="ng-scope"  ng-if="ht.activeTab == 1 && opprev.accountsremburs_company" ng-include="'template/reimbursement/company.html'" ng-controller="accountsCompanyCtrl">
+    </div>
+    <!--<div class="viewTable ng-scope ng-hide" ng-show="ht.activeTab == 2" ng-include="'template/credit/creditTab.html'"></div>-->
+    <div class="ng-scope" ng-if="ht.activeTab == 2 && opprev.accountsremburs_department" ng-include="'template/reimbursement/department.html'" ng-controller="accountsDepartmentCtrl">
+
+    </div>
+
+    <div class="ng-scope" ng-if="ht.activeTab == 3 && opprev.accountsremburs_staff" ng-include="'template/reimbursement/staff.html'" ng-controller="accountsStaffCtrl">
+
+    </div>
+
+</div>

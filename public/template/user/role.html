@@ -1,0 +1,51 @@
+<h3 class="genTitle genTitleBot"><em></em><span>人员角色配置</span></h3>
+
+<div class="generForm">
+    <form novalidate name="dwonloadRole">
+        <div class="genTitle2">
+            <div>
+                <strong>人员角色模板下载</strong>
+            </div>
+        </div>
+        <ul class="noMargin">
+            <li class="tli">
+                <strong><font>*</font>请选择部门：</strong>
+                <input type="text" ng-required="true" ng-readonly="true" ng-click="employee('roleDName')" ng-init="roleDName=''"  ng-model="roleDName" class="text" placeholder="请选择部门">
+                <input type="hidden" name="roleDId"  ng-init="roleDId=''" ng-model="roleDId">
+                <div class="gerSub noPadding">
+                    <a href="/user/exportroles?orgid={{roleDId}}" ng-click="download($event)" class="subSave" target="_blank">下载</a>
+                </div>
+            </li>
+        </ul>
+    </form>
+    <form novalidate name="uploadloadRole">
+        <div class="genTitle2">
+            <div>
+                <strong>人员角色上传</strong>
+            </div>
+        </div>
+        <ul class="noMargin">
+            <!-- <li>
+                <strong><font>*</font>请选择部门：</strong>
+                <input type="text" ng-required="true" ng-readonly="true" ng-click="employee('roleUName')" ng-init="roleUName=''"  ng-model="roleUName" class="text" placeholder="请选择部门">
+                <input type="hidden" name="roleUId"  ng-init="roleUId=''" ng-model="roleUId">
+            </li> -->
+            <li class="formUpStyle" >
+                <strong>上传模板：</strong>
+                <input excle-Updata="{{excleConf}}" get-upload-callback="getUploadCallback(uploadCallData)" ng-model="excleWlData"/>
+            </li>
+        </ul>
+    </form>
+</div>
+
+<div id="dialog" class="dialog" title="选择部门">
+    <div class="employeeTip">
+        <h5>
+            <span><a ng-click="getEmployee()" href="javascript:;">中建材信息技术</a>&gt</span>
+            <span ng-repeat="list in employeeNav"><a ng-click="getEmployee(list._id,list.orgname,orgType)" href="javascript:;">{{list.orgname}}</a>&gt</span>
+        </h5>
+        <ul>
+            <li ng-repeat="list in employeeList"><a  ng-click="getEmployee(list._id,list.orgname,orgType)" href="javascript:;">{{list.orgname}}（{{list.grandsoncount}}）</a></li>
+        </ul>
+    </div>
+</div>

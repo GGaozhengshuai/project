@@ -1,0 +1,65 @@
+<h3 class="genTitle"><em></em><span>请休假</span></h3>
+<ul class="generNav">
+    <li class="active"><a href="javascript:;">请休假</a></li>
+</ul>
+<div id="mainView">
+    <div class="viewTable ng-scope">
+        <div class="genTitle2">
+            <div>
+                <strong>请假信息</strong>
+            </div>
+        </div>
+        <ul>
+            <li><strong>申请人姓名：</strong><span>{{sdef.user.name}}</span></li>
+            <li><strong>申请人部门：</strong><span>{{sdef.department.name}}</span></li>
+            <li><strong>请假类型：</strong><span>{{getField(holidayData, 'code',sdef.off_type).name}}</span></li>
+            <li class="clear"></li>
+            <li><strong>请假开始日期：</strong><span>{{sdef.begin_date}}</span></li>
+            <li><strong>上午/下午：</strong><span>{{sdef.begin_time}}</span></li>
+            <li><strong>请假结束日期：</strong><span>{{sdef.end_date}}</span></li>
+            <li><strong>上午/下午：</strong><span >{{sdef.end_time}}</span></li>
+            <li><strong>合计天数：</strong><span>{{sdef.off_days}}</span></li>
+            <li class="list_con"><strong>工作安排：</strong><span>{{sdef.reason}}</span></li>
+            </ul>
+        <div class="genTitle2">
+            <div>
+                <strong>统计信息</strong>
+            </div>
+        </div>
+        <ul>
+            <li><strong style="text-align: right;font-weight:bold;font-size:14px">已休天数</strong></li>
+            <li><strong style="text-align: right;font-weight:bold;font-size:14px">剩余天数</strong></li>
+            <li><strong>年假：</strong><span>{{totalObj["年假"]}}</span></li>
+            <li><strong>年假：</strong><span>{{leftObj["年假"]}}</span></li>
+            <li><strong>调休：</strong><span>{{totalObj["调休"]}}</span></li>
+            <li><strong>调休：</strong><span>{{leftObj["调休"]}}</span></li>
+            <li><strong>带薪病假：</strong><span>{{totalObj["带薪病假"]}}</span></li>
+            <li><strong>带薪病假：</strong><span>{{leftObj["带薪病假"]}}</span></li>
+            <li><strong>不带薪病假：</strong><span>{{totalObj["不带薪病假"]}}</span></li>
+            <div class="clear"></div>
+            <li><strong>事假：</strong><span>{{totalObj["事假"]}}</span></li>
+            <div class="clear"></div>
+            <li><strong>丧假：</strong><span>{{totalObj["丧假"]}}</span></li>
+            <li><strong>丧假：</strong><span>{{leftObj["丧假"]}}</span></li>
+            <li><strong>产检假：</strong><span>{{totalObj["产检假"]}}</span></li>
+            <li><strong>产检假：</strong><span>{{leftObj["产检假"]}}</span></li>
+            <li><strong>产假：</strong><span>{{totalObj["产假"]}}</span></li>
+            <li><strong>产假：</strong><span>{{leftObj["产假"]}}</span></li>
+            <li><strong>医疗期：</strong><span>{{totalObj["医疗期"]}}</span></li>
+            <li><strong>医疗期：</strong><span>{{leftObj["医疗期"]}}</span></li>
+            <li><strong>探亲假：</strong><span>{{totalObj["探亲假"]}}</span></li>
+            <li><strong>探亲假：</strong><span>{{leftObj["探亲假"]}}</span></li>
+            <li><strong>婚假：</strong><span>{{totalObj["婚假"]}}</span></li>
+            <li><strong>婚假：</strong><span>{{leftObj["婚假"]}}</span></li>
+            <li><strong>照顾母婴假：</strong><span>{{totalObj["照顾母婴假"]}}</span></li>
+            <li><strong>照顾母婴假：</strong><span>{{leftObj["照顾母婴假"]}}</span></li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+    <div class="gerSub">
+        <a class="subSave" href="index.html#/holidayEdit?processId={{processId}}&nodeId={{nodeId}}" ng-if="editBtn">编辑</a>
+    </div>
+    <div class="apCot" ng-if="apCot" >
+        <div ng-include="'template/common/apply.html'"></div>
+    </div>
+</div>

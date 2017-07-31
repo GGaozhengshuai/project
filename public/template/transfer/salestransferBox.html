@@ -1,0 +1,80 @@
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>原申请人</strong>
+                    <input ng-disabled="true" type="text" class="text" name="apply" ng-model="sales">
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td colspan="2">
+                    <strong>转办至</strong>
+                    <input class="text" ng-readonly="true" ng-click="userbox()" name="username" ng-model="usersale.name" type="text" placeholder="请选择人员"/>
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<div class="gerSub">
+    <!--<a href="index.html#/transfer" ng-click="closeapply()">取消</a>-->
+    <a ng-click="closeapply('sale')">取消</a>
+    <button ng-click="save('sale')" class="subApply" >保存</button>
+</div>
+<!--<div id="applytransferBox" class="dialog cusBox" title="选择人员" ng-include="'template/transfer/userbox.html'" ng-controller="transferstaffCtrl"></div>-->
+
+
+
+
+<!--<form>-->
+    <!--<div class="genSearch">-->
+        <!--<table>-->
+            <!--<tr>-->
+                <!--<td>-->
+                    <!--<strong>原销售人</strong>-->
+                    <!--<input ng-disabled="true" type="text" class="text" name="sales" ng-model="sales">-->
+                <!--</td>-->
+            <!--</tr>-->
+            <!--<tr>-->
+                <!--<td>-->
+                    <!--<strong>转办至</strong>-->
+                    <!--<input class="text" style="width:175px" type="text" name="username"  ng-init="ORDER_DATA.user.name =''" ng-model="user.name" placeholder="请输入姓名">-->
+                <!--</td>-->
+                <!--<td>-->
+                    <!--<input type="button" value="查询" class="searchbtn2" ng-click="search()" style="margin-top: 0">-->
+                <!--</td>-->
+            <!--</tr>-->
+        <!--</table>-->
+    <!--</div>-->
+<!--</form>-->
+<!--<table class="orangestyle table">-->
+    <!--<thead>-->
+    <!--<tr>-->
+        <!--<th>姓名</th>-->
+        <!--<th>部门</th>-->
+        <!--<th>操作</th>-->
+    <!--</tr>-->
+    <!--</thead>-->
+    <!--<tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">-->
+    <!--<tr ng-repeat="list in dataList">-->
+        <!--<td>{{list.name}}</td>-->
+        <!--<td>{{list.orgname}}</td>-->
+        <!--<td>-->
+            <!--<a href="javascript:;" ng-click="userSelect(list)">选择</a>-->
+        <!--</td>-->
+    <!--</tr>-->
+    <!--<tr class="tip"><td colspan="3">没有查到</td></tr>-->
+    <!--</tbody>-->
+<!--</table>-->
+<!--<pagination conf="paginationConf"></pagination>-->
+<!--<div class="gerSub">-->
+    <!--<a href="index.html#/transfer" ng-click="closesale()">取消</a>-->
+    <!--<button ng-click="save()" class="subApply" >保存</button>-->
+<!--</div>-->
+

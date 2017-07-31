@@ -1,0 +1,138 @@
+<h3 class="genTitle"><em></em><span>费用申请单</span><span ng-if="dataWater">-追加预算</span><span ng-show="NBDDZF">-作废</span></h3>
+<!--<h3 class="genTitle" ng-if="dataWater"><em></em><span>费用申请单-追加预算</span></h3>-->
+<ul class="generNav">
+    <li class="active"><a href="javascript:;">费用申请单</a></li>
+</ul>
+
+<div id="mainView">
+    <div class="viewTable ng-scope">
+        <ul>
+            <li><strong>申请流水号：</strong><span>{{purchaseList.ZINORD}}</span></li>
+            <li ng-if="dataWater"><strong>费用申请单号：</strong><span>{{purchaseList.AUFNR}}</span></li>
+            <li><strong>公司名称：</strong><span>{{BUKRS[purchaseList.BUKRS]}}</span></li>
+            <li><strong>成本中心：</strong><span>{{purchaseList.RESPCCTR | getName:costcenterSel :'text':'code'}}</span></li>
+            <!--<li><strong>费用申请单类型：</strong><span>{{AUART}}</span></li>-->
+            <li><strong>费用申请单类型：</strong><span>{{purchaseList.ZFYLXTXT}}</span></li>
+            <!--<li><strong>费用申请单类型：</strong><span>{{categorySel[purchaseList.ZFYLX.substr(0,2)].text}}-{{categorySel[purchaseList.ZFYLX.substr(0,2)].sub[purchaseList.ZFYLX.substr(2)].text}}</span></li>-->
+            <li><strong>预算金额：</strong><span>{{purchaseList.ZSQJE | currency : '￥'}}</span></li>
+
+            <li ng-if="dataInside"><strong>追加预算金额：</strong><span>{{purchaseList.ZZJYSJE | currency : '￥'}}</span></li>
+            <li ng-if="dataInside"><strong>未使用金额：</strong><span>{{(DontuseMoney.total - (DontuseMoney.used + DontuseMoney.using)) | currency :'￥'}}</span></li>
+            <li ng-if="dataInside"><strong>总预算金额：</strong><span>{{purchaseList.ZZJE | currency : '￥'}}</span></li>
+            <li class="list_con"><strong>申请标题：</strong><span>{{purchaseList.ZSQNR}}</span></li>
+            <li class="list_con" ng-if="zzjetrue"><strong>事由：</strong><span>{{purchaseList.USER3.describe}}</span></li>
+            <li class="list_con" ng-if="zzjefalse"><strong>事由：</strong><span>{{purchaseList.USER3}}</span></li>
+            <li class="list_con" ng-if="dataInside"><strong>说明：</strong><span>{{purchaseList.USER3.instructions}}</span></li>
+            <li><strong>创建人：</strong><span>{{purchaseList.USER0}}</span></li>
+            <li><strong>所属部门：</strong><span>{{purchaseList.USER6}}</span></li>
+            <li><strong>创建时间：</strong><span>{{purchaseList.USER5 | date: 'yyyy-MM-dd HH:mm:ss'}}</span></li>
+
+        </ul>
+    </div>
+    <div class="addTable" ng-if="dataInside">
+        <div class="genTitle2">
+            <div>
+                <strong>费用使用详情</strong>
+            </div>
+        </div>
+        <table class="tab_data">
+            <thead class="tab_header">
+            <tr>
+                <th>类型</th>
+                <th>单号</th>
+                <th>使用金额</th>
+                <th>申请人</th>
+                <th>申请日期</th>
+            </tr>
+            </thead>
+            <tbody class="tab_body">
+            <tr ng-repeat="list in DontuseMoney.details.fk">      <!--付款审批完成-->
+                <td>{{list.TYPE}}</td>
+                <td>{{list.AUFNR}}</td>
+                <td>{{list.ZSQJE}}</td>
+                <td>{{list.USER}}</td>
+                <td>{{list.ZSQRQ}}</td>
+            </tr>
+            <tr ng-repeat="list in DontuseMoney.details.fking">      <!--付款审批中-->
+                <td>{{list.TYPE}}</td>
+                <td>{{list.AUFNR}}</td>
+                <td>{{list.ZSQJE}}</td>
+                <td>{{list.USER}}</td>
+                <td>{{list.ZSQRQ}}</td>
+            </tr>
+            <tr ng-repeat="list in DontuseMoney.details.bx">      <!--报销审批完成-->
+                <td>{{list.TYPE}}</td>
+                <td>{{list.AUFNR}}</td>
+                <td>{{list.ZSQJE}}</td>
+                <td>{{list.USER}}</td>
+                <td>{{list.ZSQRQ}}</td>
+            </tr>
+            <tr ng-repeat="list in DontuseMoney.details.bxing">      <!--报销审批中-->
+                <td>{{list.TYPE}}</td>
+                <td>{{list.AUFNR}}</td>
+                <td>{{list.ZSQJE}}</td>
+                <td>{{list.USER}}</td>
+                <td>{{list.ZSQRQ}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="clear"></div>
+    <div class="gerSub">
+        <a class="subSave" href="index.html#/insideEdit?processId={{processId}}&nodeId={{nodeId}}" ng-if="editBtn">编辑</a>
+    </div>
+
+    <!--<div class="apCot" ng-if="apCot" >
+        <div class="clear"></div>
+        <div class="applyLog">
+            <h3 class="genTitle"><em></em><span>审批记录</span></h3>
+            <table>
+                <thead>
+                <tr>
+                    <th>审批人</th>
+                    <th>审批时间</th>
+                    <th>审批状态</th>
+                    <th>审批意见</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="list in processlog">
+                    <td>{{list.sender.name}}</td>
+                    <td>{{list.createDate | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td>{{list.operation}}</td>
+                    <td>{{list.content.comment}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="topBar">
+            <ul>
+                <li class="goBottom"><a go-Bottom ng-model="goBottom" href="javascript:;"></a></li>
+                <li class="goTop" ><a go-Top ng-model="goTop" href="javascript:;"></a></li>
+            </ul>
+        </div>-->
+        <div class="apCot" ng-if="apCot">
+            <div ng-include="'template/common/apply.html'"></div>
+        </div>
+        <!--<div class="applyCommit">
+            <form>
+                <textarea ng-model="applyObj.applyIdea" ng-if="textareaBtn" placeholder="请填写意见"></textarea>
+                &lt;!&ndash;<div ng-repeat="c in candidates">
+                    <label ng-repeat="m in c.receivers"><input type="checkbox"> {{m.name}}</label>
+                </div>&ndash;&gt;
+                <div class="applyBtn">
+                    <a class="agree" href="javascript:;" ng-if="agreeBtn" ng-click="applyAgree(applyObj)">同意</a>
+                    <a class="disagree" href="javascript:;" ng-if="disagreeBtn" ng-click="applyDisagree(applyObj)" title="驳回到上一个审批人">驳回上级</a>
+                    <a class="recall" href="javascript:;" ng-if="recallBtn" ng-click="applyRecall(applyObj)">召回</a>
+                    <a class="cancel" href="javascript:;" ng-if="cancelBtn" ng-click="applyCancel(applyObj)" title="驳回到申请人">驳回原点</a>
+                </div>
+
+                <div class="clear"></div>
+            </form>
+        </div>-->
+    </div>
+</div>
+<!--
+<div class="applyOper">
+
+</div>-->

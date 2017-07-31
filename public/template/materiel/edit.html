@@ -1,0 +1,193 @@
+<h3 class="genTitle genTitleBot"><em></em><span>物料主数据编辑</span></h3>
+<div class="cusCont">
+    <div class="generForm">
+        <form novalidate name="matForm">
+            <div class="addTable">
+                <div class="hGener">
+                    <a class="dwonTem" href="/doc/wlzsjmb.xlsx">下载物料模版</a>
+                    <input excle-Uploadify btnname="上传物料清单" url="/materialmanagement/importexcel" excleDataAll="fileData"
+                           ng-model="fileData"/>
+                </div>
+                <br/>
+
+                <div style=" overflow: auto;">
+                    <table style="width: 200%;">
+                        <thead>
+                        <tr>
+                            <th>操作</th>
+                            <th>检查错误消息</th>
+                            <th><font>*</font>物料类型</th>
+                            <th><font>*</font>销售组织</th>
+                            <th>物料编码</th>
+                            <th><font>*</font>物料描述</th>
+                            <th width="2%"><font>*</font>基本单位</th>
+                            <th><font>*</font>原厂物料编号</th>
+                            <th><font>*</font>产品组（物料组）</th>
+                            <th>产品类别</th>
+                            <th><font>*</font>规格型号</th>
+                            <th><font>*</font>原厂物料描述</th>
+                            <th>原厂产品名称</th>
+                            <th>版本号</th>
+                            <th><font>*</font>开票描述</th>
+                            <th>采购税码</th>
+                            <th><font>*</font>利润中心</th>
+                            <th>采购组</th>
+                            <th>收货处理时间</th>
+                            <th>物料长文本</th>
+
+
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="list in fileData" class="list">
+                            <td><a href="javascript:;" ng-click="filedataDel($index)">删除</a></td>
+                            <td title="{{list.MESSAGE}}">
+                                <input ng-disabled="true" style="color: red;" ng-model="list.MESSAGE" name="MESSAGE{{$index}}" type="text"
+                                       value=""/>
+                            </td>
+                            <td>
+                                <input ng-disabled="true" ng-model="list.MTART"  name="MTART{{$index}}" ng-show="false"
+                                       type="text" value=""/>
+                                <input ng-disabled="true"   name="MTARTTEXT{{$index}}" title="{{{ZCP1:'ZCP1-产品',ZCP2:'ZCP2-礼品',ZCP3:'ZCP3-包装材料',ZCP4:'ZCP4-辅料',ZCP5:'ZCP5- 产品服务',ZCP6:'ZCP6- 服务'}[list.MTART]}}"
+                                       type="text" ng-value="{ZCP1:'ZCP1-产品',ZCP2:'ZCP2-礼品',ZCP3:'ZCP3-包装材料',ZCP4:'ZCP4-辅料',ZCP5:'ZCP5- 产品服务',ZCP6:'ZCP6- 服务'}[list.MTART]"/>
+
+
+                                <p class="errTip"
+                                   ng-if="matForm['MTART'+$index].$dirty && matForm['MTART'+$index].$error.required">
+                                    必填</p>
+                            </td>
+                            <td>
+                                <input ng-disabled="true" ng-model="list.VKORG" required name="VKORG{{$index}}"
+                                       type="text" value="" ng-show="false"/>
+                                <input ng-disabled="true"   name="VKORGTEXT{{$index}}" title="{{{1000:'信息产品事业群',2000:'合作业务部',3000:'医疗产品部'}[list.VKORG]}}"
+                                       type="text" ng-value="{1000:'信息产品事业群',2000:'合作业务部',3000:'医疗产品部'}[list.VKORG]"/>
+                                <p class="errTip"
+                                   ng-if="matForm['VKORG'+$index].$dirty && matForm['VKORG'+$index].$error.required">
+                                    必填</p>
+                            </td>
+                            <td>
+                                <input ng-disabled="true" ng-model="list.MATNR"  name="MATNR{{$index}}" title="{{list.MATNR}}"
+                                       type="text" value=""/>
+
+                            </td>
+                            <td>
+                                <input ng-disabled="true" ng-model="list.MAKTX" required name="MAKTX{{$index}}" title="{{list.MAKTX}}"
+                                       type="text" value=""/>
+
+                                <p class="errTip"
+                                   ng-if="matForm['MAKTX'+$index].$dirty && matForm['MAKTX'+$index].$error.required">
+                                    必填</p>
+                            </td>
+                            <td style="width: 2%">
+                                <input ng-disabled="true" ng-model="list.MEINS" required name="MEINS{{$index}}" title="{{list.MEINS}}"
+                                       type="text" value=""/>
+
+                                <p class="errTip"
+                                   ng-if="matForm['MEINS'+$index].$dirty && matForm['MEINS'+$index].$error.required">
+                                    必填</p>
+                            </td>
+                            <td>
+                                <input ng-disabled="true" ng-model="list.BISMT" required name="BISMT{{$index}}" title="{{list.BISMT}}"
+                                       type="text" value=""/>
+
+                                <p class="errTip"
+                                   ng-if="matForm['BISMT'+$index].$dirty && matForm['BISMT'+$index].$error.required">
+                                    必填</p>
+                            </td>
+                            <td>
+                                <input ng-disabled="true" ng-model="list.MATKL" required name="MATKL{{$index}}"
+                                       type="text" value="" ng-show="false"/>
+                                <input ng-disabled="true" required name="MATKL{{$index}}" type="text" ng-value="ZZCP[list.MATKL]" title="{{ZZCP[list.MATKL]}}" />
+                                <p class="errTip"
+                                   ng-if="matForm['MATKL'+$index].$dirty && matForm['MATKL'+$index].$error.required">
+                                    必填</p>
+                            </td>
+                            <td>
+                                <input ng-disabled="true" ng-model="list.ZCPLB"  name="ZCPLB{{$index}}" title="{{list.ZCPLB}}"
+                                       type="text" value=""/>
+
+                            </td>
+                            <td>
+                                <input ng-disabled="true" ng-model="list.ZZGKXH" required name="ZZGKXH{{$index}}" title="{{list.ZZGKXH}}"
+                                       type="text" value=""/>
+
+                                <p class="errTip"
+                                   ng-if="matForm['ZZGKXH'+$index].$dirty && matForm['ZZGKXH'+$index].$error.required">
+                                    必填</p>
+                            </td>
+                            <td>
+                                <input ng-disabled="true" ng-model="list.ZZMAKTX" required name="ZZMAKTX{{$index}}" title="{{list.ZZMAKTX}}"
+                                       type="text" value=""/>
+
+                                <p class="errTip"
+                                   ng-if="matForm['ZZMAKTX'+$index].$dirty && matForm['ZZMAKTX'+$index].$error.required">
+                                    必填</p>
+                            </td>
+                            <td>
+                                <input ng-disabled="true" ng-model="list.ZZCPMC"  name="ZZCPMC{{$index}}" title="{{list.ZZCPMC}}"
+                                       type="text" value=""/>
+
+                            </td>
+                            <td>
+                                <input ng-disabled="true" ng-model="list.ZVERSIONID"  name="ZVERSIONID{{$index}}" title="{{list.ZVERSIONID}}"
+                                       type="text" value=""/>
+
+
+                            </td>
+                            <td>
+                                <input ng-disabled="true" ng-model="list.ZZKPMS" required name="ZZKPMS{{$index}}" title="{{list.ZZKPMS}}"
+                                       type="text" value=""/>
+
+                                <p class="errTip"
+                                   ng-if="matForm['ZZKPMS'+$index].$dirty && matForm['ZZKPMS'+$index].$error.required">
+                                    必填</p>
+                            </td>
+
+                            <td>
+                                <input ng-disabled="true" ng-model="list.ZZMWSKZ"  name="ZZMWSKZ{{$index}}" title="{{list.ZZMWSKZ}}"
+                                       type="text" value=""/>
+                            </td>
+                            <td>
+                                <input ng-disabled="true" ng-model="list.PRCTR" required name="PRCTR{{$index}}" title="{{list.PRCTR}}"
+                                       type="text" value=""/>
+
+                                <p class="errTip"
+                                   ng-if="matForm['PRCTR'+$index].$dirty && matForm['PRCTR'+$index].$error.required">
+                                    必填</p>
+                            </td>
+                            <td>
+                                <input ng-disabled="true" ng-model="list.EKGRP"  name="EKGRP{{$index}}" title="{{list.EKGRP}}"
+                                       type="text" value=""/>
+
+                            </td>
+                            <td>
+                                <input ng-disabled="true" ng-model="list.WEBAZ"  name="WEBAZ{{$index}}" title="{{list.WEBAZ}}"
+                                       type="text" value=""/>
+
+                            </td>
+                            <td>
+                                <input ng-disabled="true" ng-model="list.ZCWB"  name="ZCWB{{$index}}" title="{{list.ZCWB}}"
+                                       type="text" value=""/>
+
+                            </td>
+
+
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="gerSub">
+                <a href="index.html#/materielOrder">返回</a>
+                <button ng-click="addData(fileData,'save')"
+                        class="subSave">保存
+                </button>
+                <button ng-click="addData(fileData,'apply')"
+                        class="subApply">保存并提交
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<div id="approversDialog" class="dialog cusBox" title="选择下一审批人" ng-include="'template/common/approvers.html'"></div>

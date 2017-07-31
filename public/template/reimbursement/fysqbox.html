@@ -1,0 +1,65 @@
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong style="width: 120px">费用申请单号</strong>
+                    <input class="text" type="text" style="width: 166px;"  ng-init="$parent.AUFNR=''" ng-model="$parent.AUFNR" placeholder="请输入费用申请单号">
+                </td>
+                <td >
+                    <strong style="width: 100px;">申请流水号</strong>
+                    <input class="text" type="text" style="width: 166px;" ng-init="$parent.ZINORD=''" ng-model="$parent.ZINORD" placeholder="">
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 60%">
+                    <strong style="width: 120px; padding-left: 5px;">费用申请单类型</strong>
+                    <input style="width: 166px;" class="text" type="text" ng-disabled="true"  ng-value="$parent.FYZFYLXTxt">
+                    <input type="hidden" ng-model="$parent.FYZFYLX">
+                </td>
+                <td>
+                    <strong style="width: 100px;">成本中心</strong>
+                    <input style="width: 166px;" class="text" type="text" ng-disabled="true" ng-value="FYcostcenter | getName:costcenterSel :'text':'code'">
+                    <input type="hidden" ng-model="$parent.FYcostcenter">
+                </td>
+                <td><input style="margin-top: 0" type="button" value="查询" class="searchbtn2" ng-click="searchFn()"></td>
+            </tr><!--
+            <tr>
+                <td colspan="2"><input type="button" value="查询" class="searchbtn2" ng-click="searchFn()"></td>
+            </tr>-->
+
+        </table>
+    </div>
+</form>
+<table class="orangestyle table">
+    <thead>
+    <tr>
+        <th>费用申请单号</th>
+        <th>费用申请单流水号</th>
+        <th>申请标题</th>
+        <th>类型</th>
+        <th>成本中心</th>
+        <th>总预算金额</th>
+        <th>申请人</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in dataList">
+        <td>{{list.AUFNR}}</td>
+        <td>{{list.ZINORD}}</td>
+        <td>{{list.ZSQNR}}</td>
+        <!--<td>{{{ZJ01: '市场费用', ZJ02: '直接运营费用',ZJ03:'项目前期费用', ZJ99:'间接运营费用'}[list.AUART]}}</td>-->
+        <td>{{list.ZFYLXTxt}}</td>
+        <td>{{list.RESPCCTR | getName:$parent.costcenterSel:'text':'code'}}</td>
+        <!--<td>{{PRCTRText}}</td>-->
+        <td>{{list.ZZJE}}</td>
+        <td>{{list.USER0}}</td>
+        <td>
+            <a href="javascript:;" ng-click="cusSelect(list.AUFNR, list.ZFYLX, list.ZFYLXTxt, list.RESPCCTR,list.ZSQNR,list.ZINORD)">选择</a>
+        </td>
+    </tr>
+    <tr class="tip"><td colspan="8">没有查到有效的费用申请单</td></tr>
+    </tbody>
+</table>
+<!--<pagination conf="paginationConf" manual="true"></pagination>-->

@@ -1,0 +1,63 @@
+<div class="item">客户授信额度维护</div>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>客户名称</strong>
+                    <input type="text" class="text" name="" ng-init="cusname=''" ng-model="cusname">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+                    <a ng-if="opprev.creditmaintenance_add" class="searchbtn2 searchbtn2bot addBtn"  href="/index.html#/creditmaintenanceAdd">新增客户额度信息</a>
+                    <a ng-if="opprev.creditmaintenance_maintain" target="_blank" ng-click="showcreditCustomMtceFn($event, cArrcode)" class="searchbtn2 searchbtn2bot" ng-class="cArr.length !== 1 ? ' disabledbtn' : ' defenseBtn'" ng-disabled="cArr.length !== 1" href="">客户信用维护</a>
+                    <!--<a class="searchbtn2 searchbtn2bot" ng-class="!cusname ? ' disabledbtn' : ' addBtn'" ng-disabled="!cusname" href="/index.html#/creditmaintenanceAdd?cusname={{cusname}}">新增客户额度信息</a>-->
+                    <!--<a class="searchbtn2 searchbtn2bot" href="/index.html#/creditOrder">返回</a>-->
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+
+<div class="item">查询结果</div>
+<table class="orangestyle table" id="occTable">
+    <thead>
+    <tr>
+        <!--<th><input type="checkbox" ng-model="checkAll" id="allcheck" ng-click="allCheck($event)"></th>-->
+        <th></th>
+        <th>客户编码</th>
+        <th>客户名称</th>
+        <th class="right">授信额度</th>
+        <th>有效开始时间</th>
+        <th>信用天数</th>
+        <th>预付款比例（%）</th>
+        <th>信用状况</th>
+        <th>信用等级</th>
+        <th>客户信用预警</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in dataList" class="list">
+        <td><input ng-click="updateSelection($event,list._id, list)" class="checkBox" name="checkbox{{$index}}" type="checkbox" ng-checked="checkAll"/></td>
+        <td>{{list.cuscode}}</td>
+        <td><a class="underline" href="" ng-click="showHistory(list.cuscode)" title="{{list.cusname}}">{{list.cusname | cutfield:true:14:'...'}}</a></td>
+        <td class="right">{{list.creditmoneyinfo[list.creditmoneyinfo.length-1].creditmoney | currency : '￥'}}</td>
+        <td>{{list.creditmoneyinfo[list.creditmoneyinfo.length-1].startdate | date : 'yyyy-MM-dd'}}</td>
+        <td>{{list.creditmoneyinfo[list.creditmoneyinfo.length-1].days}}</td>
+        <td>{{list.creditmoneyinfo[list.creditmoneyinfo.length-1].advancepayment}}</td>
+        <td>{{list.creditmoneyinfo[list.creditmoneyinfo.length-1].xyzk}}</td>
+        <td>{{list.creditmoneyinfo[list.creditmoneyinfo.length-1].xydj}}</td>
+        <td>{{list.creditmoneyinfo[list.creditmoneyinfo.length-1].khxyyj}}</td>
+        <td class="czBtn">
+            <a ng-if="opprev.creditmaintenance_change" class="handleBtn editBtn" title="维护" href="/index.html#/creditmaintenanceAdd?id={{list.cuscode}}"></a>
+            <a class="handleBtn detailBtn" href="" ng-click="showHistory(list.cuscode)" title="详情"></a>
+        </td>
+    </tr>
+    <tr class="tip"><td colspan="11">没有查到客户授信额度信息</td></tr>
+    </tbody>
+</table>
+<pagination conf="paginationConf"></pagination>
+<div id="creditHistory" class="dialog cusBox" title="客户信用历史" ng-include="'template/credit/creditHistory.html'"></div>

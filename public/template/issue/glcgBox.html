@@ -1,0 +1,45 @@
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong style="width:100px;">采购订单号</strong>
+                    <input class="text" style="width:250px;" type="text" name="$parent.EBELN"  ng-init="$parent.EBELN=''" ng-model="$parent.EBELN" placeholder="请输入采购订单号">
+                </td>
+                <td>
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+                </td>
+            </tr>
+
+        </table>
+    </div>
+</form>
+<table class="orangestyle table">
+    <thead>
+    <tr>
+        <th>采购订单号<br>(境外供应商)</th>
+        <th>销售订单号<br>(最终客户)</th>
+        <th>最终客户名称</th>
+        <th>采购订单号<br>(双主体之间)</th>
+        <th>销售订单号<br>(双主体之间)</th>
+        <th>订单总金额</th>
+        <th>已开证付汇金额</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody ng-class="glcgDataList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in glcgDataList">
+        <td>{{list.EBELN}}</td>
+        <td>{{list.VBELN}}</td>
+        <td>{{list.ZHKMC}}</td>
+        <td>{{list.ZEBELN}}</td>
+        <td>{{list.ZVBELN}}</td>
+        <td>{{list.ZDDZJE}}</td>
+        <td>{{list.ZYKZFHJE}}</td>
+        <td>
+            <a href="javascript:;" ng-click="glcgSelect(list.EBELN, list.VBELN, list.ZHKMC, list.ZEBELN, list.ZVBELN, list.ZDDZJE, list.ZYKZFHJE)">选择</a>
+        </td>
+    </tr>
+    <tr class="tip"><td colspan="8">没有查到关联的采购合同</td></tr>
+    </tbody>
+</table>

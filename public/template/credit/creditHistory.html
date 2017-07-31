@@ -1,0 +1,27 @@
+<div class="addTable">
+<table class="tab_data">
+    <thead>
+    <tr>
+        <!--<th><input type="checkbox" ng-model="checkAll" id="allcheck" ng-click="allCheck($event)"></th>-->
+        <th>客户编码</th>
+        <th>客户名称</th>
+        <th>信用等级</th>
+        <th>授信额度</th>
+        <th>信用天数</th>
+        <th>有效开始时间</th>
+        <th>记录人</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="list in dataHistoryList" class="list">
+        <td>{{list.cuscode}}</td>
+        <td>{{list.cusname}}</td>
+        <td>{{list.xydj}}</td>
+        <td>{{list.creditmoney}}</td>
+        <td>{{list.days}}</td>
+        <td>{{list.startdate | date : 'yyyy-MM-dd'}}</td>
+        <td>{{list.jlr}}</td>
+    </tr>
+    </tbody>
+</table>
+</div>

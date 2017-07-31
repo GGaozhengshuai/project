@@ -1,0 +1,61 @@
+<div class="item">供方财务信息配置</div>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>区域:</strong>
+                    <input type="text" name="orgname" ng-readonly="true" ng-click="employee()" ng-model="orgname" ng-init="" class="text" placeholder="请选择部门">
+                    <input type="hidden" name="orgid" ng-init="" class="ct_input" ng-model="orgid">
+                </td>
+                <td>
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<div class="item">查询结果</div>
+<div class="addTable" style="padding: 0px;">
+    <table class="orangestyle table">
+        <thead>
+        <tr>
+            <th width="14%">区域</th>
+            <th width="25%">供方开户银行</th>
+            <th width="25%">供方银行账号</th>
+            <th width="10%">最后维护人</th>
+            <th width="18%">最后维护时间</th>
+            <th width="8%">操作</th>
+        </tr>
+        </thead>
+        <tbody ng-class="data ? 'meg' : 'noMegTip'">
+        <tr ng-show="data">
+            <td width="14%">{{data.orgname}}</td>
+            <td width="25%">
+                <input type="text" ng-readonly="!editable" ng-class="editable ? 'editable' : 'noedit'" ng-model="data.bank" value="{{data.bank}}"/>
+            </td>
+            <td width="25%">
+                <input type="text" ng-readonly="!editable" ng-class="editable ? 'editable' : 'noedit'" ng-model="data.bankno" value="{{data.bankno}}"/>
+            </td>
+            <td width="10%">{{data.maintenance_user}}</td>
+            <td width="18%">{{data.maintenance_time}}</td>
+            <td  width="8%" class="padOL12">
+                <a class="handleBtn editBtn" target="_blank" href="javascript:;" ng-click="edit(data.bankno)" title="编辑"></a>
+                <a  class="handleBtn" style="line-height: 22px;color: #78B885;" target="_blank" href="javascript:;" ng-click="save(data.orgname, data.bank, data.bankno)" ng-show="editable" title="保存">保存</a>
+            </td>
+        </tr>
+        <tr class="tip"><td colspan="6">没有查询到相关信息</td></tr>
+        </tbody>
+    </table>
+</div>
+<div id="orgbox" class="dialog" title="选择部门">
+    <div class="employeeTip">
+        <h5>
+            <span><a ng-click="getEmployee()" href="javascript:;">中建材信息技术</a>&gt</span>
+            <span ng-repeat="list in employeeNav"><a ng-click="getEmployee(list._id,list.orgname)" href="javascript:;">{{list.orgname}}</a>&gt</span>
+        </h5>
+        <ul>
+            <li ng-repeat="list in employeeList"><a  ng-click="getEmployee(list._id,list.orgname)" href="javascript:;">{{list.orgname}}（{{list.grandsoncount}}）</a></li>
+        </ul>
+    </div>
+</div>

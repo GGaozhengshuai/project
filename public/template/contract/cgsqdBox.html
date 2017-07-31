@@ -1,0 +1,111 @@
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong style="width:120px;">申请单号</strong>
+                    <input style="width:210px;" class="text" type="text" ng-init="$parent.code=''" ng-model="$parent.code" placeholder="请输入单号">
+                </td>
+                <td>
+                    <strong style="width:120px;">项目名称</strong>
+                    <input style="width:210px;" class="text" type="text" ng-init="$parent.clientname=''"  ng-model="$parent.clientname" placeholder="请输入项目名称">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong style="width:120px;">供应商订单号</strong>
+                    <input style="width:210px;" class="text" type="text" ng-init="$parent.supplierId=''"  ng-model="$parent.supplierId" placeholder="供应商订单号">
+                </td>
+                <td>
+                    <input type="button" value="查询" class="searchbtn2" ng-click="cgsqdSearch()">
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<table class="orangestyle table tsTable" id="cgsqdTable">
+    <!--<thead>
+    <tr>
+        <th class="thw2">采购申请单号</th>
+        <th class="thw3">供应商订单号</th>
+        <th class="thw4">供应商名称</th>
+        <th class="thw5">项目名称</th>
+        <th class="thw1">产品线</th>
+        <th class="thw6">采购申请单金额</th>
+        <th class="thw6">操作</th>
+    </tr>
+    </thead>-->
+    <tbody ng-class="cgsqdList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in cgsqdList" class="list">
+        <td colspan="7" class="fTd">
+            <table>
+                <tr>
+                    <th class="thw2">采购申请单号</th>
+                    <th class="thw3">供应商订单号</th>
+                    <th class="thw4">供应商名称</th>
+                    <th class="thw5">项目名称</th>
+                    <th class="thw1">产品线</th>
+                    <th class="thw6">采购申请单金额</th>
+                    <th class="thw6">操作</th>
+                </tr>
+                <tr>
+                    <td class="thw2"><span>{{list.purchaseorderid}}</span><input type="hidden" value="{{list.purchaseid}}"/><input type="hidden" value="{{list.supplierorderid}}"/><input type="hidden" value="{{list.currencytype}}"/></td>
+                    <td class="thw3">{{list.supplierorderid}}</td>
+                    <td class="thw4">{{list.supplier}}</td>
+                    <td class="thw5" title="{{list.project}}">{{list.project | cutfield:true:8:'...'}}</td>
+                    <td class="thw1">{{ZZCP[list.productline]}}</td>
+                    <td class="thw6">{{list.money}}</td>
+                    <td class="thw6">
+                        <a href="index.html#/purchaseView/{{list.purchaseorderid}}" target="_blank">查看</a>
+                    </td>
+                </tr>
+
+            </table>
+            <table class="zTable">
+                <tr>
+                    <th><span ng-click="allCheck($event)" class="allCheck"></span><!--<input class="allCheck" type="checkbox" name="1"/>--></th>
+                    <th>内部物料编码</th>
+                    <th>原厂物料编码</th>
+                    <th>型号</th>
+                    <th>描述</th>
+                    <th>可用数量</th>
+                    <th>采购单价</th>
+                    <th>税率</th>
+                </tr>
+                <tr ng-repeat="zlist in list.goods" class="ztrList">
+                    <td><span ng-click="zCheck($event)" class="zCheck"></span><!--<input class="zCheck" type="checkbox" name="2"/>--></td>
+                    <td>{{zlist.goodscode}}</td>
+                    <td>{{zlist.sourcegoodscode}}</td>
+                    <td>{{zlist.version}}</td>
+                    <td title="{{zlist.desc}}">{{zlist.desc | cutfield:true:15:'...'}}</td>
+                    <td>{{zlist.purchasecount - zlist.used}}
+                        <input ng-disabled="true" type="hidden" class="djInput" type="text" value="{{zlist.purchasecount - zlist.used}}"/>
+                        <input class="djInput" type="hidden" value="{{zlist.purchasecount - zlist.used}}"/>
+                    </td>
+                    <td>{{zlist.purchaseprice}}
+                        <input ng-disabled="true" type="hidden" class="djInput" type="text" value="{{zlist.purchaseprice}}"/>
+                        <input class="djInput" type="hidden" value="{{zlist.tax}}"/>
+                        <input class="djInput" type="hidden" value="{{zlist.devicecost}}"/>
+                        <input class="djInput" type="hidden" value="{{zlist.servicecost}}"/>
+                        <input class="djInput" type="hidden" value="{{zlist.amountcost}}"/>
+                        <input class="djInput" type="hidden" value="{{zlist.selfpickupcost}}"/>
+                        <input class="djInput" type="hidden" value="{{zlist.storeplace}}"/>
+                        <input class="djInput" type="hidden" value="{{zlist.cashrebate}}"/>
+                        <input class="djInput" type="hidden" value="{{zlist.purchaseprice*zlist.count}}"/>
+                        <input class="djInput" type="hidden" value="{{zlist.purchaseprice}}"/>
+                        <input type="hidden" value="{{zlist.purchaseid}}"/>
+                        <input type="hidden" value="{{zlist.cess}}"/>
+                        <input type="hidden" value="{{zlist.purchasetype}}"/>
+                        <input type="hidden" value="{{zlist.currencytype}}"/>
+                        <input type="hidden" value="{{zlist.purchaseorderid}}"/>
+                        <input type="hidden" value="{{zlist.purchaselineno}}"/>
+                        <input class="purchaselineno" type="hidden" value="{{zlist.purchaselineno}}"/>
+                    </td>
+                    <td>{{zlist.cess}}</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr class="tip"><td colspan="5">没有查到单子</td></tr>
+    </tbody>
+</table>

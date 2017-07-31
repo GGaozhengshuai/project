@@ -1,0 +1,70 @@
+<div class="item">物料查询</div>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>编码</strong>
+                    <input class="text" type="text" name="thecode"  ng-init="thecode=''" ng-model="thecode" placeholder="">
+                </td>
+                <td>
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<div class="item">
+    查询结果
+    <div style="margin: 0;width: 50%;float: right;" class="czAddBtn">
+        <input excle-uploadify btnname="导入" excleData="ExcelList" url="/contract/materiellistforupload" ng-model="ExcelList">
+        <a href="/doc/wlcxmb.xlsx" class="downloadmb">下载模板</a>
+    </div>
+</div>
+    <div ng-show="orIf">
+        <table class="orangestyle table" id="occTable">
+            <thead>
+            <tr>
+                <th>原厂物料编码</th>
+                <th>物料组</th>
+                <th>内部物料编码</th>
+                <th>物料类型</th>
+                <th>销售范围</th>
+            </tr>
+            </thead>
+            <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+            <tr ng-repeat="list in dataList" class="list">
+                <td>{{list.BISMT}}</td>
+                <td>{{MATKL[list.MATKL]}}</td>
+                <td>{{list.MATNR}}</td>
+                <td>{{MTART[list.MTART]}}</td>
+                <td>{{list.VKORG}}</td>
+            </tr>
+            <tr class="tip"><td colspan="10">没有查到物料</td></tr>
+            </tbody>
+        </table>
+        <pagination conf="paginationConf"></pagination>
+    </div>
+    <div ng-hide="orIf">
+        <table class="orangestyle table">
+            <thead>
+            <tr>
+                <th>原厂物料编码</th>
+                <th>物料组</th>
+                <th>内部物料编码</th>
+                <th>物料类型</th>
+                <th>销售范围</th>
+            </tr>
+            </thead>
+            <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+            <tr ng-repeat="list in dataList" class="list">
+                <td>{{list.BISMT}}</td>
+                <td>{{MATKL[list.MATKL]}}</td>
+                <td>{{list.MATNR}}</td>
+                <td>{{MTART[list.MTART]}}</td>
+                <td>{{list.VKORG}}</td>
+            </tr>
+            <tr class="tip"><td colspan="10">没有查到物料</td></tr>
+            </tbody>
+        </table>
+    </div>

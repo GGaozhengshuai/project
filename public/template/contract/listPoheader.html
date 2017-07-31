@@ -1,0 +1,41 @@
+<div>
+    <table class="orangestyle table">
+        <thead>
+        <tr>
+            <th><span>采购订单号</span></th>
+            <!--<th><span>采购组织</span></th>-->
+            <th><span>供应商名称</span></th>
+            <th><span>供应商订单号</span></th>
+            <th><span>订单类型</span></th>
+            <!--<th><span>产品线</span></th>-->
+            <th><span>订单金额</span></th>
+            <!--<th><span>未付金额</span></th>-->
+            <th><span>运输方式</span></th>
+        </tr>
+        </thead>
+        <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+        <tr ng-repeat="list in dataList" class="list">
+            <td title="{{list.EBELN}}"><a class="underline" target="_blank"
+                                                ng-if="list.EKORG != '9000' && list.EKORG != '9001' && list.BSART != 'ZB6' && list.BSART != 'ZB7' && list.BSART != 'ZB8'"
+                                                href="index.html#/purOrderView/{{list.EBELN}}"> {{list.EBELN}}</a>
+                    <a class="underline" target="_blank" ng-if="list.EKORG == '9000' || list.EKORG == '9001'"
+                       href="index.html#/pojckView/{{list.EBELN}}"> {{list.EBELN}}</a>
+                    <a class="underline" target="_blank"
+                       ng-if="list.BSART == 'ZB6' || list.BSART == 'ZB7' || list.BSART == 'ZB8'"
+                       href="index.html#/purMaintainView/{{list.EBELN}}"> {{list.EBELN}}</a></td>
+
+            <!--<td>{{getField(enumobj.EKORG, 'code',list.EKORG).name}}</td>-->
+            <td title="{{list.LIFNR_NAME}}">{{list.LIFNR_NAME | cutfield:true:12:'...'}}</td>
+            <td>{{list.ZZPO}}</td>
+            <td>{{getField(enumobj.BSART, 'code',list.BSART).name}}</td>
+            <!--<td>{{getField(enumobj.ZZCP, 'code',list.ZZCP).name}}</td>-->
+            <td>{{list.ZZZJY | number : 2}}</td>
+            <!--<td>{{list.ZWFJE | number : 2}}</td>-->
+            <td>{{list.ZZYS}}</td>
+        </tr>
+        <tr class="tip">
+            <td colspan="11"><span>没有查到此采购订单</span></td>
+        </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,138 @@
+<!--<div class="mainright">-->
+    <div class="item">银行授信</div>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>银行授信申请号</strong>
+                    <input class="text" type="text" name="code"  ng-init="code=''" ng-model="code" placeholder="请输入银行授信申请号">
+                </td>
+                <!--<td>-->
+                    <!--<strong>申请主体</strong>-->
+                    <!--<input class="text" type="text" name="creditbody"  ng-init="creditbody=''" ng-model="creditbody" placeholder="请输入申请主体">-->
+                <!--</td>-->
+                <td>
+                    <strong>申请主体</strong>
+                    <select name="" id="" ng-init="creditbody=''" ng-model="creditbody">
+                        <option value="">请选择</option>
+                        <option value="1000">中建材信息技术股份有限公司</option>
+                        <option value="9000">中建材集团进出口公司</option>
+                        <option value="9001">中国建材（香港）有限公司</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>授信品种</strong>
+                    <select ng-model="credittype" ng-init="credittype=''" name="credittype">
+                        <option value="">请选择</option>
+                        <option value="银行承兑汇票">银行承兑汇票</option>
+                        <option value="流动资金贷款">流动资金贷款</option>
+                        <option value="国内信用证">国内信用证</option>
+                        <option value="保函">保函</option>
+                        <option value="商业承兑汇票">商业承兑汇票</option>
+                        <option value="供应链融资">供应链融资</option>
+                        <option value="应收账款保理">应收账款保理</option>
+                    </select>
+                </td>
+                <td>
+                    <strong>业务部门</strong>
+                    <input class="text" type="text" name="orgname" ng-init="orgname=''"  ng-model="orgname" placeholder="请输入业务部门">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>授信业务办理银行</strong>
+                    <select name="" ng-init="bankname=''" ng-model="bankname" ng-options="m.bank as m.bank for m in bklistItem">
+                        <option value="">请选择</option>
+                    </select>
+                </td>
+                <td>
+                    <strong>单据状态</strong>
+                    <select name="" ng-model="status" ng-init="status='有效'">
+                        <option value="">请选择</option>
+                        <option value="有效">有效</option>
+                        <option value="作废">作废</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>销售合同号</strong>
+                    <input class="text" type="text" ng-model="contractno" ng-init="contractno=''" placeholder="请输入销售合同号"/>
+                </td>
+                <td>
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+                    <a class="searchbtn2 searchbtn2bot addBtn" href="/index.html#/bankCreditOrderAdd" ng-if="opprev.bankCreditOrder_add">新建银行授信</a>
+                    <!-- <a class="searchbtn2 searchbtn2bot viewBtn" ng-click="exportexcel(date)">导出</a>-->
+                    <!--<a class="searchbtn2 searchbtn2bot bankBtn" href="/index.html#/bkBankCredit">银行授信额度</a>
+                    <a class="searchbtn2 searchbtn2bot bankBtn2" href="/index.html#/bmBankCredit">部门银行授信额度</a>-->
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+    <div class="item">查询结果</div>
+<div class="tableWrap">
+    <div class="tableLeft">
+    <table style="width: 120%;" class="orangestyle table">
+        <thead>
+        <tr>
+            <th><span>银行授信申请号</span></th>
+            <th><span>申请主体</span></th>
+            <th><span>授信品种</span></th>
+            <th><span>业务人员</span></th>
+            <th><span>业务部门</span></th>
+            <th><span>授信业务办理银行</span></th>
+            <th><span>授信金额</span></th>
+            <th><span>申请日期</span></th>
+            <th><span>额度回转日期</span></th>
+            <th width="100px"><span>状态</span></th>
+            <!--<th width="70px">操作</th>-->
+        </tr>
+        </thead>
+        <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+            <tr ng-repeat="list in dataList">
+                <td><span><a class="underline" target="_blank" href="index.html#/bankCreditOrderView/{{list._id}}">{{list.code}}</a></span></td>
+                <td><span title="{{list.creditbody}}">{{{'1000':'中建材信息技术股份有限公司','9000':'中建材集团进出口公司','9001':'中国建材（香港）有限公司'}[list.creditbody] | cutfield:true:20:'...'}}</span></td>
+                <td><span>{{list.credittype}}</span></td>
+                <td><span>{{list.username}}</span></td>
+                <td><span title="{{list.orgname}}">{{list.orgname |  cutfield:true:7:'...'}}</span></td>
+                <td><span>{{list.bank.name}}</span></td>
+                <td><span>{{list.creditmoney | currency : '￥'}}</span></td>
+                <td><span>{{list.timestamp| date: 'yyyy-MM-dd'}}</span></td>
+                <td><span>{{list.moneybackdate | date: 'yyyy-MM-dd'}}</span></td>
+                <td><span>{{list.status}}</span></td>
+                <!--<td class="czBtn">
+                    <a href="/print/printest.html?uri=/bankcredit/printview&_id={{list._id}}&code={{list.code}}&credittype={{list.credittype}}" target="_blank">打印</a>
+                </td>-->
+            </tr>
+            <tr class="tip"><td colspan="10"><span>没有查到</span></td></tr>
+        </tbody>
+    </table>
+    </div>
+    <div class="tableHandler" style="width: 110px;">
+        <table class="orangestyle table">
+            <thead>
+            <tr>
+                <th><span>操作</span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="list in dataList">
+
+                <td class="czBtn">
+                    <div class="handlerBox">
+                        <a class="handleBtn invalidBtn" href="" ng-show="(!list.opendate || list.opendate ) && list.status !== '作废'" ng-click="bankNullify(list)" title="作废"></a>
+                        <a class="handleBtn invalidBtn disabled" ng-hide="(!list.opendate || list.opendate ) && list.status !== '作废'" href="" title="作废"></a>
+                        <a class="handleBtn printBtn" href="/print/printht.html?uri=/bankcredit/printview&_id={{list._id}}&code={{list.code}}&credittype={{list.credittype}}" target="_blank" title="打印"></a>
+                        <a target="_blank" class="handleBtn detailBtn" href="index.html#/bankCreditOrderView/{{list._id}}" title="详情"></a>
+                    </div>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    </div>
+    <pagination conf="paginationConf"></pagination>
+

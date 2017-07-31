@@ -1,0 +1,2665 @@
+{
+  "countryCode": [
+    {
+      "CODE": "CN",
+      "TITLE": "中国",
+      "PROVINCE": [
+        {
+          "CODE": "010",
+          "TITLE": "北京",
+          "CITY": [
+            {
+              "CODE":"北京市",
+              "TITLE":"北京市"
+            }
+          ]
+        },
+        {
+          "CODE": "020",
+          "TITLE": "上海",
+          "CITY": [
+            {
+              "CODE":"上海市",
+              "TITLE":"上海市"
+            }
+          ]
+        },
+        {
+          "CODE": "030",
+          "TITLE": "天津",
+          "CITY": [
+            {
+              "CODE":"天津市",
+              "TITLE":"天津市"
+            }
+          ]
+        },
+        {
+          "CODE": "040",
+          "TITLE": "内蒙古",
+          "CITY": [
+            {
+              "CODE": "",
+              "TITLE": "呼和浩特"
+            },
+            {
+              "CODE": "",
+              "TITLE": "包头"
+            },
+            {
+              "CODE": "",
+              "TITLE": "乌海"
+            },
+            {
+              "CODE": "",
+              "TITLE": "赤峰"
+            },
+            {
+              "CODE": "",
+              "TITLE": "鄂尔多斯"
+            },
+            {
+              "CODE": "",
+              "TITLE": "呼伦贝尔"
+            },
+            {
+              "CODE": "",
+              "TITLE": "巴彦淖尔"
+            },
+            {
+              "CODE": "",
+              "TITLE": "乌兰察布"
+            },
+            {
+              "CODE": "",
+              "TITLE": "锡林郭勒盟"
+            },
+            {
+              "CODE": "",
+              "TITLE": "兴安盟"
+            },
+            {
+              "CODE": "",
+              "TITLE": "阿拉善盟"
+            }
+          ]
+        },
+        {
+          "CODE": "050",
+          "TITLE": "山西",
+          "CITY": [
+            {
+              "CODE":"",
+              "TITLE":"太原"
+            },
+            {
+              "CODE":"",
+              "TITLE":"大同"
+            },
+            {
+              "CODE":"",
+              "TITLE":"阳泉"
+            },
+            {
+              "CODE":"",
+              "TITLE":"长治"
+            },
+            {
+              "CODE":"",
+              "TITLE":"晋城"
+            },
+            {
+              "CODE":"",
+              "TITLE":"朔州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"晋中"
+            },
+            {
+              "CODE":"",
+              "TITLE":"运城"
+            },
+            {
+              "CODE":"",
+              "TITLE":"忻州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"临汾"
+            },
+            {
+              "CODE":"",
+              "TITLE":"吕梁"
+            }
+          ]
+        },
+        {
+          "CODE": "060",
+          "TITLE": "河北",
+          "CITY": [
+            {
+              "CODE":"",
+              "TITLE":"石家庄"
+            },
+            {
+              "CODE":"",
+              "TITLE":"唐山"
+            },
+            {
+              "CODE":"",
+              "TITLE":"秦皇岛"
+            },
+            {
+              "CODE":"",
+              "TITLE":"邯郸"
+            },
+            {
+              "CODE":"",
+              "TITLE":"邢台"
+            },
+            {
+              "CODE":"",
+              "TITLE":"保定"
+            },
+            {
+              "CODE":"",
+              "TITLE":"张家口"
+            },
+            {
+              "CODE":"",
+              "TITLE":"承德"
+            },
+            {
+              "CODE":"",
+              "TITLE":"沧州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"廊坊"
+            },
+            {
+              "CODE":"",
+              "TITLE":"衡水"
+            }
+          ]
+        },
+        {
+          "CODE": "070",
+          "TITLE": "辽宁",
+          "CITY": [
+            {
+              "CODE":"",
+              "TITLE":"沈阳"
+            },
+            {
+              "CODE":"",
+              "TITLE":"大连"
+            },
+            {
+              "CODE":"",
+              "TITLE":"鞍山"
+            },
+            {
+              "CODE":"",
+              "TITLE":"抚顺"
+            },
+            {
+              "CODE":"",
+              "TITLE":"本溪"
+            },
+            {
+              "CODE":"",
+              "TITLE":"丹东"
+            },
+            {
+              "CODE":"",
+              "TITLE":"锦州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"营口"
+            },
+            {
+              "CODE":"",
+              "TITLE":"阜新"
+            },
+            {
+              "CODE":"",
+              "TITLE":"辽阳"
+            },
+            {
+              "CODE":"",
+              "TITLE":"盘锦"
+            },
+            {
+              "CODE":"",
+              "TITLE":"铁岭"
+            },
+            {
+              "CODE":"",
+              "TITLE":"朝阳"
+            },
+            {
+              "CODE":"",
+              "TITLE":"葫芦岛"
+            }
+          ]
+        },
+        {
+          "CODE": "080",
+          "TITLE": "吉林",
+          "CITY": [
+            {
+              "CODE":"",
+              "TITLE":"长春"
+            },
+            {
+              "CODE":"",
+              "TITLE":"吉林"
+            },
+            {
+              "CODE":"",
+              "TITLE":"四平"
+            },
+            {
+              "CODE":"",
+              "TITLE":"辽源"
+            },
+            {
+              "CODE":"",
+              "TITLE":"通化"
+            },
+            {
+              "CODE":"",
+              "TITLE":"白山"
+            },
+            {
+              "CODE":"",
+              "TITLE":"松原"
+            },
+            {
+              "CODE":"",
+              "TITLE":"白城"
+            },
+            {
+              "CODE":"",
+              "TITLE":"延边朝鲜族自治州"
+            }
+          ]
+        },
+        {
+          "CODE": "090",
+          "TITLE": "黑龙江",
+          "CITY": [
+            {
+              "CODE":"",
+              "TITLE":"哈尔滨"
+            },
+            {
+              "CODE":"",
+              "TITLE":"齐齐哈尔"
+            },
+            {
+              "CODE":"",
+              "TITLE":"鹤岗"
+            },
+            {
+              "CODE":"",
+              "TITLE":"双鸭山"
+            },
+            {
+              "CODE":"",
+              "TITLE":"鸡西"
+            },
+            {
+              "CODE":"",
+              "TITLE":"大庆"
+            },
+            {
+              "CODE":"",
+              "TITLE":"伊春"
+            },
+            {
+              "CODE":"",
+              "TITLE":"牡丹江"
+            },
+            {
+              "CODE":"",
+              "TITLE":"佳木斯"
+            },
+            {
+              "CODE":"",
+              "TITLE":"七台河"
+            },
+            {
+              "CODE":"",
+              "TITLE":"黑河"
+            },
+            {
+              "CODE":"",
+              "TITLE":"绥化"
+            },
+            {
+              "CODE":"",
+              "TITLE":"大兴安岭地区"
+            }
+          ]
+        },
+        {
+          "CODE": "100",
+          "TITLE": "江苏",
+          "CITY": [
+            {
+              "CODE":"",
+              "TITLE":"南京"
+            },
+            {
+              "CODE":"",
+              "TITLE":"苏州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"无锡"
+            },
+            {
+              "CODE":"",
+              "TITLE":"常州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"镇江"
+            },
+            {
+              "CODE":"",
+              "TITLE":"南通"
+            },
+            {
+              "CODE":"",
+              "TITLE":"泰州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"扬州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"盐城"
+            },
+            {
+              "CODE":"",
+              "TITLE":"连云港"
+            },
+            {
+              "CODE":"",
+              "TITLE":"徐州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"淮安"
+            },
+            {
+              "CODE":"",
+              "TITLE":"宿迁"
+            }
+          ]
+        },
+        {
+          "CODE": "110",
+          "TITLE": "安徽",
+          "CITY": [
+            {
+              "CODE":"",
+              "TITLE":"合肥"
+            },
+            {
+              "CODE":"",
+              "TITLE":"芜湖"
+            },
+            {
+              "CODE":"",
+              "TITLE":"蚌埠"
+            },
+            {
+              "CODE":"",
+              "TITLE":"淮南"
+            },
+            {
+              "CODE":"",
+              "TITLE":"马鞍山"
+            },
+            {
+              "CODE":"",
+              "TITLE":"淮北"
+            },
+            {
+              "CODE":"",
+              "TITLE":"铜陵"
+            },
+            {
+              "CODE":"",
+              "TITLE":"安庆"
+            },
+            {
+              "CODE":"",
+              "TITLE":"黄山"
+            },
+            {
+              "CODE":"",
+              "TITLE":"滁州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"阜阳"
+            },
+            {
+              "CODE":"",
+              "TITLE":"宿州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"巢湖"
+            },
+            {
+              "CODE":"",
+              "TITLE":"六安"
+            },
+            {
+              "CODE":"",
+              "TITLE":"亳州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"池州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"宣城"
+            }
+          ]
+        },
+        {
+          "CODE": "120",
+          "TITLE": "山东",
+          "CITY": [
+            {
+              "CODE":"",
+              "TITLE":"济南"
+            },
+            {
+              "CODE":"",
+              "TITLE":"青岛"
+            },
+            {
+              "CODE":"",
+              "TITLE":"淄博"
+            },
+            {
+              "CODE":"",
+              "TITLE":"枣庄"
+            },
+            {
+              "CODE":"",
+              "TITLE":"东营"
+            },
+            {
+              "CODE":"",
+              "TITLE":"烟台"
+            },
+            {
+              "CODE":"",
+              "TITLE":"潍坊"
+            },
+            {
+              "CODE":"",
+              "TITLE":"济宁"
+            },
+            {
+              "CODE":"",
+              "TITLE":"泰安"
+            },
+            {
+              "CODE":"",
+              "TITLE":"威海"
+            },
+            {
+              "CODE":"",
+              "TITLE":"日照"
+            },
+            {
+              "CODE":"",
+              "TITLE":"莱芜"
+            },
+            {
+              "CODE":"",
+              "TITLE":"临沂"
+            },
+            {
+              "CODE":"",
+              "TITLE":"德州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"聊城"
+            },
+            {
+              "CODE":"",
+              "TITLE":"滨州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"菏泽"
+            }
+          ]
+        },
+        {
+          "CODE": "130",
+          "TITLE": "浙江",
+          "CITY": [
+            {
+              "CODE":"",
+              "TITLE":"杭州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"宁波"
+            },
+            {
+              "CODE":"",
+              "TITLE":"温州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"嘉兴"
+            },
+            {
+              "CODE":"",
+              "TITLE":"湖州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"绍兴"
+            },
+            {
+              "CODE":"",
+              "TITLE":"金华"
+            },
+            {
+              "CODE":"",
+              "TITLE":"衢州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"舟山"
+            },
+            {
+              "CODE":"",
+              "TITLE":"台州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"丽水"
+            }
+          ]
+        },
+        {
+          "CODE": "140",
+          "TITLE": "江西",
+          "CITY": [
+            {
+              "CODE":"",
+              "TITLE":"南昌"
+            },
+            {
+              "CODE":"",
+              "TITLE":"景德镇"
+            },
+            {
+              "CODE":"",
+              "TITLE":"萍乡"
+            },
+            {
+              "CODE":"",
+              "TITLE":"九江"
+            },
+            {
+              "CODE":"",
+              "TITLE":"新余"
+            },
+            {
+              "CODE":"",
+              "TITLE":"鹰潭"
+            },
+            {
+              "CODE":"",
+              "TITLE":"赣州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"吉安"
+            },
+            {
+              "CODE":"",
+              "TITLE":"宜春"
+            },
+            {
+              "CODE":"",
+              "TITLE":"抚州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"上饶"
+            }
+          ]
+        },
+        {
+          "CODE": "150",
+          "TITLE": "福建",
+          "CITY": [
+            {
+              "CODE":"",
+              "TITLE":"福州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"厦门"
+            },
+            {
+              "CODE":"",
+              "TITLE":"莆田"
+            },
+            {
+              "CODE":"",
+              "TITLE":"三明"
+            },
+            {
+              "CODE":"",
+              "TITLE":"泉州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"漳州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"南平"
+            },
+            {
+              "CODE":"",
+              "TITLE":"龙岩"
+            },
+            {
+              "CODE":"",
+              "TITLE":"宁德"
+            }
+          ]
+        },
+        {
+          "CODE": "160",
+          "TITLE": "湖南",
+          "CITY": [
+            {
+              "CODE":"",
+              "TITLE":"长沙"
+            },
+            {
+              "CODE":"",
+              "TITLE":"株洲"
+            },
+            {
+              "CODE":"",
+              "TITLE":"湘潭"
+            },
+            {
+              "CODE":"",
+              "TITLE":"衡阳"
+            },
+            {
+              "CODE":"",
+              "TITLE":"邵阳"
+            },
+            {
+              "CODE":"",
+              "TITLE":"岳阳"
+            },
+            {
+              "CODE":"",
+              "TITLE":"常德"
+            },
+            {
+              "CODE":"",
+              "TITLE":"张家界"
+            },
+            {
+              "CODE":"",
+              "TITLE":"益阳"
+            },
+            {
+              "CODE":"",
+              "TITLE":"郴州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"永州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"怀化"
+            },
+            {
+              "CODE":"",
+              "TITLE":"娄底"
+            },
+            {
+              "CODE":"",
+              "TITLE":"湘西土家族苗族自治州"
+            }
+          ]
+        },
+        {
+          "CODE": "170",
+          "TITLE": "湖北",
+          "CITY": [
+            {
+              "CODE":"",
+              "TITLE":"武汉"
+            },
+            {
+              "CODE":"",
+              "TITLE":"黄石"
+            },
+            {
+              "CODE":"",
+              "TITLE":"十堰"
+            },
+            {
+              "CODE":"",
+              "TITLE":"荆州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"宜昌"
+            },
+            {
+              "CODE":"",
+              "TITLE":"襄樊"
+            },
+            {
+              "CODE":"",
+              "TITLE":"鄂州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"荆门"
+            },
+            {
+              "CODE":"",
+              "TITLE":"孝感"
+            },
+            {
+              "CODE":"",
+              "TITLE":"黄冈"
+            },
+            {
+              "CODE":"",
+              "TITLE":"咸宁"
+            },
+            {
+              "CODE":"",
+              "TITLE":"随州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"恩施土家族苗族自治州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"仙桃"
+            },
+            {
+              "CODE":"",
+              "TITLE":"天门"
+            },
+            {
+              "CODE":"",
+              "TITLE":"潜江"
+            },
+            {
+              "CODE":"",
+              "TITLE":"神农架林区"
+            }
+          ]
+        },
+        {
+          "CODE": "180",
+          "TITLE": "河南",
+          "CITY": [
+            {
+              "CODE":"",
+              "TITLE":"郑州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"开封"
+            },
+            {
+              "CODE":"",
+              "TITLE":"洛阳"
+            },
+            {
+              "CODE":"",
+              "TITLE":"平顶山"
+            },
+            {
+              "CODE":"",
+              "TITLE":"安阳"
+            },
+            {
+              "CODE":"",
+              "TITLE":"鹤壁"
+            },
+            {
+              "CODE":"",
+              "TITLE":"新乡"
+            },
+            {
+              "CODE":"",
+              "TITLE":"焦作"
+            },
+            {
+              "CODE":"",
+              "TITLE":"濮阳"
+            },
+            {
+              "CODE":"",
+              "TITLE":"许昌"
+            },
+            {
+              "CODE":"",
+              "TITLE":"漯河"
+            },
+            {
+              "CODE":"",
+              "TITLE":"三门峡"
+            },
+            {
+              "CODE":"",
+              "TITLE":"南阳"
+            },
+            {
+              "CODE":"",
+              "TITLE":"商丘"
+            },
+            {
+              "CODE":"",
+              "TITLE":"信阳"
+            },
+            {
+              "CODE":"",
+              "TITLE":"周口"
+            },
+            {
+              "CODE":"",
+              "TITLE":"驻马店"
+            }
+          ]
+        },
+        {
+          "CODE": "190",
+          "TITLE": "广东",
+          "CITY": [
+            {
+              "CODE":"",
+              "TITLE":"广州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"深圳"
+            },
+            {
+              "CODE":"",
+              "TITLE":"珠海"
+            },
+            {
+              "CODE":"",
+              "TITLE":"汕头"
+            },
+            {
+              "CODE":"",
+              "TITLE":"韶关"
+            },
+            {
+              "CODE":"",
+              "TITLE":"佛山"
+            },
+            {
+              "CODE":"",
+              "TITLE":"江门"
+            },
+            {
+              "CODE":"",
+              "TITLE":"湛江"
+            },
+            {
+              "CODE":"",
+              "TITLE":"茂名"
+            },
+            {
+              "CODE":"",
+              "TITLE":"肇庆"
+            },
+            {
+              "CODE":"",
+              "TITLE":"惠州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"梅州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"汕尾"
+            },
+            {
+              "CODE":"",
+              "TITLE":"河源"
+            },
+            {
+              "CODE":"",
+              "TITLE":"阳江"
+            },
+            {
+              "CODE":"",
+              "TITLE":"清远"
+            },
+            {
+              "CODE":"",
+              "TITLE":"东莞"
+            },
+            {
+              "CODE":"",
+              "TITLE":"中山"
+            },
+            {
+              "CODE":"",
+              "TITLE":"潮州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"揭阳"
+            },
+            {
+              "CODE":"",
+              "TITLE":"云浮"
+            }
+          ]
+        },
+        {
+          "CODE": "200",
+          "TITLE": "海南",
+          "CITY": [
+            {
+              "CODE":"",
+              "TITLE":"海口"
+            },
+            {
+              "CODE":"",
+              "TITLE":"三亚"
+            },
+            {
+              "CODE":"",
+              "TITLE":"五指山"
+            },
+            {
+              "CODE":"",
+              "TITLE":"琼海"
+            },
+            {
+              "CODE":"",
+              "TITLE":"儋州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"文昌"
+            },
+            {
+              "CODE":"",
+              "TITLE":"万宁"
+            },
+            {
+              "CODE":"",
+              "TITLE":"东方"
+            },
+            {
+              "CODE":"",
+              "TITLE":"澄迈县"
+            },
+            {
+              "CODE":"",
+              "TITLE":"定安县"
+            },
+            {
+              "CODE":"",
+              "TITLE":"屯昌县"
+            },
+            {
+              "CODE":"",
+              "TITLE":"临高县"
+            },
+            {
+              "CODE":"",
+              "TITLE":"白沙黎族自治县"
+            },
+            {
+              "CODE":"",
+              "TITLE":"昌江黎族自治县"
+            },
+            {
+              "CODE":"",
+              "TITLE":"乐东黎族自治县"
+            },
+            {
+              "CODE":"",
+              "TITLE":"陵水黎族自治县"
+            },
+            {
+              "CODE":"",
+              "TITLE":"保亭黎族苗族自治县"
+            },
+            {
+              "CODE":"",
+              "TITLE":"琼中黎族苗族自治县"
+            }
+          ]
+        },
+        {
+          "CODE": "210",
+          "TITLE": "广西",
+          "CITY": [
+            {
+              "CODE":"",
+              "TITLE":"南宁"
+            },
+            {
+              "CODE":"",
+              "TITLE":"柳州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"桂林"
+            },
+            {
+              "CODE":"",
+              "TITLE":"梧州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"北海"
+            },
+            {
+              "CODE":"",
+              "TITLE":"防城港"
+            },
+            {
+              "CODE":"",
+              "TITLE":"钦州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"贵港"
+            },
+            {
+              "CODE":"",
+              "TITLE":"玉林"
+            },
+            {
+              "CODE":"",
+              "TITLE":"百色"
+            },
+            {
+              "CODE":"",
+              "TITLE":"贺州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"河池"
+            },
+            {
+              "CODE":"",
+              "TITLE":"来宾"
+            },
+            {
+              "CODE":"",
+              "TITLE":"崇左"
+            }
+          ]
+        },
+        {
+          "CODE": "220",
+          "TITLE": "贵州",
+          "CITY": [
+            {
+              "CODE":"",
+              "TITLE":"贵阳"
+            },
+            {
+              "CODE":"",
+              "TITLE":"六盘水"
+            },
+            {
+              "CODE":"",
+              "TITLE":"遵义"
+            },
+            {
+              "CODE":"",
+              "TITLE":"安顺"
+            },
+            {
+              "CODE":"",
+              "TITLE":"铜仁地区"
+            },
+            {
+              "CODE":"",
+              "TITLE":"毕节地区"
+            },
+            {
+              "CODE":"",
+              "TITLE":"黔西南布衣族苗族自治州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"黔东南苗族侗族自治州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"黔南布依族苗族自治州"
+            }
+          ]
+        },
+        {
+          "CODE": "230",
+          "TITLE": "四川",
+          "CITY": [
+            {
+              "CODE":"",
+              "TITLE":"成都"
+            },
+            {
+              "CODE":"",
+              "TITLE":"自贡"
+            },
+            {
+              "CODE":"",
+              "TITLE":"攀枝花"
+            },
+            {
+              "CODE":"",
+              "TITLE":"泸州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"德阳"
+            },
+            {
+              "CODE":"",
+              "TITLE":"绵阳"
+            },
+            {
+              "CODE":"",
+              "TITLE":"广元"
+            },
+            {
+              "CODE":"",
+              "TITLE":"遂宁"
+            },
+            {
+              "CODE":"",
+              "TITLE":"内江"
+            },
+            {
+              "CODE":"",
+              "TITLE":"乐山"
+            },
+            {
+              "CODE":"",
+              "TITLE":"南充"
+            },
+            {
+              "CODE":"",
+              "TITLE":"眉山"
+            },
+            {
+              "CODE":"",
+              "TITLE":"宜宾"
+            },
+            {
+              "CODE":"",
+              "TITLE":"广安"
+            },
+            {
+              "CODE":"",
+              "TITLE":"达州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"雅安"
+            },
+            {
+              "CODE":"",
+              "TITLE":"巴中"
+            },
+            {
+              "CODE":"",
+              "TITLE":"资阳"
+            },
+            {
+              "CODE":"",
+              "TITLE":"阿坝藏族羌族自治州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"甘孜藏族自治州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"凉山彝族自治州"
+            }
+          ]
+        },
+        {
+          "CODE": "240",
+          "TITLE": "云南",
+          "CITY": [
+            {
+              "CODE":"",
+              "TITLE":"昆明"
+            },
+            {
+              "CODE":"",
+              "TITLE":"曲靖"
+            },
+            {
+              "CODE":"",
+              "TITLE":"玉溪"
+            },
+            {
+              "CODE":"",
+              "TITLE":"保山"
+            },
+            {
+              "CODE":"",
+              "TITLE":"邵通"
+            },
+            {
+              "CODE":"",
+              "TITLE":"丽江"
+            },
+            {
+              "CODE":"",
+              "TITLE":"普洱"
+            },
+            {
+              "CODE":"",
+              "TITLE":"临沧"
+            },
+            {
+              "CODE":"",
+              "TITLE":"德宏傣族景颇族自治州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"怒江傈僳族自治州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"迪庆藏族自治州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"大理白族自治州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"楚雄彝族自治州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"红河哈尼族彝族自治州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"文山壮族苗族自治州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"西双版纳傣族自治州"
+            }
+          ]
+        },
+        {
+          "CODE": "250",
+          "TITLE": "陕西",
+          "CITY": [
+            {
+              "CODE":"",
+              "TITLE":"西安"
+            },
+            {
+              "CODE":"",
+              "TITLE":"铜川"
+            },
+            {
+              "CODE":"",
+              "TITLE":"宝鸡"
+            },
+            {
+              "CODE":"",
+              "TITLE":"咸阳"
+            },
+            {
+              "CODE":"",
+              "TITLE":"渭南"
+            },
+            {
+              "CODE":"",
+              "TITLE":"延安"
+            },
+            {
+              "CODE":"",
+              "TITLE":"汉中"
+            },
+            {
+              "CODE":"",
+              "TITLE":"榆林"
+            },
+            {
+              "CODE":"",
+              "TITLE":"安康"
+            },
+            {
+              "CODE":"",
+              "TITLE":"商洛"
+            }
+          ]
+        },
+        {
+          "CODE": "260",
+          "TITLE": "甘肃",
+          "CITY": [
+            {
+              "CODE":"",
+              "TITLE":"兰州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"嘉峪关"
+            },
+            {
+              "CODE":"",
+              "TITLE":"金昌"
+            },
+            {
+              "CODE":"",
+              "TITLE":"白银"
+            },
+            {
+              "CODE":"",
+              "TITLE":"天水"
+            },
+            {
+              "CODE":"",
+              "TITLE":"武威"
+            },
+            {
+              "CODE":"",
+              "TITLE":"酒泉"
+            },
+            {
+              "CODE":"",
+              "TITLE":"张掖"
+            },
+            {
+              "CODE":"",
+              "TITLE":"庆阳"
+            },
+            {
+              "CODE":"",
+              "TITLE":"平凉"
+            },
+            {
+              "CODE":"",
+              "TITLE":"定西"
+            },
+            {
+              "CODE":"",
+              "TITLE":"陇南"
+            },
+            {
+              "CODE":"",
+              "TITLE":"临夏回族自治州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"甘南藏族自治州"
+            }
+          ]
+        },
+        {
+          "CODE": "270",
+          "TITLE": "宁夏",
+          "CITY": [
+            {
+              "CODE":"",
+              "TITLE":"银川"
+            },
+            {
+              "CODE":"",
+              "TITLE":"石嘴山"
+            },
+            {
+              "CODE":"",
+              "TITLE":"吴忠"
+            },
+            {
+              "CODE":"",
+              "TITLE":"固原"
+            },
+            {
+              "CODE":"",
+              "TITLE":"中卫"
+            }
+          ]
+        },
+        {
+          "CODE": "280",
+          "TITLE": "青海",
+          "CITY": [
+            {
+              "CODE":"",
+              "TITLE":"西宁"
+            },
+            {
+              "CODE":"",
+              "TITLE":"海东地区"
+            },
+            {
+              "CODE":"",
+              "TITLE":"海北藏族自治州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"海南藏族自治州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"黄南藏族自治州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"果洛藏族自治州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"玉树藏族自治州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"海西蒙古族藏族自治州"
+            }
+          ]
+        },
+        {
+          "CODE": "290",
+          "TITLE": "新疆",
+          "CITY": [
+            {
+              "CODE":"",
+              "TITLE":"乌鲁木齐"
+            },
+            {
+              "CODE":"",
+              "TITLE":"克拉玛依"
+            },
+            {
+              "CODE":"",
+              "TITLE":"哈密地区"
+            },
+            {
+              "CODE":"",
+              "TITLE":"吐鲁番地区"
+            },
+            {
+              "CODE":"",
+              "TITLE":"和田地区"
+            },
+            {
+              "CODE":"",
+              "TITLE":"阿克苏地区"
+            },
+            {
+              "CODE":"",
+              "TITLE":"喀什地区"
+            },
+            {
+              "CODE":"",
+              "TITLE":"克孜勒苏柯尔克孜自治州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"巴音郭楞蒙古自治州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"昌吉回族自治州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"博尔塔拉蒙古自治州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"石河子"
+            },
+            {
+              "CODE":"",
+              "TITLE":"阿拉尔"
+            },
+            {
+              "CODE":"",
+              "TITLE":"图木舒克"
+            },
+            {
+              "CODE":"",
+              "TITLE":"五家渠"
+            },
+            {
+              "CODE":"",
+              "TITLE":"伊犁哈萨克自治州"
+            },
+            {
+              "CODE":"",
+              "TITLE":"阿勒泰"
+            },
+            {
+              "CODE":"",
+              "TITLE":"塔城"
+            },
+            {
+              "CODE":"",
+              "TITLE":"喀什"
+            }
+          ]
+        },
+        {
+          "CODE": "300",
+          "TITLE": "西藏",
+          "CITY": [
+            {
+              "CODE":"",
+              "TITLE":"拉萨"
+            },
+            {
+              "CODE":"",
+              "TITLE":"那曲地区"
+            },
+            {
+              "CODE":"",
+              "TITLE":"昌都地区"
+            },
+            {
+              "CODE":"",
+              "TITLE":"林芝地区"
+            },
+            {
+              "CODE":"",
+              "TITLE":"山南地区"
+            },
+            {
+              "CODE":"",
+              "TITLE":"日喀则地区"
+            },
+            {
+              "CODE":"",
+              "TITLE":"阿里地区"
+            }
+          ]
+        },
+        {
+          "CODE": "320",
+          "TITLE": "重庆",
+          "CITY": [
+            {
+              "CODE":"",
+              "TITLE":"重庆市"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "CODE": "HK",
+      "TITLE": "中国香港"
+    },
+    {
+      "CODE": "MO",
+      "TITLE": "中国澳门"
+    },
+    {
+      "CODE": "US",
+      "TITLE": "美国"
+    },
+    {
+      "CODE": "AS",
+      "TITLE": "萨摩亚,美国"
+    },
+    {
+      "CODE": "EU",
+      "TITLE": "欧盟"
+    },
+    {
+      "CODE": "DE",
+      "TITLE": "德国"
+    },
+    {
+      "CODE": "FR",
+      "TITLE": "法国"
+    },
+    {
+      "CODE": "IT",
+      "TITLE": "意大利"
+    },
+    {
+      "CODE": "NL",
+      "TITLE": "荷兰"
+    },
+    {
+      "CODE": "LU",
+      "TITLE": "卢森堡"
+    },
+    {
+      "CODE": "BE",
+      "TITLE": "比利时"
+    },
+    {
+      "CODE": "IE",
+      "TITLE": "爱尔兰"
+    },
+    {
+      "CODE": "GR",
+      "TITLE": "希腊"
+    },
+    {
+      "CODE": "ES",
+      "TITLE": "西班牙"
+    },
+    {
+      "CODE": "PT",
+      "TITLE": "葡萄牙"
+    },
+    {
+      "CODE": "AT",
+      "TITLE": "奥地利"
+    },
+    {
+      "CODE": "FI",
+      "TITLE": "芬兰"
+    },
+    {
+      "CODE": "SI",
+      "TITLE": "斯洛文尼亚"
+    },
+    {
+      "CODE": "CY",
+      "TITLE": "塞浦路斯"
+    },
+    {
+      "CODE": "MT",
+      "TITLE": "马耳他"
+    },
+    {
+      "CODE": "SK",
+      "TITLE": "斯洛伐克"
+    },
+    {
+      "CODE": "EE",
+      "TITLE": "爱沙尼亚"
+    },
+    {
+      "CODE": "CH",
+      "TITLE": "瑞士"
+    },
+    {
+      "CODE": "JP",
+      "TITLE": "日本"
+    },
+    {
+      "CODE": "ET",
+      "TITLE": "埃塞俄比亚"
+    },
+    {
+      "CODE": "AD",
+      "TITLE": "安道尔共和国"
+    },
+    {
+      "CODE": "AE",
+      "TITLE": "阿联酋"
+    },
+    {
+      "CODE": "AF",
+      "TITLE": "阿富汗"
+    },
+    {
+      "CODE": "AG",
+      "TITLE": "安提瓜和巴布达"
+    },
+    {
+      "CODE": "AI",
+      "TITLE": "安圭拉岛"
+    },
+    {
+      "CODE": "AL",
+      "TITLE": "阿尔巴尼亚"
+    },
+    {
+      "CODE": "AM",
+      "TITLE": "亚美尼亚"
+    },
+    {
+      "CODE": "AO",
+      "TITLE": "安哥拉"
+    },
+    {
+      "CODE": "AQ",
+      "TITLE": "南极洲"
+    },
+    {
+      "CODE": "AR",
+      "TITLE": "阿根廷"
+    },
+
+
+    {
+      "CODE": "AU",
+      "TITLE": "澳大利亚"
+    },
+    {
+      "CODE": "AW",
+      "TITLE": "阿鲁巴"
+    },
+    {
+      "CODE": "AZ",
+      "TITLE": "阿塞拜疆"
+    },
+    {
+      "CODE": "BA",
+      "TITLE": "波黑"
+    },
+    {
+      "CODE": "BB",
+      "TITLE": "巴巴多斯"
+    },
+    {
+      "CODE": "BD",
+      "TITLE": "孟加拉国"
+    },
+
+    {
+      "CODE": "BF",
+      "TITLE": "布基纳法索"
+    },
+    {
+      "CODE": "BG",
+      "TITLE": "保加利亚"
+    },
+    {
+      "CODE": "BH",
+      "TITLE": "巴林"
+    },
+    {
+      "CODE": "BI",
+      "TITLE": "布隆迪"
+    },
+    {
+      "CODE": "BJ",
+      "TITLE": "贝宁"
+    },
+    {
+      "CODE": "BL",
+      "TITLE": "蓝色"
+    },
+    {
+      "CODE": "BM",
+      "TITLE": "百慕大群岛"
+    },
+    {
+      "CODE": "BN",
+      "TITLE": "文莱达鲁萨兰"
+    },
+    {
+      "CODE": "BO",
+      "TITLE": "玻利维亚"
+    },
+    {
+      "CODE": "BQ",
+      "TITLE": "博内尔，沙巴"
+    },
+    {
+      "CODE": "BR",
+      "TITLE": "巴西"
+    },
+    {
+      "CODE": "BS",
+      "TITLE": "巴哈马(群岛)"
+    },
+    {
+      "CODE": "BT",
+      "TITLE": "不丹"
+    },
+    {
+      "CODE": "BV",
+      "TITLE": "布维群岛"
+    },
+    {
+      "CODE": "BW",
+      "TITLE": "博茨瓦纳"
+    },
+    {
+      "CODE": "BY",
+      "TITLE": "白俄罗斯"
+    },
+    {
+      "CODE": "BZ",
+      "TITLE": "伯利兹"
+    },
+    {
+      "CODE": "CA",
+      "TITLE": "加拿大"
+    },
+    {
+      "CODE": "CC",
+      "TITLE": "库科纳群岛"
+    },
+    {
+      "CODE": "CD",
+      "TITLE": "刚果民主共和国"
+    },
+    {
+      "CODE": "CF",
+      "TITLE": "中非共和国"
+    },
+    {
+      "CODE": "CG",
+      "TITLE": "刚果共和国"
+    },
+
+    {
+      "CODE": "CI",
+      "TITLE": "象牙海岸"
+    },
+    {
+      "CODE": "CK",
+      "TITLE": "科克群岛"
+    },
+    {
+      "CODE": "CL",
+      "TITLE": "智利"
+    },
+    {
+      "CODE": "CM",
+      "TITLE": "喀麦隆"
+    },
+    {
+      "CODE": "CO",
+      "TITLE": "哥伦比亚"
+    },
+    {
+      "CODE": "CR",
+      "TITLE": "哥斯答黎加"
+    },
+    {
+      "CODE": "CS",
+      "TITLE": "塞尔维亚/Monten"
+    },
+    {
+      "CODE": "CU",
+      "TITLE": "古巴"
+    },
+    {
+      "CODE": "CV",
+      "TITLE": "佛得角群岛"
+    },
+    {
+      "CODE": "CW",
+      "TITLE": "库拉索"
+    },
+    {
+      "CODE": "CX",
+      "TITLE": "圣诞岛"
+    },
+
+    {
+      "CODE": "CZ",
+      "TITLE": "捷克共和国"
+    },
+
+    {
+      "CODE": "DJ",
+      "TITLE": "吉布提"
+    },
+    {
+      "CODE": "DK",
+      "TITLE": "丹麦"
+    },
+    {
+      "CODE": "DM",
+      "TITLE": "多米尼加"
+    },
+    {
+      "CODE": "DO",
+      "TITLE": "多米尼加共和国"
+    },
+    {
+      "CODE": "DZ",
+      "TITLE": "阿尔及利亚"
+    },
+    {
+      "CODE": "EC",
+      "TITLE": "厄瓜多尔"
+    },
+
+    {
+      "CODE": "EG",
+      "TITLE": "埃及"
+    },
+    {
+      "CODE": "EH",
+      "TITLE": "撒哈拉西部"
+    },
+    {
+      "CODE": "ER",
+      "TITLE": "埃立特里亚"
+    },
+
+
+
+
+    {
+      "CODE": "FJ",
+      "TITLE": "斐济"
+    },
+    {
+      "CODE": "FK",
+      "TITLE": "福克兰群岛"
+    },
+    {
+      "CODE": "FM",
+      "TITLE": "密克罗尼西亚"
+    },
+    {
+      "CODE": "FO",
+      "TITLE": "法罗群岛"
+    },
+
+    {
+      "CODE": "GA",
+      "TITLE": "加蓬"
+    },
+    {
+      "CODE": "GB",
+      "TITLE": "英国"
+    },
+    {
+      "CODE": "GD",
+      "TITLE": "格林纳达"
+    },
+    {
+      "CODE": "GE",
+      "TITLE": "乔治亚"
+    },
+    {
+      "CODE": "GF",
+      "TITLE": "法属圭亚那"
+    },
+    {
+      "CODE": "GG",
+      "TITLE": "格恩西"
+    },
+    {
+      "CODE": "GH",
+      "TITLE": "加纳"
+    },
+    {
+      "CODE": "GI",
+      "TITLE": "直布罗陀"
+    },
+    {
+      "CODE": "GL",
+      "TITLE": "格陵兰岛"
+    },
+    {
+      "CODE": "GM",
+      "TITLE": "冈比亚"
+    },
+    {
+      "CODE": "GN",
+      "TITLE": "几内亚"
+    },
+    {
+      "CODE": "GP",
+      "TITLE": "瓜达洛普"
+    },
+    {
+      "CODE": "GQ",
+      "TITLE": "赤道几内亚"
+    },
+
+    {
+      "CODE": "GS",
+      "TITLE": "南三维治岛"
+    },
+    {
+      "CODE": "GT",
+      "TITLE": "危地马拉"
+    },
+    {
+      "CODE": "GU",
+      "TITLE": "关岛"
+    },
+    {
+      "CODE": "GW",
+      "TITLE": "几内亚比绍"
+    },
+    {
+      "CODE": "GY",
+      "TITLE": "圭亚那"
+    },
+
+    {
+      "CODE": "HM",
+      "TITLE": "荷德/马克多纳岛"
+    },
+    {
+      "CODE": "HN",
+      "TITLE": "洪都拉斯"
+    },
+    {
+      "CODE": "HR",
+      "TITLE": "克罗地亚"
+    },
+    {
+      "CODE": "HT",
+      "TITLE": "海地"
+    },
+    {
+      "CODE": "HU",
+      "TITLE": "匈牙利"
+    },
+    {
+      "CODE": "ID",
+      "TITLE": "印度尼西亚"
+    },
+
+    {
+      "CODE": "IL",
+      "TITLE": "以色列"
+    },
+    {
+      "CODE": "IM",
+      "TITLE": "马恩岛"
+    },
+    {
+      "CODE": "IN",
+      "TITLE": "印度"
+    },
+    {
+      "CODE": "IO",
+      "TITLE": "英属印度洋区"
+    },
+    {
+      "CODE": "IQ",
+      "TITLE": "伊拉克"
+    },
+    {
+      "CODE": "IR",
+      "TITLE": "伊朗"
+    },
+    {
+      "CODE": "IS",
+      "TITLE": "冰岛"
+    },
+
+    {
+      "CODE": "JE",
+      "TITLE": "泽西"
+    },
+    {
+      "CODE": "JM",
+      "TITLE": "牙买加"
+    },
+    {
+      "CODE": "JO",
+      "TITLE": "约旦"
+    },
+
+    {
+      "CODE": "KE",
+      "TITLE": "肯尼亚"
+    },
+    {
+      "CODE": "KG",
+      "TITLE": "吉尔吉斯斯坦"
+    },
+    {
+      "CODE": "KH",
+      "TITLE": "柬埔寨"
+    },
+    {
+      "CODE": "KI",
+      "TITLE": "基里巴斯"
+    },
+    {
+      "CODE": "KM",
+      "TITLE": "科摩罗群岛"
+    },
+    {
+      "CODE": "KN",
+      "TITLE": "圣基茨和那维斯"
+    },
+    {
+      "CODE": "KP",
+      "TITLE": "北朝鲜"
+    },
+    {
+      "CODE": "KR",
+      "TITLE": "韩国"
+    },
+    {
+      "CODE": "KW",
+      "TITLE": "科威特"
+    },
+    {
+      "CODE": "KY",
+      "TITLE": "开曼群岛"
+    },
+    {
+      "CODE": "KZ",
+      "TITLE": "哈萨克斯坦"
+    },
+    {
+      "CODE": "LA",
+      "TITLE": "老挝"
+    },
+    {
+      "CODE": "LB",
+      "TITLE": "黎巴嫩"
+    },
+    {
+      "CODE": "LC",
+      "TITLE": "圣路西亚"
+    },
+    {
+      "CODE": "LI",
+      "TITLE": "列支敦士登"
+    },
+    {
+      "CODE": "LK",
+      "TITLE": "斯里兰卡"
+    },
+    {
+      "CODE": "LR",
+      "TITLE": "利比里亚"
+    },
+    {
+      "CODE": "LS",
+      "TITLE": "莱索托"
+    },
+    {
+      "CODE": "LT",
+      "TITLE": "立陶宛"
+    },
+
+    {
+      "CODE": "LV",
+      "TITLE": "拉脱维亚"
+    },
+    {
+      "CODE": "LY",
+      "TITLE": "利比亚"
+    },
+    {
+      "CODE": "MA",
+      "TITLE": "摩洛哥"
+    },
+    {
+      "CODE": "MC",
+      "TITLE": "摩纳哥"
+    },
+    {
+      "CODE": "MD",
+      "TITLE": "摩尔多瓦"
+    },
+    {
+      "CODE": "MG",
+      "TITLE": "马达加斯加"
+    },
+    {
+      "CODE": "MH",
+      "TITLE": "马绍尔群岛"
+    },
+    {
+      "CODE": "MK",
+      "TITLE": "马其顿"
+    },
+    {
+      "CODE": "ML",
+      "TITLE": "马里"
+    },
+    {
+      "CODE": "MM",
+      "TITLE": "缅甸"
+    },
+    {
+      "CODE": "MN",
+      "TITLE": "蒙古"
+    },
+
+    {
+      "CODE": "MP",
+      "TITLE": "北马里亚纳群岛"
+    },
+    {
+      "CODE": "MQ",
+      "TITLE": "马提尼克"
+    },
+    {
+      "CODE": "MR",
+      "TITLE": "毛里塔尼亚"
+    },
+    {
+      "CODE": "MS",
+      "TITLE": "蒙塞拉特岛"
+    },
+
+    {
+      "CODE": "MU",
+      "TITLE": "毛里求斯"
+    },
+    {
+      "CODE": "MV",
+      "TITLE": "马尔代夫"
+    },
+    {
+      "CODE": "MW",
+      "TITLE": "马拉维"
+    },
+    {
+      "CODE": "MX",
+      "TITLE": "墨西哥"
+    },
+    {
+      "CODE": "MY",
+      "TITLE": "马来西亚"
+    },
+    {
+      "CODE": "MZ",
+      "TITLE": "莫桑比克"
+    },
+    {
+      "CODE": "NA",
+      "TITLE": "纳米比亚"
+    },
+    {
+      "CODE": "NC",
+      "TITLE": "新喀里多尼亚"
+    },
+    {
+      "CODE": "NE",
+      "TITLE": "尼日尔"
+    },
+    {
+      "CODE": "NF",
+      "TITLE": "诺福克岛"
+    },
+    {
+      "CODE": "NG",
+      "TITLE": "尼日利亚"
+    },
+    {
+      "CODE": "NI",
+      "TITLE": "尼加拉瓜"
+    },
+
+    {
+      "CODE": "NO",
+      "TITLE": "挪威"
+    },
+    {
+      "CODE": "NP",
+      "TITLE": "尼泊尔"
+    },
+    {
+      "CODE": "NR",
+      "TITLE": "瑙鲁"
+    },
+    {
+      "CODE": "NT",
+      "TITLE": "NATO"
+    },
+    {
+      "CODE": "NU",
+      "TITLE": "纽埃群岛"
+    },
+    {
+      "CODE": "NZ",
+      "TITLE": "新西兰"
+    },
+    {
+      "CODE": "OM",
+      "TITLE": "阿曼"
+    },
+    {
+      "CODE": "OR",
+      "TITLE": "橙色"
+    },
+    {
+      "CODE": "PA",
+      "TITLE": "巴拿马"
+    },
+    {
+      "CODE": "PE",
+      "TITLE": "秘鲁"
+    },
+    {
+      "CODE": "PF",
+      "TITLE": "法属波利尼西亚"
+    },
+    {
+      "CODE": "PG",
+      "TITLE": "巴布亚新几内亚"
+    },
+    {
+      "CODE": "PH",
+      "TITLE": "菲律宾"
+    },
+    {
+      "CODE": "PK",
+      "TITLE": "巴基斯坦"
+    },
+    {
+      "CODE": "PL",
+      "TITLE": "波兰"
+    },
+    {
+      "CODE": "PM",
+      "TITLE": "St.Pier,Miquel."
+    },
+    {
+      "CODE": "PN",
+      "TITLE": "皮特肯岛"
+    },
+    {
+      "CODE": "PR",
+      "TITLE": "波多黎哥"
+    },
+    {
+      "CODE": "PS",
+      "TITLE": "巴基斯坦"
+    },
+
+    {
+      "CODE": "PW",
+      "TITLE": "帕劳"
+    },
+    {
+      "CODE": "PY",
+      "TITLE": "巴拉圭"
+    },
+    {
+      "CODE": "QA",
+      "TITLE": "卡塔尔"
+    },
+    {
+      "CODE": "RE",
+      "TITLE": "统一"
+    },
+    {
+      "CODE": "RO",
+      "TITLE": "罗马尼亚"
+    },
+    {
+      "CODE": "RU",
+      "TITLE": "俄罗斯联邦"
+    },
+    {
+      "CODE": "RW",
+      "TITLE": "卢旺达"
+    },
+    {
+      "CODE": "SA",
+      "TITLE": "沙特阿拉伯"
+    },
+    {
+      "CODE": "SB",
+      "TITLE": "所罗门群岛"
+    },
+    {
+      "CODE": "SC",
+      "TITLE": "塞舌尔群岛"
+    },
+    {
+      "CODE": "SD",
+      "TITLE": "苏丹"
+    },
+    {
+      "CODE": "SE",
+      "TITLE": "瑞典"
+    },
+    {
+      "CODE": "SG",
+      "TITLE": "新加坡"
+    },
+    {
+      "CODE": "SH",
+      "TITLE": "圣赫勒拿岛"
+    },
+
+    {
+      "CODE": "SJ",
+      "TITLE": "皮特肯岛"
+    },
+
+    {
+      "CODE": "SL",
+      "TITLE": "塞拉利昂"
+    },
+    {
+      "CODE": "SM",
+      "TITLE": "圣马力诺"
+    },
+    {
+      "CODE": "SN",
+      "TITLE": "塞内加尔"
+    },
+    {
+      "CODE": "SO",
+      "TITLE": "索马里"
+    },
+    {
+      "CODE": "SR",
+      "TITLE": "苏里南"
+    },
+    {
+      "CODE": "SS",
+      "TITLE": "南苏丹"
+    },
+    {
+      "CODE": "ST",
+      "TITLE": "圣多马/普林西比"
+    },
+    {
+      "CODE": "SV",
+      "TITLE": "萨尔瓦多"
+    },
+    {
+      "CODE": "SX",
+      "TITLE": "圣马丁"
+    },
+    {
+      "CODE": "SY",
+      "TITLE": "叙利亚"
+    },
+    {
+      "CODE": "SZ",
+      "TITLE": "斯威士兰"
+    },
+    {
+      "CODE": "TC",
+      "TITLE": "特克斯凯科斯"
+    },
+    {
+      "CODE": "TD",
+      "TITLE": "乍得"
+    },
+    {
+      "CODE": "TF",
+      "TITLE": "法国南部地区"
+    },
+    {
+      "CODE": "TG",
+      "TITLE": "多哥"
+    },
+    {
+      "CODE": "TH",
+      "TITLE": "泰国"
+    },
+    {
+      "CODE": "TJ",
+      "TITLE": "塔吉克斯坦"
+    },
+    {
+      "CODE": "TK",
+      "TITLE": "托客劳群岛"
+    },
+    {
+      "CODE": "TL",
+      "TITLE": "东帝汶岛"
+    },
+    {
+      "CODE": "TM",
+      "TITLE": "土库曼斯坦"
+    },
+    {
+      "CODE": "TN",
+      "TITLE": "突尼斯"
+    },
+    {
+      "CODE": "TO",
+      "TITLE": "汤加"
+    },
+    {
+      "CODE": "TP",
+      "TITLE": "东帝汶岛"
+    },
+    {
+      "CODE": "TR",
+      "TITLE": "土耳其"
+    },
+    {
+      "CODE": "TT",
+      "TITLE": "特立尼达/多巴哥"
+    },
+    {
+      "CODE": "TV",
+      "TITLE": "图瓦卢"
+    },
+    {
+      "CODE": "TW",
+      "TITLE": "台湾"
+    },
+    {
+      "CODE": "TZ",
+      "TITLE": "坦桑尼亚"
+    },
+    {
+      "CODE": "UA",
+      "TITLE": "乌克兰"
+    },
+    {
+      "CODE": "UG",
+      "TITLE": "乌干达"
+    },
+    {
+      "CODE": "UM",
+      "TITLE": "小奥特兰群岛"
+    },
+    {
+      "CODE": "UN",
+      "TITLE": "联合国"
+    },
+
+    {
+      "CODE": "UY",
+      "TITLE": "乌拉圭"
+    },
+    {
+      "CODE": "UZ",
+      "TITLE": "乌兹别克斯坦"
+    },
+    {
+      "CODE": "VA",
+      "TITLE": "梵蒂冈城"
+    },
+    {
+      "CODE": "VC",
+      "TITLE": "圣文森特"
+    },
+    {
+      "CODE": "VE",
+      "TITLE": "委内瑞拉"
+    },
+    {
+      "CODE": "VG",
+      "TITLE": "英属维尔京群岛"
+    },
+    {
+      "CODE": "VI",
+      "TITLE": "美属维尔京群岛"
+    },
+    {
+      "CODE": "VN",
+      "TITLE": "越南"
+    },
+    {
+      "CODE": "VU",
+      "TITLE": "瓦努阿图"
+    },
+    {
+      "CODE": "WF",
+      "TITLE": "瓦利斯/富图纳岛"
+    },
+    {
+      "CODE": "WS",
+      "TITLE": "萨摩亚"
+    },
+    {
+      "CODE": "YE",
+      "TITLE": "也门"
+    },
+    {
+      "CODE": "YT",
+      "TITLE": "马约特岛"
+    },
+    {
+      "CODE": "ZA",
+      "TITLE": "南非"
+    },
+    {
+      "CODE": "ZM",
+      "TITLE": "赞比亚"
+    },
+    {
+      "CODE": "ZW",
+      "TITLE": "津巴布韦"
+    }
+  ]
+}

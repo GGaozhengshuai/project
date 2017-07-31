@@ -1,0 +1,175 @@
+<!--<h3 class="genTitle genTitleBot"><em></em><span>公司额度管理</span></h3>-->
+<div class="cusCont">
+    <div class="generForm">
+        <form novalidate name="myForm">
+            <ul style="margin-bottom: 15px;">
+                <li class="tli">
+                    <strong>年度：</strong>
+                    <input class="text Wdate"  type="text" ng-readonly="true" date-Picker dateParam='{"dateFmt":"yyyy",minDate: "%y",maxDate: "{%y+4}"}' ng-model="ORDER_DATA.year" ng-init="ORDER_DATA.year=today" placeholder="请选择日期">
+                </li>
+            </ul>
+            <div style=" overflow: hidden">
+                <div style="padding-right: 10px;" class="czAddBtn">
+                    <a href="" ng-click="comeAdd()" class="addBtn">添加</a>
+                </div>
+                <div class="addTable" style='float: left; padding: 0; width: 40%;'>
+                    <table>
+                        <tr class="float_header">
+                            <th width="40">&nbsp;</th>
+                            <th style="width: 100px;">部门</th>
+                            <th>本年度分配间接费用额度</th>
+                            <th>已分配额度</th>
+                            <th>本年度已使用额度累计</th>
+                        </tr>
+                        <tr ng-repeat="list in ORDER_DATA.userList" class="list">
+                            <!--<td><a href="javascript:;" ng-click="comedit($index, 'dataList')">编辑</a></td>-->
+                            <td> <a href="javascript:;" ng-click="comeDel($index, 'userList')">删除</a></td>
+
+                            <td>
+                                <select ng-model="list.departmentSel" ng-disabled="!readyD" ng-change="changeDepart($index,list.departmentSel)">
+                                    <option value="">--请选择--</option>
+                                    <option ng-repeat=" c in listEmployee" value="{{c._id}}|{{c.orgname}}|{{c.level}}|{{c.pid}}">{{c.orgname}}</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="text" ng-model="list.yearlimit.amount" name="amount{{$index}}"   model-format="floatminus">
+                                <span class="errTip ng-hide" ng-show="myForm['amount'+$index].$dirty && myForm['amount'+$index].$error.numtwo && !myForm['amount'+$index].$focused">小数点后保留两位</span>
+                            </td>
+                            <!--<td><input type="text" ng-model="list.yearlimit.monthcount" ng-disabled="true"></td>-->
+                            <!--<td><input type="text" ng-model="list.yearlimit.used" ng-disabled="true"></td>-->
+                            <td><input type="text" ng-value="list.yearlimit.monthcount | number:2" ng-disabled="true"></td>
+                            <td><input type="text" ng-value="list.yearlimit.used | number:2" ng-disabled="true"></td>
+
+                        </tr>
+                        <tr ng-repeat="list in ORDER_DATA.dataList" class="list">
+                            <td>
+                                <a href="javascript:;" ng-click="comedit($index, 'dataList')">编辑</a></td>
+                            <td>
+                                <input type="text" ng-model="list.org.orgname" ng-disabled="true">
+                                <input type="hidden" ng-model="list.org._id">
+                                <input type="hidden" ng-model="list.org.level">
+                                <input type="hidden" ng-model="list.org.pid">
+                            </td>
+                            <td>
+                                <input type="text" ng-model="list.yearlimit.amount" name="amountd{{$index}}"  model-format="floatminus" ng-disabled="!list.edit">
+                                <span class="errTip ng-hide" ng-show="myForm['amountd'+$index].$dirty && myForm['amountd'+$index].$error.numtwo && !myForm['amountd'+$index].$focused">小数点后保留两位</span>
+                            </td>
+                            <!--<td><input type="text" ng-model="list.yearlimit.monthcount" ng-disabled="true"></td>-->
+                            <!--<td><input type="text" ng-model="list.yearlimit.used" ng-disabled="true"></td>-->
+                            <td><input type="text" ng-value="list.yearlimit.monthcount | number:2" ng-disabled="true"></td>
+                            <td><input type="text" ng-value="list.yearlimit.used | number:2" ng-disabled="true"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="addTable" style="overflow-x: auto; padding: 0; float:left; width: 60%;">
+                    <table style="width: 160%;">
+                        <tr class="float_header">
+                            <th>1月</th>
+                            <th>2月</th>
+                            <th>3月</th>
+                            <th>4月</th>
+                            <th>5月</th>
+                            <th>6月</th>
+                            <th>7月</th>
+                            <th>8月</th>
+                            <th>9月</th>
+                            <th>10月</th>
+                            <th>11月</th>
+                            <th>12月</th>
+                            <!--<th width="50"><a href="" ng-click="comeAdd()">添加</a></th>-->
+                            <!--<th width="50">操作</th>-->
+                        </tr>
+                        <tr ng-repeat="list in ORDER_DATA.userList" class="list">
+                            <td ng-repeat="item in list.monthlimit">
+                                <input type="text"  model-format="floatminus" ng-focus="iptFocusFn($element)" ng-blur="sumFn($parent.$index,0)" name="item{{$parent.$index}}{{$index}}" ng-model="item.amount">
+                                <span class="errTip ng-hide" ng-show="myForm['item'+$parent.$index+$index].$dirty && myForm['item'+$parent.$index+$index].$error.numtwo && !myForm['item'+$parent.$index+$index].$focused">小数点后保留两位</span>
+                            </td>
+
+                           <!-- <td>
+                                <a href="javascript:;" ng-click="comeDel($index, 'userList')">删除</a>
+                            </td>-->
+                            <!-- <td>
+                                 <input type="text" ng-init="list.Jan=''" ng-Focus numtwo-Validation name="Jan" ng-model="list.Jan">
+                                 <span class="errTip ng-hide" ng-show="myForm.Jan.$dirty && myForm.Jan.$error.numtwo && !myForm.Jan.$focused">小数点后保留两位</span>
+                             </td>
+                             <td>
+                                 <input type="text" ng-init="list.Feb=''" ng-Focus numtwo-Validation name="Feb" ng-model="list.Feb">
+                                 <span class="errTip ng-hide" ng-show="myForm.Feb.$dirty && myForm.Feb.$error.numtwo && !myForm.Feb.$focused">小数点后保留两位</span>
+                             </td>
+                             <td>
+                                 <input type="text" ng-init="list.Mar=''" ng-Focus numtwo-Validation name="Mar" ng-model="list.Mar">
+                                 <span class="errTip ng-hide" ng-show="myForm.Mar.$dirty && myForm.Mar.$error.numtwo && !myForm.Mar.$focused">小数点后保留两位</span>
+                             </td>
+                             <td>
+                                 <input type="text" ng-init="list.Apr=''" ng-Focus numtwo-Validation name="Apr" ng-model="list.Apr">
+                                 <span class="errTip ng-hide" ng-show="myForm.Apr.$dirty && myForm.Apr.$error.numtwo && !myForm.Apr.$focused">小数点后保留两位</span>
+                             </td>
+                             <td>
+                                 <input type="text" ng-init="list.May=''" ng-Focus numtwo-Validation name="May" ng-model="list.May">
+                                 <span class="errTip ng-hide" ng-show="myForm.May.$dirty && myForm.May.$error.numtwo && !myForm.May.$focused">小数点后保留两位</span>
+                             </td>
+                             <td>
+                                 <input type="text" ng-init="list.Jun=''" ng-Focus numtwo-Validation name="Jun" ng-model="list.Jun">
+                                 <span class="errTip ng-hide" ng-show="myForm.Jun.$dirty && myForm.Jun.$error.numtwo && !myForm.Jun.$focused">小数点后保留两位</span>
+                             </td>
+                             <td>
+                                 <input type="text" ng-init="list.Jul=''" ng-Focus numtwo-Validation name="Jul" ng-model="list.Jul">
+                                 <span class="errTip ng-hide" ng-show="myForm.Jul.$dirty && myForm.Jul.$error.numtwo && !myForm.Jul.$focused">小数点后保留两位</span>
+                             </td>
+                             <td>
+                                 <input type="text" ng-init="list.Aug=''" ng-Focus numtwo-Validation name="Aug" ng-model="list.Aug">
+                                 <span class="errTip ng-hide" ng-show="myForm.Aug.$dirty && myForm.Aug.$error.numtwo && !myForm.Aug.$focused">小数点后保留两位</span>
+                             </td>
+                             <td>
+                                 <input type="text" ng-init="list.Sep=''" ng-Focus numtwo-Validation name="Sep" ng-model="list.Sep">
+                                 <span class="errTip ng-hide" ng-show="myForm.Sep.$dirty && myForm.Sep.$error.numtwo && !myForm.Sep.$focused">小数点后保留两位</span>
+                             </td>
+                             <td>
+                                 <input type="text" ng-init="list.Oct=''" ng-Focus numtwo-Validation name="Oct" ng-model="list.Oct">
+                                 <span class="errTip ng-hide" ng-show="myForm.Oct.$dirty && myForm.Oct.$error.numtwo && !myForm.Oct.$focused">小数点后保留两位</span>
+                             </td>
+                             <td>
+                                 <input type="text" ng-init="list.Nov=''" ng-Focus numtwo-Validation name="Nov" ng-model="list.Nov">
+                                 <span class="errTip ng-hide" ng-show="myForm.Nov.$dirty && myForm.Nov.$error.numtwo && !myForm.Nov.$focused">小数点后保留两位</span>
+                             </td>
+                             <td>
+                                 <input type="text" ng-init="list.Dec=''" ng-Focus numtwo-Validation name="Dec" ng-model="list.Dec">
+                                 <span class="errTip ng-hide" ng-show="myForm.Dec.$dirty && myForm.Dec.$error.numtwo && !myForm.Dec.$focused">小数点后保留两位</span>
+                             </td>
+                             <td>
+                                 <a href="javascript:;" ng-click="comeDel($index, 'userList')">删除</a>
+                             </td>-->
+                        </tr>
+                        <tbody>
+                        <tr ng-repeat="list in ORDER_DATA.dataList" class="list">
+                            <td ng-repeat="item in list.monthlimit">
+                                <input type="text"  model-format="floatminus"  ng-blur="sumFn($parent.$index,1)" name="itemd{{$parent.$index}}{{$index}}" ng-model="item.amount" ng-disabled="!list.edit">
+                                <span class="errTip ng-hide" ng-show="myForm['itemd'+$parent.$index+$index].$dirty && myForm['itemd'+$parent.$index+$index].$error.numtwo && !myForm['itemd'+$parent.$index+$index].$focused">小数点后保留两位</span>
+                                <!--<span class="errTip ng-hide" ng-show="myForm['itemd'+$parent.$index+$index].$dirty && !myForm['itemd'+$parent.$index+$index].$error.numtwo && !myForm['itemd'+$parent.$index+$index].$focused && item.amount-item.used<0">小数点后保留两位</span>-->
+                            </td>
+                            <!-- <td><input type="text" ng-model="list.Jan"></td>
+                             <td><input type="text" ng-model="list.Feb"></td>
+                             <td><input type="text" ng-model="list.Mar"></td>
+                             <td><input type="text" ng-model="list.Apr"></td>
+                             <td><input type="text" ng-model="list.May"></td>
+                             <td><input type="text" ng-model="list.Jun"></td>
+                             <td><input type="text" ng-model="list.Jul"></td>
+                             <td><input type="text" ng-model="list.Aug"></td>
+                             <td><input type="text" ng-model="list.Sep"></td>
+                             <td><input type="text" ng-model="list.Oct"></td>
+                             <td><input type="text" ng-model="list.Nov"></td>
+                             <td><input type="text" ng-model="list.Dec"></td>-->
+                            <!--<td><a href="javascript:;" ng-click="comedit($index, 'dataList')">编辑</a></td>-->
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="gerSub">
+                <a href="index.html#/reimbursementOrder">返回</a>
+                <button ng-click="addData(ORDER_DATA)" class="subSave">保存
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

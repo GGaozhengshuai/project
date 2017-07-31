@@ -1,0 +1,80 @@
+<div class="item">采销清单关联</div>
+<form name="myForm">
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong><font  ng-if="ifPtxs">*</font>选择销售合同：</strong>
+                    <input class="text" ng-readonly="true"  ng-disabled="ifPtxsBot" ng-model="matingContract" ng-click="contractBox()" type="text" placeholder="请选择销售合同"/>
+                    <input ng-model="getorderitems" type="hidden" placeholder=""/>
+
+                    <div class="addTable">
+                        <div class="czAddBtn">
+                            <a href="" class="downloadmb" ng-click="downloadmb()">&#12288;&#12288;&#12288;下载&#12288;&#12288;&#12288;</a>
+                            <input excle-Updata="{{excleConfW1}}" get-upload-callback="changeSalesList(uploadCallData)" ng-model="excleWlData"/>
+                        </div>
+                    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<div class="genTitle2">
+    <div>
+        <strong>销售合同基本信息</strong>
+    </div>
+</div>
+<div class="addTable">
+    <table id="sktkList">
+        <tr>
+            <th>合同编号</th>
+            <th>销售订单号</th>
+            <th>客户名称</th>
+            <th>合同类型</th>
+            <th>项目名称</th>
+            <th>合同金额</th>
+        </tr>
+        <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+        <tr ng-repeat="list in dataList">
+            <td>{{list.contractbase.contractno}}</td>
+            <td>{{list.contractbase.salesorderid[0].orderid}}</td>
+            <td title="{{list.contractbase.stomer}}">{{list.contractbase.stomer}}</td>
+            <td>{{list.contractbase.contracttype}}</td>
+            <td>{{list.contractbase.project}}</td>
+            <td>{{list.contractbase.contractmoney}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<form name="myForm">
+    <div class="genTitle2">
+        <div>
+            <strong>查看销售订单详情</strong>
+        </div>
+    </div>
+    <div class="addTable" id="salesListBox">
+        <table>
+            <tr>
+                <th>行项目号</th>
+                <th>原厂物料号</th>
+                <th>内部物料编码</th>
+                <th>订单数量</th>
+                <th>供应商订单号</th>
+            </tr>
+            <tr ng-repeat="list in salesList" ng-class="list.msg=='重复了' ? 'errTip' : ''" class="list">
+                <td>{{list.POSNR}}</td>
+                <td>{{list.BISMT}}</td>
+                <td>{{list.MATNR}}</td>
+                <td>{{list.KWMENG}}</td>
+                <td><input  ng-model="list.ZPC_NUM" type="text"/></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="gerSub">
+            <button ng-click="addData()" class="subApply" >保存</button>
+    </div>
+</form>
+
+<div id="contractBox" class="dialog cusBox" title="选择销售合同" ng-include="'template/contract/contractBox.html'" ng-controller="contractBoxCtrl"></div>

@@ -1,0 +1,155 @@
+<div class="item">客户信用</div>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>客户名称</strong>
+                    <input type="text" class="text" name="cusname" ng-init="cusname=''" ng-model="cusname">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <a ng-if="opprev.creditOrder_export" class="searchbtn2 exportBtn" href="javascript:;" ng-click="exportexcel()">导出</a>
+                    <input type="button" value="查询" class="searchbtn2 searchbtn2bot" ng-click="search()">
+                    <a ng-if="opprev.creditOrder_add" class="searchbtn2 searchbtn2bot addBtn" href="/index.html#/creditOrderAdd">新建客户信用</a>
+                    <!--<a class="searchbtn2 searchbtn2bot defenseBtn" href="/index.html#/creditmaintenance">客户授信额度维护</a>-->
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+
+<div class="item">查询结果</div>
+
+<!--<script type="text/ng-template" id="reimbursementHead.html">
+    <div role="rowgroup"
+         class="ui-grid-header">
+        <div class="ui-grid-top-panel">
+            <div class="ui-grid-header-viewport">
+                <div class="ui-grid-header-canvas">
+                    <div class="ui-grid-header-cell-wrapper"
+                         ng-style="colContainer.headerCellWrapperStyle()">
+                        <div role="row"
+                             class="ui-grid-header-cell-row">
+                            <div class="ui-grid-header-cell ui-grid-clearfix ui-grid-category" ng-repeat="cat in grid.options.category"
+                                 ng-if="cat.visible &&
+                             (colContainer.renderedColumns | filter:{ colDef:{category: cat.name} }).length > 0">
+                                {{cat.name}}
+                                <div class="ui-grid-header-cell ui-grid-clearfix"
+                                     ng-repeat="col in colContainer.renderedColumns | filter:{ colDef:{category: cat.name} }"
+                                     ui-grid-header-cell
+                                     col="col"
+                                     render-index="$index">
+                                </div>
+                            </div>&lt;!&ndash;!cat.visible && &ndash;&gt;
+                            <div class="ui-grid-header-cell ui-grid-clearfix" ng-if="col.colDef.category === undefined"
+                                 ng-repeat="col in colContainer.renderedColumns track by col.uid"
+                                 ui-grid-header-cell
+                                 col="col"
+                                 render-index="$index">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<div ng-if="!table" class="loading-text grid">
+    <span ng-if="loadData">数据载入中...</span>
+    <span ng-if="!loadData">查询不到数据</span>
+</div>
+<div ng-if="table" ui-grid="table" ui-grid-selection ui-grid-resize-columns ui-grid-pinning ui-grid-auto-resize class="grid"></div>
+<script type="text/ng-template" id="reimbursementAction.html">
+    <div class="actionBtnGroup">
+        <a class="handleBtn editBtn" ng-hide="row.entity.inprocess" target="_blank" href="index.html#/creditOrderEdit?sapid={{row.entity._id}}" title="变更"></a>
+        <span class="handleBtn editBtn disabled ng-hide" ng-show="row.entity.inprocess" title="审批中"></span>
+        <a target="_blank" class="handleBtn detailBtn" href="index.html#/creditOrderView/{{row.entity._id}}?flag={{row.entity.inprocess}}" title="详情"></a>
+    </div>
+</script>-->
+
+
+<div class="tableWrap tableBD">
+    <div class="tableLeft">
+        <table class="orangestyle table" style="width: 165%">
+            <thead>
+            <tr>
+                <th style="width: 15px;" rowspan="2"><span><input type="checkbox" ng-model="checkAll" ng-click="allCheck($event)"></span></th>
+                <th rowspan="2"><span>客户编码</span></th>
+                <th rowspan="2"><span>客户名称</span></th>
+                <th rowspan="2"><span>信用等级</span></th>
+                <th rowspan="2"><span>授信额度</span></th>
+                <th rowspan="2"><span style="height: auto;">最新财务<br>数据年份</span></th>
+                <th colspan="3" class="center"><span>股东担保</span></th>
+                <th colspan="3" class="center"><span>房屋担保</span></th>
+                <th colspan="3" class="center"><span>其他担保</span></th>
+                <th rowspan="2"><span>担保说明</span></th>
+            </tr>
+            <tr class="bdTop">
+                <th><span>担保金额</span></th>
+                <th><span>生效时间</span></th>
+                <th><span>失效时间</span></th>
+                <th><span>担保金额</span></th>
+                <th><span>生效时间</span></th>
+                <th><span>失效时间</span></th>
+                <th><span>担保金额</span></th>
+                <th><span>生效时间</span></th>
+                <th><span>失效时间</span></th>
+            </tr>
+            </thead>
+            <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+            <tr ng-repeat="list in dataList | filter:sortFn">
+                <td ><span><input ng-click="updateSelection($event,list._id, list.cuscode)" class="checkBox"
+                                  name="checkbox{{$index}}" type="checkbox" ng-checked="checkAll"/></span></td>
+                <td><span><a class="underline" target="_blank" href="index.html#/creditOrderView/{{list._id}}?flag={{list.inprocess}}">{{list.cuscode}}</a></span></td>
+                <!--<td>{{list.cusname}}</td>-->
+                <td><span><a class="underline" href="" ng-click="showHistory(list.cuscode)" title="{{list.cusname}}">{{list.cusname|
+                    cutfield:true:14:'...'}}</a></span></td>
+                <td><span>{{list.xydj}}</span></td>
+                <td class="right"><span title="{{list.creditmoney | currency : '￥'}}">{{list.creditmoney | currency : '￥' | cutfield:true:14:'...'}}</span></td>
+                <td><span>{{list.financialdata[0].year}}</span></td>
+                <td class="right"><span title="{{list.gddb.dbje | currency : '￥'}}">{{list.gddb.dbje | currency : '￥' | cutfield:true:14:'...'}}</span></td>
+                <td><span>{{list.gddb.startdate| date: 'yyyy-MM-dd'}}</span></td>
+                <td><span>{{list.gddb.enddate | date: 'yyyy-MM-dd'}}</span></td>
+                <td class="right"><span title="{{list.fwdb.dbje | currency : '￥'}}">{{list.fwdb.dbje | currency : '￥' | cutfield:true:14:'...'}}</span></td>
+                <td><span>{{list.fwdb.startdate | date: 'yyyy-MM-dd'}}</span></td>
+                <td><span>{{list.fwdb.enddate | date: 'yyyy-MM-dd'}}</span></td>
+                <td class="right"><span title="{{list.qtdb.dbje | currency : '￥'}}">{{list.qtdb.dbje | currency : '￥' | cutfield:true:14:'...'}}</span></td>
+                <td><span>{{list.qtdb.startdate | date: 'yyyy-MM-dd'}}</span></td>
+                <td><span>{{list.qtdb.enddate | date: 'yyyy-MM-dd'}}</span></td>
+                <td title="{{list.guaranteeinfo[0].explain}}"><span>{{list.guaranteeinfo[0].explain |
+                    cutfield:true:7:'...'}}</span>
+                </td>
+            </tr>
+            <tr class="tip">
+                <td colspan="17"><span>没有查到客户信用信息</span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="tableHandler">
+        <table class="orangestyle table">
+            <thead>
+            <tr>
+                <th rowspan="2" style="height:88px; overflow: hidden;"><span>操作</span></th>
+            </tr>
+            </thead>
+            <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+            <tr ng-repeat="list in dataList">
+
+                <td>
+                    <div class="handlerBox">
+                        <a class="handleBtn editBtn" ng-hide="list.inprocess" target="_blank" href="index.html#/creditOrderEdit?sapid={{list._id}}" title="变更"></a>
+                        <span class="handleBtn editBtn disabled ng-hide" ng-show="list.inprocess" title="审批中"></span>
+                        <a target="_blank" href="index.html#/creditOrderView/{{list._id}}?flag={{list.inprocess}}" class="handleBtn detailBtn" title="详情"></a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--<pagination conf="paginationConf" manual="true"></pagination>-->
+<pagination conf="paginationConf" manual="true"></pagination>
+<div id="creditHistory" class="dialog cusBox" title="客户信用历史" ng-include="'template/credit/creditHistory.html'"></div>

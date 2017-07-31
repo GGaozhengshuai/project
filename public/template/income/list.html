@@ -1,0 +1,97 @@
+<!--<div class="mainright">-->
+<div class="item">收款计划单</div>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>收款计划单号:</strong>
+                    <input class="text" type="text" name="ZJHDBHK"  ng-init="ZJHDBHK=''" ng-model="ZJHDBHK" placeholder="请填写收款计划单号">
+                </td>
+                <td>
+                    <strong>收款主体：</strong>
+                    <select ng-model="BUKRS" ng-init="BUKRS=''">
+                        <option value="">请选择</option>
+                        <option value="1000">中建材信息技术股份有限公司</option>
+                        <option value="9000">中建材集团进出口公司</option>
+                        <option value="9001">中国建材（香港）有限公司</option>
+                    </select>
+                </td>
+            <tr>
+                <td>
+                    <strong>计划申请开始日期:</strong>
+                    <input class="text Wdate" type="text" name="dateStar" ng-init="dateStar=''" date-Picker ng-readonly="true"   ng-model="dateStar" placeholder="请选择日期">
+                </td>
+                <td>
+                    <strong>计划申请结束日期:</strong>
+                    <input class="text Wdate" type="text" name="dateEnd" ng-init="dateEnd=''" date-Picker ng-readonly="true"   ng-model="dateEnd" placeholder="请选择日期">
+                </td>
+            <tr>
+                <td>
+                    <strong>客户名称:</strong>
+                    <input class="text" type="text" name="NAME1"  ng-init="NAME1=''" ng-model="NAME1" placeholder="请输入客户名称">
+                </td>
+                <td>
+                    <strong>部门:</strong>
+                    <input class="text" type="text" name="ZBM"  ng-init="ZBM=''" ng-model="ZBM" placeholder="">
+                </td>
+
+            </tr>
+            <tr>
+                <td>
+                    <strong>销售合同编号:</strong>
+                    <input class="text" type="text" name="ZBSTKD"  ng-init="ZBSTKD=''" ng-model="ZBSTKD" placeholder="">
+                </td>
+                <td>
+                    <strong>制单人:</strong>
+                    <input class="text" type="text" name="ZCRNAM"  ng-init="ZCRNAM=''" ng-model="ZCRNAM" placeholder="">
+                </td>
+
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+                    <a class="searchbtn2 searchbtn2bot addBtn" href="/index.html#/incomeOrderAdd" ng-if="opprev.incomeOrder_add">新建收款计划单</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<div class="item">查询结果</div>
+<table class="orangestyle table">
+    <thead>
+    <tr>
+        <th>收款计划单号</th>
+        <th>创建日期</th>
+        <th>客户名称</th>
+        <th>客户编码</th>
+        <th class="right">计划收款金额</th>
+        <th>制单人</th>
+        <th>部门</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in dataList">
+        <td title="{{list.ZJHDBHK}}" ><a class="underline" target="_blank" href="index.html#/incomeOrderView/{{list.ZJHDBHK}}"> {{list.ZJHDBHK}}</a></td>
+
+        <td >{{list.ZCRDAT| date: 'yyyy-MM-dd'}}</td>
+        <td title="{{list.NAME1}}">{{list.NAME1| cutfield:true:7:'...'}}</td>
+        <td >{{list.KUNNR}}</td>
+        <td class="right" >{{list.ZSKJE| number:2}}</td>
+        <td >{{list.ZCRNAM}}</td>
+        <td >{{list.ZBM}}</td>
+        <td class="czBtn">
+            <!--<a href="index.html#/incomeEdit?{{sapid}}" ng-show="list.editShow">编辑</a>-->
+            <!--<a target="_blank" href="index.html#/incomeEdit?sapid={{list.ZJHDBHK}}">变更</a>-->
+            <a class="handleBtn editBtn" href="javasccript:;" ng-click="incomEdit(list.ZJHDBHK)" ng-if="opprev.incomeOrder_change" title="变更"></a>
+            <a class="handleBtn printBtn" href="/print/printest.html?uri=/receivablesplan/printview&ZJHDBHK={{list.ZJHDBHK}}" target="_blank" title="打印"></a>
+            <a class="handleBtn detailBtn" target="_blank" href="index.html#/incomeOrderView/{{list.ZJHDBHK}}" title="详情"></a>
+        </td>
+    </tr>
+    <tr class="tip"><td colspan="10">没有查到收款计划单</td></tr>
+    </tbody>
+</table>
+<pagination conf="paginationConf"></pagination>
+

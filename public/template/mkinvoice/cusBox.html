@@ -1,0 +1,85 @@
+
+<form  novalidate name="data1Form">
+    <table class="orangestyle table" id="ccTable">
+        <thead>
+        <tr>
+            <th><input type="checkbox" ng-model="all"/></th>
+            <th ng-hide="true">销售订单号</th>
+            <!-- <th>客户名称</th>-->
+            <th ng-hide="true">客户编码</th>
+            <th>销售合同号</th>
+            <th>行项目号</th>
+            <th>物料编码</th>
+            <th>未开数量</th>
+            <th>单价（含税）</th>
+            <th>退货数量</th>
+            <th>可开数量</th>
+            <th>需求数量</th>
+            <th ng-hide="true">含税金额</th>
+            <th ng-hide="true">提前开票数量</th>
+            <th ng-hide="true">供应商订单号</th>
+            <!-- <th>销售发票号</th>-->
+            <th ng-hide="true">产品名称</th>
+            <th ng-hide="true">规格型号</th>
+            <th ng-hide="true">计量单位</th>
+            <!-- <th>行项目号</th>-->
+            <th ng-hide="true">合同部门</th>
+            <th ng-hide="true">合同部门id</th>
+        </tr>
+        </thead>
+        <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+        <tr ng-repeat="list in dataList track by $index" class="list">
+            <td><input ng-click="contractSelect($index,list.ZKKSL)" ng-disabled="list.KWMENG==0||(list.ZKKSL-list.thsl<=0&&list.thsl>0)" class="checkBox" name="checkbox" type="checkbox"  ng-checked="all&&list.KWMENG!=0&&(list.ZKKSL-list.thsl>0||list.ZKKSL-list.thsl<=0&&list.thsl<=0)" /></td>
+            <td style="display: none">{{list.VBELN}}</td>
+            <!--  <td>{{list.KUNNR_NAME}}</td>-->
+            <td style="display: none">{{list.KUNNR}}</td>
+            <td>{{list.contractno}}</td>
+            <td>{{list.POSNR}}</td>
+            <td>{{list.MATNR}}</td>
+            <td>{{list.KWMENG}}</td>
+            <td>{{list.KZWI1}}</td>
+            <td>{{list.thsl}}</td>
+            <td>{{list.ZKKSL}}</td>
+            <td>
+                <!--<input type="text" ng-model="list.xqnum" value="" ng-blur="xqChange(list.xqnum,list.KWMENG,list.thsl,$index)"/>-->
+                <input type="text" ng-model="list.xqnum" value="" ng-disabled="list.KWMENG==0||(list.ZKKSL-list.thsl<=0&&list.thsl>0)" ng-Focus lessthree-Validation name="xqnum{{$index}}" ng-init="(list.ZKKSL-list.thsl>0)?list.xqnum=(list.ZKKSL-list.thsl):list.xqnum=''" ng-change="xqChange(list.xqnum,list.KWMENG,list.thsl,$index,list.ZKKSL)"/>
+                <p class="errTip" ng-if="data1Form['xqnum'+$index].$dirty && data1Form['xqnum'+$index].$error.lessthree&&!data1Form['xqnum'+$index].$focused">最多三位小数的非负数</p>
+            </td>
+            <td style="display: none">{{list.KZWI1*list.xqnum}}</td>
+            <td style="display: none">{{list.xqnum-list.ZKKSL}}</td>
+            <td style="display: none">{{list.ZPC_NUM}}</td>
+            <td style="display: none">{{list.ZZKPMS}}</td>
+            <td style="display: none">{{list.ZZGKXH}}</td>
+            <td style="display: none">{{list.MEINS}}</td>
+            <td style="display: none">{{list.contracttype}}</td>
+            <td style="display: none">{{list.LFSTK}}</td>
+            <td style="display: none">{{list.zdfhje}}</td>
+            <td style="display: none">{{list.zdmcfhsj}}</td>
+            <td style="display: none">{{list.VBELN_DN}}</td>
+            <td style="display: none">{{list.VKORG}}</td>
+            <td style="display: none">{{list.contractmoney}}</td>
+            <!--<td>{{list.POSNR}}</td>-->
+            <td style="display: none">{{list.groupno}}</td>
+            <td style="display: none">{{list.salesorgname}}</td>
+            <td style="display: none">{{list.salesorgid}}</td>
+            <td style="display: none">{{list.DN_DATA}}</td>
+            <td style="display: none">{{list.fandchd}}</td>
+            <td style="display: none">{{list.tradername}}</td>
+            <td style="display: none">{{list.traderlogin}}</td>
+            <td style="display: none">{{list.KUNNR_NAME}}</td>
+            <td style="display: none">{{list.MTART}}</td><!--物料类型-->
+            <td style="display: none">{{list.PSTYV}}</td>
+            <td style="display: none">{{list.ZDDSL}}</td>
+            <td style="display: none">{{list.NAME1}}</td>
+            <td style="display: none">{{list.kpcusid}}</td>
+        </tr>
+        <tr class="tip"><td colspan="13">没有查到数据</td></tr>
+        </tbody>
+    </table>
+    <div class="gerSub">
+        <a href="javascript:;" ng-click="$parent.ccCancle()">关闭</a>
+        <button  class="subSave" ng-click="$parent.ccSelect(dataList)">确定</button>
+    </div>
+</form>
+<!--
+<pagination conf="paginationConf"></pagination>-->

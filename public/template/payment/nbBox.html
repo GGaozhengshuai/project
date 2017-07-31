@@ -1,0 +1,52 @@
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong style="width:111px;">费用申请单号</strong>
+                    <input style="width:215px;" class="text" type="text" name="$parent.AUFNR"  ng-init="$parent.AUFNR=''" ng-model="$parent.AUFNR" placeholder="请输订单号查询">
+                </td>
+                <td>
+                    <strong style="width:111px;">费用流水号</strong>
+                    <input style="width:215px;" class="text" type="text" name="$parent.ZINORD"  ng-init="$parent.ZINORD=''" ng-model="$parent.ZINORD" placeholder="">
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<table class="orangestyle table">
+    <thead>
+    <tr>
+        <th>费用申请单号</th>
+        <th>费用流水号</th>
+        <th>成本中心</th>
+        <th>申请标题</th>
+        <th>预算总金额</th>
+        <th>未使用金额</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody ng-class="nbDataList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in nbDataList">
+        <td>{{list.AUFNR}}</td>
+        <td>{{list.ZINORD}}</td>
+        <td>{{cenData[list.RESPCCTR]}}</td>
+       <!-- <td>{{list.RESPCCTR| getName:costcenterSel :'text':'code'}}</td>-->
+        <td title="{{list.ZSQNR}}">{{list.ZSQNR| cutfield:true:15:'...'}}</td>
+
+        <td>{{list.WTGES}}</td>
+        <td>{{list.left}}</td>
+        <td>
+            <a href="javascript:;" ng-click="cusSelect(list.AUFNR,list.ZINORD,list.ZSQNR, list.WTGES,list.WTGEV,list.left,list.RESPCCTR)">选择</a>
+        </td>
+    </tr>
+    <tr class="tip"><td colspan="6">没有查到费用申请单</td></tr>
+    </tbody>
+</table>
+<pagination conf="paginationConf" manual="true"></pagination>

@@ -1,0 +1,17 @@
+<table class="orangestyle table" id="wlTable">
+    <thead>
+    <tr class="alllist">
+        <th>销售合同号</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody ng-class="purList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in purList" class="list">
+        <td>{{list.contractbase.contractno}}</td>
+        <td ng-show="list.contractbase.classification==0"><a target="_blank" href="index.html#/contractOrderView?id={{list._id}}">选择</a></td>
+        <td ng-show="list.contractbase.classification==1"><a target="_blank" href="index.html#/iecontractView?id={{list._id}}">选择</a></td>
+        <td ng-show="list.contractbase.classification==2"><a target="_blank" href="index.html#/loanBillView?id={{list._id}}">选择</a></td>
+    </tr>
+    <tr class="tip"><td colspan="10">无关联销售合同</td></tr>
+    </tbody>
+</table>

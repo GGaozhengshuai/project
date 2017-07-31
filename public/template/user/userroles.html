@@ -1,0 +1,119 @@
+<div class="item">人员角色</div>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>姓名或账号:</strong>
+                    <input class="text" type="text" name="name"  ng-model="name" placeholder="">
+                </td>
+                <td>
+                    <input type="button" value="搜索" class="searchbtn2 no-mt" ng-click="search()">
+                </td>
+            </tr>
+            <tr>
+            </tr>
+        </table>
+    </div>
+</form>
+<div class="item">查询结果<span style="font-size:12px;margin-left: 10px;">{{curName+curLogin}}</span></div>
+<div class="addTable" style="padding: 0px;">
+    <table class="orangestyle table">
+        <thead>
+        <tr>
+            <th width="20%">英文名称</th>
+            <th width="20%">中文名称</th>
+            <th width="45%">参数值</th>
+            <th width="15%" style="text-align: center;"><a href="javascript: void(0);" ng-click="newRole()" class="btnAdd" title="添加" ></a></th>
+        </tr>
+        </thead>
+        <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+        <tr ng-if="roleAdding">
+            <td>
+                <select ng-model="newRoleData.data" class="busSel" ng-options="m as (m.name + '(' + m.text + ')') for m in all_roles" ng-change="selectChange()">
+                    <option value="">请选择</option>
+                </select>
+            </td>
+            <td>{{newRoleData.data.text}}</td>
+            <td>
+                <span ng-repeat="(index, param) in newRoleData.params">
+                    <span class="delTag" ng-repeat="(key, value) in param" ng-if="key != 'text'">
+                       <!-- ng-click="param_detail(key, value, 'new', index)" -->
+                        <a href="javascript: void(0);" ng-click="param_detail(key, value, 'new', index)">{{key + '(' + param.text + ')'}}</a>
+                        <a class="delMarke" href="javascript: void(0);" ng-click="newRoleParamDelete(key)">x</a>
+                    </span>
+                </span>
+                <span class="addInput">
+                    <!--<input type="text" ng-model="newRoleData.newParam" placeholder="英文,中文">-->
+                    <!--<i href="javascript: void(0);" ng-click="newRoleParamAdd()"></i>-->
+                </span>
+            </td>
+            <td>
+                <a href="javascript: void(0);" ng-click="newRoleSave()">新增</a>
+                <a href="javascript: void(0);" ng-click="newRoleCancel()">取消</a>
+            </td>
+        </tr>
+        <tr ng-repeat="(indexOut, list) in dataList">
+            <td>{{list.name}}</td>
+            <td>
+                <!-- <input type="text" ng-readonly="readonly[$index]" ng-class="!readonly[$index] ? 'editable' : 'noedit'" ng-model="list.text" value="{{list.text}}"/> -->
+                {{list.text}}
+            </td>
+            <td>
+                <span ng-repeat="(indexIn, param) in list.params">
+                    <span class="delTag" ng-repeat="(key, value) in param" ng-if="key != 'text'">
+                         <!-- ng-click="param_detail(key, value, indexOut, indexIn)" -->
+                        <a href="javascript: void(0);" ng-click="param_detail(key, value, indexOut, indexIn)">{{key + '(' + param.text + ')'}}</a>
+                        <a class="delMarke" href="javascript: void(0);" ng-click="paramDelete(indexOut, key)">x</a>
+                    </span>
+                </span>
+                <span ng-if="!readonly[indexOut]" class="addInput">
+                    <input type="text" name="param_new" value="新增" ng-model="param_new[indexOut]" placeholder="英文,中文">
+                    <i href="javascript: void(0);" ng-click="paramAdd(indexOut)"></i>
+                </span>
+            </td>
+            <td>
+                <a href="javascript: void(0);" ng-click="roleUpdate(indexOut)">保存</a>
+                <a href="javascript: void(0);" ng-click="edit('role', indexOut)">修改</a>
+                <a href="javascript: void(0);" ng-click="pr_roleDelete(indexOut)">删除</a>
+            </td>
+        </tr>
+        <tr class="tip"><td colspan="9">没有查询到该人员的角色</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- param展示/编辑 弹出框 -->
+<div id="param_detail" class="emBox" style="display:none">
+    <!-- <div>
+        <ul>
+            <input type="text" name="paramson_add" value="新增" ng-model="paramson_model">
+            <a href="javascript: void(0)" ng-click="paramson_add()">+</a>
+            <li ng-repeat="param in paramson_list">
+                {{param}}
+            </li>
+        </ul>
+    </div> -->
+    <div class="addTable" style="padding: 0px;">
+        <span>中文描述: <input type="text" ng-model="paramCNDes" value="paramCNDes" placeholder="为参数添加中文描述"></span>
+        <table class="orangestyle table">
+            <thead>
+            <tr>
+                <th width="40%">参数名</th>
+                <th width="40%"><a href="javascript:;" ng-click="newParamson()" class="btnAdd" title="添加"></a></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="(index, param) in paramson_list">
+                <td>
+                    <input type="text" ng-readonly="readonly_paramson[index]" ng-class="!readonly_paramson[index] ? 'editable' : 'noedit'" ng-model="param.paramson" value="{{param.name}}"/>
+                </td>
+                <td>
+                    <a href="javascript: void(0);" ng-click="edit('paramson', index)">修改</a>
+                    <a href="javascript: void(0);" ng-click="param_delete(index)">删除</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

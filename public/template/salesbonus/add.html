@@ -1,0 +1,122 @@
+<h3 class="genTitle genTitleBot"><em></em><span>新增销售返点</span></h3>
+<div class="cusCont">
+    <div class="generForm">
+        <form novalidate name="invoiceForm">
+            <ul>
+                <li class="tli"><strong>销售返点申请单编号：</strong><span><input type="text" ng-model="excelModel.model.code" ng-disabled="true"></span></li>
+                <li class="tli"><strong>返点总金额：</strong><span><input type="text" ng-model="excelModel.model.total" ng-disabled="true"></span></li>
+                <li class="tli"><strong>申请人：</strong><span><input type="text" ng-disabled="true" ng-model="username"><input type="hidden" ng-disabled="true" ng-model="name"></span></li>
+                <li class="tli"><strong>部门：</strong><span><input type="text" ng-disabled="true" ng-model="orgname"></span></li>
+            </ul>
+            <div class="clear"></div>
+            <div class="hGener" style="margin-top: 20px;">
+                <!--<a class="dwonTem" href="" ng-click="edit()">编辑</a>-->
+                <a class="dwonTem changhtBtn" href="" style="width:50px;" ng-click="xsfdDel()">删除</a>
+                <a class="dwonTem downloadmb" href="/doc/xsfdmb.xlsx">下载模板</a>
+                <input class="addBtn" excle-Uploadify btnname="返点上传" url="/salesbonus/importexcel" excleDataAll="excelModel"  excleData="file" excleError="fileError" ng-model="file"/>
+            </div>
+            <div class="addTable" style=" overflow:auto; width: 100%;max-height: 600px">
+                <table id="cgList" style="width:200%;">
+                    <tr class="allList">
+                        <th><input type="checkbox" ng-click="allCheck()" ng-model="all"/></th>
+                        <th>区别</th>
+                        <th>返点供应商</th>
+                        <th><font>*</font>事业部</th>
+                        <!--<th>产品线</th>-->
+                        <th><font>*</font>返点所属客户名称</th>
+                        <th>返点使用客户名称</th>
+                        <th><font>*</font>返点类型</th>
+                        <th><font>*</font>激励受益类型</th>
+                        <th><font>*</font>返点金额</th>
+                        <th>返点来源</th>
+                        <th>返点编号</th>
+                        <th>备注</th>
+                    </tr>
+                    <tr ng-repeat="list in file" class="list">
+                        <td><input type="checkbox" style="width: 13px;" ng-click="checkDel($index)" ng-checked="all"/></td>
+                        <td>正确</td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.provider" title="{{list.provider}}" type="text" value=""/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.department.name" title="{{list.department.name}}" type="text" value="" required/>
+                        </td>
+                        <!--<td>-->
+                            <!--<input ng-disabled="true" ng-model="list.secondary" title="{{list.secondary}}" type="text" value=""/>-->
+                        <!--</td>-->
+                        <td>
+                            <input ng-disabled="true" ng-model="list.client.name" type="text" title="{{list.client.name}}" value="" required/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.user.name" type="text" title="{{list.user.name}}" value=""/>
+                        </td>
+                        <td>
+                            <input  ng-disabled="true" ng-model="list.bonusbase.type" type="text" title="{{list.bonusbase.type}}" value="" required/>
+                        </td>
+                        <td>
+                            <input  ng-disabled="true" ng-model="list.bonusbase.benefit" type="text" title="{{list.bonusbase.benefit}}" value="" required/>
+                        </td>
+                        <td>
+                            <input  ng-disabled="true" ng-model="list.bonusmoney.total" type="text" title="{{list.bonusmoney.total}}" value="" required/>
+                        </td>
+                        <td>
+                            <input  ng-disabled="true" ng-model="list.bonusbase.source" type="text"  title="{{list.bonusbase.source}}" value=""/>
+                        </td>
+                        <td>
+                            <input  ng-disabled="true" ng-model="list.code" type="text" title="{{list.code}}" value=""/>
+                        </td>
+                        <td>
+                            <input  ng-disabled="true" ng-model="list.bonusbase.note" type="text" title="{{list.bonusbase.note}}" value=""/>
+                        </td>
+                    </tr>
+                    <tr ng-repeat="list in fileError" class="listerror">
+                        <td><input type="checkbox" ng-click="DelError($index)" ng-checked="all"/></td>
+                        <td style="color: red"><span ng-show="errorText">错误</span></td>
+                        <td>
+                            <input ng-disabled="fileErrorEdit" ng-model="list.provider" title="{{list.provider}}" type="text" value=""/>
+                        </td>
+                        <td>
+                            <input ng-disabled="fileErrorEdit" ng-model="list.department.name" title="{{list.department.name}}" ng-blur="sybType(list.department.name)" type="text" value="" required/>
+                        </td>
+                        <!--<td>-->
+                            <!--<input ng-disabled="fileErrorEdit" ng-model="list.secondary" title="{{list.secondary}}" ng-blur="cpxType(list.secondary)" type="text" value=""/>-->
+                        <!--</td>-->
+                        <td>
+                            <input ng-disabled="fileErrorEdit" ng-model="list.client.name" title="{{list.client.name}}" ng-blur="clientName(list.client.name)"  type="text" value="" required/>
+                        </td>
+                        <td>
+                            <input ng-disabled="fileErrorEdit" ng-model="list.user.name" title="{{list.user.name}}" type="text" value=""/>
+                        </td>
+                        <td>
+                            <input  ng-disabled="fileErrorEdit" ng-model="list.bonusbase.type"  title="{{list.bonusbase.type}}" ng-blur="fdType(list.bonusbase.type)" type="text" value="" required/>
+                        </td>
+                        <td>
+                            <input  ng-disabled="fileErrorEdit" ng-model="list.bonusbase.benefit" title="{{list.bonusbase.benefit}}" ng-blur="jlsyType(list.bonusbase.benefit)" type="text" value="" required/>
+                        </td>
+                        <td>
+                            <input  ng-disabled="fileErrorEdit" ng-model="list.bonusmoney.total" title="{{list.bonusmoney.total}}" type="text" value="" required/>
+                        </td>
+                        <td>
+                            <input  ng-disabled="fileErrorEdit" ng-model="list.bonusbase.source" title="{{list.bonusbase.source}}" type="text" value=""/>
+                        </td>
+                        <td>
+                            <input  ng-disabled="fileErrorEdit" ng-model="list.code" title="{{list.code}}" type="text" value=""/>
+                        </td>
+                        <td>
+                            <input  ng-disabled="fileErrorEdit" ng-model="list.bonusbase.note" title="{{list.bonusbase.note}}" type="text" value=""/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="gerSub">
+                <a href="index.html#/salesbonusOrder">返回</a>
+                <button ng-click="addData(file,'save')"  ng-class="invoiceForm.$invalid == true ? 'displaySub' : 'subSave'" ng-disabled="invoiceForm.$invalid || invoRready">保存</button>
+                <button ng-click="addData(file, 'apply')"  ng-class="invoiceForm.$invalid == true ? 'displaySub' : 'subApply'" ng-disabled="invoiceForm.$invalid || invoRready">提交审批</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+

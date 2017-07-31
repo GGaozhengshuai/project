@@ -1,0 +1,9 @@
+<h3 class="genTitle"><em></em><span>客户信用查看</span></h3>
+<ul class="generNav" ng-init="ht.activeTab = 1">
+    <li ng-class="{active:ht.activeTab == 1}" ng-hide="creditShow && loading" ng-init="loading=true"><a href="javascript:;" ng-mousedown="ht.activeTab = 2">客户信用情况</a></li>
+</ul>
+
+<div id="mainView">
+    <div class="viewTable ng-scope ng-hide" ng-show="ht.activeTab == 2||!creditShow" ng-include="'template/credit/creditTab.html'" ng-controller="creditTabCtrl"></div>
+
+</div>

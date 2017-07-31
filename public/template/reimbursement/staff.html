@@ -1,0 +1,326 @@
+<!--<h3 class="genTitle genTitleBot"><em></em><span>人员额度管理</span></h3>-->
+<div class="cusCont staffWrap">
+    <div class="generForm">
+        <form novalidate name="myForm">
+            <ul>
+                <li class="ng-hide" ng-show="$parent.extraArr.length>1">
+                    <strong>部门：</strong>
+                    <select ng-model="$parent.orgid" ng-change="changeOrgidFn()">
+                        <option ng-repeat="list in $parent.extraArr" value="{{list.org}}">{{list.orgname}}</option>
+                    </select>
+                </li>
+                <li class="tli">
+                    <strong>费用类别：</strong>
+                    <select ng-model="$parent.category" ng-change="categoryChangeFn()">
+                        <option value="">请选择</option>
+                        <option ng-if="showfzrjt" value="0-12">固定报销-非主任津贴</option>
+                        <option ng-if="showzrjt" value="1-12">固定报销-主任津贴</option>
+                        <option value="2-18">间接运营费用</option>
+                        <option value="3-13">季度浮动</option>
+                        <option value="4-14">年度浮动</option>
+                    </select>
+                </li>
+                <li ng-hide="category.split('-')[0]=='3' || category.split('-')[0]=='4'" class="tli">
+                    <strong>年度：</strong>
+                    <input class="text Wdate"  type="text" ng-readonly="true" date-Picker dateParam='{"dateFmt":"yyyy-MM",minDate:"%y-01",maxDate:"%y-%M"}' get-upload-callback="dateCallback(callbackDate)" ng-model="$parent.applyDate" placeholder="请选择日期">
+                </li>
+
+                <li ng-show="category.split('-')[0]=='4'" class="tli ng-hide">
+                    <strong>年度：</strong>
+                    <input class="text Wdate"  type="text" ng-readonly="true" date-Picker dateParam='{"dateFmt":"yyyy"}' get-upload-callback="dateCallback(callbackDate)" ng-model="$parent.applyDate" placeholder="请选择日期">
+                </li>
+
+                <li class="tli ng-hide" ng-hide="category.split('-')[0]!=='3'">
+                    <strong>季度：</strong>
+                    <input style="width: 100px;" class="text Wdate" type="text" ng-readonly="true" date-Picker dateParam='{"dateFmt":"yyyy"}' get-upload-callback="dateCallback(callbackDate)" ng-model="$parent.applyDate" placeholder="请选择日期">
+                    <select style="width: 125px;" name="jd" ng-model="$parent.jd" ng-change="dateCallback()">
+                        <option value="">请选择</option>
+                        <option value="1">第一季度</option>
+                        <option value="2">第二季度</option>
+                        <option value="3">第三季度</option>
+                        <option value="4">第四季度</option>
+                    </select>
+                </li>
+                <li class="tli" ng-if="category.split('-')[0]=='2'">
+                    <strong>部门可用费用额度：</strong>
+                    <input type="text" ng-value="free | number:2" ng-disabled="true">
+                </li>
+                <li class="tli" ng-if="category.split('-')[0]=='2'">
+                    <strong>分配费用汇总：</strong>
+                    <input type="text" ng-value="used | number:2" ng-disabled="true">
+                </li>
+            </ul>
+            <div ng-if="category.split('-')[0]=='0'">
+                <div class="addTable">
+                    <div class="czAddBtn">
+                        <span class="staffTip">带 * 号表示该分配额度已被使用，不允许修改</span>
+                        <a href="" ng-click="downloadmb($event)" class="downloadmb">下载模板</a>
+                        <!--<a href="doc/lxrmb.xlsx" class="downloadmb">下载模板</a>-->
+                        <span class="uploadedWrap">
+                            <a ng-click="forbidUploadFn()" ng-hide="!noChange" class="uploadify-button uplodBtn staff_upload"><span class="uploadify-button-text">导入</span></a>
+                            <input excle-Updata="{{excleConf}}" get-upload-callback="getUploadCallback(uploadCallData)" ng-model="excleData"/>
+                        </span>
+                    </div>
+                    <!--2017-3-6 5676 固定报销中，加入新的报销类别：高级工程师认证补贴（前端额度管理页面，导入额度固定报销-费主任津贴增加高级工程师认证补贴列）-->
+                    <table class="tab_data">
+                        <tr>
+                            <th>部门</th>
+                            <th>人员</th>
+                            <th>交通费</th>
+                            <th>招待费</th>
+                            <th>电话费</th>
+                            <th>笔记本补助</th>
+                            <th>高级工程师认证补贴</th>
+                            <th>工程师一次性奖励</th>
+                            <th>其他奖励</th>
+                            <th style="width: 60px">操作</th>
+                            <!--<th width="50"><a href="javascript:;" ng-click="comeAdd('other1')">添加</a></th>-->
+                        </tr>
+                        <tr ng-repeat="list in ORDER_DATA.dataList" class="list">
+                            <td>
+                                <input type="text" ng-model="list.org.orgname" ng-disabled="true">
+                                <input type="hidden" ng-model="list.org.id">
+                            </td>
+                            <td>
+                                <input type="text" ng-model="list.user.name" ng-disabled="true">
+                                <input type="hidden" ng-model="list.user._id">
+                                <input type="hidden" ng-model="list.user.login">
+                            </td>
+                            <td><div><font ng-show="list.limit['16'].used">*</font><input type="text" model-format="floatminus" ng-model="list.limit['16'].amount" ng-disabled="true"></div></td>
+                            <td><div><font ng-show="list.limit['12'].used">*</font><input type="text" model-format="floatminus" ng-model="list.limit['12'].amount" ng-disabled="true"></div></td>
+                            <td><div><font ng-show="list.limit['13'].used">*</font><input type="text" ng-value="list.limit['13'].amount | number:2" ng-disabled="true"></div></td>
+                            <td><div><font ng-show="list.limit['15'].used">*</font><input type="text" ng-value="list.limit['15'].amount | number:2" ng-disabled="true"></div></td>
+                            <td><div><font ng-show="list.limit['61'].used">*</font><input type="text" ng-value="list.limit['61'].amount | number:2" ng-disabled="true"></div></td>
+                            <td><div><font ng-show="list.limit['61'].used">*</font><input type="text" ng-value="list.limit['63'].amount | number:2" ng-disabled="true"></div></td>
+                            <td><div><font ng-show="list.limit['61'].used">*</font><input type="text" ng-value="list.limit['64'].amount | number:2" ng-disabled="true"></div></td>
+                            <td><a href="javascript:;" ng-hide="list.limit['16'].used || list.limit['12'].used || list.limit['13'].used || list.limit['15'].used || list.limit['61'].used || list.limit['63'].used || list.limit['64'].used" ng-click="comeDel($index,'dataList')">删除</a></td>
+                        </tr>
+                        <tr ng-repeat="list in ORDER_DATA.errorList" class="list errTip">
+                            <td>
+                                <input type="text" ng-model="list.org.orgname" ng-disabled="true">
+                                <input type="hidden" ng-model="list.org.id">
+                            </td>
+                            <td>
+                                <input type="text" ng-model="list.user.name" ng-disabled="true">
+                                <input type="hidden" ng-model="list.user._id">
+                                <input type="hidden" ng-model="list.user.login">
+                            </td>
+                            <td><input type="text" model-format="floatminus" ng-model="list.limit['16'].amount" ng-disabled="true"></td>
+                            <td><input type="text" model-format="floatminus" ng-model="list.limit['12'].amount" ng-disabled="true"></td>
+                            <td><input type="text" model-format="floatminus" ng-model="list.limit['15'].amount" ng-disabled="true"></td>
+                            <td><input type="text" model-format="floatminus" ng-model="list.limit['13'].amount" ng-disabled="true"></td>
+                            <td><a href="javascript:;" ng-click="comeDel($index,'errorList')">删除</a></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div ng-if="category.split('-')[0]=='1'">
+                <div class="addTable">
+                    <div class="czAddBtn">
+                        <span class="staffTip">带 * 号表示该分配额度已被使用，不允许修改</span>
+                        <a href="" ng-click="downloadmb($event)" class="downloadmb">下载模板</a>
+                        <!--<a href="doc/lxrmb.xlsx" class="downloadmb">下载模板</a>-->
+                        <span class="uploadedWrap">
+                            <a ng-click="forbidUploadFn()" ng-hide="!noChange" class="uploadify-button uplodBtn staff_upload"><span class="uploadify-button-text">导入</span></a>
+                            <input excle-Updata="{{excleConf}}" get-upload-callback="getUploadCallback(uploadCallData)" ng-model="excleData"/>
+                        </span>
+                    </div>
+                    <table class="tab_data">
+                        <tr>
+                            <th>部门</th>
+                            <th>人员</th>
+                            <th>主任津贴</th>
+                            <th style="width: 60px">操作</th>
+                        </tr>
+                        <tr ng-repeat="list in ORDER_DATA.dataList" class="list">
+                            <td>
+                                <input type="text" ng-model="list.org.orgname" ng-disabled="true">
+                                <input type="hidden" ng-model="list.org.id">
+                            </td>
+                            <td>
+                                <input type="text" ng-model="list.user.name" ng-disabled="true">
+                                <input type="hidden" ng-model="list.user._id">
+                                <input type="hidden" ng-model="list.user.login">
+                            </td>
+                            <td><div><font ng-show="list.limit['16'].used">*</font><input type="text" model-format="floatminus" ng-model="list.limit['14'].amount" ng-disabled="true"></div></td>
+                            <td><a href="javascript:;" ng-hide="list.limit['16'].used" ng-click="comeDel($index,'dataList')">删除</a></td>
+                        </tr>
+                        <tr ng-repeat="list in ORDER_DATA.errorList" class="list errTip">
+                            <td>
+                                <input type="text" ng-model="list.org.orgname" ng-disabled="true">
+                                <input type="hidden" ng-model="list.org.id">
+                            </td>
+                            <td>
+                                <input type="text" ng-model="list.user.name" ng-disabled="true">
+                                <input type="hidden" ng-model="list.user._id">
+                                <input type="hidden" ng-model="list.user.login">
+                            </td>
+                            <td><input type="text" ng-model="list.limit['14'].amount" model-format="floatminus" ng-disabled="true"></td>
+                            <td><a href="javascript:;" ng-click="comeDel($index,'errorList')">删除</a></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div  ng-if="category.split('-')[0]=='2'">
+                <div class="addTable">
+                    <div class="czAddBtn">
+                        <span class="staffTip">带 * 号表示该分配额度已被使用，不允许修改</span>
+
+                        <a href="" ng-click="downloadmb($event)" class="downloadmb">下载模板</a>
+                        <!--<a href="doc/lxrmb.xlsx" class="downloadmb">下载模板</a>-->
+                        <span class="uploadedWrap">
+                            <a ng-click="forbidUploadFn()" ng-hide="!(noChange || noChange2)" class="uploadify-button uplodBtn staff_upload"><span class="uploadify-button-text">导入</span></a>
+                            <input excle-Updata="{{excleConf}}" get-upload-callback="getUploadCallback(uploadCallData)" ng-model="excleData"/>
+                        </span>
+                    </div>
+                    <table class="tab_data">
+                        <tr>
+                            <th>部门</th>
+                            <th>人员</th>
+                            <th>招待费</th>
+                            <th>通讯费</th>
+                            <th>交通费</th>
+                            <th>差旅费</th>
+                            <th style="width: 60px">操作</th>
+                            <!--<th width="50"><a href="javascript:;" ng-click="comeAdd('other1')">添加</a></th>-->
+                        </tr>
+                        <tr ng-repeat="list in ORDER_DATA.dataList" class="list">
+                            <td>
+                                <input type="text" ng-model="list.org.orgname" ng-disabled="true">
+                                <input type="hidden" ng-model="list.org._id">
+                            </td>
+                            <td>
+                                <input type="text" ng-model="list.user.name" ng-disabled="true">
+                                <input type="hidden" ng-model="list.user._id">
+                                <input type="hidden" ng-model="list.user.login">
+                            </td>
+                            <td><div><font ng-show="list.limit['12'].used">*</font><input type="text" model-format="floatminus" ng-model="list.limit['12'].amount" ng-disabled="true"></div></td>
+                            <td><div><font ng-show="list.limit['48'].used">*</font><input type="text" model-format="floatminus" ng-model="list.limit['48'].amount" ng-disabled="true"></div></td>
+                            <td><div><font ng-show="list.limit['47'].used">*</font><input type="text" model-format="floatminus" ng-model="list.limit['47'].amount" ng-disabled="true"></div></td>
+                            <td><div><font ng-show="list.limit['49'].used">*</font><input type="text" model-format="floatminus" ng-model="list.limit['49'].amount" ng-disabled="true"></div></td>
+                            <td><a href="javascript:;" ng-click="comeDel($index,'dataList')" ng-hide="noChange || noChange2">删除</a></td>
+                        </tr>
+                        <tr ng-repeat="list in ORDER_DATA.errorList" class="list errTip">
+                            <td>
+                                <input type="text" ng-model="list.org.orgname" ng-disabled="true">
+                                <input type="hidden" ng-model="list.org._id">
+                            </td>
+                            <td>
+                                <input type="text" ng-model="list.user.name" ng-disabled="true">
+                                <input type="hidden" ng-model="list.user._id">
+                                <input type="hidden" ng-model="list.user.login">
+                            </td>
+                            <td><input type="text" ng-model="list.limit[12].amount" model-format="floatminus" ng-disabled="true"></td>
+                            <td><input type="text" ng-model="list.limit[48].amount" model-format="floatminus" ng-disabled="true"></td>
+                            <td><input type="text" ng-model="list.limit[47].amount" model-format="floatminus" ng-disabled="true"></td>
+                            <td><input type="text" ng-model="list.limit[49].amount" model-format="floatminus" ng-disabled="true"></td>
+                            <td><a href="javascript:;" ng-click="comeDel($index,'errorList')">删除</a></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div ng-if="category.split('-')[0]=='3'">
+                <div class="addTable">
+                    <div class="czAddBtn">
+                        <span class="staffTip">带 * 号表示该分配额度已被使用，不允许修改</span>
+                        <a href="" ng-click="downloadmb($event)" class="downloadmb">下载模板</a>
+                        <span class="uploadedWrap">
+                            <a ng-click="forbidUploadFn()" ng-hide="!noChange" class="uploadify-button uplodBtn staff_upload"><span class="uploadify-button-text">导入</span></a>
+                            <input excle-Updata="{{excleConf}}" get-upload-callback="getUploadCallback(uploadCallData)" ng-model="excleData"/>
+                        </span>
+                        <!--<span ng-hide="noChange"><input excle-Updata="{{excleConf}}" get-upload-callback="getUploadCallback(uploadCallData)" ng-model="excleData"/></span>-->
+                    </div>
+                    <table class="tab_data">
+                        <tr>
+                            <th>部门</th>
+                            <th>人员</th>
+                            <th>季度额度</th>
+                            <th style="width: 60px">操作</th>
+                        </tr>
+                        <tr ng-repeat="list in ORDER_DATA.dataList" class="list">
+                            <td>
+                                <input type="text" ng-model="list.org.orgname" ng-disabled="true">
+                                <input type="hidden" ng-model="list.org.id">
+                            </td>
+                            <td>
+                                <input type="text" ng-model="list.user.name" ng-disabled="true">
+                                <input type="hidden" ng-model="list.user._id">
+                                <input type="hidden" ng-model="list.user.login">
+                            </td>
+                            <td><div><font ng-show="list.limit['16'].used">*</font><input type="text" model-format="floatminus" ng-model="list.limit['17'].amount" ng-disabled="true"></div></td>
+                            <td><a ng-hide="noChange" href="javascript:;" ng-click="comeDel($index,'dataList')">删除</a></td>
+                        </tr>
+                        <tr ng-repeat="list in ORDER_DATA.errorList" class="list errTip">
+                            <td>
+                                <input type="text" ng-model="list.org.orgname" ng-disabled="true">
+                                <input type="hidden" ng-model="list.org.id">
+                            </td>
+                            <td>
+                                <input type="text" ng-model="list.user.name" ng-disabled="true">
+                                <input type="hidden" ng-model="list.user._id">
+                                <input type="hidden" ng-model="list.user.login">
+                            </td>
+                            <td><input type="text" ng-model="list.limit['17'].amount" model-format="floatminus" ng-disabled="true"></td>
+                            <td><a href="javascript:;" ng-click="comeDel($index,'errorList')">删除</a></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div ng-if="category.split('-')[0]=='4'">
+                <div class="addTable">
+                    <div class="czAddBtn">
+                        <span class="staffTip">带 * 号表示该分配额度已被使用，不允许修改</span>
+                        <a href="" ng-click="downloadmb($event)" class="downloadmb">下载模板</a>
+                        <!--<a href="doc/lxrmb.xlsx" class="downloadmb">下载模板</a>-->
+                        <span class="uploadedWrap">
+                            <a ng-click="forbidUploadFn()" ng-hide="!noChange" class="uploadify-button uplodBtn staff_upload"><span class="uploadify-button-text">导入</span></a>
+                            <input excle-Updata="{{excleConf}}" get-upload-callback="getUploadCallback(uploadCallData)" ng-model="excleData"/>
+                        </span>
+                        <!--<span ng-hide="noChange"><input excle-Updata="{{excleConf}}" get-upload-callback="getUploadCallback(uploadCallData)" ng-model="excleData"/></span>-->
+                    </div>
+                    <table class="tab_data">
+                        <tr>
+                            <th>部门</th>
+                            <th>人员</th>
+                            <th>年度额度</th>
+                            <th style="width: 60px">操作</th>
+                        </tr>
+                        <tr ng-repeat="list in ORDER_DATA.dataList" class="list">
+                            <td>
+                                <input type="text" ng-model="list.org.orgname" model-format="floatminus" ng-disabled="true">
+                                <input type="hidden" ng-model="list.org.id">
+                            </td>
+                            <td>
+                                <input type="text" ng-model="list.user.name" model-format="floatminus" ng-disabled="true">
+                                <input type="hidden" ng-model="list.user._id">
+                                <input type="hidden" ng-model="list.user.login">
+                            </td>
+                            <td><div><font ng-show="list.limit['16'].used">*</font><input type="text" model-format="floatminus" ng-model="list.limit['18'].amount" ng-disabled="true"></div></td>
+                            <td><a ng-hide="noChange" href="javascript:;" ng-click="comeDel($index,'dataList')">删除</a></td>
+                        </tr>
+                        <tr ng-repeat="list in ORDER_DATA.errorList" class="list errTip">
+                            <td>
+                                <input type="text" ng-model="list.org.orgname" ng-disabled="true">
+                                <input type="hidden" ng-model="list.org.id">
+                            </td>
+                            <td>
+                                <input type="text" ng-model="list.user.name" ng-disabled="true">
+                                <input type="hidden" ng-model="list.user._id">
+                                <input type="hidden" ng-model="list.user.login">
+                            </td>
+                            <td><input type="text" model-format="floatminus" ng-model="list.limit['18'].amount" ng-disabled="true"></td>
+                            <td><a href="javascript:;" ng-click="comeDel($index,'errorList')">删除</a></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="gerSub">
+                <a href="index.html#/reimbursementOrder">返回</a>
+                <button ng-disabled="noChange2" ng-click="addData(ORDER_DATA)" class="subSave">保存</button>
+                <span style="color: red" ng-show="noChange2 && category.split('-')[0]=='2' && !noChange">当前已分配到{{maxMonth}}月，之前月份不允许修改。</span>
+
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,63 @@
+<!--<div class="mainright">-->
+<div class="item">返点冲抵应收查询</div>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>返点冲抵应收</strong>
+                    <input class="text" type="text" name="No"  ng-init="No=''" ng-model="No" placeholder="请输入返点冲抵应收号">
+                </td>
+                <td>
+                    <strong>客户名称</strong>
+                    <input type="text" name="customer" ng-init="customer=''"  ng-model="customer" class="text" placeholder="请输入客户名称">
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <strong>关联销售合同号</strong>
+                    <input type="text" name="contractNo" ng-init="contractNo=''"  ng-model="contractNo" class="text" placeholder="请输入关联销售合同号">
+                </td>
+                <td>
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+                    <a ng-if="opprev.creditMemoOrder_add" href="/index.html#/creditMemoOrderAdd" class="searchbtn2 searchbtn2bot addBtn">新建返点冲抵应收</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<div class="item">查询结果</div>
+<table class="orangestyle table">
+    <thead>
+    <tr>
+        <th>返点冲抵应收</th>
+        <th>销售订单号</th>
+        <th>日期</th>
+        <th>关联销售合同号</th>
+        <th>客户名称</th>
+        <th>返点冲抵应收金额</th>
+        <th>申请人</th>
+        <!--<th>部门</th>-->
+        <th style="width: 30px">操作</th>
+    </tr>
+    </thead>
+    <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in dataList">
+        <td><a target="_blank" class="underline" ng-href="index.html#/creditMemoOrderView/{{list._id}}">{{list.No}}</a></td>
+        <td>{{list.salesorderid}}</td>
+        <td>{{list.createdate | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+        <td>{{list.contractNo}}</td>
+        <td><span title="{{list.customer}}">{{list.customer  | cutfield:true:18:'...'}}</span></td>
+        <td>{{list.thisMoney |  currency : '￥'}}</td>
+        <td>{{list.requestor}}</td>
+        <!--<td>{{list.department}}</td>-->
+        <td class="czBtn padL12">
+            <a class="handleBtn detailBtn" target="_blank" ng-href="index.html#/creditMemoOrderView/{{list._id}}" title="查看"></a>
+        </td>
+    </tr>
+    <tr class="tip"><td colspan="9">没有查到返点冲抵应收</td></tr>
+    </tbody>
+</table>
+<pagination conf="paginationConf"></pagination>
+<div class="clear"></div>

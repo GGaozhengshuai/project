@@ -1,0 +1,83 @@
+<div class="item">开票申请查询</div>
+<form>
+  <div class="genSearch">
+    <table>
+      <tr>
+        <td>
+          <strong>开票申请号</strong>
+          <input class="text" type="text" name="XBLNR" ng-init="XBLNR=''" ng-model="XBLNR" placeholder="">
+        </td>
+        <td>
+          <strong>发票类型</strong>
+          <select ng-model="ZFPLX" name="ZFPLX" ng-init="ZFPLX=''">
+            <option value="">请选择</option>
+            <option value="增值税专用发票">增值税专用发票</option>
+            <option value="增值税普通发票">增值税普通发票</option>
+           <!-- <option value="服务发票">服务发票</option>
+            <option value="资金往来专用发票">资金往来专用发票</option>-->
+            <option value="收据">收据</option>
+            <option value="服务费增值税普通发票">服务费增值税普通发票</option>
+            <option value="服务费增值税专用发票">服务费增值税专用发票</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>客户名称</strong>
+          <input class="text" type="text" name="cusname" ng-init="cusname=''" ng-model="cusname" placeholder="">
+        </td>
+        <td>
+          <strong>申请人</strong>
+          <input class="text" type="text" name="user" ng-init="user=''" ng-model="user" placeholder="">
+        </td>
+
+      </tr>
+      <tr>
+        <td>
+          <strong>销售合同号</strong>
+          <input class="text" type="text" name="contractno" ng-init="contractno=''" ng-model="contractno"
+                 placeholder="">
+        </td>
+          <td>
+              <strong>是否打印</strong>
+              <select ng-model="printed" name="printed" ng-init="printed=''">
+                  <option value="">请选择</option>
+                  <option value="1">是</option>
+                  <option value="0">否</option>
+              </select>
+          </td>
+      </tr>
+        <tr>
+            <td> <strong>是否作废</strong>
+              <select ng-model="statusofrecbill" name="statusofrecbill" ng-init="statusofrecbill='0'">
+                <option value="">请选择</option>
+                <option value="1">是</option>
+                <option value="0">否</option>
+              </select></td>
+            <td>
+                <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+                <a href="/index.html#/mkinvoiceAdd" class="searchbtn2 searchbtn2bot addBtn" ng-if="opprev.mkinvoiceCheck_add">新建开票申请</a>
+                <a class="searchbtn2 searchbtn2bot changhtBtn" href="/index.html#/outPutlist" ng-if="opprev.mkinvoiceCheck_outPutlist">进销项发票</a>
+                <a class="searchbtn2 addBtn searchbtn2bot" href="" ng-click="printFn($event)" target="_blank">打印</a>
+            </td>
+        </tr>
+    </table>
+  </div>
+</form>
+<div class="item">查询结果</div>
+<div ng-if="!table" class="loading-text grid">
+  <span ng-if="loadData">数据载入中...</span>
+  <span ng-if="!loadData">查询不到数据</span>
+</div>
+<div ng-if="table" ui-grid="table" ui-grid-selection ui-grid-resize-columns ui-grid-auto-resize class="grid">
+</div>
+<script type="text/ng-template" id="mkinvoiceAction.html">
+  <div class="actionBtnGroup">
+    <a class="handleBtn writeOffBtn" href="javascript:;" ng-click="grid.appScope.recebillBox(row.entity._id,row.entity.htxq[0].tqkpno,row.entity.ZFPLX)" ng-show="row.entity.htxq[0].xsfpnum && row.entity.mkstatus!=1" ng-if="grid.appScope.opprev.mkinvoiceCheck_cancle" title="冲销"></a>
+    <span class="handleBtn writeOffBtn disabled ng-hide" ng-hide="row.entity.htxq[0].xsfpnum && row.entity.mkstatus!=1" ng-if="grid.appScope.opprev.mkinvoiceCheck_cancle" title="冲销"></span>
+    <a class="handleBtn detailBtn" target="_blank" href="index.html#/mkinvoiceView/{{row.entity._id}}" title="详情"></a>
+    <a class="handleBtn invalidBtn" target="_blank" href="javascript:void(0);" ng-click="grid.appScope.destroy(row.entity.XBLNR)" ng-if="grid.appScope.opprev.mkinvoiceCheck_receiptvoid" ng-show="row.entity.ZFPLX=='收据'&&row.entity.statusofrecbill=='否'" title="作废"></a>
+    <span class="handleBtn invalidBtn disabled ng-hide" ng-show="(row.entity.ZFPLX=='收据'&&row.entity.statusofrecbill=='是')" ng-if="grid.appScope.opprev.mkinvoiceCheck_receiptvoid"  title="作废"></span>
+  </div>
+</script>
+<pagination conf="paginationConf"></pagination>

@@ -1,0 +1,45 @@
+<table class="orangestyle table">
+    <thead>
+    <tr>
+        <th ><input type="checkbox" ng-model="checkAll" ng-click="allCheck($event)"></th>
+        <th>付款申请单号</th>
+        <th>付款主体</th>
+        <th>付款种类</th>
+        <th>付款方式</th>
+        <th>供应商名称</th>
+        <th>供应商订单号</th>
+        <th>采购订单号</th>
+
+        <th>申请付<br>款金额</th>
+        <th>实际付<br>款金额</th>
+        <th>计划付<br>款时间</th>
+        <th>实际付<br>款时间</th>
+        <th>申请人</th>
+        <th>付款状态</th>
+    </tr>
+    </thead>
+    <tbody ng-class="paymentList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in paymentList">
+        <td><input ng-click="updateSelection($event,list.ZSQNO,$index,list.hbing,list.ZHB)" class="checkBox" name="checkbox{{$index}}" type="checkbox" ng-checked="list.check"/></td>
+        <td>{{list.ZSQNO}}</td>
+        <td title="{{enumobj.ZFKZT[list.ZFKZT]}}">{{enumobj.ZFKZT[list.ZFKZT] | cutfield:true:7:'...'}}</td>
+        <!--<td>{{list.ZFKZL}}</td>-->
+        <td>{{getField(payData, 'CODE1',list.ZFKZL.substring(0,2)).TITLE}}</td>
+        <td>{{list.ZFKFS}}</td>
+        <td title="{{list.ZSKDW}}">{{list.ZSKDW| cutfield:true:9:'...'}}
+        <td>{{list.ZZPO}}</td>
+        <td>{{list.EBELN}}</td>
+        <td>{{list.ZSQJE}}</td>
+        <td>{{list.ZSJFKJE}}</td>
+        <td>{{list.ZJHDAT}}</td>
+        <td>{{list.ZSJDAT}}</td>
+        <td>{{list.AUFUSER0}}</td>
+        <td>{{list.ZFKSTA}}</td>
+    </tr>
+    <tr class="tip"><td colspan="11">没有查到付款申请单</td></tr>
+    </tbody>
+</table>
+<div class="gerSub">
+    <a href="javascript:;" ng-click="$parent.payCancle()">关闭</a>
+    <button  class="subSave" ng-click="$parent.paySelect()">确定</button>
+</div>

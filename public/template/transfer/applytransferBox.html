@@ -1,0 +1,29 @@
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>原申请人</strong>
+                    <input ng-disabled="true" type="text" class="text" name="apply" ng-model="appl">
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td colspan="2">
+                    <strong>转办至</strong>
+                    <input class="text" ng-readonly="true" ng-click="userbox()" name="username" ng-model="usersale.name" type="text" placeholder="请选择人员"/>
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<div class="gerSub">
+    <a ng-click="closeapply('appl')">取消</a>
+    <button ng-click="save('appl')" class="subApply" >保存</button>
+</div>
+<!--<div id="applytransferBox" class="dialog cusBox" title="选择人员" ng-include="'template/transfer/userbox.html'" ng-controller="transferstaffCtrl"></div>-->

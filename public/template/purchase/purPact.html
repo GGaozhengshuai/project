@@ -1,0 +1,62 @@
+<h3 class="genTitle"><em></em><span>采购框架合同</span></h3>
+<form>
+    <!--<div class="staff_search">
+        <div class="viewTable">
+            <ul>
+                <li class="demand_h"><strong>供应商描述：</strong><span><input ng-init="NAME1=''" ng-model="NAME1" type="text" placeholder=""></span></li>
+                <li class="demand_h"><strong>框架合同号：</strong><span><input ng-init="EBELN=''" ng-model="EBELN" type="text" placeholder=""></span></li>
+            </ul>
+        </div>
+        <input value="查询" class="searchbtn btnfloat" ng-click="search()" type="button">
+    </div>-->
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>供应商描述：</strong>
+                    <input class="text" ng-init="NAME1=''" ng-model="NAME1" type="text" placeholder="">
+                </td>
+                <td>
+                    <strong>框架合同号：</strong>
+                    <input class="text" ng-init="EBELN=''" ng-model="EBELN" type="text" placeholder="">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<div class="item ng-scope">查询结果</div>
+<!--<div class="viewTable ng-scope">
+    <table class="table tab_data">-->
+<table class="orangestyle table">
+    <thead class="tab_header">
+        <tr>
+            <th>框架合同号</th>
+            <th>公司代码</th>
+            <th>采购组织</th>
+            <th>采购组</th>
+            <th>供应商编号</th>
+            <th>供应商描述</th>
+            <th>框架合同类型</th>
+            <th>采购凭证日期</th>
+        </tr>
+        </thead>
+        <tbody class="tab_body">
+            <tr ng-repeat="list in dataList">
+                <td><a class="underline" target="_blank" href="index.html#/purPactView/{{list.EBELN}}">{{list.EBELN}}</a></td>
+                <td>{{enumObj.BUKRS[list.BUKRS]}}</td>
+                <td>{{enumObj.EKORG[list.EKORG]}}</td>
+                <td>{{enumObj.EKGRP[list.EKGRP]}}</td>
+                <td>{{list.LIFNR}}</td>
+                <td><span title="{{list.NAME1}}">{{list.NAME1 | cutfield:true:20:'...'}}</span></td>
+                <td>{{enumObj.BSART[list.BSART]}}</td>
+                <td>{{list.BEDAT | date: 'yyyy-MM-dd'}}</td>
+            </tr>
+        </tbody>
+    </table>
+<!--</div>-->
+<pagination conf="paginationConf"></pagination>

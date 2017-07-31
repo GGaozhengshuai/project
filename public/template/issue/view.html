@@ -1,0 +1,88 @@
+<h3 class="genTitle"><em></em>
+    <span>开证付汇</span>
+    <span ng-if="activeTab == 2">审批详情</span>
+</h3>
+<ul class="generNav">
+    <li ng-class="{active:activeTab == 1}"><a href="javascript:void(0);" ng-mousedown='htTab(1)'>开证付汇单</a></li>
+    <li ng-class="{active:activeTab == 2}"><a href="javascript:void(0);" ng-mousedown='htTab(2)'>审批详情</a></li>
+</ul>
+
+<div id="mainView">
+    <div ng-if="activeTab == 1">
+        <div class="viewTable ng-scope">
+            <ul>
+                <li><strong>开证付汇申请号：</strong><span>{{ORDER_DATA.ZKZFH}}</span></li>
+                <li><strong>申请日期：</strong><span>{{ORDER_DATA.ZSQRQ}}</span></li>
+                <li><strong>申请人：</strong><span>{{ORDER_DATA.ZZDR}}</span></li>
+                <li><strong>付款类型：</strong><span>{{ORDER_DATA.ZFKLX}}</span></li>
+                <li><strong>付款主体：</strong><span>{{ORDER_DATA.ZFKZT}}</span></li>
+                <li><strong>币种：</strong><span>{{ZBB}}</span></li>
+                <li><strong>付汇汇率：</strong><span>{{ORDER_DATA.ZFHHL}}</span></li>
+                <li><strong>供应商名称：</strong><span>{{ORDER_DATA.NAME1 + ORDER_DATA.NAME2}}</span></li>
+                <li><strong>供应商编号：</strong><span>{{ORDER_DATA.LIFNR}}</span></li>
+                <li><strong>开证付汇金额：</strong><span>{{ORDER_DATA.ZKZFHJE | number : 2}}</span></li>
+                <li><strong>付款方式：</strong><span>{{ORDER_DATA.ZFKFS}}</span></li>
+                <li><strong>开证付汇银行：</strong><span>{{ORDER_DATA.ZKZBANK}}</span></li>
+                <li><strong>收款情况：</strong><span>{{ORDER_DATA.ZSKQK}}</span></li>
+                <li class="list_con"><strong>备注：</strong><span>{{ORDER_DATA.ZBZ}}</span></li>
+                <li><strong>公司名称（英文）：</strong><span>{{ORDER_DATA.ZGSMC}}</span></li>
+                <li><strong>银行名称（英文）：</strong><span>{{ORDER_DATA.ZYHMC}}</span></li>
+                <li><strong>银行地址（英文）：</strong><span>{{ORDER_DATA.ZYHDZ}}</span></li>
+                <li><strong>银行账号：</strong><span>{{ORDER_DATA.ZYHZH}}</span></li>
+                <li><strong>SWIFT CODE：</strong><span>{{ORDER_DATA.ZSWIFTCODE}}</span></li>
+                <li class="list_con"><strong>财务其他信息：</strong><span>{{ORDER_DATA.ZQTXX}}</span></li>
+            </ul>
+            <div class="addTable">
+                <h5>关联的采购订单信息</h5>
+                <table class="tab_data">
+                    <thead class="tab_header">
+                    <tr>
+                        <th>采购订单号<br>(境外供应商)</th>
+                        <th>销售订单号<br>(最终客户)</th>
+                        <th>最终客户名称</th>
+                        <th>采购订单号<br>(双主体之间)</th>
+                        <th>销售订单号<br>(双主体之间)</th>
+                        <th>订单总金额</th>
+                        <th>已开证付汇金额</th>
+                        <th>本次开证付汇金额</th>
+                    </tr>
+                    </thead>
+                    <tbody class="tab_body">
+                    <tr ng-repeat="list in glCgList">
+                        <td>{{list.EBELN}}</td>
+                        <td>{{list.VBELN}}</td>
+                        <td>{{list.ZHKMC}}</td>
+                        <td>{{list.ZEBELN}}</td>
+                        <td>{{list.ZVBELN}}</td>
+                        <td>{{list.ZDDZJE}}</td>
+                        <td>{{list.ZYKZFHJE}}</td>
+                        <td>{{list.ZKZFHJE}}</td>
+                    </tr>
+                    <tr><td colspan="8" style="text-align: right">开证付汇金额合计：{{ORDER_DATA.ZKZFHJE}}</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="applyLog" ng-if="activeTab == 2">
+        <table>
+            <thead>
+            <tr>
+                <th class="th1">审批人</th>
+                <th class="th2">审批时间</th>
+                <th class="th3">审批状态</th>
+                <th class="th4">审批意见</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="list in processlog">
+                <td>{{list.sender.name}}</td>
+                <td>{{list.createDate | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td>{{list.operation}}</td>
+                <td>{{list.content.comment}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="clear"></div>
+</div>

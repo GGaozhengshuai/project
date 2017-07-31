@@ -1,0 +1,51 @@
+<!--<ul>-->
+    <!--<li ng-repeat="list in userList">-->
+        <!--title:{{list.title}}&nbsp;&nbsp;&nbsp;name:{{list.name}}-->
+    <!--</li>-->
+<!--</ul>-->
+<!--<div class="c-wrap">-->
+<div class="rankwrap">
+    <div class="line">
+        <span class="s_title">编号：<input type="text"  class="s_input"></span>
+        <span class="s_title">部门：<input type="text"  class="s_input"></span>
+        <span class="s_title">姓名：<input type="text"  class="s_input"></span>
+        <input type="button" value="搜索" ng-click="" class="s_search">
+    </div>
+    <div>
+        <a href="/index.html#/addUser" class="s_search add">新增</a>
+        <input ng-click="del()" type="button" class="s_search del" value="删除">
+    </div>
+    <table class="table table-warning">
+        <thead>
+        <tr>
+            <th><input type="checkbox" class="checkall" ng-click="checkall(ck_all)" ng-model="ck_all"></th>
+            <th>用户名</th>
+            <th>密码</th>
+            <th>姓名</th>
+            <th>邮箱</th>
+            <th>部门</th>
+            <th>手机号</th>
+            <th>权限</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="list in userList">
+                <td style="width: 5%;"><input id="{{list._id}}" type="checkbox" class="check" ng-click="check($index, ck[$index])" ng-model="ck[$index]"></td>
+                <td style="width: 15%;">{{list.login}}</td>
+                <td style="width: 10%;">{{list.pwd}}</td>
+                <td style="width: 10%;">{{list.name}}</td>
+                <td style="width: 15%;">{{list.aaa}}</td>
+                <td style="width: 10%;">行政管理部门</td>
+                <td style="width: 12%;">13512345678</td>
+                <td style="width: 8%;">管理员</td>
+                <td style="width: 15%;">
+                    <a ng-href="#editUser/{{list._id}}" class="mr10">编辑</a>
+                    <a href="javascript:;" data-id="{{list._id}}" ng-click="deleteUser($index)" class="mr10">删除</a>
+                    <a ng-href="#viewUser/{{list._id}}">查看</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<!--</div>-->

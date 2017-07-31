@@ -1,0 +1,15 @@
+<table class="orangestyle table" id="wlTable">
+    <thead>
+    <tr class="alllist">
+        <th>采购申请号</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody ng-class="cgList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in cgList" class="list">
+        <td>{{list.BANFN}}</td>
+        <td><a target="_blank" href="index.html#/purchaseView/{{list.BANFN}}">选择</a></td>
+    </tr>
+    <tr class="tip"><td colspan="10">无关联采购申请</td></tr>
+    </tbody>
+</table>

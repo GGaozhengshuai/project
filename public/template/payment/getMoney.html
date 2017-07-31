@@ -1,0 +1,99 @@
+<div class="item">合同应收情况</div>
+<br/>
+<div style="overflow-x:auto; width: 100%;">
+    <table class="orangestyle table" id="ccTable" style="width:150%;">
+        <tr>
+        <td colspan="3">应收金额合计:{{ysTotal}}</td>
+        <td></td>
+        <td colspan="3">已核销金额合计:{{yhxTotal}}</td>
+        <td></td>
+        <td colspan="4">未核销金额合计:{{whxTotal}}</td>
+    </tr>
+
+        <tr>
+            <th>客户编码</th>
+            <th>名称</th>
+            <th>销售订单号</th>
+            <th>销售组织</th>
+            <th>销售员</th>
+            <th>业务应收编号</th>
+            <th>应收金额</th>
+            <th>已核销金额</th>
+            <th>未核销金额</th>
+            <th>账龄起始日期</th>
+            <th>账龄（天）</th>
+            <th>已计划金额</th>
+            <th>业务应收创建方式</th>
+            <th>应收来源</th>
+            <th>交货</th>
+            <th>交货单日期</th>
+            <th>超期天数</th>
+            <th ng-hide="true">销售合同号</th>
+            <th ng-hide="true">销售部门</th>
+            <th ng-hide="true">项目说明</th>
+        </tr>
+
+        <tbody ng-class="recevieList.length > 0 ? 'meg' : 'noMegTip'">
+        <tr ng-repeat="list in recevieList" class="list">
+            <td>{{list.KUNNR}}</td>
+            <td>{{list.NAME1}}</td>
+            <td>{{list.VBELN}}</td>
+            <td>{{list.VKORG}}</td>
+            <td>{{list.ZPERNR_NAME}}</td>
+            <td>{{list.ZYWYS}}</td>
+            <td>{{list.ZYSJE}}</td>
+            <td>{{list.ZHXJE}}</td>
+            <td>{{list.WHXJE}}</td>
+            <td>{{list.ZQSRQ}}</td>
+            <td>{{list.ZZL}}</td>
+            <td>{{list.ZJHJE}}</td>
+            <td>{{list.ZYSMS}}</td>
+            <td>{{{A:"交货",B:"付款申请",C:"手工",D:"退货",E:"开票",F:"贷项凭证"}[list.ZYSLY]}}</td>
+            <td>{{list.VBELN_VL}}</td>
+            <td>{{list.JHDRQ}}</td>
+            <td>{{list.ZCQTS}}</td>
+            <td ng-hide="true">{{list.ZBSTKD}}</td>
+            <td ng-hide="true">{{list.ZCREATE_ORG}}</td>
+            <td ng-hide="true">{{list.ZPRJ_NAME}}</td>
+        </tr>
+        <tr class="tip"><td colspan="18">没有查到应收查询</td></tr>
+        </tbody>
+    </table>
+</div>
+<!--<pagination conf="paginationConf"></pagination>-->
+
+<div class="item">到账情况</div>
+<table class="orangestyle table">
+    <thead>
+    <tr>
+        <td colspan="9">到账金额合计:{{dzTotal}}</td>
+    </tr>
+
+    <tr>
+        <th>客户编号</th>
+        <th>客户名称</th>
+        <th>到账单编号</th>
+        <th>到账金额</th>
+        <th>收款类型</th>
+        <th>核销状态</th>
+        <th>入账日期</th>
+        <th>销售和分销凭证号</th>
+        <th>业务应收编号</th>
+    </tr>
+    </thead>
+    <tbody ng-class="toBillList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in toBillList">
+        <td>{{list.KUNNR}}</td>
+        <td>{{list.NAME1}}</td>
+        <td>{{list.ZDZDBH}}</td>
+        <td>{{list.ZDZJE}}</td>
+        <td>{{list.ZSKZL}}</td>
+        <td>{{hxStateTxt[list.ZHX]}}</td>
+        <td>{{list.ZRZRQ | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+        <td>{{list.VBELN}}</td>
+        <td>{{list.ZYWYSBH}}</td>
+    </tr>
+    <tr class="tip"><td colspan="9">没有查到到账单</td></tr>
+    </tbody>
+</table>
+<!--<pagination conf="paginationConf"></pagination>-->

@@ -1,0 +1,93 @@
+<h3 class="genTitle genTitleBot"><em></em><span>变更到单申请</span></h3>
+<div class="cusCont">
+    <div class="generForm">
+        <form novalidate name="invoiceForm">
+            <ul>
+                <li class="tli">
+                    <strong>到单申请号：</strong>
+                    <input type="text" ng-disabled="true" ng-model="ORDER_DATA.ZSQNO"/>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>到单日期：</strong>
+                    <input type="text" id="changeDay" class="Wdate" date-Picker ng-readonly="true" ng-click="watchDate()" ng-model="ORDER_DATA.ZDDAT" required>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>到单/付汇日汇率：</strong>
+                    <input onkeyup="value=value.replace(/[^\-?\d.]/g,'')" numfour-Validation ng-Focus name="ZRHL" type="text" ng-model="ORDER_DATA.ZRHL" required>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.ZRHL.$dirty && invoiceForm.ZRHL.$error.numfour && !invoiceForm.ZRHL.$focused">最多四位小数</span>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>是否押汇：</strong>
+                    <select ng-model="ORDER_DATA.ZSFYH" ng-change="typeChange(ORDER_DATA.ZSFYH)">
+                        <option value="">请选择</option>
+                        <option value="是">是</option>
+                        <option value="否">否</option>
+                    </select>
+                </li>
+                <div ng-if="billType">
+                    <li class="tli">
+                        <strong><font>*</font>押汇期限（天）：</strong>
+                        <input type="text" maxlength="7" ng-model="ORDER_DATA.ZYHQX" required ng-change="Date(ORDER_DATA.ZDDAT,ORDER_DATA.ZYHQX)">
+                    </li>
+                    <li class="tli">
+                        <strong>承付（押汇）日期：</strong>
+                        <input type="text" id="changecfDay" class="Wdate" date-Picker onClick="WdatePicker({minDate:'#F{$dp.$D(\'changeDay\')}'})" ng-model="ORDER_DATA.ZCFDAT" required ng-disabled="cfDateDis">
+                    </li>
+                </div>
+                <li class="tli">
+                    <strong><font>*</font>实际融资方式：</strong>
+                    <select required ng-model="ORDER_DATA.ZRZFS">
+                        <option value="">请选择</option>
+                        <option value="代付">代付</option>
+                        <option value="押汇">押汇</option>
+                        <option value="直接付汇">直接付汇</option>
+                        <option value="押汇锁汇">押汇锁汇</option>
+                    </select>
+                </li>
+            </ul>
+            <div class="addTable">
+                <div class="genTitle2">
+                    <div>
+                        <strong>列表信息</strong>
+                    </div>
+                </div>
+                <table id="listTable">
+                    <tr>
+                        <th><font>*</font>采购订单号</th>
+                        <th>境外采购付款方式</th>
+                        <th>开证付汇申请号</th>
+                        <th>付款类型</th>
+                        <th><font>*</font>到单金额</th>
+                        <th>备注</th>
+                    </tr>
+                    <tr ng-repeat="list in comeList" class="list">
+                        <td>
+                            <input type="text" ng-disabled="true" ng-model="list.EBELN" ng-click="purchase($index)" required>
+                        </td>
+                        <td><input type="text" ng-model="list.ZFKFS" ng-disabled="true"></td>
+                        <td><input type="text" ng-model="list.ZKZFH" ng-disabled="true"></td>
+                        <td><input type="text" ng-disabled="true" ng-model="list.ZFKLX" required></td>
+                        <td>
+                            <input type="text" ng-Change keepnumber-Validation name="ZDDJE{{$index}}" onkeyup="value=value.replace(/[^\-?\d.]/g,'')" required ng-model="list.ZDDJE" ng-blur="bgddje($index,list.ZDDJE)">
+                            <p class="errTip" ng-if="invoiceForm['ZDDJE'+$index].$dirty && invoiceForm['ZDDJE'+$index].$error.keepnum&&!invoiceForm['ZDDJE'+$index].$focused">最多两位小数的非负数</p>
+                        </td>
+                        <td>
+                            <input  type="text" value="" ng-model="list.ZBZ"/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="gerSub">
+                <a href="index.html#/receipts">返回</a>
+                <button ng-click="addData(ORDER_DATA, 'save')"  ng-class="invoiceForm.$invalid == true ? 'displaySub' : 'subSave'" ng-disabled="invoiceForm.$invalid || invoRready">保存</button>
+                <button ng-click="addData(ORDER_DATA, 'apply')"  ng-class="invoiceForm.$invalid == true ? 'displaySub' : 'subApply'" ng-disabled="invoiceForm.$invalid || invoRready">保存并提交</button>
+                <!--<button ng-click="update(addInvo,'addInvoice')"  ng-class="myForm.$invalid == true ? 'displaySub' : 'subSave'" ng-disabled="invoiceForm.$invalid || invoRready">保存</button>
+                <button ng-click="update(addInvo,'addInvoice')"  ng-hide="invoApproveBtn" ng-class="myForm.$invalid == true ? 'displaySub' : 'subSave'" ng-disabled="invoiceForm.$invalid || invoRready">提交审批</button>
+            -->
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="cusBox" class="dialog cusBox" title="" ng-include="'template/receiptsApply/cuxbox.html'" ng-controller="cuxboxCtrl"></div>
+<div id="approversDialog" class="dialog cusBox" title="选择下一审批人" ng-include="'template/common/approvers.html'" ></div>

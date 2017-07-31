@@ -1,0 +1,79 @@
+<h3 class="genTitle genTitleBot"><em></em><span>借出续借</span></h3>
+<div class="cusCont">
+    <div class="generForm">
+        <form novalidate name="invoiceForm">
+            <ul>
+                <li class="tli">
+                    <strong><font>*</font>借出单号：</strong>
+                    <input ng-disabled="true" required ng-model="ORDER_DATA.code" name="code" type="text" placeholder="保留两位小数"/>
+                    <!--<input ng-model="ORDER_DATA.pdrenew.rncode" ng-init="ORDER_DATA.pdrenew.rncode=''" type="hidden" placeholder="保留两位小数"/>-->
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>产品线：</strong>
+                    <input ng-disabled="true" ng-required="true" ng-model="ORDER_DATA.lendbase.productline" name="productline" ui-autocomplete="productOption" type="text" placeholder="请输入产品线"/>
+                    <input ng-model="ORDER_DATA.lendbase.productlineid" type="hidden"/>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>借货人：</strong>
+                    <input ng-disabled="true" ng-readonly="true" ng-required="true" ng-model="ORDER_DATA.user.name" name="username" type="text" placeholder="请选择业务员"/>
+                    <input type="hidden" value="" ng-model="ORDER_DATA.user.id"/>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>部门：</strong>
+                    <input ng-disabled="true" ng-required="true" ng-disabled="true" ng-model="ORDER_DATA.department.name" type="text" placeholder="保留两位小数"/>
+                    <input type="hidden" value="" ng-model="ORDER_DATA.department.id"/>
+                </li>
+
+                <li class="tli">
+                    <strong>事业部：</strong>
+                    <input ng-disabled="true" ng-model="ORDER_DATA.department.name2" type="text" placeholder=""/>
+                    <input ng-model="ORDER_DATA.department.id2" type="hidden" placeholder=""/>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>借出客户名称：</strong>
+                    <input ng-disabled="true" ng-required="true" ng-model="ORDER_DATA.client.name" type="text" placeholder="请选择客户名称"/>
+                    <input ng-readonly="true" ng-required="true" ng-model="ORDER_DATA.client.id" type="hidden" placeholder=""/>
+                </li>
+              <li class="tli">
+                <strong><font>*</font>实际借出客户：</strong>
+                <input ng-disabled="true" ng-required="true" ng-model="ORDER_DATA.client.realname" name="realname" type="text" placeholder="请输入客户名称"/>
+                <!--<span class="errTip ng-hide" ng-show="invoiceForm.realname.$dirty && invoiceForm.realname.$error.required">必填</span>-->
+              </li>
+                <li class="tli">
+                    <strong><font>*</font>借出起始日期：</strong>
+                    <input ng-disabled="true" class="text" type="text" ng-model="ORDER_DATA.lendbase.start" placeholder="请选择日期">
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>首次借货天数：</strong>
+                    <input ng-disabled="true" class="text" type="number"  ng-model="ORDER_DATA.lendbase.days" placeholder="请填写借货天数"><!--预计归还日期-借出起始日期-->
+                </li>
+
+                <li class="tli">
+                    <strong><font>*</font>预计归还日期：</strong>
+                    <input ng-disabled="true" class="text" type="text"  ng-model="ORDER_DATA.lendbase.end" placeholder="">
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>已续借天数：</strong>
+                    <input ng-disabled="true" class="text" type="text"  ng-model="ORDER_DATA.lendbase.renewdays" placeholder="">
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>本次续借天数：</strong>
+                    <input ng-required="true" ng-blur="renDate()" class="number" type="text" name="rndays" ng-Focus ng-model="ORDER_DATA.pdrenew.rndays" placeholder="">
+                    <span class="errTip ng-hide" ng-show="invoiceForm.rndays.$dirty && invoiceForm.rndays.$error.required && !invoiceForm.rndays.$focused">必填</span>
+                </li>
+
+                <li class="clear"></li>
+                <li><strong>借货说明：</strong><textarea ng-disabled="true" ng-model="ORDER_DATA.lendbase.des"></textarea></li>
+                <li><strong>续借说明：</strong><textarea ng-model="ORDER_DATA.pdrenew.rndesc"></textarea></li>
+            </ul>
+
+            <div class="gerSub">
+                <a href="index.html#/loanBillOrder">返回</a>
+               <!-- <button ng-click="addData(ORDER_DATA, 'save')"  ng-class="invoiceForm.$invalid == true ? 'displaySub' : 'subSave'" ng-disabled="invoiceForm.$invalid || invoRready">保存</button>
+                <button ng-click="addData(ORDER_DATA, 'apply')"  ng-class="invoiceForm.$invalid == true ? 'displaySub' : 'subApply'" ng-disabled="invoiceForm.$invalid || invoRready">保存并提交</button>-->
+                <button ng-click="addData(ORDER_DATA, 'save')" class="subSave" >保存</button>
+                <button ng-click="addData(ORDER_DATA, 'apply')" class="subApply" >保存并提交</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,399 @@
+<h3 class="genTitle genTitleBot" ng-if="changed"><em></em><span>借出单变更</span></h3>
+<h3 class="genTitle genTitleBot" ng-if="!changed"><em></em><span>借出单编辑</span></h3>
+<div class="cusCont">
+    <div class="generForm loanBillWrap">
+        <form novalidate name="invoiceForm">
+            <ul>
+                <!--<li class="tli">
+                    <strong><font>*</font>借出单号：</strong>
+                    <input required ng-model="ORDER_DATA.code" type="text" placeholder="保留两位小数"/>
+                </li>
+                <li class="tli">
+                    <strong>申请日期：</strong>
+                    <input required ng-model="ORDER_DATA.lendbase.start" type="text" placeholder="保留两位小数"/>
+                </li>
+                -->
+                <li class="tli">
+                    <strong><font>*</font>借货人：</strong>
+                    <input ng-readonly="true" ng-click="userBox('salsUser')" ng-disabled="draftStatue" ng-required="true" ng-model="ORDER_DATA.user.name" name="username" type="text" placeholder="请选择业务员"/>
+                    <input type="hidden" value="" ng-model="ORDER_DATA.user.id"/>
+                    <input type="hidden" value="" ng-model="ORDER_DATA.groupcode"/><!--变更时候有次字段-->
+                    <span class="errTip ng-hide" ng-show="invoiceForm.username.$dirty && invoiceForm.username.$error.required">必填</span>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>部门：</strong>
+                    <input ng-required="true" ng-disabled="true" ng-model="ORDER_DATA.department.name" type="text"/>
+                    <input type="hidden" value="" ng-model="ORDER_DATA.department.id"/>
+                </li>
+
+                <li class="tli">
+                    <strong>事业部：</strong>
+                    <input ng-disabled="true" ng-model="ORDER_DATA.department.name2" type="text" placeholder=""/>
+                    <input ng-model="ORDER_DATA.department.id2" type="hidden" placeholder=""/>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>借出类型：</strong>
+                    <select ng-model="ORDER_DATA.lendbase.lendtype" name="lendtype" ng-required="true" ng-disabled="draftStatue">
+                        <option value="">请选择</option>
+                        <option value="ZA1">厂商借用</option>
+                        <option value="ZA2">代理商借用</option>
+                        <option value="ZA3">内部借用</option>
+                        <option value="ZA4">借货转销售</option>
+                    </select>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.lendtype.$dirty && invoiceForm.lendtype.$error.required">必填</span>
+                </li>
+                <li class="tli productlineTop">
+                    <strong><font>*</font>产品线：</strong>
+                    <input ng-required="true" ng-model="ORDER_DATA.lendbase.productline" name="productline" ng-Focus ng-keyup="productlineFn(ORDER_DATA.lendbase.productline)" ng-blur="productlineBlurFn()" type="text" placeholder="请输入产品线"/>
+                    <input ng-model="ORDER_DATA.lendbase.productlineid" type="hidden"/>
+                    <div class="productline">
+                        <ul>
+                            <li ng-repeat="list in productlineList" >
+                                <a href="javascript:;" ng-click="selProductlineFn(list)">
+                                    {{list.name}}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.productline.$dirty && invoiceForm.productline.$error.required && !invoiceForm.productline.$focused">必填</span>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>是否有借货合同：</strong>
+                    <select ng-model="ORDER_DATA.lendbase.hascontract" ng-disabled="draftStatue" name="hascontract" ng-required="true">
+                        <option value="">请选择</option>
+                        <option value='是'>是</option>
+                        <option value="否">否</option>
+                    </select>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.hascontract.$dirty && invoiceForm.hascontract.$error.required">必填</span>
+                </li><!--
+                <li class="tli">
+                    <strong><font>*</font>商务人员：</strong>
+                    <input ng-readonly="true" ng-disabled="draftStatue" ng-click="userBox('bussinessUser')" ng-required="true" ng-model="ORDER_DATA.tradername" name="tradername" type="text" placeholder="请选择商务人员"/>
+                    <input ng-model="ORDER_DATA.traderlogin" type="hidden" placeholder=""/>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.tradername.$dirty && invoiceForm.tradername.$error.required">必填</span>
+                </li>-->
+                <li class="tli">
+                    <strong><font>*</font>商务人员：</strong>
+                    <select ng-required="true" ng-model="tradername" ng-change="traderChange()" ng-options="x.name for x in traderSelect">
+                        <option value="">请选择</option>
+                    </select>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.tradername.$dirty && invoiceForm.tradername.$error.required">必填</span>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>借出客户名称：</strong>
+                    <input ng-readonly="true" ng-disabled="draftStatue" ng-click="cusBox()" ng-required="true" name="clientname" ng-model="ORDER_DATA.client.name" type="text" placeholder="请选择客户名称"/>
+                    <input ng-readonly="true" ng-required="true" ng-model="ORDER_DATA.client.id" type="hidden" placeholder=""/>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.clientname.$dirty && invoiceForm.clientname.$error.required">必填</span>
+                </li>
+                <li class="tli">
+                  <strong><font ng-if="ORDER_DATA.client.id=='1000005246'">*</font>实际借出客户：</strong>
+                  <input ng-disabled="ORDER_DATA.client.id!=='1000005246'" ng-required="ORDER_DATA.client.id=='1000005246'" ng-model="ORDER_DATA.client.realname" name="realname" type="text" placeholder="请输入客户名称"/>
+                  <span class="errTip ng-hide" ng-show="invoiceForm.realname.$dirty && invoiceForm.realname.$error.required">必填</span>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>借出起始日期：</strong>
+                    <input ng-disabled="draftStatue" ng-blur="setDate()" class="text Wdate" type="text" ng-required="true" name="start" date-Picker ng-readonly="true"  ng-model="ORDER_DATA.lendbase.start" placeholder="请选择日期">
+                    <span class="errTip ng-hide" ng-show="invoiceForm.start.$dirty && invoiceForm.start.$error.required">必填</span>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>借货天数：</strong>
+                    <input ng-blur="setDate()" ng-disabled="draftStatue" ng-required="true" name="lendbasedays" ng-Focus class="text" type="number"  ng-model="ORDER_DATA.lendbase.days" placeholder="请填写借货天数"><!--预计归还日期-借出起始日期-->
+                    <span class="errTip ng-hide" ng-show="invoiceForm.lendbasedays.$dirty && invoiceForm.lendbasedays.$error.required && !invoiceForm.lendbasedays.$focused">必填</span>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>预计归还日期：</strong>
+                    <input ng-disabled="true" class="text" type="text"  ng-model="ORDER_DATA.lendbase.end" placeholder="">
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>借出金额：</strong>
+                    <!--<input ng-disabled="true" class="text" type="text"  ng-model="ORDER_DATA.lendbase.sum" placeholder="">-->
+                    <input ng-disabled="true" class="text" type="text" placeholder="" value="{{excleWlData.sum+sumSD | number:2}}">
+                </li>
+                <!--<li class="tli">
+                    <strong><font>*</font>续借天数：</strong>
+                    <input class="text Wdate" type="text" date-Picker ng-readonly="true" ng-model="ORDER_DATA.lendbase.renewdays" placeholder="请选择日期">
+                </li>-->
+                <li class="tli">
+                    <strong><font>*</font>运输方式：</strong>
+                    <select ng-required="true" ng-disabled="draftStatue || transferwayReadOnly" ng-model="ORDER_DATA.lendbase.transferway" name="transferway">
+                        <option value="">请选择</option>
+                        <option value="01">国内陆运</option>
+                        <option value="02">国内海运</option>
+                        <option value="03">国内空运</option>
+                        <option value="04">国际陆运</option>
+                        <option value="05">国际海运</option>
+                        <option value="06">国际空运</option>
+                        <option value="07">陆运快件</option>
+                        <option value="08">火车运输</option>
+                        <option value="09">快递</option>
+                        <option value="10">专车</option>
+                        <option value="11">自提</option>
+                    </select>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.transferway.$dirty && invoiceForm.transferway.$error.required">必填</span>
+                </li>
+                <li class="clear"></li>
+                <li class="list_con ng-hide" ng-show="draftStatue"><strong>附件：</strong><span><a href="{{ORDER_DATA.attachment}}">{{ORDER_DATA.docName}}</a></span></li>
+                <li class="formUpStyle" ng-hide="draftStatue">
+                    <strong>上传附件：</strong>
+                    <input url="/resource/uploadfile" uploadify-All btnname="上传附件" type="file"  ng-model="ORDER_DATA.attachment" placeholder="">
+                    <a target="_blank" class="link" href="{{ORDER_DATA.attachment}}">{{docName}}</a>
+                </li>
+                <li class="clear"></li>
+                <li><strong>借货说明：</strong><textarea ng-model="ORDER_DATA.lendbase.des"></textarea></li>
+            </ul>
+            <h4 class="genH4">交货地点和联系人</h4>
+            <div class="addTable">
+                <div class="czAddBtn">
+                    <a href="doc/lxrmb.xlsx" class="downloadmb">下载导入联系人模板</a>
+                    <input excle-Uploadify btnname="导入常用收货地址" url="/contract/importreceiver" excleData="excleData" ng-model="excleData"/>
+                    <a href="javascript:;" ng-click="cusLinkBox()">选用客户常用收货地址</a>
+                </div>
+                <table id="nbList">
+                    <tr>
+                        <th><font>*</font>收货人姓名</th>
+                        <th><font>*</font>手机号</th>
+                        <th>固定电话</th>
+                        <th><font>*</font>省</th>
+                        <th><font>*</font>市</th>
+                        <th><font>*</font>详细地址</th>
+                        <th>邮编</th>
+                        <th><a href="javascript:;" ng-click="userAdd()" title="添加" class="btnAdd"></a></th>
+                    </tr>
+                    <tr ng-repeat="list in excleData" class="list">
+                        <td>
+                            <input ng-required="true" ng-model="list.name" type="text" value=""/>
+                        </td>
+                        <td ng-class="invoiceForm['phone'+$index].$dirty && (invoiceForm['phone'+$index].$error.required || invoiceForm['phone'+$index].$error.phonenum) ? 'hasErrTip' : ''">
+                            <input phone-Validation ng-required="true" ng-Focus name="phone{{$index}}" ng-model="list.phone" maxlength="11" type="text" value=""/>
+                            <span class="errTip" ng-if="invoiceForm['phone'+$index].$dirty && invoiceForm['phone'+$index].$error.phonenum && !invoiceForm['phone'+$index].$focused">11位手机号</span>
+                            <span class="errTip" ng-if="invoiceForm['phone'+$index].$dirty && invoiceForm['phone'+$index].$error.required ">必填</span>
+                        </td>
+                        <td ng-class="invoiceForm['tel'+$index].$dirty && (invoiceForm['tel'+$index].$error.required || invoiceForm['tel'+$index].$error.telnum) ? 'hasErrTip' : ''">
+                            <input tel-Validation name="tel{{$index}}" ng-Focus ng-model="list.tel"  type="text" value=""/>
+                            <p class="errTip" ng-if="invoiceForm['tel'+$index].$dirty && invoiceForm['tel'+$index].$error.telnum &&!invoiceForm['tel'+$index].$focused ">格式不正确</p>
+                            <p class="errTip" ng-if="invoiceForm['tel'+$index].$dirty && invoiceForm['tel'+$index].$error.required &&!invoiceForm['tel'+$index].$focused ">必填</p>
+                        </td>
+                        <td>
+                            <select ng-model="list.province" ng-change="list.city=''" ng-disabled="ready" ng-required="true" >
+                                <option value="">--请选择--</option>
+                                <option ng-repeat=" p in countryData" value="{{p.PROVINCE.CODE}}">{{p.PROVINCE.TITLE}}</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select ng-model="list.city" ng-disabled="ready" ng-required="true" >
+                                <option value="">--请选择--</option>
+                                <option ng-repeat=" c in getField(countryData, 'CODE',list.province).CITY" value="{{c.CODE}}">{{c.TITLE}}</option>
+                            </select>
+                        </td>
+                        <td ng-class="invoiceForm['address'+$index].$dirty && invoiceForm['address'+$index].$error.required ? 'hasErrTip' : ''">
+                            <input ng-required="true" name="address{{$index}}" ng-Focus ng-model="list.address" maxlength="100" type="text" value=""/>
+                            <p class="errTip" ng-if="invoiceForm['address'+$index].$dirty && invoiceForm['address'+$index].$error.required &&!invoiceForm['address'+$index].$focused ">必填</p>
+                        </td>
+                        <td ng-class="invoiceForm['zipcode'+$index].$dirty && (invoiceForm['zipcode'+$index].$error.required || invoiceForm['zipcode'+$index].$error.postcode) ? 'hasErrTip' : ''">
+                            <input postcode-Validation name="zipcode{{$index}}" ng-Focus ng-model="list.zipcode" maxlength="6" type="text" value=""/>
+                            <!--<p class="errTip" ng-if="invoiceForm['zipcode'+$index].$dirty && invoiceForm['zipcode'+$index].$error.required && !invoiceForm['zipcode'+$index].$focused ">必填</p>-->
+                            <p class="errTip" ng-if="invoiceForm['zipcode'+$index].$dirty && invoiceForm['zipcode'+$index].$error.postcode && !invoiceForm['zipcode'+$index].$focused ">6位数字</p>
+                        </td>
+                        <td><a href="javascript:;" ng-click="userDel($index,'excle')">删除</a></td>
+                    </tr>
+                    <tr ng-repeat="list in userLinkList.list" class="list">
+                        <td>
+                            <input ng-required="true" ng-model="list.name" type="text" value=""/>
+                        </td>
+                        <td ng-class="invoiceForm['phone'+$index].$dirty && (invoiceForm['phone'+$index].$error.required || invoiceForm['phone'+$index].$error.phonenum) ? 'hasErrTip' : ''">
+                            <input phone-Validation ng-required="true" ng-Focus name="phone{{$index}}" ng-model="list.phone" maxlength="11" type="text" value=""/>
+                            <span class="errTip" ng-if="invoiceForm['phone'+$index].$dirty && invoiceForm['phone'+$index].$error.phonenum && !invoiceForm['phone'+$index].$focused">11位手机号</span>
+                            <span class="errTip" ng-if="invoiceForm['phone'+$index].$dirty && invoiceForm['phone'+$index].$error.required ">必填</span>
+                        </td>
+                        <td ng-class="invoiceForm['tel'+$index].$dirty && (invoiceForm['tel'+$index].$error.required || invoiceForm['tel'+$index].$error.telnum) ? 'hasErrTip' : ''">
+                            <input tel-Validation name="tel{{$index}}" ng-Focus ng-model="list.tel"  type="text" value=""/>
+                            <p class="errTip" ng-if="invoiceForm['tel'+$index].$dirty && invoiceForm['tel'+$index].$error.telnum &&!invoiceForm['tel'+$index].$focused ">格式不正确</p>
+                            <p class="errTip" ng-if="invoiceForm['tel'+$index].$dirty && invoiceForm['tel'+$index].$error.required &&!invoiceForm['tel'+$index].$focused ">必填</p>
+                        </td>
+                        <td>
+                            <select ng-model="list.province" ng-change="list.city=''" ng-disabled="ready" ng-required="true" >
+                                <option value="">--请选择--</option>
+                                <option ng-repeat=" p in countryData" value="{{p.PROVINCE.CODE}}">{{p.PROVINCE.TITLE}}</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select ng-model="list.city" ng-disabled="ready" ng-required="true" >
+                                <option value="">--请选择--</option>
+                                <option ng-repeat=" c in getField(countryData, 'CODE',list.province).CITY" value="{{c.CODE}}">{{c.TITLE}}</option>
+                            </select>
+                        </td>
+                        <td ng-class="invoiceForm['address'+$index].$dirty && invoiceForm['address'+$index].$error.required ? 'hasErrTip' : ''">
+                            <input ng-required="true" name="address{{$index}}" ng-Focus ng-model="list.address" maxlength="100" type="text" value=""/>
+                            <p class="errTip" ng-if="invoiceForm['address'+$index].$dirty && invoiceForm['address'+$index].$error.required &&!invoiceForm['address'+$index].$focused ">必填</p>
+                        </td>
+                        <td ng-class="invoiceForm['zipcode'+$index].$dirty && (invoiceForm['zipcode'+$index].$error.required || invoiceForm['zipcode'+$index].$error.postcode) ? 'hasErrTip' : ''">
+                            <input postcode-Validation name="zipcode{{$index}}" ng-Focus ng-model="list.zipcode" maxlength="6" type="text" value=""/>
+                            <p class="errTip" ng-if="invoiceForm['zipcode'+$index].$dirty && invoiceForm['zipcode'+$index].$error.required && !invoiceForm['zipcode'+$index].$focused ">必填</p>
+                            <p class="errTip" ng-if="invoiceForm['zipcode'+$index].$dirty && invoiceForm['zipcode'+$index].$error.postcode && !invoiceForm['zipcode'+$index].$focused ">6位数字</p>
+                        </td>
+                        <td><a href="javascript:;" ng-click="userDel($index,'add')">删除</a></td>
+                    </tr>
+                </table>
+            </div>
+            <!--2017-3-24-->
+            <!--原借货数量为0的存在行项目的物料，不允许用户编辑-->
+            <div class="addTable">
+                <h5>借出产品信息</h5>
+                <div class="czAddBtn">
+                    <a href="doc/plwlmb .xlsx" class="downloadmb">下载模板</a>
+                    <!--<input excle-Uploadify btnname="导入物料信息" url="/productlend/importitems" excleData="excleWlData" ng-model="excleWlData"/>-->
+                    <!--<input excle-Updata="{{excleConfW1}}" ng-model="excleWlData"/>-->
+                    <input excle-Updata="{{excleConfW1}}" ng-model="excleWlData"/>
+                </div>
+                <table id="proList">
+                    <tr>
+                        <th><font>*</font>内部物料编码</th>
+                        <th><font>*</font>原厂物料编码</th>
+                        <th><font>*</font>型号</th>
+                        <th><font>*</font>描述</th>
+                        <th ng-if="!changed"><font>*</font>借货数量</th>
+                        <th ng-if="changed"><font>*</font>原借货数量</th>
+                        <th ng-if="changed">不可变更数量</th>
+                        <th ng-if="changed"><font>*</font>变更后数量</th>
+                        <th><a href="javascript:;" ng-click="htwlBox()" title="添加" class="btnAdd"></a></th>
+                    </tr>
+
+                    <!--手动添加-->
+                    <tbody id="tjwlList">
+                    <tr ng-repeat="list in tjwlList" class="list" lendAmount="{{list.unitprice*((changed ? list.newoutnum : list.outnum) || 0)}}" price="{{list.unitprice}}">
+                        <td>
+                            <input ng-disabled="true" ng-model="list.code" type="text"/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.productcode" type="text" value=""/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.productnumber" type="text" value=""/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.des" type="text" value=""/>
+                        </td>
+                        <td ng-class="invoiceForm['outnum3'+$index].$dirty && invoiceForm['outnum3'+$index].$error.required ? 'hasErrTip' : ''">
+                            <input ng-disabled="changed" ng-required="true" name="outnum3{{$index}}" ng-Focus ng-model="list.outnum" type="text" value="" ng-blur="sumFn()"/>
+                            <p class="errTip" ng-if="invoiceForm['outnum3'+$index].$dirty && invoiceForm['outnum3'+$index].$error.required &&!invoiceForm['outnum3'+$index].$focused ">必填</p>
+                        </td>
+                        <td ng-if='changed'>
+                            <input ng-disabled="true" ng-model="list.fhnum" type="text" value=""/>
+                        </td>
+                        <td ng-if='changed' ng-class="invoiceForm['newoutnum3'+$index].$dirty && (invoiceForm['newoutnum3'+$index].$error.required || invoiceForm['newoutnum3'+$index].$error.feifsint) ? 'hasErrTip' : ''">
+                            <input ng-required="true" name="newoutnum3{{$index}}" ng-Focus feif-Inter ng-model="list.newoutnum" type="text" value=""/>
+                            <p class="errTip" ng-if="invoiceForm['newoutnum3'+$index].$dirty && invoiceForm['newoutnum3'+$index].$error.required &&!invoiceForm['newoutnum3'+$index].$focused ">必填</p>
+                            <p class="errTip" ng-if="invoiceForm['newoutnum3'+$index].$dirty && invoiceForm['newoutnum3'+$index].$error.feifsint&&!invoiceForm['newoutnum3'+$index].$focused ">正整数</p>
+                        </td>
+                        <td><a href="javascript:;" ng-click="comeDel($index,'tjDel')">删除</a></td>
+                    </tr>
+                    </tbody>
+                    <!--变更时候导入按照新增处理，原有数据不能存放在excleWlData.right中，需要单独存一下-->
+                    <tbody id="productsList">
+                    <tr ng-if="!list.hideFlag" ng-repeat="list in productsList" class="list" lendAmount="{{list.unitprice*((changed ? list.newoutnum : list.outnum) || 0)}}" price="{{list.unitprice}}">
+                        <td>
+                            <input ng-disabled="true" ng-model="list.code" type="text"/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.productcode" type="text" value=""/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.productnumber" type="text" value=""/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.des" type="text" value=""/>
+                        </td>
+                        <td ng-class="invoiceForm['outnum'+$index].$dirty && invoiceForm['outnum'+$index].$error.required ? 'hasErrTip' : ''">
+                            <input  ng-disabled="changed" ng-required="true" name="outnum{{$index}}" ng-Focus ng-model="list.outnum" type="text" value="" ng-blur="sumFn()"/>
+                            <p class="errTip" ng-if="invoiceForm['outnum'+$index].$dirty && invoiceForm['outnum'+$index].$error.required &&!invoiceForm['outnum'+$index].$focused ">必填</p>
+                        </td>
+
+                        <td ng-if='changed'>
+                            <input ng-disabled="true" ng-model="list.fhnum" type="text" value=""/>
+                        </td>
+                        <td ng-if='changed' ng-class="invoiceForm['newoutnum'+$index].$dirty && invoiceForm['newoutnum'+$index].$error.required || invoiceForm['newoutnum'+$index].$dirty && invoiceForm['newoutnum'+$index].$error.feifsint ? 'hasErrTip' : ''">
+                            <input ng-disabled="list.outnum==0 && list.POSNR && list.POSNR.length>4 " ng-required="!(list.outnum==0 && list.POSNR && list.POSNR.length>4)" name="newoutnum{{$index}}" ng-Focus feif-Inter ng-model="list.newoutnum" type="text" value=""/>
+                            <p class="errTip" ng-if="invoiceForm['newoutnum'+$index].$dirty && invoiceForm['newoutnum'+$index].$error.required &&!invoiceForm['newoutnum'+$index].$focused ">必填</p>
+                            <p class="errTip" ng-if="invoiceForm['newoutnum'+$index].$dirty && invoiceForm['newoutnum'+$index].$error.feifsint&&!invoiceForm['newoutnum'+$index].$focused ">正整数</p>
+                        </td>
+                        <td><a ng-if="!list.POSNR || list.POSNR==undefined || list.POSNR && list.POSNR.length<4" href="javascript:;" ng-click="comeDel($index,'products', list.code)">删除</a></td>
+                    </tr>
+                    </tbody>
+                    <tbody id="excleWlDatar">
+                    <tr ng-repeat="list in excleWlData.right" class="list" lendAmount="{{list.unitprice*(changed ? list.newoutnum : list.outnum)}}" price="{{list.unitprice}}">
+                        <td>
+                            <input ng-disabled="true" ng-model="list.code" type="text"/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.productcode" type="text" value=""/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.productnumber" type="text" value=""/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.des" type="text" value=""/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.outnum" type="text" value=""/>
+                        </td>
+                        <td ng-if="changed">
+                            <input ng-disabled="true" ng-model="list.fhnum" type="text" value=""/>
+                        </td>
+                        <td ng-if='changed' ng-class="invoiceForm['newoutnum2'+$index].$dirty && invoiceForm['newoutnum2'+$index].$error.required || invoiceForm['newoutnum2'+$index].$dirty && invoiceForm['newoutnum2'+$index].$error.feifsint ? 'hasErrTip' : ''">
+                            <input ng-required="true" name="newoutnum2{{$index}}" ng-Focus feif-Inter ng-model="list.newoutnum" type="text" value=""/>
+                            <p class="errTip" ng-if="invoiceForm['newoutnum2'+$index].$dirty && invoiceForm['newoutnum2'+$index].$error.required &&!invoiceForm['newoutnum2'+$index].$focused ">必填</p>
+                            <p class="errTip" ng-if="invoiceForm['newoutnum2'+$index].$dirty && invoiceForm['newoutnum2'+$index].$error.feifsint&&!invoiceForm['newoutnum2'+$index].$focused ">正整数</p>
+                        </td>
+                        <td><a ng-if="!list.POSNR || list.POSNR==undefined || list.POSNR && list.POSNR.length<4" href="javascript:;" ng-click="comeDel($index, 'right')">删除</a></td>
+                    </tr>
+                    </tbody>
+                    <tr ng-repeat="list in excleWlData.error" class="list errTip" lendAmount="" price="">
+                        <td>
+                            <input ng-disabled="true" ng-model="list.code" type="text"/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.productcode" type="text" value=""/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.productnumber" type="text" value=""/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.des" type="text" value=""/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.outnum" type="number" ng-blur="" value=""/>
+                        </td>
+
+                        <td ng-if="changed">
+                            <input ng-disabled="true" ng-model="list.fhnum" type="text" value=""/>
+                        </td>
+                        <td ng-if="changed">
+                            <input ng-disabled="true" ng-model="list.newoutnum" type="text" value=""/>
+                        </td>
+                        <td><a href="javascript:;" ng-click="comeDel($index,'error')">删除</a></td>
+                    </tr>
+
+                    <!--<tr><td colspan="3">采购订单合计：</td></tr>-->
+                </table>
+            </div>
+            <div class="gerSub">
+                <a href="index.html#/loanBillOrder">返回</a>
+                <!--<button ng-click="addData(ORDER_DATA, 'save')"  ng-class="invoiceForm.$invalid == true ? 'displaySub' : 'subSave'" ng-disabled="invoiceForm.$invalid || invoRready">保存</button>
+                <button ng-click="addData(ORDER_DATA, 'apply')"  ng-class="invoiceForm.$invalid == true ? 'displaySub' : 'subApply'" ng-disabled="invoiceForm.$invalid || invoRready">保存并提交</button>-->
+                <button ng-click="addData(ORDER_DATA, 'save')" class="subSave" >保存</button>
+                <button ng-click="addData(ORDER_DATA, 'apply')" class="subApply" >保存并提交</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div  id="userBox" class="dialog cusBox" title="选择人员">
+    <div ng-if="openDialog"   ng-include="'template/contract/userBox.html'" ng-controller="userLoanBoxCtrl"></div>
+</div>
+<!--<div id="userBox" class="dialog cusBox" title="选择人员" ng-include="'template/loanBill/userBox.html'" ng-controller="userLoanBoxCtrl"></div>-->
+<div id="cusBox" class="dialog cusBox" title="选择客户" ng-include="'template/loanBill/cusBox.html'" ng-controller="cusLoanBoxCtrl"></div>
+<div id="wlBox" class="dialog cusBox" title="选择物料" ng-include="'template/loanBill/wlBox.html'" ng-controller="selectProductBoxCtrl"></div>
+<div id="cusLinkBox" class="dialog cusBox" title="选择收货人" ng-include="'template/loanBill/cusLinkBox.html'"></div>
+<div id="approversDialog" class="dialog cusBox" title="选择下一审批人" ng-include="'template/common/approvers.html'" ></div>
+
+

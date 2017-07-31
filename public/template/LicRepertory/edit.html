@@ -1,0 +1,43 @@
+<div class="item">LIC编辑</div>
+<div class="genSearch">
+    <table>
+        <tr>
+            <div class="gerSub" style="float: left;">
+                <div class="gerSuba">
+                <button ng-click="addData()" ng-class=" 'subSave'" >保存</button>
+                <!--<a class="distractBtn" href="javascript:;" ng-click="deleteDatas()">&#12288;&#12288;&#12288;删除&#12288;&#12288;&#12288;</a>-->
+            </div>
+            </div>
+        </tr>
+    </table>
+</div>
+<div class="addTable" style="margin-top: 20px;">
+    <table>
+    <thead>
+        <tr>
+            <!--<th width="6%"><input type="checkbox" ng-model="checkAll" id="allcheck" ng-click="allCheck($event)">全选</th>-->
+            <th width="12%"><font>*</font>原厂物料编码</th>
+            <th width="12%"><font>*</font>库存数量</th>
+            <th width="12%"><font>*</font>激活码</th>
+            <th width="14%"><font>*</font>供应商订单号</th>
+            <th width="20%">华为分批次号</th>
+            <th width="12%"><font>*</font>已匹配数量</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="list in dataLists" class="list">
+            <!--<td><span><input ng-click="updateSelection($event,list._id,$index)" class="checkBox" type="checkbox" ng-checked="checkAll"/></span></td>-->
+            <td><span>{{list.mcode}}</span></td>
+            <td><span><input ng-model="list.stocknum" type="text" name="myForm"/></span></td>
+            <td><span><input ng-model="list.lickey" type="text" name="myForm"/></span></td>
+            <td><span>{{list.sorder}}</span></td>
+            <td><span>{{list.batchnum}}</span></td>
+            <td><span>{{list.matchnum}}</span></td>
+        </tr>
+        <!--<tr class="tip"><td colspan="6">没有查到单据内容</td></tr>-->
+    </tbody>
+</table>
+    <pagination conf="paginationConf" style="float: right; display:none"></pagination>
+</div>
+
+

@@ -1,0 +1,75 @@
+<!--<div class="mainright">-->
+<div class="item">客户查询</div>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>客户名称</strong>
+                    <input class="text" type="text" name="NAME"  ng-init="NAME=''" ng-model="NAME" placeholder="请输入客户名称">
+                </td>
+                <td>
+                    <strong>客户编码</strong>
+                    <input type="text" name="KUNNR" ng-init="KUNNR=''"  ng-model="KUNNR" class="text" placeholder="请输入客户编码">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>客户类型</strong>
+                    <select  ng-model="KTOKD" name="KTOKD" ng-init="KTOKD=''" >
+                        <option value="">请选择</option>
+                        <option value="ZC01">业务客户</option>
+                        <option value="ZC04">财务客户</option>
+                    </select>
+                </td>
+                <td>
+                    <strong>机构类型</strong>
+                    <select  ng-model="ZORG_TYPE" name="ZORG_TYPE" ng-init="ZORG_TYPE=''">
+                        <option value="">请选择</option>
+                        <option value="企业法人">企业法人</option>
+                        <option value="国家机关法人">国家机关法人</option>
+                        <option value="事业单位法人">事业单位法人</option>
+                        <option value="社会团体法人">社会团体法人</option>
+                        <option value="其他机构">其他机构</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>创建人</strong>
+                    <input type="text" name="ZCREATE_NAME" ng-init="ZCREATE_NAME=''"  ng-model="ZCREATE_NAME" class="text" placeholder="">
+                </td>
+                <td>
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+                    <a ng-if="opprev.customer_add" href="/index.html#/addCustomer" class="searchbtn2 searchbtn2bot addBtn">新增客户</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<div class="item">查询结果</div>
+<table class="orangestyle table">
+    <thead>
+    <tr>
+        <th>客户编码</th>
+        <th>客户类型</th>
+        <th>客户名称</th>
+        <th>创建人</th>
+        <th style="width: 30px;">操作</th>
+    </tr>
+    </thead>
+    <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in dataList">
+        <td title="{{list.KUNNR}}"><a class="underline" target="_blank" href="index.html#/viewCustomer/{{list.KUNNR}}"> {{list.KUNNR}}</a></td>
+        <td>{{list.CENTRAL_DATA.KTOKD}}</td>
+        <td>{{list.CENTRAL_DATA.NAME1}}</td>
+        <td>{{list.CENTRAL_DATA.ZCREATE_NAME}}</td>
+        <td class="czBtn padL12">
+            <a ng-if="opprev.customer_change" class="handleBtn editBtn" target="_blank" ng-href="index.html#/editCustomer?sapid={{list.KUNNR}}" title="修改"></a>
+        </td>
+    </tr>
+    <tr class="tip"><td colspan="5">没有查到此客户</td></tr>
+    </tbody>
+</table>
+<pagination conf="paginationConf" manual="true"></pagination>
+<div class="clear"></div>

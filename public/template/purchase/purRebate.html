@@ -1,0 +1,93 @@
+<h3 class="genTitle"><em></em><span>采购返点查询</span></h3>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>证书编号：</strong>
+                    <input class="text" ng-init="ZMZSBH=''" ng-model="ZMZSBH" type="text" placeholder="">
+                </td>
+                <td>
+                    <strong>返点类型：</strong>
+                    <input class="text" ng-init="ZMFDLX=''" ng-model="ZMFDLX" type="text" placeholder="">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>截止有效期起始：</strong>
+                    <input class="text Wdate" date-Picker ng-init="STARTDATE=''" ng-model="STARTDATE" type="text" placeholder="">
+                </td>
+                <td>
+                    <strong>截止有效期截止：</strong>
+                    <input class="text Wdate" date-Picker ng-init="ENDDATE=''" ng-model="ENDDATE" type="text" placeholder="">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>返点所属代理商：</strong>
+                    <input class="text" ng-init="ZMDL=''" ng-model="ZMDL" type="text" placeholder="">
+                </td>
+                <td>
+                    <strong>订单号：</strong>
+                    <input class="text" ng-init="ZMFDXH=''" ng-model="ZMFDXH" type="text" placeholder="">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>状态：</strong>
+                    <select ng-model="ZMZT" ng-init="ZMZT='有效'">
+                        <option value="有效">有效</option>
+                        <option value="作废">作废</option>
+                        <option value="失效">失效</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<!--<form>
+    <div class="staff_search">
+        <div class="viewTable">
+            <ul>
+                <li class="demand_h"><strong>证书编号：</strong><span><input ng-init="ZMZSBH=''" ng-model="ZMZSBH" type="text" placeholder=""></span></li>
+                <li class="demand_h"><strong>返点类型：</strong><span><input ng-init="ZMFDLX=''" ng-model="ZMFDLX" type="text" placeholder=""></span></li>
+            </ul>
+        </div>
+        <input value="查询" class="searchbtn btnfloat" ng-click="search()" type="button">
+    </div>
+</form>-->
+<div class="item ng-scope">查询结果</div>
+<!--<div class="viewTable ng-scope">
+    <table class="tab_data">-->
+    <table class="orangestyle table">
+        <thead class="tab_header">
+        <tr>
+            <th>订单号</th>
+            <th>证书编号</th>
+            <th>返点类型</th>
+            <th>返点所属代理商</th>
+            <th>返点金额</th>
+            <th>截止有效期</th>
+            <th>激励说明</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody class="tab_body"  ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+            <tr ng-repeat="list in dataList">
+                <td>{{list.ZMFDXH}}</td>
+                <td>{{list.ZMZSBH}}</td>
+                <td>{{list.ZMFDLX}}</td>
+                <td>{{list.ZMDL}}</td>
+                <td>{{list.ZMFDJE | number : 2}}</td>
+                <td>{{list.ZMSXRQ}}</td>
+                <td>{{list.ZMJLSM}}</td>
+                <td class="czBtn padL12"><a class="handleBtn detailBtn" target="_blank" href="index.html#/purRebateView/{{list.ZMFDXH}}" title="详情"></a></td>
+            </tr>
+            <tr class="tip"><td colspan="10">没有查到采购返点</td></tr>
+        </tbody>
+    </table>
+<!--</div>-->
+<pagination conf="paginationConf"></pagination>

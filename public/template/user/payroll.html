@@ -1,0 +1,66 @@
+<div class="item">工资单查询</div>
+<form>
+  <div class="genSearch">
+    <table>
+      <tr>
+        <td>
+          <strong>选择日期</strong>
+          <input type="text" class="text Wdate"  date-Picker dateParam="{dateFmt: 'yyyy-MM', maxDate: '%y-%M', readOnly: true}" placeholder="请选择日期" ng-init="findDate=''" ng-model="findDate"/>
+        </td>
+        <td>
+          <input type="button" value="查询" class="searchbtn2 no-m" ng-click="search()">
+        </td>
+      </tr>
+    </table>
+  </div>
+</form>
+<div class="viewTable" ng-if="paymentData">
+  <div class="item">查询结果</div>
+  <div class="genTitle2">
+      <div>
+          <strong>应发工资</strong>
+      </div>
+  </div>
+  <ul>
+      <li class="no-ml"><strong>{{paymentData.amount.name}}: </strong><span class="salaryFlaot">{{paymentData.amount.amount | currency:''}}</span></li>
+      <li class="no-ml"><strong>{{paymentData.overtime.name}}: </strong><span class="salaryFlaot">{{paymentData.overtime.amount | currency:''}}</span></li>
+      <li ng-if="paymentData.auth_award.amount" class="no-ml"><strong>{{paymentData.auth_award.name}}: </strong><span class="salaryFlaot">{{paymentData.auth_award.amount | currency:''}}</span></li>
+      <!-- 此处和后台数据不符，返回结果为"认证补贴", 需求为高级工程师津贴 -->
+      <li ng-if="paymentData.auth_allowance.amount" class="no-ml"><strong>高级工程师津贴: </strong><span class="salaryFlaot">{{paymentData.auth_allowance.amount | currency:''}}</span></li>
+      <li ng-if="paymentData.performance.amount" class="no-ml"><strong>{{paymentData.performance.name}}: </strong><span class="salaryFlaot">{{paymentData.performance.amount | currency:''}}</span></li>
+      <li ng-if="paymentData.workday_adjust.amount" class="no-ml"><strong>{{paymentData.workday_adjust.name}}: </strong><span class="salaryFlaot">{{paymentData.workday_adjust.amount | currency:''}}</span></li>
+      <li ng-if="paymentData.positive.amount" class="no-ml"><strong>{{paymentData.positive.name}}: </strong><span class="salaryFlaot">{{paymentData.positive.amount | currency:''}}</span></li>
+      <li ng-if="paymentData.job_transfer.amount" class="no-ml"><strong>{{paymentData.job_transfer.name}}: </strong><span class="salaryFlaot">{{paymentData.job_transfer.amount | currency:''}}</span></li>
+      <li ng-if="paymentData.normality.amount" class="no-ml"><strong>{{paymentData.normality.name}}: </strong><span class="salaryFlaot">{{paymentData.normality.amount | currency:''}}</span></li>
+      <li ng-if="paymentData.sick_leave.amount" class="no-ml"><strong>{{paymentData.sick_leave.name}}: </strong><span class="salaryFlaot">{{paymentData.sick_leave.amount | currency:''}}</span></li>
+      <li ng-if="paymentData.casual_leave.amount" class="no-ml"><strong>{{paymentData.casual_leave.name}}: </strong><span class="salaryFlaot">{{paymentData.casual_leave.amount | currency:''}}</span></li>
+      <li ng-if="paymentData.be_late.amount" class="no-ml"><strong>{{paymentData.be_late.name}}: </strong><span class="salaryFlaot">{{paymentData.be_late.amount | currency:''}}</span></li>
+      <li ng-if="paymentData.fine.amount" class="no-ml"><strong>{{paymentData.fine.name}}: </strong><span class="salaryFlaot">{{paymentData.fine.amount | currency:''}}</span></li>
+      <li ng-if="paymentData.other_check.amount" class="no-ml"><strong>{{paymentData.other_check.name}}: </strong><span class="salaryFlaot">{{paymentData.other_check.amount | currency:''}}</span></li>
+      <li ng-if="paymentData.relieve_compensation.amount" class="no-ml"><strong>{{paymentData.relieve_compensation.name}}: </strong><span class="salaryFlaot">{{paymentData.relieve_compensation.amount | currency:''}}</span></li>
+      <div class="clear"></div>
+  </ul>
+  <p class="salarySum">{{paymentData.ssalary.name}}: {{paymentData.ssalary.amount | currency:''}}</p>
+  <div class="clear"></div>
+  <div class="genTitle2">
+      <div>
+          <strong>税前扣款</strong>
+      </div>
+  </div>
+  <ul>
+      <li class="no-ml"><strong>{{paymentData.pension.name}}: </strong><span class="salaryFlaot">{{paymentData.pension.amount | currency:''}}</span></li>
+      <li class="no-ml"><strong>{{paymentData.unemploy.name}}: </strong><span class="salaryFlaot">{{paymentData.unemploy.amount | currency:''}}</span></li>
+      <li class="no-ml"><strong>{{paymentData.base_medical.name}}: </strong><span class="salaryFlaot">{{paymentData.base_medical.amount | currency:''}}</span></li>
+      <li class="no-ml"><strong>{{paymentData.housing_fund.name}}: </strong><span class="salaryFlaot">{{paymentData.housing_fund.amount | currency:''}}</span></li>
+  </ul>
+  <p class="salarySum">{{paymentData.pre_tax.name}}: {{paymentData.pre_tax.amount | currency:''}}</p>
+  <div class="clear"></div>
+  <div class="genTitle2">
+      <div>
+          <strong></strong>
+      </div>
+  </div>
+  <p class="salarySum">{{paymentData.income_tax.name}}: {{paymentData.income_tax.amount | currency:''}}</p>
+  <p class="salarySum">{{paymentData.union_due.name}}: {{paymentData.union_due.amount | currency:''}}</p>
+  <p class="salarySum">{{paymentData.fsalary.name}}: {{paymentData.fsalary.amount | currency:''}}</p>
+</div>

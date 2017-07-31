@@ -1,0 +1,207 @@
+<h3 class="genTitle"><em></em>
+    <span>库存调整</span>
+    <span ng-if="activeTab == 2">审批详情</span>
+</h3>
+<ul class="generNav">
+  <li ng-class="{active:activeTab == 1}"><a href="javascript:void(0);" ng-mousedown='htTab(1)'>库存调整详情</a></li>
+  <li ng-class="{active:activeTab == 2}"><a href="javascript:void(0);" ng-mousedown='htTab(2)'>审批详情</a></li>
+</ul>
+
+<div id="mainView">
+    <div class="viewTable ng-scope">
+    <div ng-if="activeTab == 1">
+        <ul>
+            <li><strong>申请日期：</strong><span>{{purchaseList.CDATE}}</span></li>
+            <li><strong>申请单号：</strong><span>{{purchaseList.SQDH}}</span></li>
+            <li><strong>业务类型：</strong><span>{{businessType[purchaseList.ZTYPE]}}</span></li>
+            <li><strong>成本中心：</strong><span>{{purchaseList.KOSTL | getName:enumObj:'text':'code'}}</span></li>
+            <li><strong>总金额：</strong><span>{{purchaseList.CZJJE | number : 2}}</span></li>
+            <li ng-if="transportation"><strong>运输方式：</strong><span>{{enumObj.YSFS.enum[purchaseList.YSFS]}}</span></li>
+            <li><strong>需求日期：</strong><span>{{purchaseList.LDATE}}</span></li>
+            <li><strong>目标库存地点：</strong><span>{{LGORT}}</span></li>
+            <li><strong>库存类型：</strong><span>{{purchaseList.ZTYPE == 'A2' ? purchaseList.KCLXNEW : purchaseList.ZKCLX}}</span></li>
+            <li class="list_con"><strong>申请原因：</strong><span>{{purchaseList.SQYY}}</span></li>
+            <li class="list_con"><strong>备注说明：</strong><span>{{purchaseList.TEXT1}}</span></li>
+            <li><strong>状态：</strong><span>{{ZSTATUS}}</span></li>
+            <li><strong>申请人：</strong><span>{{purchaseList.ERNAM}}</span></li>
+            <li><strong>申请部门：</strong><span>{{CDEPT}}</span></li>
+        </ul>
+        <!--跨仓库调拨，仓库内转移，仓库产品报废-->
+        <table class="tab_data" ng-if="storeType">
+            <thead class="tab_header">
+            <tr>
+                <th>行项目</th>
+                <th>物料编码</th>
+                <th>库存类型</th>
+                <th>物料描述</th>
+                <th>申请数量</th>
+                <th>计量单位</th>
+                <th>申请金额</th>
+                <th>批次号</th>
+                <th>箱号</th>
+                <th>库存地点</th>
+            </tr>
+            </thead>
+            <tbody class="tab_body">
+            <tr ng-repeat="list in dataList">
+                <td>{{list.SQXH}}</td>
+                <td>{{list.MATNR}}</td>
+                <td>{{purchaseList.ZTYPE == 'A4' && purchaseList.ZTYPE == 'A5' ? list.ZKCLX: list.KCLXNEW}}</td>
+                <td>{{list.MAKTX}}</td>
+                <td>{{list.MENGE}}</td>
+                <td>{{list.MEINS | getName:enumObj.MEINS:'name':'code'}}</td>
+                <td>{{list.ZSQJE | number : 2}}</td>
+                <td>{{list.CHARG}}</td>
+                <td>{{list.XDHM}}</td>
+                <td>{{list.LGORT | getName:enumObj.LGORT:'name':'code'}}</td>
+            </tr>
+            </tbody>
+        </table>
+        <!--产品组装拆卸-->
+        <div ng-if="storeType2" style="max-height: 450px; overflow: auto;">
+        <table class="tab_data">
+            <thead class="tab_header">
+            <tr>
+                <th>项目</th>
+                <th>物料编码</th>
+                <th>物料描述</th>
+                <th>物料数量</th>
+                <th>计量单位</th>
+                <th>金额</th>
+                <th>批次号</th>
+                <th>目标箱号</th>
+                <th>库存地点</th>
+            </tr>
+            </thead>
+            <tbody class="tab_body">
+            <tr>
+                <th colspan="9">组装前</th>
+            </tr>
+            <tr ng-repeat="list in dataList.before">
+                <td>{{list.SQXH}}</td>
+                <td>{{list.MATNR}}</td>
+                <td>{{list.MAKTX}}</td>
+                <td>{{list.MENGE}}</td>
+                <td>{{ZUMEINS}}</td>
+                <td>{{list.ZSQJE | number : 2}}</td>
+                <td>{{list.CHARG}}</td>
+                <td>{{list.XDHM}}</td>
+                <td>{{list.LGORT | getName:enumObj.LGORT:'name':'code'}}</td>
+            </tr>
+            <tr>
+                <th colspan="9">组装后</th>
+            </tr>
+            <tr ng-repeat="list in dataList.after">
+                <td>{{list.SQXH}}</td>
+                <td>{{list.MATNR}}</td>
+                <td>{{list.MAKTX}}</td>
+                <td>{{list.CLABS}}</td>
+                <td>{{ZUMEINS}}</td>
+                <td>{{list.VERPR}}</td>
+                <td>{{list.CHARG}}</td>
+                <td>{{list.XDHM}}</td>
+                <td>{{list.LGORT | getName:enumObj.LGORT:'name':'code'}}</td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+        <!--产品拆箱-->
+        <div ng-if="storeType3">
+            <div style="max-height: 210px; overflow: auto;">
+                <table class="tab_data">
+                    <thead class="tab_header">
+                    <tr>
+                        <th>项目</th>
+                        <th>物料编码</th>
+                        <th>物料描述</th>
+                        <th>库存地点</th>
+                        <th>数量</th>
+                        <th>批次号</th>
+                        <th>箱号</th>
+                        <!--<th>库存数量</th>-->
+                        <th>计量单位</th>
+                        <th>金额</th>
+                    </tr>
+                    <tr>
+                        <th colspan="10">拆箱前</th>
+                    </tr>
+                    </thead>
+                    <tbody class="tab_body">
+                    <tr ng-repeat="list in dataList.before">
+                        <td>{{list.SQXH}}</td>
+                        <td>{{list.MATNR}}</td>
+                        <td>{{list.MAKTX}}</td>
+                        <td>{{list.LGORT | getName:enumObj.LGORT:'name':'code'}}</td>
+                        <td>{{list.MENGE}}</td>
+                        <td>{{list.CHARG}}</td>
+                        <td>{{list.XDHM}}</td>
+                        <!--<td>{{list.CLABS}}</td>-->
+                        <td>{{list.MEINS | getName:enumObj.MEINS:'name':'code'}}</td>
+                        <td>{{list.ZSQJE | number : 2}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="max-height: 210px; overflow: auto;">
+                <table class="tab_data">
+                    <thead class="tab_header">
+                    <tr>
+                        <th>申请单号</th>
+                        <th>物料编码</th>
+                        <th>物料描述</th>
+                        <th>库存地点</th>
+                        <th>数量</th>
+                        <th>批次号</th>
+                        <th>箱号</th>
+                        <th>库存类型</th>
+                        <th>计量单位</th>
+                        <th>金额</th>
+                    </tr>
+                    <tr>
+                        <th colspan="10">拆箱后</th>
+                    </tr>
+                    </thead>
+                    <tbody class="tab_body">
+                    <tr ng-repeat="list in dataList.after">
+                        <td>{{list.SQDH}}</td>
+                        <td>{{list.MATNR}}</td>
+                        <td>{{list.MAKTX}}</td>
+                        <td>{{list.LGORT | getName:enumObj.LGORT:'name':'code'}}</td>
+                        <td>{{list.ZMOUNT}}</td>
+                        <td>{{list.CHARG}}</td>
+                        <td>{{list.NUMBE}}</td>
+                        <td>{{list.ZKCLX}}</td>
+                        <td>{{list.MEINS | getName:enumObj.MEINS:'name':'code'}}</td>
+                        <td>{{list.VERPR | number : 2}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    </div>
+    <div class="applyLog" ng-if="activeTab == 2">
+        <table>
+            <thead>
+            <tr>
+                <th class="th1">审批人</th>
+                <th class="th2">审批时间</th>
+                <th class="th3">审批状态</th>
+                <th class="th4">审批意见</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="list in processlog">
+                <td>{{list.sender.name}}</td>
+                <td>{{list.createDate | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td>{{list.operation}}</td>
+                <td>{{list.content.comment}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<pagination ng-hide="storeType2||storeType3" conf="paginationConf"></pagination>

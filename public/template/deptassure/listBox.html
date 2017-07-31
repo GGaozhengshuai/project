@@ -1,0 +1,18 @@
+<div class="generForm boxForm">
+    <form novalidate name="freeForm">
+        <ul>
+            <li>
+                <strong style="width:110px;">释放金额:</strong>
+                <input class="text" style="width:175px" type="number" required  keepnumber-Validation  name="freemoney" ng-model="$parent.freemoney" placeholder="">
+                <span class="errTip ng-hide" ng-show="freeForm.freemoney.$dirty && freeForm.freemoney.$error.keepnum && !freeForm.freemoney.$focused">最多两位小数的正数</span>
+
+            </li>
+        </ul>
+        <div class="gerSub">
+            <a href="javascript:;" ng-click="listCancel()" class="closeBtn">关闭</a>
+            <button ng-class="freeForm.$invalid == true ? 'displaySub' : 'subSave'" ng-disabled="freeForm.$invalid || invoRready" ng-click="listSelect(freemoney)">保存</button>
+
+        </div>
+    </form>
+</div>
+

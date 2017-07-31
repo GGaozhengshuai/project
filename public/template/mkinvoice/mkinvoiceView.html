@@ -1,0 +1,216 @@
+<h3 class="genTitle" ng-if="titelShow"><em></em><span>开票申请查看</span></h3>
+<h3 class="genTitle" ng-if="!titelShow"><em></em><span>开票申请-冲销</span></h3>
+<ul class="generNav">
+    <li class="active"><a href="javascript:;">开票申请</a></li>
+</ul>
+<div id="mainView">
+    <div class="viewTable ng-scope">
+        <h4 class="genH4">基本信息</h4>
+        <ul>
+            <li><strong>开票申请号：</strong><span>{{sdef.XBLNR}}</span></li>
+            <li><strong>发票类型：</strong><span>{{sdef.ZFPLX}}</span></li>
+            <li><strong>客户名称：</strong><span>{{sdef.cusname}}</span></li>
+            <li><strong>开票客户名称：</strong><span>{{sdef.NAME1}}</span></li>
+            <li><strong>纳税人识别号：</strong><span>{{sdef.nsrnum}}</span></li>
+            <li><strong>地址：</strong><span>{{sdef.adress}}</span></li>
+            <li><strong>电话：</strong><span>{{sdef.tel}}</span></li>
+            <li><strong>开户行：</strong><span>{{sdef.bank}}</span></li>
+            <li><strong>帐号：</strong><span>{{sdef.account}}</span></li>
+
+            <li><strong>发票总金额：</strong><span>{{sdef.invoiceamount | currency : '￥'}}</span></li>
+            <li><strong>红色发票金额：</strong><span>{{sdef.redinvoice | currency : '￥'}}</span></li>
+            <li><strong>返点冲抵应收金额/退货差额：</strong><span>{{sdef.amountoffandchd | currency : '￥'}}</span></li>
+            <li class="list_con"><strong>收款情况：</strong><span>{{sdef.recmy}}</span></li>
+            <li class="list_con"><strong>备注：</strong><span>{{sdef.note}}</span></li>
+            <li><strong>申请人：</strong><span>{{sdef.user}}</span></li>
+            <li><strong>部门：</strong><span>{{sdef.deptmt}}</span></li>
+            <li><strong>申请日期：</strong><span>{{sdef.ZSQRQ | date: 'yyyy-MM-dd'}}</span></li>
+            <li ng-hide="true"><strong>开票客户编码：</strong><span>{{sdef.KUNNR}}</span></li>
+        </ul>
+        <div class="clear"></div>
+        <div class="addTable" ng-if="contractShow">
+            <h4 class="genH4">列表信息</h4>
+            <div style="overflow-y:auto;max-height:300px">
+                <table class="tab_data">
+                    <thead class="tab_header">
+                    <tr>
+                        <th ng-hide="true">销售订单号</th>
+                        <th ng-hide="true">客户编码</th>
+                        <th>销售合同号</th>
+                        <th>行项目号</th>
+                        <th>物料编码</th>
+                        <th>物料类型</th>
+                        <th>未开数量</th>
+                        <th>单价（含税）</th>
+                        <th>退货数量</th>
+                        <th>可开数量</th>
+                        <th>需求数量</th>
+                        <th>提前开票数量</th>
+                        <th>SAP开票金额</th>
+                        <th>供应商订单号</th>
+                        <th ng-if="!titelShow">销售发票号</th>
+                        <th ng-if="!titelShow">返点冲抵发票号</th>
+                        <th ng-hide="true">原始合同号</th>
+                    </tr>
+                    </thead>
+
+
+
+                    <tbody class="tab_body">
+                    <tr ng-repeat="list in glCgList">
+                        <td ng-hide="true">{{list.VBELN}}</td>
+                        <td ng-hide="true">{{list.KUNNR}}</td>
+                        <td ng-show="list.identShow">{{list.contractno}}</td>
+                        <td ng-show="list.identShow">{{list.POSNR}}</td>
+                        <td ng-show="list.identShow">{{list.MATNR}}</td>
+                        <td ng-show="list.identShow">{{list.MTART}}</td>
+                        <td ng-show="list.identShow">{{list.KWMENG}}</td>
+                        <td ng-show="list.identShow">{{list.KZWI1}}</td>
+                        <td ng-show="list.identShow">{{list.thsl}}</td>
+                        <td ng-show="list.identShow">{{list.ZKKSL}}</td>
+                        <td ng-show="list.identShow">{{list.xqnum}}</td>
+                        <td ng-show="list.identShow">{{list.tqkpno}}</td>
+                        <td ng-show="list.identShow">{{list.sapinvoice | currency : '￥'}}</td>
+                        <td ng-show="list.identShow">{{list.ZPC_NUM}}</td>
+                        <td ng-if="(!titelShow)&&list.identShow">{{list.xsfpnum}}</td>
+                        <td ng-if="(!titelShow)&&list.identShow">{{list.dxpzfph}}</td>
+                        <td ng-hide="true">{{list.groupno}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!--开票变更展示合同信息-->
+            <table class="mkinvoiceTable">
+                <tr>
+                    <th>合同编号</th>
+                    <th>合同类型</th>
+                    <th>订单状态</th>
+                    <th>放货金额</th>
+                    <th>末次放货时间</th>
+                </tr>
+                <tr ng-repeat="list in contractMsgList">
+                    <td>{{list.contractno}}</td>
+                    <td>{{list.contracttype}}</td>
+                    <td>{{{A:"未放货",B:"部分放货",C:"全部放货"}[list.LFSTK]}}</td>
+                    <td>{{list.zdfhje | currency : '￥'}}</td>
+                    <td>{{list.zdmcfhsj}}</td>
+                </tr>
+            </table>
+            <br/>
+            <div ng-if="contractShow">
+                <span>SAP开票金额合计:</span>
+                {{sdef.sumsapinvoice| currency : '￥'}}
+                <!--<input type="text" ng-model="sumsapinvoice" ng-disabled="true"/>-->
+                <span>放货金额合计:</span>
+                {{totalproductout| currency : '￥'}}
+                <!--<input type="text" ng-model="totalproductout" ng-disabled="true"/>-->
+            </div>
+        </div>
+        <br/>
+        <div ng-if="contractShow"><span>发票清单是否和销售合同一致:</span>
+            <span>{{sdef.isfpandxsht}}</span></div>
+        <div class="clear"></div>
+        <div class="addTable" ng-if="contractShow">
+            <h4 class="genH4">发票信息</h4>
+            <div  class="gerSub" ng-hide="downShow">
+                <button ng-click="mkinvoic2Excel()" class="subSave" >下载发票清单</button>
+            </div>
+            <table class="tab_data">
+                <thead class="tab_header">
+                <tr>
+                    <th style="width: 11%;text-align: center">行项目号</th>
+                    <th style="width: 11%;text-align: center">物料编码</th>
+
+                    <th style="width: 11%;text-align: center">产品名称</th>
+                    <th style="width: 11%;text-align: center">规格型号</th>
+                    <th style="width: 11%;text-align: right">计量单位</th>
+                    <th style="width: 11%;text-align: center">数量</th>
+                    <th style="width: 11%;text-align: right">单价（含税）</th>
+                    <th style="width: 11%;text-align: center">税率</th>
+                    <th style="width: 11%;text-align: center">含税金额</th>
+                </tr>
+                </thead>
+            </table>
+            <div style="overflow-y:auto;max-height:300px">
+                <table style="margin-top: 0">
+                    <col width="11%">
+                    <col width="11%">
+                    <col width="11%">
+                    <col width="11%">
+                    <col width="11%">
+                    <col width="11%">
+                    <col width="11%">
+                    <col width="11%">
+                    <col width="11%">
+
+                    <tbody class="tab_body">
+                    <tr ng-repeat="list in invoiceCgList" style="text-align: center">
+                        <td ng-show="list.identShow">{{list.POSNR}}</td>
+                        <td ng-show="list.identShow">{{list.MATNR}}</td>
+
+                        <td ng-show="list.identShow" title="{{list.ZZKPMS}}"><div style="width:145px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{list.ZZKPMS}}</div></td>
+                        <td ng-show="list.identShow" title="{{list.ZZGKXH}}"><div style="width:145px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{list.ZZGKXH}}</div></td>
+                        <td ng-show="list.identShow">{{list.MEINS}}</td>
+                        <td ng-show="list.identShow">{{list.xqnum}}</td>
+                        <td ng-show="list.identShow">{{list.KZWI1}}</td>
+                        <td ng-show="list.identShow">{{sdef.rate}}</td>
+                        <td ng-show="list.identShow">{{list.hsje| currency : '￥'}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <br/>
+            <div>
+                <span>发票总金额:</span>
+                {{(sdef.invoiceamount||sdef.redinvoice)| currency : '￥'}}
+                <!-- <input type="text" ng-model="sumfphsje" ng-disabled="true"/>-->
+            </div>
+        </div>
+        <div class="addTable" ng-if="!contractShow">
+            <div class="genTitle2">
+                <div>
+                    <strong>收据信息</strong>
+                </div>
+            </div>
+            <br/>
+            <table>
+                <tr>
+                    <th>销售合同号</th>
+                    <th>合同金额</th>
+                    <th>已开收据金额</th>
+                    <th>收据金额</th>
+                    <th>收据说明</th>
+                </tr>
+                <tr ng-repeat="list in recebillList" class="list">
+                    <td>
+                        {{list.contractno}}
+                    </td>
+                    <td>
+                        {{list.htje}}
+                    </td>
+                    <td>
+                        {{list.yksjje}}
+                    </td>
+
+                    <td>
+                        {{list.sjje}}
+                    </td>
+                    <td>
+                        {{list.sjsm}}
+                    </td>
+                </tr>
+            </table>
+            <div class="clear"></div>
+            <br/>
+        </div>
+        <div class="clear"></div>
+
+        <div class="gerSub">
+            <a class="subSave" href="index.html#/mkinvoiceEdit?processId={{processId}}&nodeId={{nodeId}}" ng-if="editBtn">编辑</a>
+        </div>
+
+        <div class="apCot" ng-if="apCot" >
+            <div ng-include="'template/common/apply.html'"></div>
+        </div>
+    </div>
+</div>

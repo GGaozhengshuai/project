@@ -1,0 +1,151 @@
+<div class="item">销售返点查询</div>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>返点所属客户名称</strong>
+                    <input class="text" type="text" name="client"  ng-init="client=''" ng-model="client" placeholder="">
+                </td>
+                <td>
+                    <strong>返点供应商</strong>
+                    <input class="text" type="text" name="provider"  ng-init="provider=''"  ng-model="provider" placeholder="">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>事业部</strong>
+                    <input class="text" type="text" name="department "  ng-init="department =''"  ng-model="department.name" placeholder="">
+                </td>
+                <td>
+                    <strong>返点编号</strong>
+                    <input class="text" type="text" name="code"  ng-init="code=''"  ng-model="code" placeholder="">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>返点使用客户名称</strong>
+                    <input class="text" type="text" name="user"  ng-init="user=''" ng-model="user.name" placeholder="">
+                </td>
+                <td>
+                    <strong>返点类型</strong>
+                    <select name="bonusbase"  ng-init="bonusbase=''"  ng-model="bonusbase.type">
+                        <option value="">请选择</option>
+                        <option value="分销返点">分销返点</option>
+                        <option value="项目返点">项目返点</option>
+                        <option value="框架协议返点">框架协议返点</option>
+                        <option value="代理商委托">代理商委托</option>
+                        <option value="其他">其他</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>生效日期起始</strong>
+                    <input class="text Wdate" date-Picker type="text" name="bonusinfo"  ng-init="bonusinfo=''" ng-model="bonusinfo.start" placeholder="">
+                </td>
+                <td>
+                    <strong>生效日期截止</strong>
+                    <input class="text Wdate" date-Picker type="text" ng-blur="sxdate(bonusinfo.start,bonusinfo.end)" name="bonusinfo"  ng-init="bonusinfo=''"  ng-model="bonusinfo.end" placeholder="">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <strong>返点状态</strong>
+                    <select name="fdstate"  ng-init="fdstate='valid'"  ng-model="fdstate">
+                        <option value="all">请选择</option>
+                        <option value="valid">有效</option>
+                        <option value="invalid">作废</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a ng-if="opprev.salesbonusOrder_statusexport" class="searchbtn2 searchbtn2bot exportBtn" href="javascript:;" ng-click="exportexcel()">导出现状</a>
+                    <a ng-if="opprev.salesbonusOrder_recordexport" class="searchbtn2 searchbtn2bot viewBtn" href="javascript:;" ng-click="exportlogs()">导出使用记录</a>
+                </td>
+                <td>
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+                    <a  ng-if="opprev.salesbonusOrder_add" class="searchbtn2 searchbtn2bot addBtn" href="/index.html#/salesbonusAdd">新建销售返点</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<div class="item">查询结果</div>
+<div class="tableWrap">
+    <div class="tableLeft" style="margin-right: 155px;">
+<table class="orangestyle table" id="occTable" style="width:150%">
+    <thead>
+        <tr id="list">
+            <th><span><input type="checkbox" ng-model="all" id="allcheck" ng-click="allCheck($event)"></span></th>
+            <th><span>返点编号</span></th>
+            <th><span>返点所属客户名称</span></th>
+            <th><span>返点使用客户名称</span></th>
+            <th><span>返点类型</span></th>
+            <th><span>返点来源</span></th>
+            <th><span>生效日期</span></th>
+            <th><span>返点金额</span></th>
+            <th><span>可用金额</span></th>
+            <th><span>状态</span></th>
+            <!--<th>操作</th>-->
+        </tr>
+    </thead>
+    <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+        <tr ng-repeat="list in dataList" class="list">
+            <td><span><input ng-click="checkSelect($index,list._id)" class="checkBox" name="checkbox" type="checkbox" ng-checked="list.checkAll"/></span></td>
+            <td style="text-decoration: underline;cursor:pointer" ng-click="view(list.code)"><span>{{list.code}}</span></td>
+            <td><span title="{{list.client.name}}">{{list.client.name | cutfield:true:14:'...'}}</span></td>
+            <td><span title="{{list.user.name}}">{{list.user.name | cutfield:true:14:'...'}}</span></td>
+            <td><span>{{list.bonusbase.type}}</span></td>
+            <td><span title="{{list.bonusbase.source}}">{{list.bonusbase.source| cutfield:true:20:'...'}}</span></td>
+            <td><span>{{list.bonusinfo.start | date: 'yyyy-MM-dd HH:mm:ss'}}</span></td>
+            <td><span>{{list.bonusmoney.total | currency : '￥'}}</span></td>
+            <td><span>{{list.bonusinfo.status == 'invalid' ?  0 : (list.bonusmoney.total-list.bonusmoney.freeze-list.bonusmoney.used) | currency : '￥'}}</span></td>
+            <td><span>{{status[list.bonusinfo.status]}}</span></td>
+          <!--  <td>
+                <a target="_blank" href="index.html#/salesbonusView/{{list._id}}">查看</a>
+                <a target="_blank" href="index.html#/salesbonusTransfer/{{list._id}}" ng-if="list.bonusinfo.status != 'invalid'">转移</a>
+                <a target="_blank" href="index.html#/salesbonusChange/{{list._id}}" ng-if="list.bonusinfo.status != 'invalid'">变更</a>
+                <a target="_blank" href="index.html#/salesbonusFreeze/{{list._id}}" ng-if="list.bonusinfo.status != 'invalid'">冻结</a>
+                <a target="_blank" href="index.html#/salesbonuszf/{{list._id}}" ng-if="list.bonusinfo.status != 'invalid'">作废</a>
+            </td>-->
+        </tr>
+        <tr class="tip"><td colspan="10"><span>没有查到销售返点</span></td></tr>
+    </tbody>
+</table>
+    </div>
+    <div class="tableHandler" style="width: 155px;">
+        <table class="orangestyle table">
+            <thead>
+            <tr>
+                <th><span>操作</span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="list in dataList">
+
+                <td>
+                    <div class="handlerBox" ng-hide="list.bonusinfo.status == 'invalid'">
+                        <a ng-if="opprev.salesbonusOrder_transfer" class="handleBtn transferBtn" target="_blank" href="index.html#/salesbonusTransfer/{{list._id}}" title="转移"></a>
+                        <a ng-if="opprev.salesbonusOrder_change" class="handleBtn editBtn" target="_blank" href="index.html#/salesbonusChange/{{list._id}}"  title="变更"></a>
+                        <a ng-if="opprev.salesbonusOrder_freeze" class="handleBtn frozenBtn" target="_blank" href="index.html#/salesbonusFreeze/{{list._id}}" title="冻结"></a>
+                        <a ng-if="opprev.salesbonusOrder_cancellation" class="handleBtn invalidBtn" target="_blank" href="index.html#/salesbonuszf/{{list._id}}" title="作废"></a>
+                        <a class="handleBtn detailBtn" target="_blank" href="index.html#/salesbonusView/{{list._id}}" title="详情"></a>
+                    </div>
+                    <div class="handlerBox ng-hide" ng-show="list.bonusinfo.status == 'invalid'">
+                        <a ng-if="opprev.salesbonusOrder_transfer" href="" class="handleBtn transferBtn disabled" title="转移"></a>
+                        <a ng-if="opprev.salesbonusOrder_change" href="" class="handleBtn editBtn disabled" title="变更"></a>
+                        <a ng-if="opprev.salesbonusOrder_freeze" href="" class="handleBtn frozenBtn disabled" title="冻结"></a>
+                        <a ng-if="opprev.salesbonusOrder_cancellation" href="" class="handleBtn invalidBtn disabled" title="作废"></a>
+                        <a class="handleBtn detailBtn" target="_blank" href="index.html#/salesbonusView/{{list._id}}" title="详情"></a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<pagination conf="paginationConf"></pagination>
+
+<div id="cusBox" class="dialog cusBox" title="" ng-include="'template/salesbonus/cuxbox.html'"></div>

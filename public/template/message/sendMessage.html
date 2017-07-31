@@ -1,0 +1,130 @@
+<div class="item">
+    <span><img ng-src="../../img/message/send.png" height="24" alt="" /></span>
+    <span class="msgTitle">消息发布</span>
+    <div class="clear"></div>
+</div>
+<hr>
+    <form name="cfrm">
+        <div class="genSearch">
+            <table>
+                <tr>
+                    <td>
+                        <strong>发送人</strong>
+                        <input class="text" type="text" name="senderName" ng-model="frmData.senderName" placeholder="请输入发送人" ng-disabled="true" ng-required="true">
+                    </td>
+                    <td>
+                        <strong>发送开始时间</strong>
+                        <input class="text" ng-disabled="frmData.sendtype == 'listcast'" type="text" name="start_time" ng-model="frmData.start_time" placeholder="请输入开始时间" id="start_time" date-pickerlist WdateFmt='yyyy-MM-dd HH:mm:ss' WmaxDate='%y-%M-% %H:%m:%s'  Wfun="#F{$dp.$D(\'end_time\')}" >
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>标题</strong>
+                        <input class="text" type="text" name="title" ng-model="frmData.title" placeholder="请输入标题" ng-required="true">
+                    </td>
+                    <td>
+                        <strong>发送结束时间</strong>
+                        <input class="text" ng-disabled="frmData.sendtype == 'listcast'" type="text" name="end_time" ng-model="frmData.end_time" placeholder="请输入结束时间" id="end_time" date-pickerlist WdateFmt='yyyy-MM-dd HH:mm:ss'   WminDate="#F{$dp.$D(\'start_time\')}">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong class="msgContent">内容</strong>
+                        <textarea name="content" ng-model="frmData.content" placeholder="请输入内容" ng-required="true"></textarea>
+                    </td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td>
+                                    <strong>发送类型</strong>
+                                    <select name="sendtype" ng-model="frmData.sendtype" ng-required="true" ng-change="sendtypeFn()">
+                                        <option value="broadcast" >广播</option>
+                                        <option value="listcast" >列播，单播</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr ng-if="frmData.receivers.length > 0">
+                                <td>
+                                    <span class="pull-left">接收对象：</span>
+                                    <span class="isUserlists" ng-repeat="list in frmData.receivers">
+                                        <a href="javascript:;">
+                                            {{list.name}}
+                                            <b ng-click="delReceivers(list._id)">X</b>
+                                        </a>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td >
+                                    <div class="userListTop" ng-if="frmData.sendtype == 'listcast'" >
+                                        <strong>搜索</strong>
+                                        <input class="text" type="text" ng-model="frmData.receiversName" placeholder="搜索用户" ng-change="userGetByName(frmData.receiversName)">
+                                        <div class="userList" ng-if="userDataList">
+                                            <ul>
+                                                <li ng-repeat="list in userDataList" >
+                                                    <a href="javascript:;" ng-click="receiversFun(list)">
+                                                        {{list.name}}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="button" value="发布" class="searchbtn2 searchbtn2bot addBtn" ng-click="MsgFun.sendMsg(frmData)">
+                        <input type="button" value="预览" class="searchbtn2 viewBtn" ng-click="MsgFun.showMsg(frmData)">
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </form>
+    <div class="item">
+        <span><img ng-src="../../img/message/send.png"  height="24" alt="" /></span>
+        <span class="msgTitle">消息查询结果</span>
+        <div class="clear"></div>
+    </div>
+    <table class="orangestyle table">
+        <thead>
+        <tr>
+            <th width="10%">发送人</th>
+            <th width="15%">创建时间</th>
+            <th width="14%">消息标题</th>
+            <th width="20%">消息内容</th>
+            <th width="15%">开始时间</th>
+            <th width="15%">结束时间</th>
+            <th width="6%">任务状态</th>
+            <th width="5%">操作</th>
+        </tr>
+        </thead>
+        <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+            <tr ng-repeat="list in dataList | orderBy : 'create_time':true " ng-click="MsgFun.viewMsg(list)">
+                <td>{{list.sender.name}}</td>
+                <td>{{list.create_time | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td class="whidder">{{list.title}}</td>
+                <td class="whidder">{{list.content}}</td>
+                <td>{{list.start_time | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td>{{list.end_time | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td>{{list.status == 1 ? '正常' : '已取消' }}</td>
+                <td class="czBtn padL12"><a class="handleBtn detailBtn" ng-click="MsgFun.viewMsg(list)" title="详情"></a></td>
+            </tr>
+            <tr class="tip"><td colspan="8" rowspan="8">没有查询到消息</td></tr>
+        </tbody>
+    </table>
+    <pagination conf="paginationConf" ></pagination>
+
+
+<div id="msgdialog" class="dialog" title="消息">
+    <div class="msgdialogBody">
+        <div class="msgdialog-title">{{msgData.title}}</div>
+        <div class="msgdialog-info">发件人：{{msgData.sender.name}}  &nbsp;&nbsp; {{msgData.timestamp | date:'yyyy-MM-dd HH:mm:ss'}}</div>
+        <hr>
+        <div class="msgdialog-body" ng-bind-html="msgData.content | to_trusted"></div>
+    </div>
+</div>

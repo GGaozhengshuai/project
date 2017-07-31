@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html ng-app="loginApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>中建信息-登陆</title>
+    <link rel="Shortcut Icon" href="favicon.ico" type="image/x-icon"/>
+    <link href="css/reset.css" rel="stylesheet">
+    <link href="css/login.css" rel="stylesheet">
+</head>
+<body ng-controller="loginController">
+<header class="header">
+    <div class="group">
+        <h1><img src="img/login/logo.png" alt="logo"/></h1>
+        <ul>
+            <!--<li>手机版</li>
+            <li class="line">|</li>-->
+            <li>中文简体</li>
+        </ul>
+    </div>
+</header>
+<main class="mainCont">
+    <div class="mainCenter">
+        <div class="mainCenCont">
+            <div class="loginModule">
+                <h3><span>登录</span><font>LOGIN</font></h3>
+                <ul>
+                    <li class="userName"><em></em><span></span><input type="text" name="user_name" placeholder="请输入用户名" ng-init="user_name=''" ng-model="user_name"></li>
+                    <li class="userPassword"><em></em><span></span><input type="password" ng-keyup="myKeyup($event)" name="password" placeholder="请输入密码" ng-init="password=''" ng-model="password"></li>
+                </ul>
+                <div class="tipMeg" ng-bind="errorTip"></div>
+                <input class="subBtn" ng-click="login()" type="submit" value="登 录"/>
+                <p class="ptj">推荐使用浏览器：Windows版<a target="_blank" href="/doc/Chrome_52.0.2743.82_XiaZaiBa.exe">Chrome</a> Mac版<a target="_blank" href="http://rj.baidu.com/soft/detail/25718.html?ald">Chrome</a> </p>
+            </div>
+        </div>
+    </div>
+    <div class="proModule">
+        <dl class="proPart1">
+            <dt><em></em></dt>
+            <dd>最新公告</dd>
+        </dl>
+        <dl class="proPart2">
+            <dt><em></em></dt>
+            <dd>公司新闻</dd>
+        </dl>
+        <dl class="proPart3">
+            <dt><em></em></dt>
+            <dd>办公流程</dd>
+        </dl>
+        <dl class="proPart4">
+            <dt><em></em></dt>
+            <dd>员工交流平台</dd>
+        </dl>
+        <dl class="proPart5">
+            <dt><em></em></dt>
+            <dd>办公邮件</dd>
+        </dl>
+        <dl class="proPart6">
+            <dt><em></em></dt>
+            <dd>团队活动</dd>
+        </dl>
+    </div>
+</main>
+<footer class="footer">
+    <div class="footerCont">
+      <p>联系方式：<a href="mailto:inform@cnbmtech.com">inform@cnbmtech.com</a><!--   010-68738914    010-68738916    010-68738905--></p>
+      <p>
+        <span>power by 中建材信息技术股份有限公司</span>
+        <span>Copyright©2017 All Rights Reserved</span>
+        <span>备案号（京ICP备15030620号-2）</span>
+      </p>
+    </div>
+</footer>
+<loading ng-show="statueLoding"></loading>
+<script src="js/lib/angular/angular.js"></script>
+<script src="js/lib/angular/angular-cookies.min.js"></script>
+<script src="js/loginApp.js"></script>
+</body>
+</html>

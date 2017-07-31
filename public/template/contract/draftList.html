@@ -1,0 +1,82 @@
+<!--<div class="mainright">-->
+    <div class="item">销售合同(草稿)</div>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>合同编号</strong>
+                    <input class="text" type="text" name="ZSQNO"  ng-init="ZSQNO=''" ng-model="ZSQNO" placeholder="请输入合同编号">
+                </td>
+                <td>
+                    <strong>客户名称</strong>
+                    <input class="text" type="text" name="ZSQNO"  ng-init="ZSQNO=''" ng-model="ZSQNO" placeholder="请输入客户名称">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>合同类型</strong>
+                    <select ng-model="ZFKZL" ng-init="ZFKZL=''">
+                        <option value="">请选择</option>
+                        <option value="项目">项目</option>
+                        <option value="分销">分销</option>
+                        <option value="服务">服务</option>
+                    </select>
+                </td>
+                <td>
+                    <strong>开票类型</strong>
+                    <select ng-model="ZFKZT" ng-init="ZFKZT=''">
+                        <option value="">请选择</option>
+                        <option value="6%">6%</option>
+                        <option value="17%">17%</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>项目名称</strong>
+                    <input class="text" type="text" name="ZSQNO"  ng-init="ZSQNO=''" ng-model="ZSQNO" placeholder="请输入申请单号">
+                </td>
+                <td>
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+                    <a class="searchbtn2 searchbtn2bot addContractbtn" href="/index.html#/contractOrderAdd">新建销售合同</a>
+                    <a class="searchbtn2 searchbtn2bot" href="/index.html#/contractOrder">返回</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+    <div class="item">查询结果</div>
+    <table class="orangestyle table">
+        <thead>
+        <tr>
+            <th>合同编号</th>
+            <th>客户名称</th>
+            <th>合同类型</th>
+            <th>项目名称</th>
+            <th>合同金额</th>
+            <th>开票类型</th>
+            <th>销售人员</th>
+            <th>合同状态</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+            <tr ng-repeat="list in dataList">
+                <td>{{list.contractbase.contractno}}</td>
+                <td>{{list.contractbase.stomer}}</td>
+                <td>{{list.contractbase.contracttype}}</td>
+                <td>{{list.contractbase.project}}</td>
+                <td>{{list.contractbase.contractmoney}}</td>
+                <td>{{list.contractbase.receipttype}}</td>
+                <td>{{list.contractbase.salesname}}</td>
+                <td>{{list.contractbase.status}}</td>
+                <td class="czBtn">
+                    <a href="index.html#/contractOrderView/{{list._id}}">查看</a>
+                </td>
+            </tr>
+            <tr class="tip"><td colspan="10">没有查到收款计划单</td></tr>
+        </tbody>
+    </table>
+    <pagination conf="paginationConf"></pagination>
+

@@ -1,0 +1,62 @@
+<h3 class="genTitle genTitleBot"><em></em><span>单据规则配置</span></h3>
+<div class="addTable">
+    <table class="orangestyle table">
+        <thead>
+        <tr>
+            <th width="30%">单据中文名称</th>
+            <th width="30%">单据英文名称</th>
+            <th width="40%">描述</th>
+        </tr>
+        </thead>
+        <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+        <tr ng-repeat="doc in dataList" ng-click="viewOps($index)">
+            <td>{{doc.desc}}</td>
+            <td>{{doc.name}}</td>
+            <td>{{doc.datasrc}}</td>
+        </tr>
+        <tr class="tip"><td colspan="9">没有查询到单据</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- param展示/编辑 弹出框 -->
+<div id="ops_detail" class="emBox" style="display:none">
+    <div class="addTable">
+        <table class="orangestyle table">
+            <thead>
+            <tr>
+                <th width="30%">规则中文名</th>
+                <th width="30%">规则英文名</th>
+                <th width="25%">规则描述</th>
+                <th width="15%" style="text-align: center;"><a href="javascript: void(0);" ng-click="new_ops()" class="btnAdd" title="添加" ></a></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-if="adding">
+                <td>
+                    <input type="text" ng-model="newOps.name" placeholder="请输入规则中文名"/>
+                </td>
+                <td>
+                    <input type="text" ng-model="newOps.text" placeholder="请输入规则英文名"/>
+                </td>
+                <td>
+                    <input type="text" ng-model="newOps.describe" placeholder="请输入规则描述"/>
+                </td>
+                <td>
+                    <a ng-if="newOps" href="javascript: void(0);" ng-click="newOpsConfirm()">确认</a>
+                    <a href="javascript: void(0);" ng-click="newOpsCancel()">取消</a>
+                </td>
+            </tr>
+            <tr ng-repeat="ops in doc_ops">
+                <td>{{ops.text}}</td>
+                <td>{{ops.name}}</td>
+                <td>{{ops.describe}}</td>
+                <td>
+                    <a href="javascript: void(0);" ng-click="edit('paramson', $index)">修改</a>
+                    <a href="javascript: void(0);" ng-click="ops_delete($index)">删除</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

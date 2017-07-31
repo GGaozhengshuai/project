@@ -1,0 +1,93 @@
+<h3 class="genTitle genTitleBot"><em></em><span>放货信息维护</span></h3>
+
+<div class="cusCont">
+    <div class="generForm">
+        <form novalidate name="invoiceForm">
+            <ul>
+                <li class="tli">
+                    <strong>单据编号：</strong><span>
+                    <input type="text" ng-disabled="true" ng-model="ORDER_DARA.code"></span>
+                </li>
+                <li class="tli">
+                    <strong>客户名称：</strong><span>
+                    <input type="text" ng-disabled="true" ng-model="ORDER_DARA.client"></span>
+                </li>
+                <li class="tli">
+                    <strong>上传附件：</strong><span>
+                    <div ng-repeat="list in ORDER_DARA.attachment">
+                        <div class='showImg'><a target='_blank' href='{{list.filePath}}'>{{list.fileName}}</a></div>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="addTable" id="occTable">
+                <table id="cgList">
+                    <tr>
+                        <th>来源</th>
+                        <th><font>*</font>收货人姓名</th>
+                        <th><font>*</font>手机号码</th>
+                        <th>固定电话</th>
+                        <th><font>*</font>省</th>
+                        <th><font>*</font>市</th>
+                        <th><font>*</font>详细地址</th>
+                        <th>邮编</th>
+                        <th><font>*</font>签收方式</th>
+                        <th>站点</th>
+                    </tr>
+                    <tr class="list" ng-repeat="list in Cglist">
+                        <td>
+                            <input ng-disabled="true" type="text" ng-model="enumSourceType[list.source]" value=""/>
+                        </td>
+                        <td>
+                            <input ng-disabled="!(editAdd && list.source == 'neo')" title="{{list.contact}}" type="text" ng-model="list.contact" value=""/>
+                        </td>
+                        <td>
+                            <input ng-disabled="!(editAdd && list.source == 'neo')" title="{{list.mobile}}" type="text" ng-model="list.mobile" maxlength="11" value=""/>
+                        </td>
+                        <td>
+                            <input ng-disabled="!(editAdd && list.source == 'neo')"type="text" ng-model="list.phone" title="{{list.phone}}" maxlength="20" value=""/>
+                        </td>
+                        <td title="{{countryData}}">
+                            <select style="width:80px;" ng-model="list.province" title="{{list.province}}" ng-change="list.city=''" ng-disabled="!(editAdd && list.status != 'inprocess')" ng-required="true" >
+                                <option value="">--请选择--</option>
+                                <option ng-repeat=" p in countryData" value="{{p.PROVINCE.CODE}}">{{p.PROVINCE.TITLE}}</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select style="width:80px;" ng-change="ba(list.city)" ng-model="list.city" title="{{list.city}}" ng-disabled="!(editAdd && list.status != 'inprocess')" ng-required="true" >
+                                <option value="">--请选择--</option>
+                                <option ng-repeat=" c in getField(countryData, 'CODE',list.province).CITY" value="{{c.CODE}}">{{c.TITLE}}</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input  ng-disabled="!(editAdd && list.source == 'neo')" type="text" ng-model="list.address" title="{{list.address}}" maxlength="100" value=""/>
+                        </td>
+                        <td>
+                            <input  ng-disabled="!(editAdd && list.source == 'neo')" type="text" ng-model="list.postcode" title="{{list.postcode}}" maxlength="6" value=""/>
+                        </td>
+                        <td>
+                            <!--<input  ng-disabled="signWay" type="text" ng-model="list.sign" value=""/>-->
+                            <select ng-model="list.sign" title="{{list.sign}}" ng-disabled="true">
+                                <option value="">请选择</option>
+                                <option value="收货人签字+日期">收货人签字+日期</option>
+                                <option value="收货人签字">收货人签字</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input  type="text" ng-model="list.station" title="{{list.station}}" value="" ng-disabled="true"/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="clear"></div>
+<div class="gerSub">
+   <!-- <button class="subSave" ng-click="applyDelete(applyObj)" ng-if="deleteBtn">删除</button>-->
+    <a class="subSave" href="index.html#/cargooutinfoEdit?processId={{processId}}&nodeId={{nodeId}}" ng-if="editBtn">编辑</a>
+</div>
+<div class="apCot" ng-if="apCot" >
+    <div ng-include="'template/common/apply.html'"></div>
+</div>
+<div id="approversDialog" class="dialog cusBox" title="选择下一审批人" ng-include="'template/common/approvers.html'" ></div>

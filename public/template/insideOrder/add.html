@@ -1,0 +1,76 @@
+<h3 class="genTitle genTitleBot"><em></em><span>新增费用申请单</span></h3>
+<div class="cusCont">
+    <div class="generForm">
+        <form novalidate name="invoiceForm">
+            <ul>
+                <!--<li><strong>内部订单号：</strong><input ng-model="ORDER_DATA.AUFNR" type="text" placeholder=""/></li>-->
+                <li class="tli">
+                    <strong><font>*</font>公司名称：</strong>
+                    <select ng-model="ORDER_DATA.BUKRS" ng-required="true" name="BUKRS" ng-options="m.code as m.name for m in BUKRS">
+                        <option value="">请选择</option>
+                    </select>
+                    <span class="errTip" ng-show="invoiceForm.BUKRS.$dirty && invoiceForm.BUKRS.$error.required">必填</span>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>成本中心：</strong>
+                    <input type="text"
+                           ng-value="ORDER_DATA.RESPCCTR | getName:costcenterSel :'text':'code'"
+                           ng-disabled="fixedcoscenter" ng-required="true" ng-readonly="true"
+                           ng-click="selCostcenterFn()" placeholder="请选择成本中心">
+                    <input type="hidden" name="treecostcenter" ng-required="true" ng-model="ORDER_DATA.RESPCCTR">
+                    <span class="errTip ng-hide"
+                          ng-show="invoiceForm.treecostcenter.$dirty && invoiceForm.treecostcenter.$error.required">必填</span>
+                </li>
+                <li class="clear"></li>
+                <li>
+                    <strong><font>*</font>费用申请单类型：</strong>
+                    <select ng-model="selectType.category" ng-change="selectType.costtype=''" name="category" ng-required="true">
+                        <option value="">--请选择--</option>
+                        <option ng-repeat="(x,y) in selectType.categorySel" value="{{x}}">{{y.text}}</option>
+                    </select>
+                    <select ng-model="selectType.costtype" ng-required="true" ng-change="selectType.fulltype=''" name="costtype">
+                        <option value="">--请选择--</option>
+                        <option ng-if="y.status != 'x'" ng-repeat=" (x,y) in selectType.categorySel[selectType.category.split('-')[0]].sub" value="{{x}}">{{y.text}}</option>
+                    </select>
+                    <select ng-model="selectType.fulltype" name="fulltype" ng-init="selectType.fulltype=''">
+                        <option value="">--请选择--</option>
+                        <option ng-if="y.status != 'x'" ng-repeat=" (x,y) in selectType.categorySel[selectType.category.split('-')].sub[selectType.costtype.split('-')].sub" value="{{x}}">{{y.text}}</option>
+                    </select>
+                    <!--<select ng-model="ORDER_DATA.AUART" ng-required="true" name="AUART">
+                        <option value="">请选择</option>
+                        <option value="ZJ01">市场费用</option>
+                        <option value="ZJ02">直接运营费用</option>
+                        <option value="ZJ03">项目前期费用</option>
+                        <option value="ZJ99">间接运营费用</option>
+                    </select>-->
+                    <span class="errTip" ng-show="invoiceForm.category.$dirty && invoiceForm.category.$error.required || invoiceForm.costtype.$dirty && invoiceForm.costtype.$error.required">必填</span>
+                </li>
+                <li class="tli"><strong><font>*</font>预算金额：</strong><input ng-required="true" ng-Focus numtwo-Validation ng-model="ORDER_DATA.ZSQJE" name="ZSQJE" type="text" placeholder="保留两位小数"/>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.ZSQJE.$dirty && invoiceForm.ZSQJE.$error.numtwo && !invoiceForm.ZSQJE.$focused">保留两位小数</span>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.ZSQJE.$dirty && invoiceForm.ZSQJE.$error.required && !invoiceForm.ZSQJE.$focused">必填</span>
+                </li>
+                <div class="clear"></div>
+
+                <li>
+                    <strong><font>*</font>申请标题：</strong>
+                    <textarea maxlength="40" ng-Focus  name="ZSQNR" ng-required="true" ng-model="ORDER_DATA.ZSQNR" placeholder="最多40个字符"></textarea>
+                    <span class="errTip" ng-show="invoiceForm.ZSQNR.$dirty && invoiceForm.ZSQNR.$error.required && !invoiceForm.ZSQNR.$focused">必填</span>
+                    <!--<span class="errTip" ng-show="invoiceForm.ZSQNR.$error.maxlength">超过200个字符</span>-->
+                </li>
+                <li><strong><font>*</font>事由：</strong>
+                    <textarea placeholder="" ng-model="ORDER_DATA.USER3" name="USER3" ng-required="true"></textarea>
+                    <span class="errTip" ng-show="invoiceForm.USER3.$dirty && invoiceForm.USER3.$error.required">必填</span>
+                    <!--<span class="errTip" ng-show="invoiceForm.USER3.$error.maxlength">超过200个字符</span>-->
+                </li>
+            </ul>
+            <div class="gerSub">
+                <a href="index.html#/insideOrder">返回</a>
+                <button ng-click="addInside(ORDER_DATA, 'save')" class="subSave">保存</button>
+                <button ng-click="addInside(ORDER_DATA, 'apply')" class="subApply">保存并提交</button>
+                <!--<button ng-click="update(addInvo,'addInvoice')"  ng-class="myForm.$invalid == true ? 'displaySub' : 'subSave'" ng-disabled="invoiceForm.$invalid || invoRready">保存</button>
+                <button ng-click="update(addInvo,'addInvoice')"  ng-hide="invoApproveBtn" ng-class="myForm.$invalid == true ? 'displaySub' : 'subSave'" ng-disabled="invoiceForm.$invalid || invoRready">提交审批</button>
+            --></div>
+        </form>
+    </div>
+</div>
+<div id="costCenterDialog" class="dialog cusBox" title="选择成本中心" ng-include="'template/reimbursement/costCenter.html'"></div>

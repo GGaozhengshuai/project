@@ -1,0 +1,76 @@
+<h3 class="genTitle"><em></em>
+    <span>到单申请</span>
+    <span ng-if="activeTab == 2">审批详情</span>
+</h3>
+<ul class="generNav">
+  <li ng-class="{active:activeTab == 1}"><a href="javascript:void(0);" ng-mousedown='htTab(1)'>到单申请</a></li>
+  <li ng-class="{active:activeTab == 2}"><a href="javascript:void(0);" ng-mousedown='htTab(2)'>审批详情</a></li>
+</ul>
+
+<div id="mainView">
+    <div ng-if="activeTab == 1">
+    <div class="viewTable ng-scope">
+        <ul>
+            <li><strong>到单申请号：</strong><span>{{ORDER_DATA.ZSQNO}}</span></li>
+            <li><strong>到单日期：</strong><span>{{ORDER_DATA.ZDDAT}}</span></li>
+            <li><strong>到单/付汇日汇率：</strong><span>{{ORDER_DATA.ZRHL}}</span></li>
+            <li><strong>是否押汇：</strong><span>{{ORDER_DATA.ZSFYH}}</span></li>
+            <li ng-if="billType"><strong>押汇期限（天）：</strong><span>{{ORDER_DATA.ZYHQX}}</span></li>
+            <li ng-if="billType"><strong>承付（押汇）日期：</strong><span>{{ORDER_DATA.ZCFDAT}}</span></li>
+            <li><strong>实际融资方式：</strong><span>{{ORDER_DATA.ZRZFS}}</span></li>
+        </ul>
+
+    </div>
+
+    <div class="clear"></div>
+    <div class="addTable">
+        <div class="genTitle2">
+            <div>
+                <strong>列表信息</strong>
+            </div>
+        </div>
+        <table>
+            <tr>
+                <th>采购订单号</th>
+                <th>境外采购付款方式</th>
+                <th>开证付汇申请号</th>
+                <th>付款类型</th>
+                <!--<th>已开证付汇金额</th>
+                <th>已到单金额</th>-->
+                <th>到单金额</th>
+                <th>备注</th>
+            </tr>
+            <tr ng-repeat="list in comeList">
+                <td>{{list.EBELN}}</td>
+                <td>{{List.ZFKFS}}</td>
+                <td>{{list.ZKZFH}}</td>
+                <td>{{list.ZFKLX}}</td>
+               <!-- <td>{{list.ZKZFHJE}}</td>
+                <td>{{list.YDDJE}}</td>-->
+                <td>{{list.ZDDJE | number : 2}}</td>
+                <td>{{list.ZBZ}}</td>
+            </tr>
+        </table>
+    </div>
+    </div>
+    <div class="applyLog" ng-if="activeTab == 2">
+        <table>
+            <thead>
+            <tr>
+                <th class="th1">审批人</th>
+                <th class="th2">审批时间</th>
+                <th class="th3">审批状态</th>
+                <th class="th4">审批意见</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="list in processlog">
+                <td>{{list.sender.name}}</td>
+                <td>{{list.createDate | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td>{{list.operation}}</td>
+                <td>{{list.content.comment}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

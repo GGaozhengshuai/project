@@ -1,0 +1,34 @@
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>姓名</strong>
+                    <input class="text" style="width:175px" type="text" name="$parent.useSname"  ng-init="$parent.useSname=''" ng-model="$parent.useSname" placeholder="请输入姓名">
+                    <input type="button" value="查询" class="searchbtn2" ng-click="userSearch()">
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<table class="orangestyle table">
+    <thead>
+    <tr>
+        <th>姓名</th>
+        <th>部门</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody ng-class="userDateList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in userDateList">
+        <td>{{list.name}}</td>
+        <td>{{list.orgname}}</td>
+        <td>
+            <a href="javascript:;" ng-click="userSelect(list.name,list.login)">选择</a>
+        </td>
+    </tr>
+    <tr class="tip"><td colspan="3">没有查到</td></tr>
+    </tbody>
+</table>
+<!--
+<pagination conf="paginationConf"></pagination>-->

@@ -1,0 +1,91 @@
+<h3 class="genTitle"><em></em>
+  <span>借款单</span>
+  <span ng-if="activeTab == 2">审批详情</span>
+</h3>
+<ul class="generNav">
+  <li ng-class="{active:activeTab == 1}"><a href="javascript:void(0);" ng-mousedown='htTab(1)'>借款单</a></li>
+  <li ng-class="{active:activeTab == 2}"><a href="javascript:void(0);" ng-mousedown='htTab(2)'>审批详情</a></li>
+</ul>
+
+<div id="mainView">
+  <div ng-if="activeTab == 1">
+    <div class="viewTable ng-scope">
+        <ul>
+            <li><strong>借款单号：</strong><span>{{ORDER_DATA.code}}</span></li>
+            <li><strong>借款日期：</strong><span>{{ORDER_DATA.brw_date | date: 'yyyy-MM-dd'}}</span></li>
+            <li><strong>借款人：</strong><span>{{ORDER_DATA.user.name}}</span></li>
+            <li><strong>借款部门：</strong><span>{{ORDER_DATA.department.name}}</span></li>
+            <li><strong>资金性质：</strong><span>{{ORDER_DATA.fin.name}}</span></li>
+            <li class="list_con"><strong>借款事由：</strong><span>{{ORDER_DATA.reason}}</span></li>
+            <!--<li><strong>费用种类：</strong><span>{{ORDER_DATA.ZRZFS}}</span></li>-->
+            <li><strong>借款金额：</strong><span>{{ORDER_DATA.brw_amount | number:2}}</span></li>
+            <li><strong>本单未还金额：</strong><span>{{ORDER_DATA.cur_brw | number:2}}</span></li>
+            <li><strong>申请人：</strong><span>{{ORDER_DATA.applicant.name}}</span></li>
+        </ul>
+    </div>
+    <div>
+        <div class="genTitle2">
+            <div>
+                <strong>借款标记信息</strong>
+            </div>
+        </div>
+        <div class="viewTable ng-scope">
+            <ul>
+                <li><strong>付款类型：</strong><span>{{{'01':'库存现金', '02':'银行存款'}[ORDER_DATA.mark.pay_type]}}</span></li>
+                <li><strong>付款银行：</strong><span>{{bankList[ORDER_DATA.mark.pay_bank]}}</span></li>
+                <li><strong>财务标记日期：</strong><span>{{ORDER_DATA.mark.fin_date | date:'yyyy-MM-dd'}}</span></li>
+                <li><strong>财务执行人员：</strong><span>{{ORDER_DATA.mark.fin_user.name}}</span></li>
+                <li><strong>借款凭证号：</strong><span>{{ORDER_DATA.brw_sapsn}}</span></li>
+            </ul>
+        </div>
+    </div>
+    <div class="fysqdTable">
+        <div class="genTitle2">
+            <div>
+                <strong>还款记录</strong>
+            </div>
+        </div>
+        <div class="addTable">
+            <table class="tab_data">
+                <tr>
+                    <th>还款金额</th>
+                    <th>还款方式</th>
+                    <th>还款银行</th>
+                    <th>还款日期</th>
+                    <th>财务标记人员</th>
+                    <th>还款凭证号</th>
+                </tr>
+                <tr ng-repeat="list in repayment" class="list">
+                    <td>{{list.rep_amount}}</td>
+                    <td>{{{'01':'库存现金', '02':'银行','03':'报销'}[list.rep_type]}}<span ng-if="list.rep_type=='03'">-{{list.reimburse_code}}</span></td>
+                    <td>{{bankList[list.rep_bank]}}</td>
+                    <td>{{list.rep_date | date:'yyyy-MM-dd'}}</td>
+                    <td>{{list.rep_user.name}}</td>
+                    <td>{{list.rep_sapsn}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+  </div>
+  <div class="applyLog" ng-if="activeTab == 2">
+    <table>
+      <thead>
+      <tr>
+        <th class="th1">审批人</th>
+        <th class="th2">审批时间</th>
+        <th class="th3">审批状态</th>
+        <th class="th4">审批意见</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="list in processlog">
+        <td>{{list.sender.name}}</td>
+        <td>{{list.createDate | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+        <td>{{list.operation}}</td>
+        <td>{{list.content.comment}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <br/><br/>
+</div>

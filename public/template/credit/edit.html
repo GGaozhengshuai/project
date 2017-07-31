@@ -1,0 +1,635 @@
+<h3 class="genTitle genTitleBot"><em></em><span>客户信用</span></h3>
+<ul class="generNav" ng-init="ht.activeTab = fkUser ? 2 : 1">
+    <li ng-class="{active:ht.activeTab == 1}"><a href="javascript:;" ng-mousedown="ht.activeTab = 1">客户信用</a></li>
+    <!--<li ng-class="{active:ht.activeTab == 2}" ng-hide="loading" ng-init="loading=true"><a href="javascript:;" ng-mousedown="ht.activeTab = 2">客户信用情况</a></li>-->
+    <li ng-class="{active:ht.activeTab == 2}" class="ng-hide" ng-show="fkUser"><a href="javascript:;" ng-mousedown="ht.activeTab = 2">信用信息</a></li>
+</ul>
+<div class="cusCont">
+    <!--<div class="generForm">-->
+        <form novalidate name="myForm">
+            <div class="ng-scope ng-hide" style="padding-top: 20px;" ng-class="fkUser ? 'viewTable' : 'generForm'"  ng-show="ht.activeTab == 1">
+
+            <ul ng-if="!fkUser" style="padding-bottom: 20px; margin-top:0;">
+                <li class="tli">
+                    <strong><font>*</font>客户名称：</strong>
+                    <input ng-required="true" ng-readonly="true" name="cusname" ng-model="ORDER_DATA.cusname" ng-click="cusBox()"
+                           type="text" placeholder="请选择客户"/>
+                    <input ng-model="ORDER_DATA.cuscode" type="hidden" placeholder=""/>
+                    <span class="errTip ng-hide" ng-show="myForm.cusname.$dirty && myForm.cusname.$error.required">必填</span>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>客户编号：</strong>
+                    <input type="text" ng-required="true" ng-readonly="true" ng-model="ORDER_DATA.cuscode" name="cuscode" placeholder="请输入客户编号">
+                    <span class="errTip ng-hide" ng-show="myForm.cuscode.$dirty && myForm.cuscode.$error.required">必填</span>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>客户类型：</strong>
+                    <select ng-model="ORDER_DATA.custype" ng-required="true" name="custype">
+                        <option value="">请选择</option>
+                        <option value="分销商">分销商</option>
+                        <option value="最终客户">最终客户</option>
+                    </select>
+                    <span class="errTip ng-hide" ng-show="myForm.custype.$dirty && myForm.custype.$error.required">必填</span>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>业务类型：</strong>
+                    <select ng-model="ORDER_DATA.type" ng-required="true" name="type">
+                        <option value="">请选择</option>
+                        <option value="项目">项目</option>
+                        <option value="分销">分销</option>
+                        <option value="项目及分销">项目及分销</option>
+                        <option value="其他">其他</option>
+                    </select>
+                    <span class="errTip ng-hide" ng-show="myForm.type.$dirty && myForm.type.$error.required">必填</span>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>建议信用额度：</strong>
+                    <input ng-model="ORDER_DATA.advicecredit" name="advicecredit" ng-Focus numtwo-Validation ng-required="true" type="text" placeholder="请输入建议信用额度"/>
+                    <span class="errTip ng-hide" ng-show="myForm.advicecredit.$dirty && myForm.advicecredit.$error.numtwo && !myForm.advicecredit.$focused">小数点后保留两位</span>
+                    <span class="errTip ng-hide" ng-show="myForm.advicecredit.$dirty && myForm.advicecredit.$error.required && !myForm.advicecredit.$focused">必填</span>
+                </li>
+                <li class="tli">
+                    <strong>建议首付款比例(%)：</strong>
+                    <input ng-model="ORDER_DATA.jysfkbl" ng-Focus num100-Validation type="text"  name="jysfkbl" placeholder="请输入建议首付款比例"/>
+                    <span class="errTip ng-hide" ng-show="myForm.jysfkbl.$dirty && myForm.jysfkbl.$error.num100 && !myForm.jysfkbl.$focused">请输入0-100之间的数字</span>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>建议账期：</strong>
+                    <input ng-model="ORDER_DATA.suggestpayday" ng-required="true" ng-Focus numtwo-Validation name="suggestpayday" type="text" placeholder="请输入建议账期"/>
+                    <span class="errTip ng-hide" ng-show="myForm.suggestpayday.$dirty && myForm.suggestpayday.$error.numtwo && !myForm.suggestpayday.$focused">小数点后保留两位</span>
+                    <span class="errTip ng-hide" ng-show="myForm.suggestpayday.$dirty && myForm.suggestpayday.$error.required && !myForm.suggestpayday.$focused">必填</span>
+                </li>
+                <li class="tli">
+                    <strong>第三方资信调查：</strong>
+                    <select ng-model="ORDER_DATA.dsfzxdc">
+                        <option value="">请选择</option>
+                        <option value="是">是</option>
+                        <option value="否">否</option>
+                    </select>
+                </li>
+                <li class="clear"></li>
+                <li>
+                    <strong><font>*</font>授信申请理由及客户说明：</strong>
+                    <textarea ng-model="ORDER_DATA.reasonandcusint" name="reasonandcusint" ng-Focus ng-required="true" maxlength="2000"></textarea>
+                    <span class="errTip ng-hide" ng-show="myForm.reasonandcusint.$dirty && myForm.reasonandcusint.$error.required && !myForm.reasonandcusint.$focused">必填</span>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>评分汇总：</strong>
+                    <input type="text" ng-disabled="true" value="{{ORDER_DATA.khjydxdjxz*1 + (+ORDER_DATA.cussource) + (+ORDER_DATA.ydfgcsfss*2) + (+ORDER_DATA.yqnjyed) + (+ORDER_DATA.industryreputation) + (+ORDER_DATA.premises) + (+ORDER_DATA.companysize)}}">
+                </li>
+                <li class="clear"></li>
+                <!--<li class="formUpStyle">
+                  <strong>财务资料：</strong>
+                  <input url="/resource/uploadfile" fileName="cwzl" uploadify-All btnname="上传附件" type="file"  ng-model="ORDER_DATA.cwzl" placeholder="">
+                  <a target="_blank" class="link" href="{{ORDER_DATA.cwzl}}">{{cwzl}}</a>
+                </li>-->
+                <!--<li class="formUpStyle cwzlBox" id="cwzlBox">
+                    <strong><font>*</font>财务资料：</strong>
+                    <input uploadifyfile btnname="上传附件" />
+                    <span style="padding-left: 10px;">(可上传多个)</span>
+                    <div>
+                        <div class='showImg' ng-repeat="list in cwzl"><a target='_blank' href='{{list.filePath}}'>{{list.fileName}}</a><span ng-click="delupload($index)" style='margin-left: 5px;cursor: pointer;'>删除</span></div>
+                    </div>
+                </li>-->
+                <li class="formUpStyle cwzlBox" id="cwzlBox">
+                    <strong><font ng-hide="changed">*</font>财务资料：</strong>
+                    <input uploadify-More btnname="上传附件" fileName="cwzl" ng-model="cwzl" />
+                    <span style="padding-left: 10px;">(可上传多个)</span>
+                    <div>
+                        <div class='showImg' ng-repeat="list in cwzl"><a target='_blank' href='{{list.filePath}}'>{{list.fileName}}</a><span ng-hide="list.cannotDel" ng-click="delupload($index, 'cwzl')" style='margin-left: 5px;cursor: pointer;'>删除</span></div>
+                    </div>
+                </li>
+                <li class="formUpStyle cwzlBox">
+                    <strong>资质证明：</strong>
+                    <input uploadify-More btnname="上传附件" fileName="zzzm" ng-model="zzzm" />
+                    <span style="padding-left: 10px;">(可上传多个)</span>
+                    <div>
+                        <div class='showImg' ng-repeat="list in zzzm"><a target='_blank' href='{{list.filePath}}'>{{list.fileName}}</a><span ng-hide="list.cannotDel" ng-click="delupload($index, 'zzzm')" style='margin-left: 5px;cursor: pointer;'>删除</span></div>
+                    </div>
+                </li>
+                <li class="formUpStyle cwzlBox">
+                    <strong>担保资料：</strong>
+                    <input uploadify-More btnname="上传附件" fileName="dbzl" ng-model="dbzl" />
+                    <span style="padding-left: 10px;">(可上传多个)</span>
+                    <div>
+                        <div class='showImg' ng-repeat="list in dbzl"><a target='_blank' href='{{list.filePath}}'>{{list.fileName}}</a><span ng-hide="list.cannotDel" ng-click="delupload($index, 'dbzl')" style='margin-left: 5px;cursor: pointer;'>删除</span></div>
+                    </div>
+                </li>
+                <li class="formUpStyle cwzlBox">
+                    <strong>其它资料：</strong>
+                    <input uploadify-More btnname="上传附件" fileName="qtzl" ng-model="qtzl" />
+                    <span style="padding-left: 10px;">(可上传多个)</span>
+                    <div>
+                        <div class='showImg' ng-repeat="list in qtzl"><a target='_blank' href='{{list.filePath}}'>{{list.fileName}}</a><span ng-hide="list.cannotDel" ng-click="delupload($index, 'qtzl')" style='margin-left: 5px;cursor: pointer;'>删除</span></div>
+                    </div>
+                </li>
+                <li class="clear"></li>
+
+            </ul>
+            <ul style="margin-top:0;" ng-if="fkUser">
+                <li><strong>客户名称：</strong><span>{{ORDER_DATA.cusname}}</span></li>
+                <li><strong>客户编号：</strong><span>{{ORDER_DATA.cuscode}}</span></li>
+                <li><strong>客户类型：</strong><span>{{ORDER_DATA.custype}}</span></li>
+                <li><strong>业务类型：</strong><span>{{ORDER_DATA.type}}</span></li>
+                <li><strong>建议信用额度：</strong><span>{{ORDER_DATA.advicecredit}}</span></li>
+                <li><strong>建议首付款比例：</strong><span>{{ORDER_DATA.jysfkbl}}</span></li>
+                <li><strong>建议账期：</strong><span>{{ORDER_DATA.suggestpayday}}</span></li>
+                <li><strong>第三方资信调查：</strong><span>{{ORDER_DATA.dsfzxdc}}</span></li>
+              <li class="list_con"><strong>授信申请理由及客户说明：</strong><span ng-bind-html="ORDER_DATA.reasonandcusint | trustHtml"></span></li>
+              <!--<li class="list_con"><strong>授信申请理由及客户说明：</strong><span>{{ORDER_DATA.reasonandcusint}}</span></li>-->
+                <li><strong>评分汇总：</strong><span>{{ORDER_DATA.scoresummary}}</span></li>
+                <li class="list_con"><strong>财务资料：</strong><span><a ng-repeat="list in ORDER_DATA.cwzl" style="padding-right: 15px;" class="underLine" href="{{list.filePath}}">{{list.fileName}}</a></span></li>
+                <li class="list_con"><strong>资质证明：</strong><span><a ng-repeat="list in ORDER_DATA.zzzm" style="padding-right: 15px;" class="underLine" href="{{list.filePath}}">{{list.fileName}}</a></span></li>
+                <li class="list_con"><strong>担保资料：</strong><span><a ng-repeat="list in ORDER_DATA.dbzl" style="padding-right: 15px;" class="underLine" href="{{list.filePath}}">{{list.fileName}}</a></span></li>
+                <li class="list_con"><strong>其它资料：</strong><span><a ng-repeat="list in ORDER_DATA.qtzl" style="padding-right: 15px;" class="underLine" href="{{list.filePath}}">{{list.fileName}}</a></span></li>
+
+            </ul>
+            <div class="clear"></div>
+            <div class="addTable creditpfTable">
+                <table>
+                    <tr>
+                        <th>序号</th>
+                        <th>评价指标名称</th>
+                        <th>细分值</th>
+                        <th>评分值</th>
+                        <th>评价标准</th>
+                        <th>评分</th>
+                    </tr>
+                    <tbody class="tbd_1">
+                    <tr>
+                        <td rowspan="4">1</td>
+                        <td rowspan="4">客户交易对象等级性质</td>
+                        <td rowspan="4">6分</td>
+                        <td>6分（100%）</td>
+                        <td>交易对象或最终客户含有国际国内知名企业，且实际交易总金额≥1000万元</td>
+                        <td>
+                            <input ng-disabled="fkUser" name="khjydxdjxz" ng-model="ORDER_DATA.khjydxdjxz" class="radio" type="radio" value="6"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4.8分（80%）</td>
+                        <td>交易对象或最终客户含有国际国内知名企业或其分支机构及子公司，且实际交易总金额≥500万元</td>
+                        <td>
+                            <input ng-disabled="fkUser" name="khjydxdjxz" ng-model="ORDER_DATA.khjydxdjxz" class="radio" type="radio" value="4.8"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3.6分（60%）</td>
+                        <td>与国际国内知名企业或其分支机构及子公司有成功交易记录</td>
+                        <td>
+                            <input ng-disabled="fkUser" name="khjydxdjxz" ng-model="ORDER_DATA.khjydxdjxz" class="radio" type="radio" value="3.6"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>1.8分（30%）</td>
+                        <td>与其他企业有过成功交易记录</td>
+                        <td>
+                            <input ng-disabled="fkUser" name="khjydxdjxz" ng-model="ORDER_DATA.khjydxdjxz" class="radio" type="radio" value="1.8"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tbody  class="tbd_2">
+                    <tr>
+                        <td rowspan="3">2</td>
+                        <td rowspan="3">客户来源</td>
+                        <td rowspan="3">3分</td>
+                        <td>3分（100%）</td>
+                        <td>中标、生产厂商介绍、长期合作伙伴介绍等</td>
+                        <td>
+                            <input ng-disabled="fkUser" name="cussource" ng-model="ORDER_DATA.cussource" class="radio" type="radio" value="3"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2分（66%）</td>
+                        <td>普通合作伙伴介绍等</td>
+                        <td>
+                            <input ng-disabled="fkUser" name="cussource" ng-model="ORDER_DATA.cussource" class="radio" type="radio" value="2"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>1分（33%）</td>
+                        <td>陌生客户</td>
+                        <td>
+                            <input ng-disabled="fkUser" name="cussource" ng-model="ORDER_DATA.cussource" class="radio" type="radio" value="1"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tbody  class="tbd_3">
+                    <tr>
+                        <td>3</td>
+                        <td>与对方高层是否熟识</td>
+                        <td>2分</td>
+                        <td>2分（100%）</td>
+                        <td>很熟悉，与对方交往密切，有私人友谊。有则加分，无则零分</td>
+                        <td>
+                            <input ng-disabled="fkUser" name="ydfgcsfss" ng-model="ORDER_DATA.ydfgcsfss" class="radio" type="checkbox" value="2"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tbody class="tbd_4">
+                    <tr>
+                        <td rowspan="2">4</td>
+                        <td rowspan="2">预期年交易额度</td>
+                        <td rowspan="2">2分</td>
+                        <td>2分（100%）</td>
+                        <td>500万≤预期年交易额度</td>
+                        <td>
+                            <input ng-disabled="fkUser" name="yqnjyed" ng-model="ORDER_DATA.yqnjyed" class="radio" type="radio" value="2"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>1分（50%）</td>
+                        <td>预期年交易额度＜500万</td>
+                        <td>
+                            <input ng-disabled="fkUser" name="yqnjyed" ng-model="ORDER_DATA.yqnjyed" class="radio" type="radio" value="1"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tbody class="tbd_5">
+                    <tr>
+                        <td rowspan="3">5</td>
+                        <td rowspan="3">行业口碑</td>
+                        <td rowspan="3">3分</td>
+                        <td>3分（100%）</td>
+                        <td>业内众所周知，行业口碑及履约情况非常好</td>
+                        <td>
+                            <input ng-disabled="fkUser" name="industryreputation" ng-model="ORDER_DATA.industryreputation" class="radio" type="radio" value="3"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2分（66%）</td>
+                        <td>经熟悉客户介绍得知，行业口碑及履约情况比较较好</td>
+                        <td>
+                            <input ng-disabled="fkUser" name="industryreputation" ng-model="ORDER_DATA.industryreputation" class="radio" type="radio" value="2"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>1分（33%）</td>
+                        <td>不知道对方的行业口碑或者行业口碑及履约情况一般</td>
+                        <td>
+                            <input ng-disabled="fkUser" name="industryreputation" ng-model="ORDER_DATA.industryreputation" class="radio" type="radio" value="1"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tbody class="tbd_6">
+                    <tr>
+                        <td rowspan="3">6</td>
+                        <td rowspan="3">经营场所</td>
+                        <td rowspan="3">6分</td>
+                        <td>6分（100%）</td>
+                        <td>高档写字楼</td>
+                        <td>
+                            <input ng-disabled="fkUser" name="premises" ng-model="ORDER_DATA.premises" type="radio" class="radio" value="6"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4分（66%）</td>
+                        <td>自有资产</td>
+                        <td>
+                            <input ng-disabled="fkUser" name="premises" ng-model="ORDER_DATA.premises" type="radio" class="radio" value="4"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2分（33%）</td>
+                        <td>其他办公条件</td>
+                        <td>
+                            <input ng-disabled="fkUser" name="premises" ng-model="ORDER_DATA.premises" type="radio" class="radio" value="2"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tbody class="tbd_7">
+                    <tr>
+                        <td rowspan="3">7</td>
+                        <td rowspan="3">公司规模</td>
+                        <td rowspan="3">6分</td>
+                        <td>6分（100%）</td>
+                        <td>50人以上</td>
+                        <td>
+                            <input ng-disabled="fkUser" name="companysize" ng-model="ORDER_DATA.companysize" type="radio" class="radio" value="6"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4分（66%）</td>
+                        <td>30~50人</td>
+                        <td>
+                            <input ng-disabled="fkUser" name="companysize" ng-model="ORDER_DATA.companysize" type="radio" class="radio" value="4"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2分（33%）</td>
+                        <td>30人以下</td>
+                        <td>
+                            <input ng-disabled="fkUser" name="companysize" ng-model="ORDER_DATA.companysize" type="radio" class="radio" value="2"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div ng-hide="draftStatue" class="viewTable breakgenerForm">
+                <ul>
+                    <li><strong>经营场所：</strong><span>{{ORDER_DATA.jycs}}</span></li>
+                    <li><strong>成立日期：</strong><span>{{ORDER_DATA.builddate | date:'yyyy-MM-dd'}}</span></li>
+                    <li><strong>年检年份：</strong><span>{{ORDER_DATA.njnf}}</span></li>
+                    <li><strong>是否一般纳税人：</strong><span>{{ORDER_DATA.isybnsr}}</span></li>
+                    <li><strong>有分支机构：</strong><span>{{ORDER_DATA.branch}}</span></li>
+                    <li class="list_con"><strong>风控评估：</strong><span ng-bind-html="filterRole ? (ORDER_DATA.khbz | trustHtml | cutfield:true:20:'...') : ORDER_DATA.khbz | trustHtml"></span></li>
+                    <li class="list_con"><strong>资质说明：</strong><span ng-bind-html="ORDER_DATA.explainqualification | trustHtml"></span></li>
+                    <li><strong>信用天数：</strong><span>{{ORDER_DATA.days}}</span></li>
+                    <li><strong>预付款比例（%）：</strong><span>{{ORDER_DATA.advancepayment}}</span></li>
+                    <li><strong>信用状况：</strong><span>{{ORDER_DATA.xyzk}}</span></li>
+                    <li><strong>信用等级：</strong><span>{{ORDER_DATA.xydj}}</span></li>
+                    <li><strong>客户信用预警：</strong><span>{{ORDER_DATA.khxyyj}}</span></li>
+                    <li class="list_con"><strong>附件：</strong><span><a ng-repeat="list in ORDER_DATA.xyxx" style="padding-right: 15px;" class="underLine" href="{{list.filePath}}">{{list.fileName}}</a></span></li>
+                    <!--<li class="list_con"><strong>附件：</strong><span><a class="underLine" href="{{ORDER_DATA.xyxx}}">{{ORDER_DATA.xyxxname}}</a></span></li>-->
+                </ul>
+                <div class="clear"></div>
+                <div class="addTable viewTable">
+                    <table>
+                        <tr>
+                            <th>数据年份</th>
+                            <th>营业收入</th>
+                            <th>净资产</th>
+                            <th>资产负债率(%)</th>
+                            <th>实收资本</th>
+                            <th>净利润</th>
+                            <th>经营活动所产生<br>的现金流量净值</th>
+                            <th>销售毛利率(%)</th>
+                            <th>总资产周转率(%)</th>
+                            <!--<th><a href="javascript:;" ng-click="userAdd('list1')">添加</a></th>-->
+                        </tr>
+                        <tr ng-repeat="list in ORDER_DATA.financialdata">
+                            <td>{{list.year}}</td>
+                            <td>{{list.yysr | number:2}}</td>
+                            <td>{{list.jzc | number:2}}</td>
+                            <td>{{list.zcfzl | parseInt}}</td>
+                            <td>{{list.sszc | number:2}}</td>
+                            <td>{{list.jlr | number:2}}</td>
+                            <td>{{list.jyhdcsxjljz | number:2}}</td>
+                            <td>{{list.xsmll | parseInt}}</td>
+                            <td>{{list.zzczzl | parseInt}}</td>
+                            <!--<td><a href="javascript:;" ng-click="userDel($index,'list1')">删除</a></td>-->
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="addTable viewTable">
+                    <table>
+                        <tr>
+                            <th>担保类型</th>
+                            <th>担保金额</th>
+                            <th>生效时间</th>
+                            <th>失效时间</th>
+                            <th>说明</th>
+                            <!--<th width="60px"><a href="javascript:;" ng-click="userAdd('list2')">添加</a></th>-->
+                        </tr>
+                        <tr ng-repeat="list in ORDER_DATA.guaranteeinfo ">
+                            <td>{{list.dblx}}</td>
+                            <td>{{list.dbje}}</td>
+                            <td>{{list.startdate| date: 'yyyy-MM-dd'}}</td>
+                            <td>{{list.enddate | date: 'yyyy-MM-dd'}}</td>
+                            <td>{{list.instructions}}</td>
+                            <!--<td><a href="javascript:;" ng-click="userDel($index,'list2')">删除</a></td>-->
+                        </tr>
+                    </table>
+                    <ul>
+                      <li class="list_con"><strong>担保说明：</strong><span ng-bind-html="ORDER_DATA.guaranteeinfo.length>0 ? (ORDER_DATA.guaranteeinfo[0].explain | trustHtml) : ''"></span></li>
+                        <!--<li class="list_con"><strong>担保说明：</strong><span>{{ORDER_DATA.explain}}</span></li>-->
+                    </ul>
+                </div>
+            </div>
+            </div>
+
+            <div class="ng-scope ng-hide" ng-show="ht.activeTab == 2">
+                <!--<div class="cusCont">-->
+                <div class="generForm">
+                    <form novalidate name="myForm">
+                        <ul>
+                            <li class="tli">
+                                <strong>经营场所：</strong>
+                                <select ng-model="ORDER_DATA.jycs" ng-disabled="true">
+                                    <option value="">请选择</option>
+                                    <option value="自有">自有</option>
+                                    <option value="租用高端">租用高端</option>
+                                </select>
+                            </li>
+                            <li class="tli">
+                                <strong>成立日期：</strong>
+                                <input class="text Wdate" ng-disabled="true" type="text" name="builddate" ng-init="ORDER_DATA.builddate=''" dateParam='{"maxDate": "%y"}' date-Picker ng-readonly="true"   ng-model="ORDER_DATA.builddate" placeholder="请选择日期">
+                            </li>
+                            <li class="tli">
+                                <strong>年检年份：</strong>
+                                <input ng-disabled="true" class="text Wdate" type="text" name="njnf" ng-init="ORDER_DATA.njnf=''" dateParam='{"dateFmt":"yyyy", "maxDate": "%y"}' date-Picker ng-readonly="true"   ng-model="ORDER_DATA.njnf" placeholder="请选择日期">
+                            </li>
+                            <li class="tli">
+                                <strong>是否一般纳税人：</strong>
+                                <select ng-disabled="true" ng-model="ORDER_DATA.isybnsr">
+                                    <option value="">请选择</option>
+                                    <option value="是">是</option>
+                                    <option value="否">否</option>
+                                </select>
+                            </li>
+                            <li class="tli">
+                                <strong>有分支机构：</strong>
+                                <select ng-disabled="true" ng-model="ORDER_DATA.branch">
+                                    <option value="">请选择</option>
+                                    <option value="有">有</option>
+                                    <option value="否">否</option>
+                                </select>
+                            </li>
+                            <li class="clear"></li>
+                            <li class="list_con">
+                                <strong>风控评估：</strong>
+                                <textarea ng-disabled="busiRoles[0].code!='fengkong_jingli'" ng-model="ORDER_DATA.khbz"></textarea>
+                            </li>
+                            <li class="clear"></li>
+                            <li class="list_con">
+                                <strong>资质说明：</strong>
+                                <textarea ng-disabled="true"ng-model="ORDER_DATA.explainqualification" maxlength="2000"></textarea>
+                            </li>
+                            <li class="tli">
+                                <strong>授信额度：</strong>
+                                <input type="text" ng-disabled="true" ng-model="ORDER_DATA.creditmoney" placeholder="">
+                            </li>
+                            <li class="tli">
+                                <strong>信用天数：</strong>
+                                <input ng-disabled="true" ng-model="ORDER_DATA.days" type="text" placeholder=""/>
+                            </li>
+                            <li class="tli">
+                                <strong>预付款比例（%）：</strong>
+                                <input ng-disabled="true" ng-model="ORDER_DATA.advancepayment" type="text" placeholder=""/>
+                            </li>
+                            <li class="tli">
+                                <strong>信用状况：</strong>
+                                <input ng-disabled="true" ng-model="ORDER_DATA.xyzk" type="text" placeholder=""/>
+                            </li>
+                            <li class="tli">
+                                <strong>信用等级：</strong>
+                                <input ng-disabled="true" ng-model="ORDER_DATA.xydj" type="text" placeholder=""/>
+                            </li>
+                            <li class="tli">
+                                <strong>客户信用预警：</strong>
+                                <input ng-disabled="true" ng-model="ORDER_DATA.khxyyj" type="text" placeholder=""/>
+                            </li>
+                            <li class="clear"></li>
+                            <!--<li class="formUpStyle">
+                                <strong>上传附件：</strong>
+                                <input url="/resource/uploadfile" fileName="xyxx" uploadify-All btnname="上传附件" type="file"  ng-model="ORDER_DATA.xyxx" placeholder="">
+                                <a target="_blank" class="link" href="{{ORDER_DATA.xyxx}}">{{xyxx}}</a>
+                            </li>-->
+                            <li class="formUpStyle cwzlBox" id="xyxxBox">
+                                <strong><font>*</font>上传附件：</strong>
+                                <input uploadify-More btnname="上传附件" fileName="xyxx" ng-model="xyxx" />
+                                <span style="padding-left: 10px;">(可上传多个)</span>
+                                <div>
+                                    <div class='showImg' ng-repeat="list in xyxx"><a target='_blank' href='{{list.filePath}}'>{{list.fileName}}</a><span ng-click="delupload($index, 'xyxx')" style='margin-left: 5px;cursor: pointer;'>删除</span></div>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="addTable viewTable">
+                            <table>
+                                <tr>
+                                    <th>数据年份<font>*</font></th>
+                                    <th>营业收入</th>
+                                    <th>净资产</th>
+                                    <th>资产负债率(%)</th>
+                                    <th>实收资本</th>
+                                    <th>净利润</th>
+                                    <th>经营活动所产生<br>的现金流量净值</th>
+                                    <th>销售毛利率(%)</th>
+                                    <th>总资产周转率(%)</th>
+                                    <!--<th><a href="javascript:;" ng-click="userAdd('financialdata')">添加</a></th>-->
+                                </tr>
+                                <!--<tr ng-repeat="list in ORDER_DATA.financialdata ">
+                                    <td ng-class="myForm['year'+$index].$dirty && myForm['year'+$index].$error.required ? 'hasErrTip' : ''">
+                                        <input ng-required="true" name="year{{$index}}" type="text" class="text Wdate" date-Picker  dateParam='{"dateFmt":"yyyy", "maxDate": "%y"}' ng-readonly="true"  ng-model="list.year" placeholder="请选择年份">
+                                        <span class="errTip" ng-if="myForm['year'+$index].$dirty && myForm['year'+$index].$error.required">必填</span>
+                                    </td>
+                                    &lt;!&ndash;<td>
+                                        <input model-format="floatminus" name="yysr{{$index}}" ng-model="list.yysr" type="text" value=""/>
+                                        <span class="errTip" ng-if="myForm['yysr'+$index].$dirty && myForm['yysr'+$index].$error.floatminus && !myForm['yysr'+$index].$focused">小数点后保留两位</span>
+                                    </td>&ndash;&gt;
+                                    <td ng-class="myForm['yysr'+$index].$dirty && myForm['yysrfs'+$index].$error.floattwo ? 'hasErrTip' : ''">
+                                        <input ng-Focus float-Validation name="yysr{{$index}}" ng-model="list.yysr" type="text" value=""/>
+                                        <span class="errTip" ng-if="myForm['yysr'+$index].$dirty && myForm['yysr'+$index].$error.floattwo && !myForm['yysr'+$index].$focused">小数点后保留两位</span>
+                                    </td>
+                                    <td ng-class="myForm['jzc'+$index].$dirty && myForm['jzc'+$index].$error.floattwo ? 'hasErrTip' : ''">
+                                        <input ng-Focus float-Validation name="jzc{{$index}}" ng-model="list.jzc" type="text" value=""/>
+                                        <span class="errTip" ng-if="myForm['jzc'+$index].$dirty && myForm['jzc'+$index].$error.floattwo && !myForm['jzc'+$index].$focused">小数点后保留两位</span>
+                                    </td>
+                                    <td ng-class="myForm['zcfzl'+$index].$dirty && myForm['zcfzl'+$index].$error.floattwo ? 'hasErrTip' : ''">
+                                        <input ng-Focus float-Validation name="zcfzl{{$index}}" ng-model="list.zcfzl" type="text" value=""/>
+                                        <span class="errTip" ng-if="myForm['zcfzl'+$index].$dirty && myForm['zcfzl'+$index].$error.floattwo && !myForm['zcfzl'+$index].$focused">小数点后保留两位</span>
+                                    </td>
+                                    <td ng-class="myForm['sszc'+$index].$dirty && myForm['sszc'+$index].$error.floattwo ? 'hasErrTip' : ''">
+                                        <input ng-Focus float-Validation name="sszc{{$index}}" ng-model="list.sszc" type="text" value=""/>
+                                        <span class="errTip" ng-if="myForm['sszc'+$index].$dirty && myForm['sszc'+$index].$error.floattwo && !myForm['sszc'+$index].$focused">小数点后保留两位</span>
+                                    </td>
+                                    <td ng-class="myForm['jlr'+$index].$dirty && myForm['jlr'+$index].$error.floattwo ? 'hasErrTip' : ''">
+                                        <input ng-Focus float-Validation name="jlr{{$index}}" ng-model="list.jlr" type="text" value=""/>
+                                        <span class="errTip" ng-if="myForm['jlr'+$index].$dirty && myForm['jlr'+$index].$error.floattwo && !myForm['jlr'+$index].$focused">小数点后保留两位</span>
+                                    </td>
+                                    <td ng-class="myForm['jyhdcsxjljz'+$index].$dirty && myForm['jyhdcsxjljz'+$index].$error.floattwo ? 'hasErrTip' : ''">
+                                        <input ng-Focus float-Validation name="jyhdcsxjljz{{$index}}" ng-model="list.jyhdcsxjljz" type="text" value=""/>
+                                        <span class="errTip" ng-if="myForm['jyhdcsxjljz'+$index].$dirty && myForm['jyhdcsxjljz'+$index].$error.floattwo && !myForm['jyhdcsxjljz'+$index].$focused">小数点后保留两位</span>
+                                    </td>
+                                    <td ng-class="myForm['xsmll'+$index].$dirty && myForm['xsmll'+$index].$error.floattwo ? 'hasErrTip' : ''">
+                                        <input ng-Focus float-Validation name="xsmll{{$index}}" ng-model="list.xsmll" type="text" value=""/>
+                                        <span class="errTip" ng-if="myForm['xsmll'+$index].$dirty && myForm['xsmll'+$index].$error.floattwo && !myForm['xsmll'+$index].$focused">小数点后保留两位</span>
+                                    </td>
+                                    <td ng-class="myForm['zzczzl'+$index].$dirty && myForm['zzczzl'+$index].$error.floattwo ? 'hasErrTip' : ''">
+                                        <input ng-Focus float-Validation name="zzczzl{{$index}}" ng-model="list.zzczzl" type="text" value=""/>
+                                        <span class="errTip" ng-if="myForm['zzczzl'+$index].$dirty && myForm['zzczzl'+$index].$error.floattwo && !myForm['zzczzl'+$index].$focused">小数点后保留两位</span>
+                                    </td>
+
+                                    <td><a href="javascript:;" ng-click="userDel($index,'financialdata')">删除</a></td>
+                                </tr>-->
+                                <tr ng-repeat="list in ORDER_DATA.financialdata ">
+                                    <td ng-class="myForm['year'+$index].$dirty && myForm['year'+$index].$error.required ? 'hasErrTip' : ''">
+                                        <input ng-disabled="true" name="year{{$index}}" type="text" class="text Wdate" date-Picker  dateParam='{"dateFmt":"yyyy", "maxDate": "%y"}' ng-readonly="true"  ng-model="list.year" placeholder="请选择年份">
+                                        <span class="errTip" ng-if="myForm['year'+$index].$dirty && myForm['year'+$index].$error.required">必填</span>
+                                    </td>
+                                    <td><input ng-disabled="true" model-format="floatminus" name="yysr{{$index}}" ng-model="list.yysr" type="text" value=""/></td>
+                                    <td><input ng-disabled="true" model-format="floatminus" name="jzc{{$index}}" ng-model="list.jzc" type="text" value=""/></td>
+                                    <td><input ng-disabled="true" model-format="per"  name="zcfzl{{$index}}" ng-model="list.zcfzl" type="text" value=""/></td>
+                                    <td><input ng-disabled="true" model-format="floatminus"  name="sszc{{$index}}" ng-model="list.sszc" type="text" value=""/></td>
+                                    <td><input ng-disabled="true" model-format="floatminus"  name="jlr{{$index}}" ng-model="list.jlr" type="text" value=""/></td>
+                                    <td><input ng-disabled="true" model-format="floatminus"  name="jyhdcsxjljz{{$index}}" ng-model="list.jyhdcsxjljz" type="text" value=""/></td>
+                                    <td><input ng-disabled="true" model-format="per"  name="xsmll{{$index}}" ng-model="list.xsmll" type="text" value=""/></td>
+                                    <td><input ng-disabled="true" model-format="per"  name="zzczzl{{$index}}" ng-model="list.zzczzl" type="text" value=""/></td>
+
+                                    <!--<td><a href="javascript:;" ng-click="userDel($index,'financialdata')">删除</a></td>-->
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="addTable viewTable">
+                            <table>
+                                <tr>
+                                    <th>担保类型</th>
+                                    <th>担保金额</th>
+                                    <th>生效时间</th>
+                                    <th>失效时间</th>
+                                    <th>说明</th>
+                                    <th width="60px"><a href="javascript:;" ng-click="userAdd('guaranteeinfo')" title="添加" class="btnAdd"></a></th>
+                                </tr>
+                                <tr ng-repeat="list in ORDER_DATA.guaranteeinfo">
+                                    <td>
+                                        <!--<input type="text" ng-model="list.dblx" value="" maxlength="3" readonly="true">-->
+                                        <select ng-model="list.dblx">
+                                            <option value="股东">股东</option>
+                                            <option value="非股东">非股东</option>
+                                            <option value="房屋">房屋</option>
+                                            <option value="其他">其他</option>
+                                        </select>
+                                    </td>
+                                    <td><input model-format="float" name="dbje{{$index}}" ng-model="list.dbje" type="text" value=""/></td>
+                                    <!--<td ng-class="myForm['dbje'+$index].$dirty && myForm['dbje'+$index].$error.numtwo ? 'hasErrTip' : ''">
+                                        <input ng-Focus numtwo-Validation name="dbje{{$index}}" ng-model="list.dbje" type="text" value=""/>
+                                        <span class="errTip" ng-if="myForm['dbje'+$index].$dirty && myForm['dbje'+$index].$error.numtwo && !myForm['dbje'+$index].$focused">小数点后保留两位</span>
+                                    </td>-->
+                                    <td ng-class="flagDate[$index] ? 'hasErrTip' : ''"><input type="text" class="text Wdate" date-Picker ng-readonly="true"  ng-model="list.startdate" placeholder="请选择日期"></td>
+                                    <td ng-class="flagDate[$index] ? 'hasErrTip' : ''"><input type="text" class="text Wdate" date-Picker ng-readonly="true"  ng-model="list.enddate" placeholder="请选择日期"></td>
+                                    <td>
+                                        <input type="text" ng-model="list.instructions" value="" maxlength="1000">
+                                    </td>
+                                    <td><a href="javascript:;" ng-click="userDel($index,'guaranteeinfo')">删除</a></td>
+                                </tr>
+                            </table>
+                            <ul style="margin-top:0;">
+                                <li class="list_con">
+                                    <strong>担保说明：</strong>
+                                    <textarea ng-model="explain" ng-disabled="!ORDER_DATA.guaranteeinfo.length" maxlength="2000" placeholder="不超过2000字符"></textarea>
+                                    <!--<textarea ng-disabled="!ORDER_DATA.guaranteeinfo.length" ng-model="explain" maxlength="200"></textarea>-->
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="gerSub">
+                            <!--<a href="index.html#/creditOrder">返回</a>-->
+                            <!--<button ng-click="addData(ORDER_DATA, 'save')" class= 'subSave'>保存-->
+                            <!--</button>-->
+                            <!--<button ng-click="addData(ORDER_DATA, 'apply')" class= 'subSave'>保存并提交-->
+                            <!--</button>-->
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="gerSub" ng-hide="fkUser">
+                <a href="index.html#/creditOrder">返回</a>
+                <button ng-click="addData(ORDER_DATA, 'save')" class="subSave">保存
+                </button>
+                <button ng-click="addData(ORDER_DATA, 'apply')" class="subApply">保存并提交
+                </button>
+            </div>
+            <div class="gerSub ng-hide" ng-show="fkUser">
+                <a href="index.html#/creditOrder">返回</a>
+                <button ng-click="addData(ORDER_DATA, 'saveFk')" class="subSave">保存
+                </button>
+            </div>
+        </form>
+    <!--</div>-->
+
+
+</div>
+<div id="cusBox" class="dialog cusBox" title="选择客户" ng-include="'template/contract/cusBox.html'"
+     ng-controller="cusCusBoxCtrl"></div>

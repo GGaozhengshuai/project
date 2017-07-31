@@ -1,0 +1,578 @@
+<h3 class="genTitle genTitleBot"><em></em><span>销售合同内容变更</span></h3>
+<div id="tabs">
+    <ul class="generNav">
+        <li class="active"><a href="javascript:;">销售合同</a></li>
+    </ul>
+    <div class="cusCont tab_cont">
+        <div class="generForm">
+            <form novalidate name="invoiceForm">
+                <h4 class="genH4">基本信息</h4>
+                <ul class="noMargin">
+                    <li class="tli">
+                        <strong><font>*</font>销售主体：</strong>
+                        <select ng-disabled="true" ng-model="ORDER_DATA.escompany" ng-required="true" ng-change="xszt(ORDER_DATA.escompany)">
+                            <option value="">请选择</option>
+                            <option value="中建材信息技术股份有限公司">中建材信息技术股份有限公司</option>
+                            <option value="中建材集团进出口公司">中建材集团进出口公司</option>
+                            <!--<option value="中国建材（香港）有限公司">中国建材（香港）有限公司</option>-->
+                        </select>
+                    </li>
+                    <li class="tli">
+                        <strong><font>*</font>合同编号：</strong>
+                        <input ng-disabled="true" ng-model="ORDER_DATA.contractno" type="text" placeholder="保留两位小数"/>
+                    </li>
+                    <li class="tli">
+                        <strong>需方合同编号：</strong>
+                        <input ng-disabled="true" ng-model="ORDER_DATA.customercontractno" type="text" placeholder="请输入需方合同编号"/>
+                    </li>
+                    <!--<li class="tli">
+                        <strong><font>*</font>订单编号：</strong>
+                        <input ng-required="true" ng-model="ORDER_DATA.salesorderid" type="text" placeholder=""/>salesorderid是一个数组 显示第一个
+                    </li>-->
+                    <li class="tli">
+                        <strong><font>*</font>销售人员姓名：</strong>
+                        <input ng-disabled="true" ng-readonly="true"  ng-model="ORDER_DATA.salesname" type="text" placeholder="请选择姓名"/>
+                        <input ng-model="ORDER_DATA.salesid" type="hidden" placeholder=""/>
+                    </li>
+                    <li class="tli">
+                        <strong><font>*</font>申请部门：</strong>
+                        <input ng-disabled="true" ng-required="true" ng-model="ORDER_DATA.salesorgnanme" type="text" placeholder=""/>
+                        <input ng-model="ORDER_DATA.salesorgid" type="hidden" placeholder=""/>
+                    </li>
+                    <li class="tli">
+                        <strong>事业部：</strong>
+                        <input ng-disabled="true" ng-model="ORDER_DATA.salesorgnanme2" type="text" placeholder=""/>
+                        <input ng-model="ORDER_DATA.salesorgid2" type="hidden" placeholder=""/>
+                    </li>
+                    <li class="tli">
+                        <strong><font>*</font>商务人员：</strong>
+                        <input ng-disabled="true"  ng-model="ORDER_DATA.tradername" type="text" placeholder=""/>
+                        <input ng-model="ORDER_DATA.traderlogin" type="hidden" placeholder=""/>
+                    </li>
+                    <li class="tli">
+                        <strong><font>*</font>合同类型：</strong>
+                        <select ng-disabled="true" ng-model="ORDER_DATA.contracttype" ng-change="htType(ORDER_DATA.contracttype)" ng-required="true">
+                            <option value="">请选择</option>
+                            <option value="项目">项目</option>
+                            <option value="分销">分销</option>
+                            <option value="专有服务">专有服务</option>
+                            <option value="配套销售">配套销售</option>
+                        </select>
+                    </li>
+                    <li class="tli">
+                        <strong>选择关联合同：</strong>
+                        <input  ng-disabled="true" ng-model="matingContract" type="text" placeholder="请选择关联合同"/>
+                        <input ng-model="matingContractId" type="hidden" placeholder=""/>
+                    </li>
+                    <li class="tli">
+                        <strong><font ng-if="ifSerfas">*</font>服务方式：</strong>
+                        <select ng-model="ORDER_DATA.servicemethod" ng-disabled="true">
+                            <option value="">请选择</option>
+                            <option value="资金成本">资金成本</option>
+                            <option value="诉讼赔偿">诉讼赔偿</option>
+                            <option value="市场费用">市场费用</option>
+                            <option value="市场拓展服务">市场拓展服务</option>
+                            <option value="自有服务(CSP)">自有服务(CSP)</option>
+                            <option value="微软云服务">微软云服务</option>
+                            <option value="其他">其他</option>
+                        </select>
+                    </li>
+                    <li class="tli">
+                        <strong><font>*</font>开票税率：</strong>
+                        <select ng-disabled="true" ng-model="ORDER_DATA.receipttype" ng-required="true">
+                            <option value="">请选择</option>
+                            <option value="税率17%">税率17%</option>
+                            <option value="税率6%">税率6%</option>
+                        </select>
+                    </li>
+                    <!--<li class="tli">
+                        <strong><font>*</font>产品线：</strong>
+                        <input ng-disabled="true" ng-model="ORDER_DATA.product" ui-autocomplete="productOption" type="text" placeholder="请输入产品线"/>
+                        <input ng-model="ORDER_DATA.productId" type="hidden"/>
+                    </li>-->
+                    <li class="tli productlineTop">
+                        <strong><font>*</font>产品线：</strong>
+                        <input ng-required="true" ng-disabled="fwType" ng-model="ORDER_DATA.product" name="product" ng-keyup="productlineFn(ORDER_DATA.productline)" type="text" placeholder="请输入产品线"/>
+                        <input ng-model="ORDER_DATA.productId" type="hidden"/>
+                        <div class="productline">
+                            <ul>
+                                <li ng-repeat="list in productlineList" >
+                                    <a href="javascript:;" ng-click="selProductlineFn(list)">
+                                        {{list.name}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <span class="errTip ng-hide" ng-show="invoiceForm.product.$dirty && invoiceForm.product.$error.required">必填</span>
+                    </li>
+                    <li class="tli">
+                        <strong><font>*</font>项目名称：</strong>
+                        <input ng-disabled="true" ng-model="ORDER_DATA.project" type="text" placeholder="请输入项目名称"/>
+                    </li>
+                    <li class="tli">
+                        <strong><font>*</font>客户名称：</strong>
+                        <input ng-disabled="true" ng-required="true" ng-readonly="true" ng-model="ORDER_DATA.stomer" ng-click="cusBox()" type="text" placeholder="请选择客户"/>
+                        <input ng-model="ORDER_DATA.stomerid" type="hidden" placeholder=""/>
+                    </li>
+                    <li class="tli">
+                        <strong><font>*</font>最终用户：</strong>
+                        <input ng-disabled="true"  ng-model="ORDER_DATA.finalconsumer" type="text" placeholder="请输入最终用户"/>
+                    </li>
+                    <li class="tli">
+                        <strong><font>*</font>开票客户：</strong>
+                        <input ng-disabled="true" name="KPstomer" ng-model="ORDER_DATA.KPstomer"  type="text" placeholder="请选择开票客户"/>
+                        <input ng-model="ORDER_DATA.KPstomerid" type="hidden" placeholder=""/>
+                    </li>
+                    <li class="tli">
+                        <strong><font>*</font>合同金额：</strong><!--提交时系统需要检验输入{合同金额}是否等于各个产品的{金额小计}之和，如果不相等的，给出提示，终止操作；-->
+                        <input ng-disabled="true" ng-required="true" ng-model="ORDER_DATA.contractmoney" type="text" placeholder="请输入合同金额"/>
+                    </li>
+                    <li class="tli" ng-if="ORDER_DATA.escompany =='中建材集团进出口公司'">
+                        <strong>内部结算合同金额：</strong>
+                        <input  ng-model="ORDER_DATA.interiooney" ng-disabled="ORDER_DATA.canRepeirInteriooney == 1" type="text" placeholder="请输入金额"/>
+                    </li>
+                    <li class="tli">
+                        <strong><font>*</font>是否关联合同：</strong>
+                        <select ng-disabled="true" ng-model="ORDER_DATA.hasservicecontract" ng-required="true">
+                            <option value="">请选择</option>
+                            <option value="是">是</option>
+                            <option value="否">否</option>
+                        </select>
+                    </li>
+                    <li class="tli">
+                        <strong>预估毛利率（%）：</strong>
+                        <input ng-disabled="true" ng-model="ORDER_DATA.estimategrocssmargin" type="text" placeholder="请输入毛利率"/>
+                    </li>
+                    <!--<li class="tli">
+                        <strong><font>*</font>生效日期：</strong>&lt;!&ndash;新建时，不可填。审批流程流转到执行商务处可填写。执行商务填写生效日期时，系统会弹出一个提示框，提示是否以当前日期为
+                        生效日期，如果是的话，{生效日期}取当前日期。如果否的话，选择要输入的日期，输入的日期赋值给{生效日期}；&ndash;&gt;
+                        <input ng-required="true" ng-model="ORDER_DATA.effectdate" type="text" placeholder=""/>
+                    </li>-->
+                    <!--<li class="tli">流程流转到商务的第一次审批时，为必填项
+                        <strong><font>*</font>业务应收创建方式：</strong>
+                        <select ng-model="ORDER_DATA.receivabletype" ng-required="true">
+                            <option value="">请选择</option>
+                            <option value="固定模式">固定模式</option>
+                            <option value="修改模式">修改模式</option>
+                        </select>
+                    </li>-->
+
+                </ul>
+                <h4 class="genH4">需方商务联系人</h4>
+
+                <ul class="noMargin">
+                    <li class="tli">
+                        <strong><font>*</font>商务联系人姓名：</strong>
+                        <input ui-autocomplete="cusUserOption" ng-required="true" ng-model="ORDER_DATA.contactname" type="text" placeholder="请输入商务联系人姓名"/>
+                    </li>
+                    <li class="tli">
+                        <strong><font>*</font>商务联系人电话：</strong>
+                        <input ng-required="true" ng-focus name="contactphone" telphone-Validation ng-model="ORDER_DATA.contactphone" type="text" placeholder="请输入联系电话"/>
+                        <span class="errTip ng-hide" ng-show="invoiceForm.contactphone.$dirty && invoiceForm.contactphone.$error.telphonenum && !invoiceForm.contactphone.$focused">格式不正确</span>
+                    </li>
+                    <li class="tli">
+                        <strong>商务联系人邮箱：</strong>
+                        <input ng-model="ORDER_DATA.contactemail" type="text" placeholder="请输入商务联系人邮箱"/>
+                    </li>
+                    <li class="tli">
+                        <strong>商务联系人职位：</strong>
+                        <input ng-model="ORDER_DATA.contacttitle" type="text" placeholder="请输入商务联系人职位"/>
+                    </li>
+                </ul>
+                <div ng-if="ifxf">
+                    <h4 class="genH4">本单销售返点</h4>
+                    <div class="czAddBtn">
+                        <a style="float:left; margin-left:100px;" href="javascript:;" ng-click="fdBox()" class="addBtn">请选择返点</a>
+                    </div>
+                    <ul class="noMargin">
+                        <li class="tli">
+                            <strong>返点使用金额：</strong>
+                            <input ng-disabled="true" ng-model="ORDER_DATA.rebatemoney" type="text" placeholder=""/>
+                        </li>
+                        <li class="tli">
+                            <strong>返点使用比例（%）：</strong>
+                            <input ng-disabled="true" ng-model="ORDER_DATA.rebatepercent" type="text" placeholder=""/>
+                        </li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                    <div class="addTable">
+                        <table id="fdList">
+                            <tr>
+                                <th>返点编号</th>
+                                <th>生效日期</th>
+                                <th>返点名称</th>
+                                <!--<th>返点金额</th>
+                                <th>可用余额</th>-->
+                                <th>使用返点金额</th>
+                                <th>操作</th>
+                            </tr>
+                            <tr ng-repeat="fd in rebateitem" class="list">
+                                <td>
+                                    <input style="width:170px;" title="{{fd.NO}}" ng-disabled="true" ng-model="fd.NO" type="text"/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="true" ng-model="fd.effectdate" type="text" value=""/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="true" ng-model="fd.title" type="text" value=""/>
+                                </td>
+
+                                <!--<td>
+                                    <input ng-disabled="true" ng-model="fd.money" type="text" value=""/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="true" ng-model="fd.remainder" type="text" value=""/>
+                                </td>-->
+                                <td>
+                                    <input ng-disabled="fdDisable || fd.amount*1<=0"  class="amountVal" ng-blur="fdBlur(fd.amount,fd.remainder,$index)"  ng-model="fd.amount" type="text" value=""/>
+                                </td>
+                                <td><a ng-click="fdListDelet($index,'rebate')" ng-if="fd.status == 0 ? true : false" href="javascript:;">删除</a></td>
+                            </tr>
+                            <tr ng-repeat="fd in Addrebateitem" class="list">
+                                <td>
+                                    <input style="width:170px;" title="{{fd.NO}}" ng-disabled="true" ng-model="fd.NO" type="text"/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="true" ng-model="fd.effectdate" type="text" value=""/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="true" ng-model="fd.title" type="text" value=""/>
+                                </td>
+
+                                <!--<td>
+                                    <input ng-disabled="true" ng-model="fd.money" type="text" value=""/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="true" ng-model="fd.remainder" type="text" value=""/>
+                                </td>-->
+                                <td>
+                                    <input class="amountVal" ng-disabled="true" ng-model="fd.amount" type="text" value=""/>
+                                </td>
+                                <td><a ng-click="fdListDelet($index,'add')" href="javascript:;">删除</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <h4 class="genH4">合同条款</h4>
+                <ul class="noMargin">
+                    <li class="tli">
+                        <strong><font>*</font>合同模版：</strong>
+                        <select ng-disabled="true" ng-model="ORDER_DATA.contracttemplate">
+                            <option value="">请选择</option>
+                            <option value="华为硬件标准合同">华为硬件标准合同</option>
+                            <option value="华为硬件非标准合同">华为硬件非标准合同</option>
+                            <option value="华为服务标准合同">华为服务标准合同</option>
+                            <option value="华为服务非标准合同">华为服务非标准合同</option>
+                            <option value="自有服务标准合同">自有服务标准合同</option>
+                            <option value="自有服务非标准合同">自有服务非标准合同</option>
+                            <!--<option value="启明星辰格式合同">启明星辰格式合同</option>-->
+                            <!--<option value="Oracle标准合同">Oracle标准合同</option>-->
+                            <!--<option value="Oracle非标准合同">Oracle非标准合同</option>-->
+                            <option value="非标准合同">非标准合同</option>
+                        </select>
+                    </li>
+                    <li class="tli">
+                        <strong>合同清单是否显示单价：</strong>
+                        <select ng-disabled="true" ng-model="ORDER_DATA.isshowunitprice">
+                            <option value="">请选择</option>
+                            <option value="是">是</option>
+                            <option value="否">否</option>
+                        </select>
+                    </li>
+                    <li class="tli"  ng-if="ifHttk">
+                        <strong><font>*</font>收款条件：</strong>
+                        <select  ng-required="true" ng-change="sktj(ORDER_DATA.sktj)" ng-model="ORDER_DATA.sktj">
+                            <option value="">请选择</option>
+                            <option value="按比例">按比例</option>
+                            <option value="按金额">按金额</option>
+                        </select>
+                    </li>
+                </ul>
+                <!---->
+                <div class="addTable">
+                    <h5>合同收款条款</h5>
+                    <table id="sktkList"  ng-if="ifHttk">
+                        <tr>
+                            <th><font>*</font>收款类型</th>
+                            <th ng-if="skblIf"><font>*</font>收款比例（%）</th>
+                            <th ng-if="skjeIf"><font>*</font>收款金额</th>
+                            <th><font>*</font>天数</th>
+                            <th><font>*</font>收款方式</th>
+                            <th><font>*</font>收款条件</th>
+                            <th><a href="javascript:;" ng-click="httkAdd('sktkList')">添加</a></th>
+                        </tr>
+                        <tr ng-repeat="list in contactreceivablescondition" class="list">
+                            <td>
+                                <select ng-required="true" ng-model="list.thetype" ng-change="fkType($index,list.thetype)">
+                                    <option value="">请选择</option>
+                                    <option value="预付款">预付款</option>
+                                    <option ng-if="hkttk" value="货款">货款</option>
+                                    <option ng-if="qtfkIf" value="其他付款">其他付款</option>
+                                    <option ng-if="qtfwIf" value="服务款">服务款</option>
+                                </select>
+                            </td>
+                            <td ng-if="skblIf" ng-class="invoiceForm['scale'+$index].$dirty && invoiceForm['scale'+$index].$error.num1001 && !invoiceForm['scale'+$index].$focused ? 'hasErrTip' : ''">
+                                <input ng-required="true" ng-Focus num1001-Validation name="scale{{$index}}" ng-model="list.scale" type="text" value=""/>
+                                <p class="errTip" ng-if="invoiceForm['scale'+$index].$dirty && invoiceForm['scale'+$index].$error.num1001&&!invoiceForm['scale'+$index].$focused ">大于0小于等于100的数字</p>
+                            </td>
+                            <td ng-if="skjeIf" ng-class="invoiceForm['money'+$index].$dirty && invoiceForm['money'+$index].$error.numtwo && !invoiceForm['money'+$index].$focused ? 'hasErrTip' : ''">
+                                <input ng-required="true" style="width:100px;" ng-Focus ng-required="true" numtwo-Validation name="money{{$index}}" ng-model="list.money" type="text" placeholder="请输入金额"/>
+                                <p class="errTip" ng-if="invoiceForm['money'+$index].$dirty && invoiceForm['money'+$index].$error.numtwo&&!invoiceForm['money'+$index].$focused ">请输入正确的数字</p>
+                            </td>
+                            <td ng-class="invoiceForm['days'+$index].$dirty && invoiceForm['days'+$index].$error.integer && !invoiceForm['days'+$index].$focused ? 'hasErrTip' : ''">
+                                <input ng-required="true" ng-Focus integer-Validation  name="days{{$index}}" ng-model="list.days" type="text" value=""/>
+                                <p class="errTip" ng-if="invoiceForm['days'+$index].$dirty && invoiceForm['days'+$index].$error.integer&&!invoiceForm['days'+$index].$focused ">正整数</p>
+                            </td>
+                            <td>
+                                <select ng-required="true" ng-model="list.method">
+                                    <option value="">请选择</option>
+                                    <option value="电汇">电汇</option>
+                                    <option value="可转让的银行承兑汇票">可转让的银行承兑汇票</option>
+                                    <option value="银行承兑汇票">银行承兑汇票</option>
+                                    <option value="支票">支票</option>
+                                    <option ng-if="fkfsZpIf" value="支票，该支票于发货前提供">支票，该支票于发货前提供</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select ng-required="true" name="cond{{$index}}" ng-model="list.cond">
+                                    <option value="">请选择</option>
+                                    <option ng-repeat="m in cond[$index]" value="{{m}}">{{m}}</option>
+                                </select>
+                            </td>
+                            <td><a href="javascript:;" ng-click="httkDel($index,'sktkList')">删除</a></td>
+                        </tr>
+                        <!--<tr><td colspan="3">冲抵核销信息合计：</td></tr>-->
+                    </table>
+                </div>
+                <button  ng-if="ifHttk" class="putBtn" ng-click="putMeg()">点击生成合同收款条款</button>
+                <div class="clear"></div>
+                <ul class="noMargin">
+                    <li class="list_con">
+                        <strong><font ng-if="hkIfBot">*</font>收款条款展示区：</strong>
+                        <textarea ng-required="hkIfBot" ng-disabled="hkIf" ng-model="ORDER_DATA.contactreceivablesconditionshowarea"></textarea>
+                    </li>
+                </ul>
+                <div ng-if="fpkjDes">
+                    <h4 class="genH4">发票开具说明</h4>
+                    <ul class="noMargin">
+                        <li class="list_con">
+                            <strong>发票开具说明：</strong>
+                            <select ng-disabled="true" ng-model="ORDER_DATA.receiptdesc">
+                                <option value="">请选择</option>
+                                <option ng-if="fpkjOptionZy" value="供方就合同金额开具增值税专用发票">供方就合同金额开具增值税专用发票</option>
+                                <option value="手工输入">手工输入</option>
+                                <option ng-if="fpkjOption" value="供方就合同金额开具服务发票">供方就合同金额开具服务发票</option>
+                            </select>
+                        </li>
+                        <li class="list_con">
+                            <strong>发票开具说明区域：</strong>
+                            <textarea ng-disabled="true" ng-disabled="kjqyIf" ng-model="ORDER_DATA.receiptdescarea"></textarea>
+                        </li>
+                    </ul>
+                </div>
+                <h4 class="genH4">合同交货条款</h4>
+                <ul class="noMargin">
+                    <li class="tli" ng-if="httkIf">
+                        <strong>货期要求：</strong>
+                        <input class="Wdate" date-Picker ng-readonly="true"  ng-model="ORDER_DATA.paymentdate" type="text" placeholder=""/>
+                    </li>
+                    <li class="tli" ng-if="httkIf">
+                        <strong><font ng-if="zyfwIf">*</font>运输方式：</strong>
+                        <select ng-required="zyfwIf" ng-model="ORDER_DATA.transferway">
+                            <option value="">请选择</option>
+                            <option value="01">国内陆运</option>
+                            <option value="02">国内海运</option>
+                            <option value="03">国内空运</option>
+                            <option value="04">国际陆运</option>
+                            <option value="05">国际海运</option>
+                            <option value="06">国际空运</option>
+                            <option value="07">陆运快件</option>
+                            <option value="08">火车运输</option>
+                            <option value="09">快递</option>
+                            <option value="10">专车</option>
+                            <option value="11">自提</option>
+                        </select>
+                    </li>
+                    <li class="clear"></li>
+                    <li class="list_con" ng-if="jhfs2">
+                        <strong>交货方式：</strong>
+                        <label ng-click="jhFs(ORDER_DATA.deliverwaycheck)"><input name="deliverwaycheck" ng-model="ORDER_DATA.deliverwaycheck.type1" type="checkbox"/><em>有形介质交付</em></label>
+                        <label ng-click="jhFs(ORDER_DATA.deliverwaycheck)"><input name="deliverwaycheck" ng-model="ORDER_DATA.deliverwaycheck.type2" type="checkbox"/><em>电子邮件交付</em></label>
+                        <label ng-click="jhFs(ORDER_DATA.deliverwaycheck)"><input name="deliverwaycheck" ng-model="ORDER_DATA.deliverwaycheck.type3" type="checkbox"/><em>买方自行网络下载</em></label>
+                    </li>
+                    <li class="list_con" ng-if="jhfs1">
+                        <strong><font>*</font>交货方式：</strong>
+                        <input ng-disabled="true" ng-required="true" ng-model="ORDER_DATA.deliverway" type="text" placeholder="请输入交货方式"/>
+                    </li>
+                    <li class="tli" ng-if="ifEmail">
+                        <strong><font>*</font>邮箱地址：</strong>
+                        <input ng-required="true" ng-model="ORDER_DATA.deliveremail" type="text" placeholder="请输入邮箱地址"/>
+                    </li>
+                    <li class="clear"></li>
+                    <li class="list_con" ng-if="jhtkXs">
+                        <strong>交货条款区域：</strong>
+                        <textarea ng-disabled="jhtkIf" ng-model="ORDER_DATA.deliverconditionarea"></textarea>
+                    </li>
+                </ul>
+                <h4 class="genH4">产品维修</h4>
+                <ul class="noMargin" ng-if="cpbxtkXs">
+                    <li class="list_con">
+                        <strong>产品保修条款区域：</strong>
+                        <textarea ng-disabled="cpbxtkIf" ng-model="ORDER_DATA.guarantyterm"></textarea>
+                    </li>
+                </ul>
+                <h4 class="genH4">项目工程服务方式</h4>
+                <ul class="noMargin">
+                    <li class="list_con" ng-if="xmgcfwfXs">
+                        <strong><font ng-if="xmgcfwfXs2">*</font>项目工程服务方式：</strong>
+                        <input ng-if="xmgcfwfXs1" type="text" value="" ng-model="ORDER_DATA.projectserviceterm"/>
+                        <select ng-if="xmgcfwfXs2" ng-required="true" ng-change="xmgcfw(ORDER_DATA.projectserviceterm)" ng-model="ORDER_DATA.projectserviceterm">
+                            <option value="">请选择</option>
+                            <option value="原厂提供">原厂提供</option>
+                            <option value="需方提供">需方提供</option>
+                            <option value="供方提供">供方提供</option>
+                        </select>
+                    </li>
+                    <li class="list_con" ng-if="xmgcfuXs">
+                        <strong>项目工程服务方式条款区域：</strong>
+                        <textarea ng-disabled="xmgcfsTr" ng-model="ORDER_DATA.projectservicetermarea"></textarea>
+                    </li>
+                </ul>
+                <h4 class="genH4">交货地点和联系人</h4>
+                <div class="addTable">
+                    <div class="czAddBtn">
+                        <a href="doc/lxrmb.xlsx" class="downloadmb">下载导入联系人模板</a>
+                        <input excle-Uploadify btnname="导入收货联系人" url="/contract/importreceiver" excleData="excleData" ng-model="excleData"/>
+                        <a href="javascript:;" ng-click="cusLinkBox()">选用客户常用收货地址</a>
+                    </div>
+                    <table id="nbList">
+                        <tr>
+                            <th>收货人姓名</th>
+                            <th>手机号</th>
+                            <th>固定电话</th>
+                            <th><font ng-if="zyfwIf">*</font>省</th>
+                            <th><font ng-if="zyfwIf">*</font>市</th>
+                            <th>详细地址</th>
+                            <th>邮编</th>
+                            <th><a href="javascript:;" ng-click="userAdd()">添加</a></th>
+                        </tr>
+                        <tr ng-repeat="list in excleData" class="list">
+                            <td>
+                                <input ng-model="list.name" type="text" value=""/>
+                            </td>
+                            <td ng-class="invoiceForm['phone'+$index].$dirty && invoiceForm['phone'+$index].$error.phonenum && !invoiceForm['phone'+$index].$focused ? 'hasErrTip' : ''">
+                                <input ng-Focus phone-Validation  name="phone{{$index}}" ng-model="list.phone" type="text" value=""/>
+                                <p class="errTip" ng-if="invoiceForm['phone'+$index].$dirty && invoiceForm['phone'+$index].$error.phonenum&&!invoiceForm['phone'+$index].$focused ">请输入11位数字</p>
+                            </td>
+                            <td ng-class="invoiceForm['tel'+$index].$dirty && invoiceForm['tel'+$index].$error.telnum && !invoiceForm['tel'+$index].$focused ? 'hasErrTip' : ''">
+                                <input ng-Focus tel-Validation  name="tel{{$index}}" ng-model="list.tel" type="text" value=""/>
+                                <p class="errTip" ng-if="invoiceForm['tel'+$index].$dirty && invoiceForm['tel'+$index].$error.telnum&&!invoiceForm['tel'+$index].$focused ">请输入有区号的电话号码</p>
+                            </td>
+                            <td>
+                                <select ng-model="list.province" ng-required="zyfwIf" ng-change="list.city=''" ng-disabled="ready" >
+                                    <option value="">--请选择--</option>
+                                    <option ng-repeat=" p in countryData" value="{{p.PROVINCE.CODE}}">{{p.PROVINCE.TITLE}}</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select ng-model="list.city" ng-required="zyfwIf"  ng-disabled="ready" >
+                                    <option value="">--请选择--</option>
+                                    <option ng-repeat=" c in getField(countryData, 'CODE',list.province).CITY" value="{{c.CODE}}">{{c.TITLE}}</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input maxlength="60" ng-model="list.address" type="text" value=""/>
+                            </td>
+                            <td ng-class="invoiceForm['zipcode'+$index].$dirty && invoiceForm['zipcode'+$index].$error.postcode && !invoiceForm['zipcode'+$index].$focused ? 'hasErrTip' : ''">
+                                <input ng-Focus postcode-Validation  name="zipcode{{$index}}" ng-model="list.zipcode" type="text" value=""/>
+                                <p class="errTip" ng-if="invoiceForm['zipcode'+$index].$dirty && invoiceForm['zipcode'+$index].$error.postcode&&!invoiceForm['zipcode'+$index].$focused ">请输入6位数字</p>
+                            </td>
+                            <td><a href="javascript:;" ng-click="userDel($index,'excleData')">删除</a></td>
+                        </tr>
+                        <tr ng-repeat="list in userLinkList" class="list">
+                            <td>
+                                <input ng-model="list.name" type="text" value=""/>
+                            </td>
+                            <td ng-class="invoiceForm['phone'+$index].$dirty && invoiceForm['phone'+$index].$error.phonenum && !invoiceForm['phone'+$index].$focused ? 'hasErrTip' : ''">
+                                <input ng-Focus phone-Validation  name="phone{{$index}}" ng-model="list.phone" type="text" value=""/>
+                                <p class="errTip" ng-if="invoiceForm['phone'+$index].$dirty && invoiceForm['phone'+$index].$error.phonenum&&!invoiceForm['phone'+$index].$focused ">请输入11位数字</p>
+                            </td>
+                            <td ng-class="invoiceForm['tel'+$index].$dirty && invoiceForm['tel'+$index].$error.telnum && !invoiceForm['tel'+$index].$focused ? 'hasErrTip' : ''">
+                                <input ng-Focus tel-Validation  name="tel{{$index}}" ng-model="list.tel" type="text" value=""/>
+                                <p class="errTip" ng-if="invoiceForm['tel'+$index].$dirty && invoiceForm['tel'+$index].$error.telnum&&!invoiceForm['tel'+$index].$focused ">请输入正确的电话号码</p>
+                            </td>
+                            <td>
+                                <select ng-model="list.province" ng-required="zyfwIf" ng-change="list.city=''" ng-disabled="ready" >
+                                    <option value="">--请选择--</option>
+                                    <option ng-repeat=" p in countryData" value="{{p.PROVINCE.CODE}}">{{p.PROVINCE.TITLE}}</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select ng-model="list.city" ng-required="zyfwIf"  ng-disabled="ready" >
+                                    <option value="">--请选择--</option>
+                                    <option ng-repeat=" c in getField(countryData, 'CODE',list.province).CITY" value="{{c.CODE}}">{{c.TITLE}}</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input maxlength="60" ng-model="list.address" type="text" value=""/>
+                            </td>
+                            <td ng-class="invoiceForm['zipcode'+$index].$dirty && invoiceForm['zipcode'+$index].$error.postcode && !invoiceForm['zipcode'+$index].$focused ? 'hasErrTip' : ''">
+                                <input ng-Focus postcode-Validation  name="zipcode{{$index}}" ng-model="list.zipcode" type="text" value=""/>
+                                <p class="errTip" ng-if="invoiceForm['zipcode'+$index].$dirty && invoiceForm['zipcode'+$index].$error.postcode&&!invoiceForm['zipcode'+$index].$focused ">请输入6位数字</p>
+                            </td>
+                            <td><a href="javascript:;" ng-click="userDel($index,'userLinkList')">删除</a></td>
+                        </tr>
+                    </table>
+                </div>
+                <h4 class="genH4">合同附加信息</h4>
+                <ul class="noMargin">
+                    <li  class="tli">
+                        <strong><font ng-if="zyfwIf">*</font>配套服务：</strong>
+                        <select ng-model="ORDER_DATA.cp"  ng-disabled="cpDisable">
+                            <option value="">请选择</option>
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                        </select>
+                    </li>
+
+                    <li class="clear"></li>
+                    <li class="formUpStyle">
+                        <strong><font  ng-show="ifupload">*</font>上传附件：</strong>
+                        <input ng-required="ifupload" url="/resource/uploadfile" fileName="fileName" uploadify-All btnname="上传附件" type="file"  ng-model="uploadFile">
+                        <a target="_blank" class="link" href="{{uploadFile}}">{{fileName}}</a>
+                    </li>
+                    <!-- <li  class="tli">
+                         <strong><font>*</font>合同状态：</strong>
+
+                     </li>-->
+                    <li class="clear"></li>
+                    <li class="list_con">
+                        <strong><font>*</font>备注：</strong>
+                        <textarea ng-required="true" ng-model="ORDER_DATA.remarks"></textarea>
+                    </li>
+                    <!--<li  class="tli">
+                        <strong><font>*</font>申请人：</strong>
+                        <input ng-model="ORDER_DATA.creator" type="text" value=""/>
+                    </li>
+                    <li  class="tli">
+                        <strong><font>*</font>创建日期：</strong>
+                        <input ng-model="ORDER_DATA.createdate" type="text" value=""/>
+                    </li>-->
+                </ul>
+
+
+                <div class="gerSub">
+                    <a href="index.html#/contractOrder">返回</a>
+                    <button ng-click="addData(ORDER_DATA, 'save')" ng-class="invoiceForm.$invalid == true ? 'displaySub' : 'subSave'" ng-disabled="invoiceForm.$invalid || invoRready" class="subSave">保存草稿</button>
+                    <button ng-click="addData(ORDER_DATA, 'apply')"  ng-class="invoiceForm.$invalid == true ? 'displaySub' : 'subApply'" ng-disabled="invoiceForm.$invalid || invoRready">保存并提交</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<div id="fdBox" class="dialog cusBox" title="选择返点" ng-include="'template/contract/fdBox.html'"></div>
+<div id="cusLinkBox" class="dialog cusBox" title="选择收货人" ng-include="'template/contract/cusLinkBox.html'"></div>
+<div id="approversDialog" class="dialog cusBox" title="选择下一审批人" ng-include="'template/common/approvers.html'" ></div>
+

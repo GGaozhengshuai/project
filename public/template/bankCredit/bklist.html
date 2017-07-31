@@ -1,0 +1,75 @@
+<div class="genSearch">
+    <table>
+        <tr>
+            <td>
+                <a class="searchbtn2 searchbtn2bot addBtn" href="javascript:;" ng-click="addBkBox()" ng-if="opprev.bkBankCredit_add">添加授信银行</a>
+                <a class="searchbtn2 searchbtn2bot" href="index.html#/bankCreditOrder">返回</a>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="item">银行授信额度</div>
+<table class="orangestyle table">
+    <thead>
+    <tr>
+        <th>银行名称</th>
+        <th>人民币授信额度</th>
+        <th>已使用人民币授信额度</th>
+        <th>可用人民币授信额度</th>
+        <th>有效开始时间</th>
+        <th>申请人</th>
+        <th style="width: 30px;">操作</th>
+    </tr>
+    </thead>
+    <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in dataList">
+        <td>{{list.bank}}</td>
+        <td>{{list.rmblimit | currency:'￥'}}</td>
+        <td>{{list.usedrmb | currency:'￥'}}</td>
+        <td>{{list.unusedrmb | currency:''}}</td>
+        <td>{{list.startdate | date:'yyyy-MM-dd'}}</td>
+        <td>{{list.username}}</td>
+        <td class="czBtn" style="width: 125px;">
+            <div class="handlerBox">
+                <a class="handleBtn editBtn" target="_blank" href="" ng-click="bankChange(list)" title="变更"></a>
+                <a class="handleBtn delBtn" href="javascript:;" ng-click="bkDelet(list._id,$index)" ng-if="opprev.bkBankCredit_delete" title="删除"></a>
+            </div>
+
+        </td>
+    </tr>
+    <tr class="tip"><td colspan="7">没有查到银行授信额度</td></tr>
+    </tbody>
+</table>
+<pagination conf="paginationConf"></pagination>
+<div id="bkBox" class="dialog cusBox" title="添加授信银行" ng-include="'template/bankCredit/bkBox.html'"></div>
+
+<div id="changebankbox" class="dialog changebankbox" title="变更银行授信">
+    <div class="generForm boxForm">
+        <form novalidate name="invoiceForm">
+            <ul>
+                <li>
+                    <strong><font>*</font>银行名称：</strong>
+                    <input required ng-model="bank" ng-disabled="true" type="text" placeholder="请填写银行名称"/>
+                </li>
+                <li>
+                    <strong><font>*</font>人民币授信额度：</strong>
+                    <input integer-Validation ng-Change required ng-model="rmblimit" name="rmblimit" type="number" placeholder="请填写额度"/>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.rmblimit.$dirty && invoiceForm.rmblimit.$error.integer && !invoiceForm.rmblimit.$focused">请输入正整数</span>
+                </li>
+                <li>
+                    <strong><font>*</font>有效开始日期：</strong>
+                    <input class="Wdate" date-Picker required ng-model="startdate" type="text" placeholder="请选择时间"/>
+                </li>
+            </ul>
+
+
+            <div class="gerSub">
+                <a href="javascript:;" ng-click="cbkCancel()" class="closeBtn">关闭</a>
+                <button ng-click="changeSave()"  ng-class="invoiceForm.$invalid == true ? 'displaySub' : 'subSave'" ng-disabled="invoiceForm.$invalid || invoRready">变更</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+

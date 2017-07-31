@@ -1,0 +1,119 @@
+<div class="item">应收查询</div>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>客户名称:</strong>
+                    <input class="text" type="text" name="NAME1"  ng-init="NAME1=''" ng-model="NAME1" placeholder="">
+                </td>
+                <td>
+                    <strong>销售订单号：</strong>
+                    <input class="text" type="text" name="VBELN"  ng-init="VBELN=''" ng-model="VBELN" placeholder="">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>销售合同号:</strong>
+                    <input class="text" type="text" name="ZBSTKD"  ng-init="ZBSTKD=''" ng-model="ZBSTKD" placeholder="">
+                </td>
+                <td>
+                    <strong>销售员：</strong>
+                    <input class="text" type="text" name="ZPERNR"  ng-init="ZPERNR=''" ng-model="ZPERNR" placeholder="">
+                </td>
+            </tr>
+            <tr>
+
+                <td>
+                    <strong>开始到期日期：</strong>
+                    <input class="text Wdate" type="text" name="ZDQR_START" ng-init="ZDQR_START=''" date-Picker ng-readonly="true"   ng-model="ZDQR_START" placeholder="请选择日期">
+                </td>
+                <td>
+                    <strong>结束到期日期：</strong>
+                    <input class="text Wdate" date-Picker type="text" name="ZDQR_END"  ng-init="ZDQR_END=''" ng-model="ZDQR_END" placeholder="">
+                </td>
+            </tr>
+            <tr>
+
+                <td>
+                    <strong>超期天数范围：</strong>
+                    <select ng-model="ZCQBS" ng-init="ZCQBS='EQ'" style="width: 70px">
+                        <option value="GT ">大于</option>
+                        <option value="EQ">等于</option>
+                        <option value="LT">小于</option>
+                    </select>
+                    <input class="text" style="width: 195px" type="text" name="ZCQTS"  ng-init="ZCQTS=''" ng-model="ZCQTS" placeholder="">
+                </td>
+                <td>
+                    <strong>核销状态：</strong>
+                    <select ng-model="ZHXSTA" ng-init="ZHXSTA=''">
+                        <option value="">请选择</option>
+                        <option value="10 ">已核销</option>
+                        <option value="20">未核销</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+                    <a ng-if="opprev.receivableList_receivableAdd" class="searchbtn2 searchbtn2bot addBtn" href="javascript:;" ng-click="receivableBill()">收款计划单</a>
+                    <a class="searchbtn2 searchbtn2bot addBtn" href="javascript:;" ng-click="incomeView()">查看收款计划详情</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<div class="item">查询结果</div>
+<div style="overflow-x:auto; width: 100%;">
+<table class="orangestyle table" id="ccTable" style="width:150%;">
+    <thead>
+    <tr>
+        <th></th>
+        <th>客户名称</th>
+        <th>销售合同号</th>
+        <th>销售订单号</th>
+        <th>部门</th>
+        <th>销售员</th>
+        <th class="right">应收金额</th>
+        <th class="right">已核销金额</th>
+        <th class="right">未核销金额</th>
+        <th>到期日</th>
+        <th>账期</th>
+        <th>超期天数</th>
+        <th class="right">已计划金额</th>
+        <th>应收来源</th>
+        <th>交货单号</th>
+        <th ng-hide="true">项目说明</th>
+        <th ng-hide="true">业务应收编码</th>
+        <th ng-hide="true">客户编码</th>
+        <th >备注</th>
+    </tr>
+    </thead>
+    <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in dataList" class="list">
+        <td><input ng-click="receivableSelect($index)" class="checkBox" name="checkbox" type="checkbox"/></td>
+        <td>{{list.NAME1}}</td>
+        <td>{{list.ZBSTKD}}</td>
+        <td>{{list.VBELN}}</td>
+        <td>{{list.ZCREATE_ORG	}}</td>
+        <td>{{list.ZPERNR_NAME}}</td>
+        <td class="right">{{list.ZYSJE}}</td>
+        <td class="right">{{list.ZHXJE}}</td>
+        <td class="right">{{list.WHXJE}}</td>
+        <td>{{list.ZDQR}}</td>
+        <td>{{list.ZZL}}</td>
+        <td >{{list.ZCQTS}}</td>
+        <td class="right">{{list.ZJHJE}}</td>
+        <td>{{list.ZYSLY}}</td>
+        <td>{{list.VBELN_VL}}</td>
+        <td ng-hide="true">{{list.ZPRJ_NAME}}</td>
+        <td ng-hide="true">{{list.ZYWYS}}</td>
+        <td ng-hide="true">{{list.KUNNR}}</td>
+        <td>{{list.ZBZ}}</td>
+    </tr>
+    <tr class="tip"><td colspan="18">没有查到应收查询</td></tr>
+    </tbody>
+</table>
+    </div>
+<pagination conf="paginationConf"></pagination>

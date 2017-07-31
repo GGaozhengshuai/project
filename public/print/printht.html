@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>打印</title>
+    <script type="text/javascript" src="/js/lib/jquery/jquery-1.11.3.js"></script>
+    <link rel="stylesheet" href="/css/print.css">
+    <style>
+        body {margin: 0;padding: 0; background-color: #FAFAFA; font: 12pt "Tahoma"; }
+        * {box-sizing: border-box; -moz-box-sizing: border-box; }
+        #printbtn{width: 21cm; }
+        .page {width: 21cm;/*min-height: 29.7cm;*/margin: 0 auto;border: 1px #D3D3D3 solid;border-radius: 5px;background: white;}
+        @page { size: A4;margin:0; }/*size: A4 landscape; 纵向*/
+        @media print {
+            .page {margin: 0; padding: 0; border: 0;border-radius: initial; width: initial;min-height: initial;box-shadow: initial; background: initial; page-break-after: always; }
+            #printbtn { display: none;}
+        }
+
+    </style>
+</head>
+<body style="text-align: center;">
+<div id="printbtn" style="display:none;"><span>模板预览</span><button onclick="javascript:window.print()">打印</button></div>
+<div id="wrap">
+    <!--<iframe src="" style="margin:0 auto;" scrolling="no" id="external-frame"></iframe>-->
+</div>
+
+<script>
+    var ii=0;
+    function ready(){
+        $('#wrap').find('iframe').each(function(i) {
+            setIframeHeight( $(this)[0] );
+            $(document.getElementById('ifm'+i).contentWindow.document.body).addClass('hasMoreIframe');
+        });
+        ii++;
+        if($('#wrap').find('iframe').length == ii){
+            $('#printbtn').show();
+        }
+    }
+    function setIframeHeight(iframe) {
+        if (iframe) {
+            var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
+            if (iframeWin.document.body) {
+                setPageFn($(iframeWin.document).find('.pageH'));
+                iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
+
+                // 检查是否显示水印
+                if($(iframeWin.document.body).hasClass('hasshuiyin')) {
+                    var conHeight = $(iframe).height();
+                    var conWidth = $(iframe).width();
+                    var num = Math.ceil(conHeight*conWidth/390/113);
+                    for(i=0;i<num;i++)
+                        $(iframeWin.document.body).find('.shuiyin').append('<img src="../print/shuiyin.png" />');
+
+                }
+//                console.log(iframe.height, $(iframeWin.document).find('.pageH').height())
+            }
+        }
+    }
+    // iframe 内容高度超出一页，重组打印页面
+    function setPageFn(obj) {
+        obj.each(function() {
+            var o = $(this).find('.showWrap');
+            if(!o || !o[0] || o.closest('.morePage')[0]) return;
+//            console.log('showWrap', o.find('.barcode p').html())
+            $(this).wrap('<div class="morePage">');
+            var oH = parseInt(o[0].offsetHeight),
+                h = parseInt(o[0].scrollHeight),
+                allPage = Math.ceil(h/oH);
+            o.find('.contentBox').height(oH *allPage);
+//            console.log('allPage:',allPage,h, oH)
+//            return false;
+            if(allPage>1){
+                for(var i=1; i<allPage; i++) {
+                    var pageI = $(this).clone();
+                    $(this).after(pageI);
+                }
+            }
+            $(this).parent().find('.showWrap').each(function(i){
+                this.scrollTop = i*oH;
+            })
+
+        })
+    }
+    window.onload = function(){
+//        var ifm = window.frames;
+        var str = window.location.search;
+        str = str.split('&');
+        var uri = str[0], arr=[];
+        console.log(str, uri)
+        for(var i=0,l=str.length; i<l; i++) {
+            if(i) {
+                var param = str[i];
+                param = param.split("=");
+                arr[i-1] = [param[0], param[1].split(";;")];
+                console.log(arr)
+            }
+        }
+        var htmlArr = [];
+        if(arr.length) {
+            for(var i=0,l=arr[0][1].length; i<l; i++) {
+                var params = [];
+                for(var j=0,len=arr.length; j<len; j++) {
+                    params[j] = arr[j][0] + '=' +arr[j][1][i];
+                }
+                htmlArr[i] = '<div class="page"><iframe src="'+ uri.substr(5) + '?'+ params.join('&') +'" style="margin:0 auto; width:100%;" scrolling="no" id="ifm'+i+'"></iframe></div>'
+//                htmlArr[i] = '<div class="page"><iframe src="'+ uri.substr(5) +'" style="margin:0 auto; width:100%;" scrolling="no" id="ifm'+i+'"></iframe></div>'
+            }
+        }
+
+        $("#wrap").html( htmlArr.join("") );
+        console.log('h:',$('.page').height())
+    }
+</script>
+</body>
+</html>

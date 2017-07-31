@@ -1,0 +1,49 @@
+<h3 class="genTitle"><em></em><span>审批流记录</span></h3>
+<h3 class="genTitle"><em></em><span>oldprocess</span></h3>
+<!--<div>{{applyUpdataold}}</div>-->
+<div>
+    <div class="applyLog">
+        <table>
+            <thead>
+            <tr>
+                <th class="th1">审批人</th>
+                <th class="th2">审批时间</th>
+                <th class="th3">审批状态</th>
+                <th class="th4">审批意见</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="list in processlog">
+                <td>{{list.sender.name}}</td>
+                <td>{{list.createDate | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td>{{list.operation}}</td>
+                <td>{{list.content.comment}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<h3 class="genTitle"><em></em><span>newprocess</span></h3>
+<!--<div>{{applyUpdatanew}}</div>-->
+<div>
+    <div class="applyLog">
+        <table>
+            <thead>
+            <tr>
+                <th class="th1">审批人</th>
+                <th class="th2">审批时间</th>
+                <th class="th3">审批状态</th>
+                <th class="th4">审批意见</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="list in processlog1" ng-class="list.flag == 'old' ? '':'newtr'">
+                <td>{{list.sender.name}}</td>
+                <td>{{list.createDate | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td>{{list.operation}}</td>
+                <td>{{list.content.comment}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

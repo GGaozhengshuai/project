@@ -1,0 +1,89 @@
+<div class="item">销售合同收款计划信息</div>
+<table class="orangestyle table">
+    <thead>
+    <tr>
+        <th>收款计划单号</th>
+        <th>创建日期</th>
+        <th>客户名称</th>
+        <th>客户编码</th>
+        <th class="right">计划收款金额</th>
+        <th>制单人</th>
+        <th>部门</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in dataList">
+        <td title="{{list.ZJHDBHK}}" ><a class="underline" target="_blank" href="index.html#/incomeOrderView/{{list.ZJHDBHK}}"> {{list.ZJHDBHK}}</a></td>
+
+        <td >{{list.ZCRDAT| date: 'yyyy-MM-dd'}}</td>
+        <td title="{{list.NAME1}}">{{list.NAME1| cutfield:true:7:'...'}}</td>
+        <td >{{list.KUNNR}}</td>
+        <td class="right" >{{list.ZSKJE| number:2}}</td>
+        <td >{{list.ZCRNAM}}</td>
+        <td >{{list.ZBM}}</td>
+        <td class="czBtn">
+            <!--<a href="index.html#/incomeEdit?{{sapid}}" ng-show="list.editShow">编辑</a>-->
+            <!--<a target="_blank" href="index.html#/incomeEdit?sapid={{list.ZJHDBHK}}">变更</a>-->
+            <a class="handleBtn editBtn" href="" ng-click="incomEdit(list.ZJHDBHK)" ng-if="opprev.incomeOrder_change" title="变更"></a>
+            <a class="handleBtn printBtn" href="/print/printest.html?uri=/receivablesplan/printview&ZJHDBHK={{list.ZJHDBHK}}" target="_blank" title="打印"></a>
+            <a class="handleBtn detailBtn" target="_blank" href="index.html#/incomeOrderView/{{list.ZJHDBHK}}" title="详情"></a>
+        </td>
+    </tr>
+    <tr class="tip"><td colspan="10">没有查到收款计划单</td></tr>
+    </tbody>
+</table>
+<div class="item">销售合同业务应收信息</div>
+<div class="czAddBtn">
+    <a ng-if="opprev.receivableList_receivableAdd" class="searchbtn2 searchbtn2bot addBtn" href="javascript:;" ng-click="receivableBill()">收款计划单</a>
+</div>
+<div style="overflow-x:auto; width: 100%;">
+<table class="orangestyle table" id="ccTable" style="width:150%;">
+    <thead>
+    <tr>
+        <th></th>
+        <th>客户名称</th>
+        <th>销售合同号</th>
+        <th>销售订单号</th>
+        <th>部门</th>
+        <th>销售员</th>
+        <th class="right">应收金额</th>
+        <th class="right">已核销金额</th>
+        <th class="right">未核销金额</th>
+        <th>到期日</th>
+        <th>账期</th>
+        <th>超期天数</th>
+        <th class="right">已计划金额</th>
+        <th>应收来源</th>
+        <th>交货单号</th>
+        <th ng-hide="true">项目说明</th>
+        <th ng-hide="true">业务应收编码</th>
+        <th ng-hide="true">客户编码</th>
+    </tr>
+    </thead>
+    <tbody ng-class="dataList1.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in dataList1" class="list">
+        <td><input ng-click="receivableSelect($index)" class="checkBox" name="checkbox" type="checkbox"/></td>
+        <td>{{list.NAME1}}</td>
+        <td>{{list.ZBSTKD}}</td>
+        <td>{{list.VBELN}}</td>
+        <td>{{list.ZCREATE_ORG	}}</td>
+        <td>{{list.ZPERNR_NAME}}</td>
+        <td class="right">{{list.ZYSJE}}</td>
+        <td class="right">{{list.ZHXJE}}</td>
+        <td class="right">{{list.WHXJE}}</td>
+        <td>{{list.ZDQR}}</td>
+        <td>{{list.ZZL}}</td>
+        <td >{{list.ZCQTS}}</td>
+        <td class="right">{{list.ZJHJE}}</td>
+        <td>{{list.ZYSLY}}</td>
+        <td>{{list.VBELN_VL}}</td>
+        <td ng-hide="true">{{list.ZPRJ_NAME}}</td>
+        <td ng-hide="true">{{list.ZYWYS}}</td>
+        <td ng-hide="true">{{list.KUNNR}}</td>
+
+    </tr>
+    <tr class="tip"><td colspan="18">没有查到应收查询</td></tr>
+    </tbody>
+</table>.
+</div>

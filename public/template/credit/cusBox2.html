@@ -1,0 +1,47 @@
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>客户名称</strong>
+                    <input class="text" type="text" name="$parent.NAME"  ng-init="$parent.NAME=''" ng-model="$parent.NAME" placeholder="请输入客户名称">
+                </td>
+                <td>
+                    <strong>客户编码</strong>
+                    <input type="text" name="$parent.KUNNR" ng-init="$parent.KUNNR=''"  ng-model="$parent.KUNNR" class="text" placeholder="请输入客户编码">
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="button" value="查询" class="searchbtn2" ng-click="searchCus()">
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<table class="orangestyle table">
+    <thead>
+    <tr>
+        <th>客户编码</th>
+        <th>客户类型</th>
+        <th>客户名称</th>
+        <th>创建人</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody ng-class="cusDateList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in cusDateList">
+        <td>{{list.KUNNR}}</td>
+        <td>{{list.CENTRAL_DATA.KTOKD}}</td>
+        <td>{{list.CENTRAL_DATA.NAME1}}</td>
+        <td>{{list.CENTRAL_DATA.ZCREATE_NAME}}</td>
+        <td>
+            <a href="javascript:;" ng-click="cusSelect(list.KUNNR, list.CENTRAL_DATA.NAME1)">选择</a>
+        </td>
+    </tr>
+    <tr class="tip"><td colspan="5">没有查到此客户</td></tr>
+    </tbody>
+</table>
+<!--
+<pagination conf="paginationConf"></pagination>-->

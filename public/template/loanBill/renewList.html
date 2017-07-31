@@ -1,0 +1,59 @@
+<!--<div class="mainright">-->
+<div class="item">借出续借</div>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>借出单编号</strong>
+                    <input class="text" type="text"  ng-init="code=''" ng-model="code" placeholder="请输入申请单号">
+                </td>
+                <td>
+                    <strong>借出客户名称</strong>
+                    <input class="text" type="text"  ng-init="clientName=''"  ng-model="clientName" placeholder="请输入借出客户名称">
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+                    <a class="searchbtn2 searchbtn2bot" href="/index.html#/loanBillOrder">返回借出单</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<div class="item">查询结果</div>
+<table class="orangestyle table">
+    <thead>
+    <tr>
+        <th>借出单编号</th>
+        <th>续借单编号</th>
+        <th>借出类型</th>
+        <th>产品线</th>
+        <th>借出客户名称</th>
+        <th>续借天数</th>
+        <th style="width: 30px;">操作</th>
+    </tr>
+    </thead>
+    <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in dataList">
+        <!--<td>{{list.code}}</td>-->
+        <td>
+            <a class="underline" href="index.html#/renewBillOrderView?id={{list._id}}&code={{list.code}}&rncode={{list.pdrenew.rncode}}">{{list.code}}</a>
+        </td>
+        <td>{{list.pdrenew.rncode}}</td>
+        <!--<td>{{list.lendbase.lendtype}}</td>-->
+        <td>{{{'ZA1':'厂商借用','ZA2':'代理商借用','ZA3':'内部借用','ZA4':'借货转销售'}[list.lendbase.lendtype] || list.lendbase.lendtype}}</td>
+        <td>{{list.lendbase.productline}}</td>
+        <td>{{list.client.name}}</td>
+        <td>{{list.pdrenew.rndays}}</td>
+        <td class="czBtn padL12">
+            <a class="handleBtn detailBtn" href="index.html#/renewBillOrderView?id={{list._id}}&code={{list.code}}&rncode={{list.pdrenew.rncode}}" title="详情"></a>
+        </td>
+    </tr>
+    <tr class="tip"><td colspan="7">没有查到借出续借单</td></tr>
+    </tbody>
+</table>
+<pagination conf="paginationConf"></pagination>
+

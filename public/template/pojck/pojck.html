@@ -1,0 +1,86 @@
+<h3 class="genTitle"><em></em><span>进出口采购订单</span></h3>
+<ul class="generNav">
+    <li class="active"><a href="javascript:;">进出口采购订单</a></li>
+</ul>
+<div id="mainView">
+    <div class="czAddBtn">
+        <a href="javascript:;" ng-click="viewPurchase1()" class="changhtBtn">查看采购申请</a>
+        <a target="_blank" href="/print/printest.html?uri=/pojck/printview&EBELN={{purchaseList.EBELN}}" ng-if="ifPoheader" class="viewBtn">打印</a>
+        <a href="javascript:;" ng-click="contractdetails($event,purchaseList.ZZPO)" class="changInfoBtn">查看销售详情</a>
+    </div>
+    <div class="viewTable ng-scope">
+        <ul>
+            <li><strong>公司代码：</strong><span>{{enumBUKRS[purchaseList.BUKRS]}}</span></li>
+            <li><strong>采购订单号：</strong><span>{{purchaseList.EBELN}}</span></li>
+            <li><strong>采购订单凭证类型：</strong><span>{{enumBSART[purchaseList.BSART]}}</span></li>
+            <li><strong>采购凭证日期：</strong><span>{{purchaseList.BEDAT}}</span></li>
+            <li><strong>采购组织：</strong><span>{{enumEKORG[purchaseList.EKORG]}}</span></li>
+            <li><strong>采购组：</strong><span>{{enumEKGRP[purchaseList.EKGRP]}}</span></li>
+            <li><strong>供应商描述：</strong><span>{{purchaseList.LIFNR_NAME + purchaseList.LIFNR_NAME2}}</span></li>
+            <li><strong>供应商订单号：</strong><span>{{purchaseList.ZZPO}}</span></li>
+            <li><strong>最终客户名称：</strong><span>{{purchaseList.ZZKH}}</span></li>
+            <li><strong>采购合同编号：</strong><span>{{purchaseList.ZZCYPO}}</span></li>
+            <li><strong>销售订单号：</strong><span>{{purchaseList.ZZSDPO}}</span></li>
+            <li><strong>操作标识：</strong><span>{{{'I':'新增','U':'修改','D':'作废'}[purchaseList.ZOPERATION] || purchaseList.ZOPERATION}}</span></li>
+            <li><strong>贸易方式：</strong><span>{{purchaseList.ZZMYFS}}</span></li>
+            <li><strong>境外交货方式：</strong><span>{{purchaseList.ZZJWJH}}</span></li>
+            <li><strong>是否有境外第三方：</strong><span>{{{'X':'是','':'否'}[purchaseList.ZZJWSK]}}</span></li>
+            <li><strong>是否是双方合同：</strong><span>{{{'X':'是','':'否'}[purchaseList.ZZSFHT]}}</span></li>
+            <li><strong>境外采购付款方式：</strong><span>{{enumZZJWCP[purchaseList.ZZJWCP]}}</span></li>
+            <!--<li><strong>贸易条款：</strong><span>{{purchaseList.ZZMY}}</span></li>-->
+            <li><strong>最迟交货期：</strong><span>{{purchaseList.ZZJHDA}}</span></li>
+            <li><strong>报关金额：</strong><span>{{purchaseList.ZZBGJJ}}</span></li>
+            <li><strong>结算方式：</strong><span>{{purchaseList.ZZJSFS}}</span></li>
+            <li><strong>到货口岸：</strong><span>{{purchaseList.ZZDHKA}}</span></li>
+            <li><strong>启运国别：</strong><span>{{purchaseList.ZZQYGB}}</span></li>
+            <li><strong>产品线：</strong><span>{{enumZZCP[purchaseList.ZZCP]}}</span></li>
+            <li><strong>币别：</strong><span>{{enumWAERS[purchaseList.WAERS]}}</span></li>
+            <li><strong>合同金额：</strong><span>{{purchaseList.ZZZJY}}</span></li>
+            <li><strong>申请人：</strong><span>{{purchaseList.ZZSQR}}</span></li>
+            <li><strong>关务人员：</strong><span>{{purchaseList.ZZGWRY}}</span></li>
+            <li><strong>原厂供应商：</strong><span>{{purchaseList.ZZCYVD}}</span></li>
+            <li><strong>创建者：</strong><span>{{purchaseList.ERNAM}}</span></li>
+            <li><strong>是否提前下单：</strong><span>{{{'0':'正常下单','1':'提前下单','':'未认领'}[purchaseList.ZZTQXD]}}</span></li>
+            <li class="list_con"><strong>备注：</strong><span>{{purchaseList.note}}</span></li>
+            <!--<li class="list_con"><strong>采购申请清单：</strong><span>展开详细采购清单∨</span></li>-->
+            <li class="list_con"><strong>采购订单清单：</strong><span style="text-decoration: underline;cursor: pointer" ng-click="show()">展开详细采购清单∨</span></li>
+        </ul>
+
+        <table class="tab_data" ng-show="emerge">
+            <thead class="tab_header">
+            <tr>
+                <th>行项目</th>
+                <th>物料组</th>
+                <th>物料编码</th>
+                <th>物料描述</th>
+                <th>数量</th>
+                <th>单位</th>
+                <th>税率</th>
+                <th>小计</th>
+                <th>交货日期</th>
+                <th>退货标示</th>
+            </tr>
+            </thead>
+            <tbody class="tab_body">
+            <tr ng-repeat="list in dataList">
+                <td>{{list.EBELP}}</td>
+                <td>{{enumData.MATKL[list.MATKL]}}</td>
+                <td>{{list.MATNR}}</td>
+                <td>{{list.TXZ01}}</td>
+                <td>{{list.MENGE}}</td>
+                <td>{{enumData.MEINS[list.MEINS]}}</td>
+                <td>{{enumMWSKZ[list.MWSKZ]}}</td>
+                <td>{{list.NETPR}}</td>
+                <td>{{list.EINDT}}</td>
+                <th ><span ng-if="list.RETPO == 'X' ? true : false">是</span><span ng-if="list.RETPO == '' ? true : false">否</span></th>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<pagination conf="paginationConf"></pagination>
+<div id="chsBox" class="dialog cusBox" title="查看采购申请" ng-include="'template/purchase/OpurchaseList.html'"></div>
+<div class="apCot" ng-if="apCot" >
+    <div ng-include="'template/common/apply.html'"></div>
+</div>
+<div id="approversDialog" class="dialog cusBox" title="选择下一审批人" ng-include="'template/common/approvers.html'" ></div>

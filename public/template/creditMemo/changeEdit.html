@@ -1,0 +1,142 @@
+<h3 class="genTitle genTitleBot"><em></em><span>返点冲抵应收变更</span></h3>
+<div class="generForm">
+    <form novalidate name="invoiceForm">
+        <ul class="noMargin">
+            <!--<li class="tli">
+                <strong><font>*</font>贷向凭证号：</strong>
+                <input ng-disabled="true" ng-model="ORDER_DATA.No" type="text" placeholder="保留两位小数"/>
+            </li>-->
+            <!--
+            <li class="tli">
+                <strong><font>*</font>日期：</strong>
+                <input ng-required="true" ng-model="ORDER_DATA.createdate" type="text" placeholder=""/>
+            </li>
+            -->
+            <li class="tli">
+                <strong><font>*</font>申请人：</strong>
+                <input ng-disabled="true" ng-model="ORDER_DATA.requestor" type="text" placeholder="请选择姓名"/>
+                <input ng-model="ORDER_DATA.requestorId" type="hidden" placeholder=""/>
+            </li>
+            <li class="tli">
+                <strong>申请部门：</strong>
+                <input ng-disabled="true" ng-model="ORDER_DATA.department" type="text" placeholder=""/>
+                <input ng-model="ORDER_DATA.departmentId" type="hidden" placeholder=""/>
+            </li>
+            <li class="tli">
+                <strong><font>*</font>关联销售合同号：</strong>
+                <input ng-disabled="true" ng-model="ORDER_DATA.contractNo" type="text" placeholder="请选择销售合同"/>
+                <input ng-model="ORDER_DATA.contractOrderId" type="hidden" placeholder=""/>
+            </li>
+            <!--<li class="tli">
+                <strong>销售订单号：</strong>
+                <input ng-disabled="true" ng-model="ORDER_DATA.salesorderid" type="text" placeholder=""/>
+            </li>-->
+            <li class="tli">
+                <strong>客户编号：</strong>
+                <input ng-disabled="true"  ng-model="ORDER_DATA.customerId" type="text" placeholder=""/>
+            </li>
+            <li class="tli">
+                <strong>客户名称：</strong>
+                <input ng-disabled="true" ng-model="ORDER_DATA.customer" type="text" placeholder=""/>
+            </li>
+            <li class="tli">
+                <strong>开票税率：</strong>
+                <input ng-disabled="true" ng-model="ORDER_DATA.tax" type="text" placeholder=""/>
+            </li>
+            <li class="tli">
+                <strong>合同金额：</strong>
+                <input ng-disabled="true" ng-model="ORDER_DATA.contractMoney" type="text" placeholder=""/>
+            </li>
+            <li class="tli">
+                <strong>合同已用返点金额：</strong>
+                <input ng-disabled="true" ng-model="ORDER_DATA.rebatemoney" type="text" placeholder=""/>
+            </li>
+        </ul>
+        <div class="genTitle2">
+            <div>
+                <strong>本单销售返点</strong>
+            </div>
+        </div>
+        <div class="czAddBtn">
+            <a style="float:left; margin-left:100px;" href="javascript:;" ng-click="fdBox()">请选择返点</a>
+        </div>
+        <ul class="noMargin">
+            <li class="tli">
+                <strong>返点冲抵应收金额：</strong>
+                <input ng-disabled="true" ng-model="ORDER_DATA.thisMoney" type="text" placeholder=""/>
+            </li>
+            <li></li>
+            <li></li>
+        </ul>
+        <div class="addTable">
+            <table id="fdList">
+                <tr>
+                    <th><font>*</font>返点编号</th>
+                    <th>生效日期</th>
+                    <th>返点名称</th>
+                    <th>返点金额</th>
+                    <th>可用余额</th>
+                    <th>使用返点金额</th>
+                    <th>操作</th>
+                </tr>
+                <tr ng-repeat="fd in rebateitem" class="list">
+                    <td>
+                        <input style="width:170px;" title="{{fd.NO}}" ng-disabled="true" ng-model="fd.NO" type="text"/>
+                    </td>
+                    <td>
+                        <input ng-disabled="true" ng-model="fd.effectdate" type="text" value=""/>
+                    </td>
+                    <td>
+                        <input ng-disabled="true" ng-model="fd.title" type="text" value=""/>
+                    </td>
+
+                    <td>
+                        <input ng-disabled="true" ng-model="fd.money" type="text" value=""/>
+                    </td>
+                    <td>
+                        <input ng-disabled="true" ng-model="fd.remainder" type="text" value=""/>
+                    </td>
+                    <td>
+                        <input class="amountVal" ng-blur="fdBlur(fd.amount,fd.amount3,$index)"  ng-model="fd.amount3" type="text" value=""/>
+                    </td>
+                    <td><a ng-click="fdListDelet($index,'rebate')" ng-if="fd._id == undefined ? true : false" href="javascript:;">删除</a></td>
+                </tr>
+                <tr ng-repeat="fd in Addrebateitem" class="list">
+                    <td>
+                        <input style="width:170px;" title="{{fd.NO}}" ng-disabled="true" ng-model="fd.NO" type="text"/>
+                    </td>
+                    <td>
+                        <input ng-disabled="true" ng-model="fd.effectdate" type="text" value=""/>
+                    </td>
+                    <td>
+                        <input ng-disabled="true" ng-model="fd.title" type="text" value=""/>
+                    </td>
+
+                    <td>
+                        <input ng-disabled="true" ng-model="fd.money" type="text" value=""/>
+                    </td>
+                    <td>
+                        <input ng-disabled="true" ng-model="fd.remainder" type="text" value=""/>
+                    </td>
+                    <td>
+                        <input class="amountVal" ng-disabled="true" ng-model="fd.amount" type="text" value=""/>
+                    </td>
+                    <td><a ng-click="fdListDelet($index,'add')" href="javascript:;">删除</a></td>
+                </tr>
+            </table>
+        </div>
+        <ul class="noMargin">
+            <li class="list_con">
+                <strong>备注：</strong>
+                <textarea ng-disabled="true" ng-model="ORDER_DATA.remark"></textarea>
+            </li>
+        </ul>
+        <div class="gerSub">
+            <a href="javascript:;" back-Button>返回</a>
+            <button ng-click="addData(ORDER_DATA, 'save')"  class="subSave">保存草稿</button>
+            <button ng-click="addData(ORDER_DATA, 'apply')"  class="subApply">保存并提交</button>
+        </div>
+    </form>
+</div>
+<div id="fdBox" class="dialog cusBox" title="选择返点" ng-include="'template/contract/fdBox.html'"></div>
+

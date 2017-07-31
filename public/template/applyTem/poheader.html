@@ -1,0 +1,78 @@
+<h3 class="genTitle"><em></em><span>采购订单</span></h3>
+<ul class="generNav">
+    <li class="active"><a href="javascript:;">采购订单详情</a></li>
+</ul>
+
+<div id="mainView">
+    <div class="viewTable ng-scope">
+        <div class="czAddBtn">
+            <a href="javascript:;" ng-click="viewpurchase()" class="changhtBtn">查看采购申请</a>
+            <a target="_blank" href="/print/printht.html?uri=/poheader/printview&EBELN={{purchaseList.EBELN}}" ng-if="ifPoheader" class="viewBtn">打印</a>
+            <a href="javascript:;" ng-click="contractdetails($event,purchaseList.ZZPO)" class="changInfoBtn">查看销售详情</a>
+        </div>
+        <ul>
+            <li><strong>采购订单号：</strong><span>{{purchaseList.EBELN}}</span></li>
+            <li><strong>采购凭证日期：</strong><span>{{purchaseList.BEDAT}}</span></li>
+            <li><strong>操作标识：</strong><span>{{{'I':'新增','U':'修改','D':'作废'}[purchaseList.ZOPERATION] || purchaseList.ZOPERATION}}</span></li>
+            <li><strong>采购订单凭证类型：</strong><span>{{enumobj.BSART[purchaseList.BSART]}}</span></li>
+            <li><strong>采购组织：</strong><span>{{enumobj.EKORG[purchaseList.EKORG]}}</span></li>
+            <li><strong>采购组：</strong><span>{{enumobj.EKGRP[purchaseList.EKGRP]}}</span></li>
+            <li><strong>供应商订单号：</strong><span>{{purchaseList.ZZPO}}</span></li>
+            <li><strong>供应商名称：</strong><span>{{purchaseList.LIFNR_NAME + purchaseList.LIFNR_NAME2}}</span></li>
+            <li><strong>产品线：</strong><span>{{enumobj.ZZCP[purchaseList.ZZCP]}}</span></li>
+            <li><strong>运输方式：</strong><span>{{purchaseList.ZZYS}}</span></li>
+            <li><strong>二级经销商名称：</strong><span>{{purchaseList.ZZEJ}}</span></li>
+            <li><strong>最终客户名称：</strong><span>{{purchaseList.ZZKH}}</span></li>
+            <li><strong>付款方式：</strong><span>{{purchaseList.ZZFK}}</span></li>
+            <li><strong>付款条款：</strong><span>{{purchaseList.ZTERM}}</span></li>
+            <li><strong>项目名称：</strong><span>{{purchaseList.ZZXM}}</span></li>
+            <li><strong></strong><span></span></li>
+            <li><strong>合同原金额：</strong><span>{{purchaseList.ZZZJY | number:2}}</span></li>
+            <li><strong>合同总金额：</strong><span>{{(purchaseList.ZZZJY - purchaseList.ZZSBFD - purchaseList.ZZFWFD) | number:2}}</span></li>
+            <li><strong>设备使用返点金额：</strong><span>{{purchaseList.ZZSBFD | number:2}}</span></li>
+            <li><strong>服务使用返点金额：</strong><span>{{purchaseList.ZZFWFD}}</span></li>
+            <li><strong>币别：</strong><span>{{enumobj.WAERS[purchaseList.WAERS]}}</span></li>
+            <li><strong>创建者：</strong><span>{{purchaseList.ERNAM}}</span></li>
+            <li><strong>是否提前下单：</strong><span>{{{'0':'正常下单','1':'提前下单','':'未认领'}[purchaseList.ZZTQXD]}}</span></li>
+            <li class="list_con"><strong>项目说明：</strong><span>{{purchaseList.note}}</span></li>
+        </ul>
+        <table class="tab_data">
+            <thead class="tab_header">
+            <tr>
+                <th>行项目</th>
+                <th>物料组</th>
+                <th>物料编码</th>
+                <th>物料描述</th>
+                <th>数量</th>
+                <th>单位</th>
+                <th>税率</th>
+                <th>小计</th>
+                <th>交货日期</th>
+                <th>退货标示</th>
+            </tr>
+            </thead>
+            <tbody class="tab_body">
+            <tr ng-repeat="list in dataList">
+                <td>{{list.EBELP}}</td>
+                <td>{{enumobj.MATKL[list.MATKL]}}</td>
+                <td>{{list.MATNR}}</td>
+                <td>{{list.TXZ01}}</td>
+                <td>{{list.MENGE}}</td>
+                <td>{{enumobj.MEINS[list.MEINS]}}</td>
+                <td>{{enumobj.MWSKZ[list.MWSKZ]}}</td>
+                <td>{{list.BRTWR}}</td>
+                <td>{{list.EINDT}}</td>
+                <th ><span ng-if="list.RETPO == 'X' ? true : false">是</span><span ng-if="list.RETPO == '' ? true : false">否</span></th>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <pagination conf="paginationConf"></pagination>
+
+        <div class="apCot" ng-if="apCot" >
+            <div ng-include="'template/common/apply.html'"></div>
+        </div>
+    </div>
+
+<div id="approversDialog" class="dialog cusBox" title="选择下一审批人" ng-include="'template/common/approvers.html'" ></div>
+<div id="chsBox" class="dialog cusBox" title="查看采购申请" ng-include="'template/purchase/OpurchaseList.html'"></div>

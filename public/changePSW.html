@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html ng-app="userApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>修改密码</title>
+    <link rel="Shortcut Icon" href="favicon.ico" type="image/x-icon"/>
+    <link href="js/lib/sweetalert/sweetalert.css" rel="stylesheet">
+    <link href="css/reset.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body ng-controller="changeInfoCtrl">
+<div class="head">
+
+    <div class="nav">
+        <div class="navCont">
+            <!--<span class="user">欢迎<span>&nbsp;{{userChineseName}}（{{userName}}）</span><a class="loginout" ng-click="loginOut()" href="javascript:;">退出</a></span>-->
+
+        </div>
+    </div>
+</div>
+<div style=" width: 70%; margin: 0 auto;">
+    <p style="color: red; margin-top: 30px; text-align: center; font-size: 14px;">首次登陆，必须先修改密码</p>
+<h3 class="genTitle genTitleBot"><em></em><span>修改密码</span></h3>
+<div class="cusCont">
+    <div class="generForm">
+        <form novalidate name="myForm">
+            <ul style="width: 60%;margin: 0 auto;">
+               <!-- <li>
+                    <strong>旧密码：</strong>
+                    <input class="text" type="password" ng-model="oldpwd" name="oldpwd" placeholder="请输入旧密码">
+                    <span class="errTip ng-hide" ng-show="myForm.oldpwd.$dirty && myForm.oldpwd.$error.required && !myForm.oldpwd.$focused">必填</span>
+                </li>-->
+                <li>
+                    <strong><font>*</font>新密码：</strong>
+                    <input class="text" type='password' ng-required="true" ng-maxlength="20" name="newpwd" ng-Focus pass-Strength ng-model="newpwd" placeholder="6-20个字符；至少包含数字、字母、特殊字符任意两种">
+                    <span class="errTip ng-hide" ng-show="myForm.newpwd.$dirty && myForm.newpwd.$error.required && !myForm.newpwd.$focused">必填</span>
+                    <span class="errTip ng-hide" ng-show="myForm.newpwd.$dirty && myForm.newpwd.$error.pwd && !myForm.newpwd.$focused">密码太弱</span>
+                    <span class="errTip ng-hide" ng-show="myForm.newpwd.$dirty && myForm.newpwd.$error.maxlength && !myForm.newpwd.$focused">密码长度不能超过20</span>
+                </li>
+                <li class="passStrengthWrapLi">
+                    <strong>&nbsp;</strong>
+                    <div class='passStrength' ng-class="'passLevel'+newpwd.substr(0,1)"><!--{{{1:'弱',2:'弱',3:'中',4:'中',5:'强',6:'非常好'}[newpwd.substr(0,1)]}}--></div>
+                </li>
+                <li style="margin-top: 10px;">
+                    <strong>确认新密码：</strong>
+                    <input class="text" type="password" name="newpwd2" ng-model="newpwd2" ng-Focus placeholder="请再输一遍新密码" ng-required="true">
+                    <span class="errTip ng-hide" ng-show="myForm.newpwd2.$dirty && myForm.newpwd2.$error.required && !myForm.newpwd2.$focused">必填</span>
+                    <span class="errTip ng-hide" ng-show="newpwd2 && newpwd2 != newpwd.substr(1) && !myForm.newpwd2.$focused ">两次密码输入不一致</span>
+                </li>
+            </ul>
+        </form>
+        <div class="gerSub">
+            <button ng-click="saveFn()" class="subSave" >保存</button>
+        </div>
+    </div>
+</div>
+</div>
+<!--<loading ng-show="statueLoding"></loading>-->
+<script type="text/javascript" src="js/lib/jquery/jquery-1.11.3.js"></script>
+<script type="text/javascript" src="js/lib/sweetalert/sweetalert.min.js"> </script>
+<script type="text/javascript" src="js/lib/angular/angular.js"></script>
+<script src="js/changePSWApp.js"></script>
+</body>
+</html>

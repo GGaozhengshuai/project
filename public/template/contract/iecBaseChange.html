@@ -1,0 +1,598 @@
+<h3 class="genTitle genTitleBot"><em></em><span>进出口销售合同内容变更</span></h3>
+<div id="tabs">
+    <ul class="generNav" ng-init="ht.activeTab = 1">
+        <li ng-class="{active:ht.activeTab == 1}"><a href="javascript:;" ng-mousedown = 'htTab(1)'>进出口销售合同</a></li>
+        <li ng-class="{active:ht.activeTab == 3}"><a href="javascript:;" ng-mousedown = 'htTab(3)' >成本分析</a></li>
+    </ul>
+    <div class="cusCont tab_cont">
+        <div class="" ng-show="ht.activeTab == 1">
+            <div class="generForm">
+                <form novalidate name="invoiceForm">
+                    <h4 class="genH4">基本信息</h4>
+                    <ul class="noMargin">
+                        <li class="tli">
+                            <strong><font>*</font>销售主体：</strong>
+                            <select ng-model="ORDER_DATA.escompany" ng-disabled="true">
+                                <option value="">请选择</option>
+                                <option value="中建材信息技术股份有限公司">中建材信息技术股份有限公司</option>
+                                <option value="中建材集团进出口公司">中建材集团进出口公司</option>
+                                <option value="中国建材（香港）有限公司">中国建材（香港）有限公司</option>
+                            </select>
+                            <input ng-init="ORDER_DATA.classification='1'" ng-model="ORDER_DATA.classification" type="hidden"/><!--标识是是进出口销售合同-->
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>合同类型：</strong>
+                            <select ng-model="ORDER_DATA.contracttype" ng-required="true" ng-disabled="true">
+                                <option value="">请选择</option>
+                                <option value="项目">项目</option>
+                                <option value="分销">分销</option>
+                                <option value="专有服务">专有服务</option>
+                            </select>
+                        </li>
+                        <!--<li class="tli">
+                            <strong><font>*</font>合同编号：</strong>
+                            <input required ng-model="ORDER_DATA.contractno" type="text" placeholder="保留两位小数"/>
+                        </li>-->
+                        <!--<li class="tli">
+                            <strong><font>*</font>销售订单编号：</strong>
+                            <input ng-required="true" ng-model="ORDER_DATA.salesorderid" type="text" placeholder=""/>salesorderid是一个数组 显示第一个
+                        </li>-->
+                        <li class="tli">
+                            <strong><font>*</font>项目类型：</strong>
+                            <select ng-model="ORDER_DATA.projecttype" ng-required="true" ng-disabled="true">
+                                <option value="">请选择</option>
+                                <option value="进口代理">进口代理</option>
+                                <option value="进口销售">进口销售</option>
+                                <option value="进口代理转口">进口代理转口</option>
+                                <option value="代理投标">代理投标</option>
+                                <option value="代理投标转口">代理投标转口</option>
+                                <option value="GE分销">GE分销</option>
+                                <option value="分销">分销</option>
+                                <option value="出口">出口</option>
+                                <option value="转口">转口</option>
+                            </select>
+                        </li>
+                        <li class="tli">
+                            <strong>需方合同编号：</strong>
+                            <input ng-model="ORDER_DATA.customercontractno" type="text" placeholder="请输入需方合同编号" ng-disabled="true"/>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>销售人员姓名：</strong>
+                            <input ng-disabled="true" ng-readonly="true"  ng-model="ORDER_DATA.salesname" type="text" placeholder="请选择姓名"/>
+                            <input ng-model="ORDER_DATA.salesid" type="hidden" placeholder=""/>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>申请部门：</strong>
+                            <input ng-disabled="true" ng-required="true" ng-model="ORDER_DATA.salesorgnanme" type="text" placeholder=""/>
+                            <input ng-model="ORDER_DATA.salesorgid" type="hidden" placeholder=""/>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>商务人员：</strong>
+                            <input ng-disabled="true"  ng-model="ORDER_DATA.tradername" type="text" placeholder=""/>
+                            <input ng-model="ORDER_DATA.traderlogin" type="hidden" placeholder=""/>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>客户名称：</strong>
+                            <input ng-required="true" ng-readonly="true" ng-model="ORDER_DATA.stomer" ng-click="cusBox()" type="text" placeholder="请选择客户" ng-disabled="true"/>
+                            <input ng-model="ORDER_DATA.stomerid" type="hidden" placeholder=""/>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>关务人员：</strong>
+                            <select ng-disabled="true" ng-required="true" ng-model="ORDER_DATA.doorman">
+                                <option value="">请选择</option>
+                                <option value="xingfang">行方方</option>
+                                <option value="luyue">鲁玥</option>
+                                <option value="zhangna">张娜</option>
+                                <option value="piaoxianguo">朴贤国</option>
+                                <option value="wangmutian">王牧天</option>
+                            </select>
+                        </li>
+                        <li class="tli">
+                            <strong>开票客户：</strong>
+                            <input ng-disabled="true" name="KPstomer"  ng-model="ORDER_DATA.KPstomer"  type="text" placeholder="请选择开票客户"/>
+                            <input ng-model="ORDER_DATA.KPstomerid" type="hidden" placeholder=""/>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>产品线：</strong>
+                            <input ng-required="true" ng-model="ORDER_DATA.product" type="text" placeholder="请输入产品线" ng-disabled="true"/>
+                            <input ng-model="ORDER_DATA.productId" type="hidden"/>
+                        </li>
+                        <li class="tli">
+                            <strong>最终用户：</strong>
+                            <input ng-model="ORDER_DATA.finalconsumer" type="text" placeholder="" ng-disabled="true"/>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>币种：</strong>
+                            <select ng-model="ORDER_DATA.currencytype" ng-required="true" ng-disabled="true">
+                                <option value="">请选择</option>
+                                <option value="CNY">人民币</option>
+                                <option value="EUR">欧元</option>
+                                <option value="USD">美元</option>
+                                <option value="CHF">瑞士法郎</option>
+                                <option value="HKD">港币</option>
+                                <option value="JPY">日元</option>
+                            </select>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>合同金额：</strong>
+                            <input ng-required="true" ng-model="ORDER_DATA.contractmoney" type="number" placeholder="请输入合同金额" ng-disabled="true"/>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>开票税率：</strong>
+                            <select ng-model="ORDER_DATA.receipttype" ng-required="true" ng-disabled="true">
+                                <option value="">请选择</option>
+                                <option value="税率17%">税率17%</option>
+                                <option value="税率6%">税率6%</option>
+                                <option value="税率0">税率0</option>
+                            </select>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>付款方式：</strong>
+                            <select ng-model="ORDER_DATA.paytype" ng-required="true">
+                                <option value="">请选择</option>
+                                <option value="支票">支票</option>
+                                <option value="同城交换">同城交换</option>
+                                <option value="电汇">电汇</option>
+                                <option value="延期支票">延期支票</option>
+                                <option value="银行承兑汇票">银行承兑汇票</option>
+                                <option value="银行汇票">银行汇票</option>
+                                <option value="现金">现金</option>
+                                <option value="国内信用证">国内信用证</option>
+                                <option value="商业承兑汇票">商业承兑汇票</option>
+                                <option value="银承背书转让">银承背书转让</option>
+                                <option value="流动资金贷款">流动资金贷款</option>
+                                <option value="华为小额定期">华为小额定期</option>
+                                <option value="转口代付">转口代付</option>
+                            </select>
+                        </li>
+                        <li  class="tli">
+                            <strong><font>*</font>配套服务：</strong>
+                            <select ng-disabled="cpDisable" ng-model="ORDER_DATA.cp" ng-change="cpChange(ORDER_DATA.cp)" ng-required="true" ng-init="ORDER_DATA.cp='0'" >
+                                <option value="">请选择</option>
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                            </select>
+                        </li>
+                        <li  class="tli">
+                            <strong><font>*</font>结算方式：</strong>
+                            <select ng-model="ORDER_DATA.counttype" ng-required="true" ng-disabled="true">
+                                <option value="">请选择</option>
+                                <option value="自营">自营</option>
+                                <option value="代理">代理</option>
+                            </select>
+                        </li>
+                        <li  class="tli">
+                            <strong><font>*</font>是否双主体：</strong>
+                            <select ng-disabled="true" ng-model="ORDER_DATA.is2body" ng-required="true">
+                                <option value="">请选择</option>
+                                <option value="是">是</option>
+                                <option value="否">否</option>
+                            </select>
+                        </li>
+                        <li class="tli" ng-if="ORDER_DATA.is2body == '是'">
+                            <strong>内部结算合同金额：</strong>
+                            <input ng-focus bigzero-Validation ng-required="true" ng-model="ORDER_DATA.interiooney" name="interiooney" ng-disabled="ORDER_DATA.canRepeirInteriooney == 1" type="text" placeholder=""/>
+                            <span class="errTip ng-hide" ng-show="invoiceForm.interiooney.$dirty && $parent.invoiceForm.interiooney.$error.required">必填</span>
+                            <span class="errTip ng-hide" ng-show="invoiceForm.interiooney.$error.bigzero">大于0</span>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>运输方式：</strong>
+                            <select ng-required="true" ng-model="ORDER_DATA.transferway">
+                                <option value="">请选择</option>
+                                <option value="01">国内陆运</option>
+                                <option value="02">国内海运</option>
+                                <option value="03">国内空运</option>
+                                <option value="04">国际陆运</option>
+                                <option value="05">国际海运</option>
+                                <option value="06">国际空运</option>
+                                <option value="07">陆运快件</option>
+                                <option value="08">火车运输</option>
+                                <option value="09">快递</option>
+                                <option value="10">专车</option>
+                                <option value="11">自提</option>
+                            </select>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>计划账期（天）：</strong>
+                            <input ng-required="true" ng-model="ORDER_DATA.planday" type="number" placeholder="请输入天数"/>
+                        </li>
+                        <!--<li class="tli">
+                            <strong><font>*</font>生效日期：</strong>&lt;!&ndash;新建时，不可填。审批流程流转到执行商务处可填写。执行商务填写生效日期时，系统会弹出一个提示框，提示是否以当前日期为
+                            生效日期，如果是的话，{生效日期}取当前日期。如果否的话，选择要输入的日期，输入的日期赋值给{生效日期}；&ndash;&gt;
+                            <input ng-required="true" ng-model="ORDER_DATA.effectdate" type="text" placeholder=""/>
+                        </li>-->
+                        <li class="tli">
+                            <strong>货期要求：</strong>
+                            <input class="Wdate" date-Picker ng-readonly="true"  ng-model="ORDER_DATA.paymentdate" type="text" placeholder=""/>
+                        </li>
+                        <!--<li class="tli">流程流转到商务的第一次审批时，为必填项
+                            <strong><font>*</font>业务应收创建方式：</strong>
+                            <select ng-model="ORDER_DATA.receivabletype" ng-required="true">
+                                <option value="">请选择</option>
+                                <option value="固定模式">固定模式</option>
+                                <option value="修改模式">修改模式</option>
+                            </select>
+                        </li>-->
+                        <li class="clear"></li>
+                        <li class="list_con">
+                            <strong><font>*</font>合同收款条款：</strong>
+                            <textarea ng-required="true" ng-model="ORDER_DATA.contactreceivablesconditionshowarea"></textarea>
+                        </li>
+                        <li class="list_con">
+                            <strong>备注：</strong>
+                            <textarea ng-model="ORDER_DATA.remarks"></textarea>
+                        </li>
+
+                    </ul>
+                    <h4 class="genH4">需方商务联系人</h4>
+
+                    <ul class="noMargin">
+                        <li class="tli">
+                            <strong><font>*</font>商务联系人姓名：</strong>
+                            <input ui-autocomplete="cusUserOption" ng-required="true" ng-model="ORDER_DATA.contactname" type="text" placeholder="请输入商务联系人姓名"/>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>商务联系人电话：</strong>
+                            <input ng-required="true" ng-focus name="contactphone" telphone-Validation ng-model="ORDER_DATA.contactphone" type="text" placeholder="请输入联系电话"/>
+                            <span class="errTip ng-hide" ng-show="invoiceForm.contactphone.$dirty && invoiceForm.contactphone.$error.telphonenum && !invoiceForm.contactphone.$focused">格式不正确</span>
+                        </li>
+                        <li class="tli">
+                            <strong>商务联系人邮箱：</strong>
+                            <input ng-model="ORDER_DATA.contactemail" type="text" placeholder="请输入商务联系人邮箱"/>
+                        </li>
+                        <li class="tli">
+                            <strong>商务联系人职位：</strong>
+                            <input ng-model="ORDER_DATA.contacttitle" type="text" placeholder="请输入商务联系人职位"/>
+                        </li>
+                    </ul>
+                    <h4 class="genH4">交货地点和联系人</h4>
+                    <div class="addTable">
+                        <div class="czAddBtn">
+                            <a href="doc/lxrmb.xlsx">下载导入联系人模板</a>
+                            <input excle-Uploadify btnname="导入收货联系人" url="/contract/importreceiver" excleData="excleData" ng-model="excleData"/>
+                            <a href="javascript:;" ng-click="cusLinkBox()">选用客户联系人地址</a>
+                        </div>
+                        <table id="nbList">
+                            <tr>
+                                <th>收货人姓名</th>
+                                <th>手机号</th>
+                                <th>固定电话</th>
+                                <th><font>*</font>省</th>
+                                <th><font>*</font>市</th>
+                                <th>详细地址</th>
+                                <th>邮编</th>
+                                <th><a href="javascript:;" ng-click="userAdd()">添加</a></th>
+                            </tr>
+                            <tr ng-repeat="list in excleData" class="list">
+                                <td>
+                                    <input ng-model="list.name" type="text" value=""/>
+                                </td>
+                                <td ng-class="invoiceForm['phone'+$index].$dirty && invoiceForm['phone'+$index].$error.phonenum && !invoiceForm['phone'+$index].$focused ? 'hasErrTip' : ''">
+                                    <input ng-Focus phone-Validation  name="phone{{$index}}" ng-model="list.phone" type="text" value=""/>
+                                    <p class="errTip" ng-if="invoiceForm['phone'+$index].$dirty && invoiceForm['phone'+$index].$error.phonenum&&!invoiceForm['phone'+$index].$focused ">请输入11位数字</p>
+                                </td>
+                                <td ng-class="invoiceForm['tel'+$index].$dirty && invoiceForm['tel'+$index].$error.telnum && !invoiceForm['tel'+$index].$focused ? 'hasErrTip' : ''">
+                                    <input ng-Focus tel-Validation  name="tel{{$index}}" ng-model="list.tel" type="text" value=""/>
+                                    <p class="errTip" ng-if="invoiceForm['tel'+$index].$dirty && invoiceForm['tel'+$index].$error.telnum&&!invoiceForm['tel'+$index].$focused ">请输入有区号的电话号码</p>
+                                </td>
+                                <td>
+                                    <select ng-model="list.province" ng-required="true" ng-change="list.city=''" ng-disabled="ready" >
+                                        <option value="">--请选择--</option>
+                                        <option ng-repeat=" p in countryData" value="{{p.PROVINCE.CODE}}">{{p.PROVINCE.TITLE}}</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select ng-model="list.city" ng-required="true"  ng-disabled="ready" >
+                                        <option value="">--请选择--</option>
+                                        <option ng-repeat=" c in getField(countryData, 'CODE',list.province).CITY" value="{{c.CODE}}">{{c.TITLE}}</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input maxlength="30" ng-model="list.address" type="text" value=""/>
+                                </td>
+                                <td ng-class="invoiceForm['zipcode'+$index].$dirty && invoiceForm['zipcode'+$index].$error.postcode && !invoiceForm['zipcode'+$index].$focused ? 'hasErrTip' : ''">
+                                    <input ng-Focus postcode-Validation  name="zipcode{{$index}}" ng-model="list.zipcode" type="text" value=""/>
+                                    <p class="errTip" ng-if="invoiceForm['zipcode'+$index].$dirty && invoiceForm['zipcode'+$index].$error.postcode&&!invoiceForm['zipcode'+$index].$focused ">请输入6位数字</p>
+                                </td>
+                                <td><a href="javascript:;" ng-click="userDel($index,'excleData')">删除</a></td>
+                            </tr>
+                            <tr ng-repeat="list in userLinkList" class="list">
+                                <td>
+                                    <input ng-model="list.name" type="text" value=""/>
+                                </td>
+                                <td ng-class="invoiceForm['phone'+$index].$dirty && invoiceForm['phone'+$index].$error.phonenum && !invoiceForm['phone'+$index].$focused ? 'hasErrTip' : ''">
+                                    <input ng-Focus phone-Validation  name="phone{{$index}}" ng-model="list.phone" type="text" value=""/>
+                                    <p class="errTip" ng-if="invoiceForm['phone'+$index].$dirty && invoiceForm['phone'+$index].$error.phonenum&&!invoiceForm['phone'+$index].$focused ">请输入11位数字</p>
+                                </td>
+                                <td ng-class="invoiceForm['tel'+$index].$dirty && invoiceForm['tel'+$index].$error.telnum && !invoiceForm['tel'+$index].$focused ? 'hasErrTip' : ''">
+                                    <input ng-Focus tel-Validation  name="tel{{$index}}" ng-model="list.tel" type="text" value=""/>
+                                    <p class="errTip" ng-if="invoiceForm['tel'+$index].$dirty && invoiceForm['tel'+$index].$error.telnum&&!invoiceForm['tel'+$index].$focused ">请输入正确的电话号码</p>
+                                </td>
+                                <td>
+                                    <select ng-model="list.province" ng-required="true" ng-change="list.city=''" ng-disabled="ready" >
+                                        <option value="">--请选择--</option>
+                                        <option ng-repeat=" p in countryData" value="{{p.PROVINCE.CODE}}">{{p.PROVINCE.TITLE}}</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select ng-model="list.city" ng-required="true"  ng-disabled="ready" >
+                                        <option value="">--请选择--</option>
+                                        <option ng-repeat=" c in getField(countryData, 'CODE',list.province).CITY" value="{{c.CODE}}">{{c.TITLE}}</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input maxlength="30" ng-model="list.address" type="text" value=""/>
+                                </td>
+                                <td ng-class="invoiceForm['zipcode'+$index].$dirty && invoiceForm['zipcode'+$index].$error.postcode && !invoiceForm['zipcode'+$index].$focused ? 'hasErrTip' : ''">
+                                    <input ng-Focus postcode-Validation  name="zipcode{{$index}}" ng-model="list.zipcode" type="text" value=""/>
+                                    <p class="errTip" ng-if="invoiceForm['zipcode'+$index].$dirty && invoiceForm['zipcode'+$index].$error.postcode&&!invoiceForm['zipcode'+$index].$focused ">请输入6位数字</p>
+                                </td>
+                                <td><a href="javascript:;" ng-click="userDel($index,'userLinkList')">删除</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!--<h4 class="genH4">合同附加信息</h4>
+                    <ul class="noMargin">
+                        <li  class="tli">
+                            <strong><font>*</font>申请人：</strong>
+                            <input ng-model="ORDER_DATA.creator" type="text" value=""/>
+                        </li>
+                        <li  class="tli">
+                            <strong><font>*</font>创建日期：</strong>
+                            <input ng-model="ORDER_DATA.createdate" type="text" value=""/>
+                        </li>
+                    </ul>-->
+
+
+                    <div class="gerSub">
+                        <a href="index.html#/iecontractOrder">返回</a>
+                        <button ng-click="addData(ORDER_DATA, 'save')" ng-class="invoiceForm.$invalid == true ? 'displaySub' : 'subSave'" ng-disabled="invoiceForm.$invalid || invoRready">保存并填写成本分析</button>
+                        <!--<button ng-click="addData(ORDER_DATA, 'apply')"  ng-class="invoiceForm.$invalid == true ? 'displaySub' : 'subSave'" ng-disabled="invoiceForm.$invalid || invoRready">保存并提交</button>-->
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="ng-hide" ng-show="ht.activeTab == 3">
+            <div style="padding-top:10px;" class="czAddBtn">
+                <a class="viewBtn" target="_blank" href="/index.html#/iecontractView?id={{oldId}}">查看原成本分析</a>
+            </div>
+            <div class="generForm">
+                <form novalidate name="cbfxForm">
+
+                    <h4 class="genH4">利润</h4>
+                    <!--转口-->
+                    <div class="addTable" ng-if="cbfxZk"> <!--ng-if='cbfxZk'-->
+                        <table>
+                            <tr>
+                                <th></th>
+                                <th>利润（外币）</th>
+                                <th>合约利润率</th>
+                            </tr>
+                            <tr>
+                                <td>公司利润</td>
+                                <td>{{zkLirunWbi}}</td><!--销售合同金额-采购合同金额-->
+                                <td>{{zkHeyuelirunlv}}%</td><!--利润（外币）/销售合同金额-->
+                            </tr>
+                        </table>
+                    </div>
+                    <!--出口-->
+                    <div class="addTable" ng-if='cbfxCk'> <!--ng-if='cbfxCk'-->
+                        <table>
+                            <tr>
+                                <th></th>
+                                <th>利润（外币）</th>
+                                <th>利润（RMB）</th>
+                                <th>合约利润率</th>
+                            </tr>
+                            <tr>
+                                <td>公司利润(含退税)</td>
+                                <td><!--{{foreign_tax}}--></td>
+                                <td>{{RMB_tax}}</td>
+                                <td>{{ratio_tax}}%</td>
+                            </tr>
+                            <tr>
+                                <td>公司利润(不含退税)</td>
+                                <td>{{foreign}}</td>
+                                <td>{{RMB}}</td>
+                                <td>{{ratio}}%</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4 class="genH4" ng-if="cbfxCk">成本分析</h4>
+                    <div class="addTable" ng-if='cbfxCk'><!--ng-if='cbfxCk'-->
+                        <table style="margin-top:10px;">
+                            <tr>
+                                <th>税率</th>
+                                <th>合同金额（外币）</th>
+                                <th>合同金额（RMB）</th>
+                                <th>预估成本（外币）</th>
+                                <th>预估成本（RMB）</th>
+                                <th>外采成本</th>
+                                <th>配套采购</th>
+                                <th>第三方服务</th>
+                            </tr>
+                            <tr ng-repeat="list in othercost" class="list">
+                                <td>{{list.thetype}}%
+                                    <input ng-disabled="true" ng-model="list.thetype" type="hidden"/>
+                                    <input ng-disabled="true" ng-model="list.contractId" type="hidden"/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="true" ng-model="list.money" type="text"/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="true" ng-model="list.moneyRMB" type="text"/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="true" ng-model="list.predictorderscost" type="text"/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="true" ng-model="list.orderscostRMB" type="text"/>
+                                </td>
+                                <td>
+                                    <input ng-model="list.outorderost" type="text"/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="cpIf" ng-model="list.mating" type="text"/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="list.third=='0'" ng-model="list.third" type="text"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!--其他合同类型-->
+                    <div class="addTable" ng-if="cbfxOther">
+                        <table>
+                            <tr>
+                                <th></th>
+                                <th>毛利（含税)</th>
+                                <th>毛利（不含税)</th>
+                                <th>合约利润率</th>
+                            </tr>
+                            <tr>
+                                <td>公司利润</td>
+                                <td><!--{{foreign_tax}}-->{{moHanshui}}</td>
+                                <td><!--{{RMB}}-->{{moBuHanshui}}</td>
+                                <td><!--{{ratio}}-->{{heYuelirun}}%</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4 class="genH4" ng-if="cbfxOther">成本分析</h4>
+                    <div class="addTable" ng-if="cbfxOther">
+                        <table style="margin-top:10px;">
+                            <tr>
+                                <th>税率</th>
+                                <th>合同金额（含税）</th>
+                                <th>预估成本汇总</th>
+                                <th>外采成本</th>
+                                <th>配套采购</th>
+                                <th>第三方服务</th>
+                            </tr>
+                            <tr ng-repeat="list in othercost" class="list">
+                                <td>{{list.thetype}}%
+                                    <input ng-disabled="true" ng-model="list.thetype" type="hidden"/>
+                                    <input ng-disabled="true" ng-model="list.contractId" type="hidden"/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="true" ng-model="list.money" type="text"/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="true" ng-model="list.orderscost" type="text"/>
+                                </td>
+                                <td>
+                                    <input ng-model="list.outorderost" type="text"/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="cpIf" ng-model="list.mating" type="text"/>
+                                </td>
+                                <td>
+                                    <input ng-disabled="list.third=='0'" ng-model="list.third" type="text"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4 class="genH4">费用明细</h4>
+                    <ul class="noMargin">
+                        <li class="tli">
+                            <strong><font>*</font>采购币种：</strong>
+                            <select ng-disabled="currencyDisable" ng-model="CBFX.outpurchasecurrency" ng-required="true"
+                                    name="outpurchasecurrency">
+                                <option value="">请选择</option>
+                                <option value="CNY">人民币</option>
+                                <option value="EUR">欧元</option>
+                                <option value="USD">美元</option>
+                                <option value="CHF">瑞士法郎</option>
+                                <option value="HKD">港币</option>
+                                <option value="JPY">日元</option>
+                            </select>
+                            <!--<input ng-disabled="true" ng-model="CBFX.outpurchasecurrency" type="text" placeholder=""/>-->
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>实时汇率：</strong>
+                            <input feifs-Validation ng-required="true" ng-model="CBFX.exchangerate" type="text"
+                                   placeholder=""/>
+                            <a class="aBtn" ng-click="getExchangerate(CBFX.outpurchasecurrency)" href="javascript:;">获取实时汇率</a>
+                        </li>
+                        <li class="tli">
+                            <strong>销售合同金额：</strong>
+                            <input ng-disabled="true" ng-model="CBFX.contractmoney" type="text" placeholder=""/>
+                        </li>
+                        <li class="tli">
+                            <strong>采购成本：</strong>
+                            <input ng-disabled="true" ng-model="CBFX.outpurchasecost" type="text" placeholder=""/>
+                        </li>
+
+                        <li class="tli">
+                            <strong><font>*</font>银行费：</strong>
+                            <input ng-required="true" ng-model="CBFX.bankfee" type="text" placeholder=""/>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>代理费：</strong>
+                            <input ng-required="true" ng-model="CBFX.proxyfee" type="text" placeholder=""/>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>国际运费：</strong>
+                            <input ng-required="true" ng-model="CBFX.outtrance" type="text" placeholder=""/>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>报关杂费：</strong>
+                            <input ng-required="true" ng-model="CBFX.duties2" type="text" placeholder=""/>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>保险费：</strong>
+                            <input ng-required="true" ng-model="CBFX.insurance" type="text" placeholder=""/>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>国内运费：</strong>
+                            <input ng-required="true" ng-model="CBFX.intrance" type="text" placeholder=""/>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>其他：</strong>
+                            <input ng-required="true" ng-model="CBFX.otherfee" type="text" placeholder=""/>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>押汇利息：</strong>
+                            <input ng-required="true" ng-model="CBFX.documentaryinterest" type="text" placeholder=""/>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>关税：</strong>
+                            <input ng-required="true" ng-model="CBFX.duties" type="text" placeholder=""/>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>增值税：</strong>
+                            <input ng-required="true" ng-model="CBFX.addedtax" type="text" placeholder=""/>
+                        </li>
+                        <li class="tli" ng-if="cbfxOther"><!--ng-if="cbfxOther"-->
+                            <strong>综合汇率：</strong>
+                            <input ng-disabled="true" ng-model="CBFX.generalrate" type="text" placeholder=""/>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>厂家服务：</strong>
+                            <input ng-required="true" ng-model="CBFX.factoryservice" type="text" placeholder=""/>
+                        </li>
+                        <li class="tli" ng-if="cbfxOther"><!--ng-if="cbfxOther"-->
+                            <strong>内部合同结算金额：</strong>
+                            <input ng-disabled="true" ng-model="CBFX.interiooney" type="text" placeholder=""/>
+                        </li>
+                        <li class="tli" ng-if="cbfxZk"> <!--ng-if="cbfxZk"-->
+                            <strong>成本：</strong>
+                            <input ng-disabled="true" ng-model="CBFX.cost" type="text" placeholder=""/>
+                        </li>
+                        <li class="tli" ng-if="cbfxCk"> <!--ng-if="cbfxCk"-->
+                            <strong><font>*</font>预计退税金额：</strong>
+                            <input ng-required="true" ng-model="CBFX.predictbacktax" type="text" placeholder=""/>
+                        </li>
+                    </ul>
+                    <div class="gerSub">
+                        <a href="index.html#/iecontractOrder">返回</a>
+                        <button ng-click="addqdData(CBFX,'save')" ng-class="cbfxForm.$invalid == true ? 'displaySub' : 'subSave'" class="subSave">保存草稿</button>
+                        <button ng-click="addqdData(CBFX,'apply')" ng-class="cbfxForm.$invalid == true ? 'displaySub' : 'subApply'" ng-disabled="cbfxForm.$invalid || invoRready">保存并提交</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="cusLinkBox" class="dialog cusBox" title="选择收货人" ng-include="'template/contract/cusLinkBox.html'"></div>
+
+

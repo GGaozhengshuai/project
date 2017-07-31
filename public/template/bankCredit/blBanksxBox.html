@@ -1,0 +1,38 @@
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong style="width:110px;">开立日</strong>
+                    <input id="Sday" class="text Wdate" ng-change="klrFf(klDate)" date-Picker ng-readonly="true" style="width:175px" type="text"ng-init="$parent.klDate=''" ng-model="$parent.klDate" placeholder="请选择时间">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong style="width:110px;">到期日</strong><!--开立日+授信业务期限(天)-->
+                    <input id="Eday" class="text Wdate" style="width:175px" date-Picker type="text" onClick="WdatePicker({minDate:'#F{$dp.$D(\'Sday\')}'})" ng-init="$parent.dqDate=''" ng-model="$parent.dqDate" placeholder="">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong style="width:110px;">额度审核人</strong>
+                    <input class="text" style="width:175px" ng-disabled="true" type="text"  ng-init="$parent.shrUserName=''" ng-model="$parent.shrUserName" placeholder="">
+                    <input type="hidden" ng-model="$parent.shrUser"/>
+                    <input type="hidden" ng-model="$parent.shrUserId"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong style="width:120px;">额度转回日期</strong><!--开立日+授信业务期限(天)-->
+                    <input class="text" style="width:165px" ng-disabled="true" type="text"  ng-init="$parent.edDate=''" ng-model="$parent.edDate" placeholder="">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="button" value="确定" class="searchbtn2" ng-click="blBanksx(klDate, dqDate, shrUser, shrUserId, edDate,ORDER_DATA.code,ORDER_DATA.creditmoney)">
+                    <input type="button" value="关闭" class="searchbtn2" ng-click="closeBlanksx()">
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>

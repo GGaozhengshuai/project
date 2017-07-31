@@ -1,0 +1,126 @@
+<!doctype html>
+<html ng-app="app">
+
+<head>
+  <meta charset="UTF-8">
+  <title>中建材信息数字化工作平台</title>
+  <link href="js/lib/jquery-ui-1.11.4.custom/jquery-ui.css" rel="stylesheet">
+  <link href="js/lib/sweetalert/sweetalert.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="js/lib/uploadify/uploadify.css">
+  <link rel="stylesheet" type="text/css" href="js/lib/uploadify/uploadify.css">
+  <link rel="stylesheet" type="text/css" href="js/lib/angular/tree/tree-control.css">
+  <link rel="stylesheet" type="text/css" href="js/lib/angular/tree/tree-control-attribute.css">
+  <link href="js/lib/angular-ui-grid/ui-grid.css" rel="stylesheet">
+  <!--<link href="http://mbenford.github.io/ngTagsInput/css/ng-tags-input.min.css" rel="stylesheet">-->
+  <link href="css/reset.css" rel="stylesheet">
+  <link href="css/common.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+<div ng-include="'template/common/header.html'" ng-controller="loginOutCtrl" style="height:131px;"></div>
+<div class="clear"></div>
+<div class="main">
+  <div class="wrap">
+    <!--<div ng-include="'template/common/mainleft.html'" class="mainleft"></div>-->
+    <div class="page {{pageClass}} mainright" ui-view></div>
+    <div class="clear"></div>
+  </div>
+  <div class="clear"></div>
+</div>
+<div class="clear"></div>
+<div class="footer">
+  <div class="wrap">
+    <!--<p>用户手册：
+      <a target="_blank" href="/doc/销售.rar">销售管理</a>
+      <a target="_blank" href="/doc/采购-库存.rar">采购库存管理</a>
+      <a target="_blank" href="/doc/财务.rar">财务管理</a>
+      <a target="_blank" href="/doc/客户.rar">客户管理</a>
+      <a target="_blank" href="/doc/基础公用功能.rar">基础公用功能</a>
+    </p>-->
+    <p>联系方式：<a href="mailto:inform@cnbmtech.com">inform@cnbmtech.com</a>
+      <!--    010-68738914    010-68738916    010-68738905--></p>
+    <p>power by 中建材信息技术股份有限公司     Copyright©2017 All Rights Reserved    备案号（京ICP备15030620号-2）</p>
+  </div>
+</div>
+<div class="layer"></div>
+<loading></loading>
+<div class="topBar">
+  <ul>
+
+    <li class="goTop"><a go-Top ng-model="goTop" href="javascript:;"></a></li>
+    <li class="goBottom"><a go-Bottom ng-model="goBottom" href="javascript:;"></a></li>
+  </ul>
+</div>
+<!--<div id="loading"class="hidden" ><img src="img/loading.gif"></div>-->
+<script type="text/javascript" src="js/lib/jquery/jquery-1.11.3.js"></script>
+<script type="text/javascript" src="js/lib/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
+<script type="text/javascript" src="js/common/common.js"></script>
+<script type="text/javascript" src="js/lib/sweetalert/sweetalert.min.js"></script>
+<script type="text/javascript" src="js/lib/socketIO/socket.io.js"></script>
+<script type="text/javascript" src="js/lib/angular/angular.js"></script>
+<script type="text/javascript" src="js/lib/angular/angular-sanitize.js"></script>
+<script type="text/javascript" src="js/lib/angular/angular-cookies.min.js"></script>
+<script type="text/javascript" src="js/lib/angular/angular-ui-router.min.js"></script>
+<script type="text/javascript" src="js/lib/angular/angular-animate.js"></script>
+<script type="text/javascript" src="js/lib/angular/angular-touch.js"></script>
+<script type="text/javascript" src="js/lib/angular-ui-grid/ui-grid.js"></script>
+<script type="text/javascript" src="js/lib/angular/tree/angular-tree-control.js"></script>
+<script type="text/javascript" src="js/lib/ngmodel-format/ngmodel.format.js"></script>
+<script type="text/javascript" src="js/lib/angular/oclazyload/dist/ocLazyLoad.js"></script>
+<!--<script src="js/lib/angular/ng-tags-input.min.js"></script>-->
+<script type="text/javascript" src="js/lib/angular/autocomplete.js"></script>
+<script type="text/javascript" src="js/lib/My97DatePicker/WdatePicker.js"></script>
+<!--<script type="text/javascript" src="js/lib/angular-file-upload-master/dist/angular-file-upload.min.js"></script>-->
+<script type="text/javascript" src="js/lib/uploadify/jquery.uploadify.js"></script>
+<script type="text/javascript" src="js/lib/dateformat/dateformat.js"></script>
+<script type="text/javascript" src="js/common/uploadify.js"></script>
+<script type="text/javascript" src="js/app.js"></script>
+<script type="text/javascript" src="js/common/pagination.js"></script>
+<script type="text/javascript" src="js/common/directive.js"></script>
+<script type="text/javascript" src="js/common/filter.js"></script>
+
+
+<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript" src="js/customer/customer.js"></script>
+<script type="text/javascript" src="js/appplyTem/applyTem.js"></script>
+<!--
+<script type="text/javascript" src="js/user/userApp.js"></script>
+<script type="text/javascript" src="js/employee/employeeApp.js"></script>
+<script type="text/javascript" src="js/purchase/purchase.js"></script>
+<script type="text/javascript" src="js/insideOrder/insideOrder.js"></script>
+<script type="text/javascript" src="js/income/income.js"></script>
+<script type="text/javascript" src="js/payment/payment.js"></script>
+<script type="text/javascript" src="js/issue/issue.js"></script>
+<script type="text/javascript" src="js/receiptsApply/receipts.js"></script>
+<script type="text/javascript" src="js/occupy/occupy.js"></script>
+<script type="text/javascript" src="js/check/check.js"></script>
+<script type="text/javascript" src="js/bankCredit/bankCredit.js"></script>
+<script type="text/javascript" src="js/contract/contract.js"></script>
+<script type="text/javascript" src="js/salesbonus/salesbonus.js"></script>
+<script type="text/javascript" src="js/mkinvoice/mkinvoice.js"></script>
+<script type="text/javascript" src="js/pojck/pojck.js"></script>
+<script type="text/javascript" src="js/loanBill/loanBill.js"></script>
+<script type="text/javascript" src="js/productout/productout.js"></script>
+<script type="text/javascript" src="js/sellclue/sellclue.js"></script>-->
+<!--<script type="text/javascript" src="js/sign/signApp.js"></script>-->
+<!--<script type="text/javascript" src="js/credit/credit.js"></script>-->
+<!--<script type="text/javascript" src="js/deptassure/deptassure.js"></script>-->
+<!--<script type="text/javascript" src="js/materiel/materiel.js"></script>-->
+<!--<script type="text/javascript" src="js/creditMemo/creditMemo.js"></script>-->
+<!--<script type="text/javascript" src="js/intoBill/intoBill.js"></script>-->
+<!--<script type="text/javascript" src="js/home/home.js"></script>-->
+<!--<script type="text/javascript" src="js/reimbursement/reimbursement.js"></script>-->
+<!--<script type="text/javascript" src="js/loanManage/loanManage.js"></script>-->
+<!--<script type="text/javascript" src="js/holiday/holiday.js"></script>-->
+<!--<script type="text/javascript" src="js/approval/approval.js"></script>-->
+
+<!--<script type="text/javascript" src="js/lib/lodop/LodopFuncs.js"></script>-->
+
+<script type="text/javascript" src="js/lib/underscore/underscore.js"></script>
+<script type="text/javascript" src="js/message/message.js"></script>
+<script type="text/javascript" src="js/message/SocketMessageSDK.js"></script>
+<script type="text/javascript" src="js/lib/ngFileUpload/ng-file-upload-shim.js"></script>
+<script type="text/javascript" src="js/lib/ngFileUpload/ng-file-upload.js"></script>
+<script type="text/javascript" src="js/docManage/docManage.js"></script>
+</body>
+</html>

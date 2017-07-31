@@ -1,0 +1,239 @@
+<h3 class="genTitle"><em></em><span>进出口销售合同清单变更</span></h3>
+<ul class="generNav" ng-init="ht.activeTab = 2">
+    <li ng-class="{active:ht.activeTab == 2}"><a href="javascript:;" ng-mousedown="ht.activeTab = 2">产品清单</a></li>
+    <li ng-class="{active:ht.activeTab == 3}"><a href="javascript:;" ng-mousedown="ht.activeTab = 3" >成本分析</a></li>
+</ul>
+<div id="mainView">
+    <!--<div class="czAddBtn" style="margin-top:10px;">
+        <a ng-click="viewHistory()" href="javascript:;" class="changInfoBtn">查看历史版本</a>
+        <a target="_blank" href="/print/printlandscape.html?uri=/contract/printview&contractno={{ORDER_DATA.contractno}}&&type=c5&processId={{processId}}&nodeId={{nodeId}}" ng-show="manageAgree" class="addBtn ng-hide">申请表打印</a>
+    </div>-->
+    <ul class="btnwrap">
+        <li class="btnList">
+            <a class="moreBtn">关联单据查询 <i class="triangle"></i></a>
+            <ul class="subBtnlist subBtn">
+                <li><a ng-click="viewCGDD('{{ORDER_DATA.groupno}}','{{ORDER_DATA.salesorderid[0].orderid}}')" href="javascript:;">查看采购订单</a></li>
+            </ul>
+        </li>
+
+        <li class="btnList"><a ng-click="viewHistory()" href="javascript:;" class="defenseBtn">查看历史版本</a></li>
+        <li class="btnList ng-hide" ng-show="manageAgree"><a target="_blank" href="/print/printlandscape.html?uri=/contract/printview&contractno={{ORDER_DATA.contractno}}&type=c5&processId={{processId}}&nodeId={{nodeId}}" class="defenseBtn">申请表打印</a></li>
+
+    </ul>
+    <div class="ng-hide" ng-show="ht.activeTab == 2">
+
+        <div class="viewTable">
+            <h4 class="genH4">基本信息</h4>
+            <ul>
+                <li><strong>合同编号：</strong><span>{{ORDER_DATA.contractno}}</span></li>
+                <li><strong>客户名称：</strong><span>{{ORDER_DATA.stomer}}</span></li>
+                <li><strong>退货金额：</strong><span>{{ORDER_DATA.returngoodsmoney | currency : '￥'}}</span></li>
+                <li><strong>补货金额：</strong><span>{{ORDER_DATA.addgoodsmoney | currency : '￥'}}</span></li>
+                <li ng-if="is2body == '是'"><strong>调整后内部结算金额：</strong><span>{{ORDER_DATA.interiooney | currency : '￥'}}</span></li>
+                <li><strong>调整后合同金额：</strong><span>{{ORDER_DATA.allmoney | currency : '￥'}}</span></li>
+                <li class="list_con"><strong>备注：</strong><span>{{ORDER_DATA.remark}}</span></li>
+            </ul>
+            <div class="clear"></div>
+            <h4 class="genH4">清单变更明细</h4>
+            <div class="addTable">
+                <table class="tab_data">
+                    <thead class="tab_header">
+                    <tr>
+                        <th>类型</th>
+                        <th>内部物料编码</th>
+                        <th>原厂物料编码</th>
+                        <th>描述</th>
+                        <th>型号</th>
+                        <th>数量</th>
+                        <th>单价</th>
+                        <th>金额小计</th>
+                    </tr>
+                    </thead>
+                    <tbody class="tab_body">
+                    <tr ng-repeat="list in excleWlData.right.MatchAdd" class="list">
+                        <td>补货</td>
+                        <td>{{list.goodscode}}</td>
+                        <td>{{list.sourcegoodscode}}</td>
+                        <td>{{list.desc}}</td>
+                        <td>{{list.version}}</td>
+                        <td>{{list.changeCount}}</td>
+                        <td>{{list.unitprice}}</td>
+                        <td>{{list.thesum | currency : '￥'}}</td>
+                    </tr>
+                    <tr ng-repeat="list in excleWlData.right.MatchSubtract" class="list">
+                        <td>退货 </td>
+                        <td>{{list.goodscode}}</td>
+                        <td>{{list.sourcegoodscode}}</td>
+                        <td>{{list.desc}}</td>
+                        <td>{{list.version}}</td>
+                        <td>{{list.changeCount}}</td>
+                        <td>{{list.unitprice}}</td>
+                        <td>{{list.thesum | currency : '￥'}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+    <div class="ng-hide" ng-show="ht.activeTab == 3">
+        <div class="viewTable">
+            <h4 class="genH4">利润</h4>
+            <!--转口-->
+            <div class="addTable" ng-if="cbfxZk"> <!--ng-if='cbfxZk'-->
+                <table style="margin-top:0;">
+                    <tr>
+                        <th></th>
+                        <th>利润（外币）</th>
+                        <th>合约利润率</th>
+                    </tr>
+                    <tr>
+                        <td>公司利润</td>
+                        <td>{{ieprofit.zkLirunWbi}}</td><!--销售合同金额-采购合同金额-->
+                        <td>{{ieprofit.zkHeyuelirunlv}}%</td><!--利润（外币）/销售合同金额-->
+                    </tr>
+                </table>
+            </div>
+            <!--出口-->
+            <div class="addTable" ng-if='cbfxCk'> <!--ng-if='cbfxCk'-->
+                <table style="margin-top:0;">
+                    <tr>
+                        <th></th>
+                        <th>利润（外币）</th>
+                        <th>利润（RMB）</th>
+                        <th>合约利润率</th>
+                    </tr>
+                    <tr>
+                        <td>公司利润(含退税)</td>
+                        <td><!--{{foreign_tax}}--></td>
+                        <td>{{ieprofit.RMB_tax}}</td>
+                        <td>{{ieprofit.ratio_tax}}%</td>
+                    </tr>
+                    <tr>
+                        <td>公司利润(不含退税)</td>
+                        <td>{{ieprofit.foreign}}</td>
+                        <td>{{ieprofit.RMB}}</td>
+                        <td>{{ieprofit.ratio}}%</td>
+                    </tr>
+                </table>
+            </div>
+            <h4 class="genH4" ng-if='cbfxCk'>成本分析</h4>
+            <div class="addTable" ng-if='cbfxCk'><!--ng-if='cbfxCk'-->
+                <table style="margin-top:10px;">
+                    <tr>
+                        <th>税率</th>
+                        <th>合同金额（外币）</th>
+                        <th>合同金额（RMB）</th>
+                        <th>预估成本（外币）</th>
+                        <th>预估成本（RMB）</th>
+                        <th>外采成本</th>
+                        <th>配套采购</th>
+                        <th>第三方服务</th>
+                    </tr>
+                    <tr ng-repeat="list in othercost" class="list">
+                        <td>{{list.thetype}}%
+                            <input ng-disabled="true" ng-model="list.thetype" type="hidden"/>
+                            <input ng-disabled="true" ng-model="list.contractId" type="hidden"/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.money" type="text"/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.moneyRMB" type="text"/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.predictorderscost" type="text"/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.orderscostRMB" type="text"/>
+                        </td>
+                        <td>
+                            <input ng-model="list.outorderost" type="text"/>
+                        </td>
+                        <td>
+                            <input ng-disabled="cpIf" ng-model="list.mating" type="text"/>
+                        </td>
+                        <td>
+                            <input ng-disabled="list.third=='0'" ng-model="list.third" type="text"/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <!--其他合同类型-->
+            <div class="addTable" ng-if="cbfxOther">
+                <table style="margin-top:0;">
+                    <tr>
+                        <th></th>
+                        <th>毛利（含税)</th>
+                        <th>毛利（不含税)</th>
+                        <th>合约利润率</th>
+                    </tr>
+                    <tr>
+                        <td>公司利润</td>
+                        <td>{{ieprofit.moHanshui}}</td>
+                        <td>{{ieprofit.moBuHanshui}}</td>
+                        <td>{{ieprofit.heYuelirun}}%</td>
+                    </tr>
+                </table>
+            </div>
+            <h4 class="genH4" ng-if='cbfxOther'>成本分析</h4>
+            <div class="addTable" ng-if="cbfxOther">
+                <table>
+                    <tr>
+                        <th>税率</th>
+                        <th>合同金额（含税）</th>
+                        <th>预估成本汇总</th>
+                        <th>外采成本</th>
+                        <th>配套采购</th>
+                        <th>第三方服务</th>
+                    </tr>
+                    <tr ng-repeat="list in othercost" class="list">
+                        <td>{{list.thetype}}%</td>
+                        <td>{{list.money | currency : '￥'}}</td>
+                        <td>{{list.orderscost}}</td>
+                        <td>{{list.outorderost}}</td>
+                        <td>{{list.mating}}</td>
+                        <td>{{list.third}}</td>
+                    </tr>
+                </table>
+            </div>
+            <h4 class="genH4">费用明细</h4>
+            <ul>
+                <li class="list_con" ng-if="CBFX.purchaseids.length >0 ? true : false">
+                    <strong>采购申请号：</strong>
+                    <span><a class="aLink" target="_blank" href="/index.html#/purchaseView/{{list}}" ng-repeat="list in CBFX.purchaseids">{{list}}</a></span>
+                </li>
+                <li><strong>采购币种：</strong><span>{{CBFX.outpurchasecurrency}}</span></li>
+                <li><strong>实时汇率：</strong><span>{{CBFX.exchangerate}}</span></li>
+                <li><strong>销售合同金额：</strong><span>{{CBFX.contractmoney}}</span></li>
+                <li><strong>采购成本：</strong><span>{{CBFX.outpurchasecost | number:2}}</span></li>
+                <li><strong>银行费：</strong><span>{{CBFX.bankfee}}</span></li>
+                <li><strong>代理费：</strong><span>{{CBFX.proxyfee}}</span></li>
+                <li><strong>国际运费：</strong><span>{{CBFX.outtrance}}</span></li>
+                <li><strong>报关杂费：</strong><span>{{CBFX.duties2}}</span></li>
+                <li><strong>保险费：</strong><span>{{CBFX.insurance}}</span></li>
+                <li><strong>国内运费：</strong><span>{{CBFX.intrance}}</span></li>
+                <li><strong>其他：</strong><span>{{CBFX.otherfee}}</span></li>
+                <li><strong>押汇利息：</strong><span>{{CBFX.documentaryinterest}}</span></li>
+                <li><strong>关税：</strong><span>{{CBFX.duties}}</span></li>
+                <li><strong>增值税：</strong><span>{{CBFX.addedtax}}</span></li>
+                <li ng-if="cbfxOther"><strong>综合汇率：</strong><span>{{CBFX.generalrate}}</span></li>
+                <li><strong>厂家服务：</strong><span>{{CBFX.factoryservice}}</span></li>
+                <li ng-if="cbfxOther"><strong>内部合同结算金额：</strong><span>{{CBFX.interiooney}}</span></li>
+                <li ng-if="cbfxZk"><strong>成本：</strong><span>{{CBFX.cost}}</span></li>
+                <li ng-if="cbfxCk"><strong>预计退税金额：</strong><span>{{CBFX.predictbacktax}}</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="clear"></div>
+    <div class="gerSub">
+        <a class="subSave" href="index.html#/iecChangeBillAdd?processId={{processId}}&nodeId={{nodeId}}" ng-if="editBtn">编辑</a>
+    </div>
+    <div class="apCot" ng-if="apCot" >
+        <div ng-include="'template/common/apply.html'"></div>
+    </div>
+</div>
+<div id="approversDialog" class="dialog cusBox" title="选择下一审批人" ng-include="'template/common/approvers.html'" ></div>
+<div id="listversion" class="dialog cusBox" title="查看合同版本" ng-include="'template/contract/iecontactHistory.html'"></div>
+<div id="listPoheader" class="dialog cusBox" title="查看采购订单" ng-include="'template/contract/listPoheader.html'"></div>

@@ -1,0 +1,122 @@
+<h3 class="genTitle genTitleBot"><em></em><span>变更员工信息</span></h3>
+<div class="cusCont">
+    <div class="generForm">
+        <form novalidate name="invoiceForm">
+            <ul>
+                <li class="tli">
+                    <strong><font>*</font>姓名：</strong>
+                    <input type="text" ng-model="userData.name" placeholder="请填写真实姓名" required/>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.name.$dirty && invoiceForm.name.$error.required">必填</span>
+                </li>
+                <li class="tli">
+                    <strong>部门：</strong>
+                    <input type="text" name="orgname" class="ct_input" placeholder="请输入部门" ng-click="employee()" ng-model="orgname">
+                    <input type="hidden" name="_id" class="ct_input" ng-model="orgid">
+                </li>
+                <li class="tli">
+                    <strong>职称：</strong>
+                    <input type="text" ng-model="userData.title" placeholder="请输入职称"/>
+                </li>
+                <li class="tli">
+                    <strong>电话：</strong>
+                    <input type="text" ng-model="contact.tel" placeholder="请输入电话"/>
+                </li>
+                <li class="tli">
+                    <strong>邮箱：</strong>
+                    <input type="text" ng-model="contact.email" placeholder="请输入邮箱"/>
+                </li>
+                <li class="tli">
+                    <strong>手机：</strong>
+                    <input type="text" ng-model="contact.phone" placeholder="请输入手机"/>
+                </li>
+                <li class="tli">
+                    <strong>传真：</strong>
+                    <input type="text" ng-model="contact.fax" placeholder="请输入传真"/>
+                </li>
+                <li class="tli">
+                    <strong>销售小组：</strong>
+                    <select name="" ng-model="userData.belongaddr" ng-options="m for m in saleArr">
+                        <option value="">请选择</option>
+                    </select>
+                    <button ng-click="addsaleData()">添加</button>
+                </li>
+                <li class="tli">
+                    <strong>办事处：</strong>
+                    <select name="" ng-model="userData.office" ng-options="item.text as item.text for item in officeList">
+                        <option value="">请选择</option>
+                    </select>
+                </li>
+                <li class="tli">
+                    <strong>订阅配置：</strong>
+                    <div class="gerSub noPadding">
+                        <a href="javascript:;" ng-click="userprctype()" class="addBtn" target="_blank">点击配置</a>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="gerSub">
+                <a href="index.html#/userList">返回</a>
+                <button ng-click="addData(userData,contact,orgname,orgid)" ng-class="invoiceForm.$invalid == true ? 'displaySub' : 'subSave'" ng-disabled="invoiceForm.$invalid">保存</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div id="userbox" class="emBox" title="选择部门" style="display:none">
+    <div class="employeeTip">
+        <h5>
+            <span><a ng-click="getEmployee()" href="javascript:;">中建材信息技术</a>&gt</span>
+            <span ng-repeat="list in employeeNav"><a ng-click="getEmployee(list._id,list.orgname)" href="javascript:;">{{list.orgname}}</a>&gt</span>
+        </h5>
+        <ul>
+            <li ng-repeat="list in employeeList">
+                <a  ng-click="getEmployee(list._id,list.orgname)" href="javascript:;">{{list.orgname}}（{{list.grandsoncount}}）</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div id="prcbox" class="emBox" title="配置权限" style="display:none">
+    <div class="employeeTip">
+        <ul>
+            <span><input type="checkbox" class="checkBox" name="checkbox" ng-model="all" ng-checked="selectedsubs.length == prctypelist.length ? true : false" ng-click="checkAll($event)">全选</span>
+            <li ng-repeat="item in prctypelist">
+                <span><input type="checkbox" class="checkBox" name="checkbox" ng-model="all" ng-checked="hasCheckStatus(item.code)" ng-click="checkSelect($event, $index, item)">{{item.code + " -- " + item.name}}</span>
+            </li>
+        </ul>
+    </div>
+</div>
+<div id="salebox1" class="embox" title="维护销售小组" style="display: none;">
+    <div class="genSearch">
+        <table>
+            <tr>
+                <th>编码</th>
+                <th>名称</th>
+            </tr>
+            <tr ng-repeat="(key, val) in saleArr">
+                <td style="text-align: center;">key：{{key}}</td>
+                <td style="text-align: center;">value：{{val}}</td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td>
+                    <strong style="width: 100px;">小组编码</strong>
+                    <input class="text" style="width: 150px;" ng-init="code=''" ng-model="code" type="text"/>
+                </td>
+                <td>
+                    <strong style="width: 100px;">小组名称</strong>
+                    <input class="text" style="width: 150px;" ng-init="name=''" ng-model="name" type="text"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong style="width: 100px;">部门编码</strong>
+                    <input class="text" style="width: 150px;" ng-init="orgcode=''" ng-model="orgcode" type="text"/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="gerSub">
+        <a href="javascript:;" ng-click="closesale()" class="closeBtn">关闭</a>
+        <button  class="subSave" ng-click="confirmAddsale(orgcode, code, name)">确定</button>
+    </div>
+</div>

@@ -1,0 +1,150 @@
+<h3 class="genTitle genTitleBot"><em></em><span>客户管理</span></h3>
+<div id="tabs">
+    <ul class="generNav" ng-init="ht.activeTab = 1">
+        <li ng-class="{active:ht.activeTab == 1}"><a href="javascript:;" ng-mousedown='htTab(1)'>客户基本信息</a></li>
+        <li ng-class="{active:ht.activeTab == 2}"><a href="javascript:;" ng-mousedown='htTab(2)'>客户联系信息</a></li>
+        <li ng-class="{active:ht.activeTab == 3}"><a href="javascript:;" ng-mousedown='htTab(3)'>客户开票信息</a></li>
+        <li ng-class="{active:ht.activeTab == 4}"><a href="javascript:;" ng-mousedown='htTab(4)'>客户注册信息</a></li>
+    </ul>
+    <div id="mainView">
+        <div class="" ng-show="ht.activeTab == 1">
+            <div class="viewTable">
+                <ul>
+                    <li><strong>客户类型：</strong><span>{{KTOKD}}</span></li>
+                    <li><strong>客户名称：</strong><span>{{applicationList.NAME1}}</span></li>
+                    <li><strong>新客户名称：</strong><span>{{applicationList.NEWNAME}}</span></li>
+                    <li><strong>客户名称(英文)：</strong><span>{{applicationList.NAME2}}</span></li>
+                    <li><strong>币种：</strong><span>{{WAERS}}</span></li>
+                    <li><strong>固定电话：</strong><span>{{applicationList.TELF1}}</span></li>
+                    <li><strong>手机号：</strong><span>{{applicationList.TELF2}}</span></li>
+                    <li><strong>传真：</strong><span>{{applicationList.TELFX}}</span></li>
+                    <li><strong>邮政编码：</strong><span>{{applicationList.PSTLZ}}</span></li>
+
+                    <li class="list_con"><strong>详细地址：</strong><span>{{applicationList.STRAS}}</span></li>
+
+                    <li><strong>所在地区：</strong><span>{{country}}{{province}}{{city}}</span></li>
+                    <li><strong>创建人：</strong><span>{{applicationList.ZCREATE_NAME}}</span></li>
+                    <li><strong>创建人部门：</strong><span>{{applicationList.ZCREATE_ORG}}</span></li>
+                    <li><strong>创建日期：</strong><span>{{applicationList.ZOPT_DATE}}</span></li>
+                </ul>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div class="ng-hide" ng-show="ht.activeTab == 2">
+            <div class="generForm">
+
+                <form novalidate name="selltraceForm">
+                    <div class="addTable">
+                        <h4 class="genH4">客户联系人</h4>
+                        <table>
+                            <tr>
+                                <th>姓名</th>
+                                <th>电话</th>
+                                <th>职位</th>
+                                <th>岗位</th>
+                                <th>通讯地址</th>
+                            </tr>
+                            <tr ng-repeat="list in linkmanList">
+                                <td>{{list.NAME1}}</td>
+                                <td>{{list.TELF1}}</td>
+                                <td>{{list.TITEL_AP}}</td>
+                                <td>{{list.ABTPA}}</td>
+                                <td>{{list.PARAU}}</td>
+                            </tr>
+                        </table>
+                        <h4 class="genH4">常用收货地址</h4>
+                        <table>
+                            <tr>
+                                <th>姓名</th>
+                                <th>手机号</th>
+                                <th>所在省</th>
+                                <th>所在市</th>
+                                <th>收货详细地址</th>
+                                <th>邮编</th>
+                                <th>身份证号</th>
+                                <th>备注</th>
+                            </tr>
+                            <tr ng-repeat="list in addressList">
+                                <td>{{list.ZCNEE_NAME}}</td>
+                                <td>{{list.ZCNEE_MOBILE}}</td>
+                                <!--<td>{{getField(countryData2, 'CODE',list.ZCNEE_PROVINCE).TITLE}}{{getField(countryData2, 'CODE',list.ZCNEE_CITY).TITLE}}</td>-->
+                                <td>{{list.ZCNEE_PROVINCE | province:countryData2}}</td>
+                                <td>{{list.ZCNEE_CITY | province:countryData2}}</td>
+                                <td>{{list.ZCNEE_ADDRESS}}</td>
+                                <td>{{list.ZCNEE_PSTLZ}}</td>
+                                <td>{{list.ZCNEE_CARD}}</td>
+                                <td>{{list.ZCNEE_MEMO}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="ng-hide" ng-show="ht.activeTab ==3">
+            <div class="viewTable">
+                <ul>
+                    <li><strong>客户名称：</strong><span ng-bind="applicationList.NAME1"></span></li>
+                    <li><strong>开票名称：</strong><span>{{invoiceList.KOINH}}</span></li>
+                    <li><strong>是否一般纳税人：</strong><span>{{invoiceList.BKONT}}</span></li>
+                    <li><strong>纳税人识别号：</strong><span>{{invoiceList.STCEG}}</span></li>
+                    <li><strong>地址：</strong><span>{{invoiceList.STRAS}}</span></li>
+                    <li><strong>电话：</strong><span>{{invoiceList.BKREF}}</span></li>
+                    <li><strong>开户行：</strong><span>{{invoiceList.BRNCH}}</span></li>
+                    <li><strong>账号：</strong><span>{{invoiceList.BANKA}}</span></li>
+                </ul>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div class="ng-hide" ng-show="ht.activeTab ==4">
+            <div class="viewTable">
+                <ul>
+                    <li ><strong >客户名称：</strong><span ng-bind="applicationList.NAME1"></span></li>
+                    <li><strong>机构类型：</strong><span>{{regMessageList.ZORG_TYPE}}</span></li>
+                    <li ><strong>企业执照号：</strong><span>{{regMessageList.ZORG_CODE}}</span></li>
+<!--
+                    <li ><strong style="width: 150px">企业执照号：</strong><span>{{regMessageList.ZBUSI_CODE}}</span></li>
+-->
+                    <li ><strong>住所(经营场所)：</strong><span>{{regMessageList.ZBUSI_ADDR}}</span></li>
+                    <li ><strong>法定代表人姓名：</strong><span>{{regMessageList.ZLEGAL_NAME}}</span></li>
+                    <li ><strong>成立日期：</strong><span>{{regMessageList.ZFOUND_DATE}}</span></li>
+                    <li ><strong>注册资本：</strong><span>{{regMessageList.ZREGIST}}</span></li>
+                    <li><strong>实收资本：</strong><span>{{regMessageList.ZINCOME}}</span></li>
+                    <li ><strong>公司类型：</strong><span>{{regMessageList.ZCOM_TYPE}}</span></li>
+                    <li ><strong>税务登记注册类型：</strong><span>{{regMessageList.ZTAX_TYPE}}</span></li>
+                    <li ><strong>组织机构有效期起：</strong><span>{{regMessageList.ZREGIST_BEGIN}}</span></li>
+                    <li ><strong>营业期限起：</strong><span>{{regMessageList.ZBUSI_BEGIN}}</span></li>
+                    <li ><strong>组织机构有效期止：</strong><span>{{regMessageList.ZREGIST_END}}</span></li>
+                    <li ><strong>营业期限止：</strong><span>{{regMessageList.ZBUSI_END}}</span></li>
+                    <div class="clear"></div>
+                    <li style="float: none;width: 100%"><strong>执照证件：</strong>
+                        <div class="clear"></div>
+                        <div ng-repeat="list in FILE_DATA">
+                            <p style="padding-left: 130px;width: 50%" ng-if="list.ZFILETYPE=='10'"><img ng-src='{{list.ZFTP}}'/><span>{{list.ZFILE_NAME}}</span></p>
+                            <p style="padding-left: 130px;width: 50%" ng-if="list.ZFILETYPE=='20'"><a target='_blank' href='{{list.ZFTP}}'style="text-decoration:underline ">{{list.ZFILE_NAME}}</a></p>
+                        </div>
+                    </li>
+
+                   <!-- <li style="float: none;width: 100%"><strong>税务登记证：</strong>
+                        <div class="clear"></div>
+                        <div ng-repeat="list in FILE_DATA">
+                            <p style="padding-left: 130px;width: 50%" ng-if="list.ZFILETYPE=='20'"><img ng-src='{{list.ZFTP}}'/></p>
+                        </div>
+                    </li>
+
+                    <li style="float: none;width: 100%"><strong>组织机构代码证：</strong>
+                        <div class="clear"></div>
+                        <div ng-repeat="list in FILE_DATA">
+                            <p style="padding-left: 130px;width: 50%" ng-if="list.ZFILETYPE=='30'"><img ng-src='{{list.ZFTP}}'/></p>
+                        </div>
+                    </li>-->
+                  </ul>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="gerSub">
+            <a class="subSave" href="index.html#/editCustomer?processId={{processId}}&nodeId={{nodeId}}" ng-if="editBtn">编辑</a>        </div>
+        <div class="apCot" ng-if="apCot" >
+            <div ng-include="'template/common/apply.html'"></div>
+        </div>
+    </div>
+</div>

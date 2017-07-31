@@ -1,0 +1,102 @@
+<h3 class="genTitle genTitleBot"><em></em><span>预约提货-登记</span></h3>
+<div class="cusCont">
+    <div class="generForm">
+        <form novalidate name="arriveCargoForm">
+            <div class="addTable" id="occTable">
+                <div class="czAddBtn">
+                    <input excle-uploadify btnname="上传" excleData="uploadList" url="arrival/uploadfile" ng-model="uploadList">
+                    <a href="/doc/yyth.xlsx" class="downloadmb">下载模板</a>
+                    <a href="" class="addBtn" ng-click="Createlist()">添加</a>
+                    <a href="" class="addBtn" ng-click="commonDel()">删除</a>
+                </div>
+                <table id="cgList">
+                    <tr class="allist">
+                        <th><input type="checkbox" ng-model="checkAll" ng-click="allCheck($event)"/></th>
+                        <th><font>*</font>货运单号</th>
+                        <th><font>*</font>供应商订单号</th>
+                        <th><font>*</font>提货体积(方)</th>
+                        <th><font>*</font>预约提货箱数</th>
+                        <th><font>*</font>预计到厂时间</th>
+                        <th><font>*</font>预约创建时间</th>
+                        <th>预约号</th>
+                        <th>预约人工号</th>
+                    </tr>
+                    <tr ng-repeat="list in addCreateList">
+                        <td>
+                            <input type="checkbox" class="checkBox" ng-checked="checkAll" ng-click="updateSelection($event,list,$index)"/>
+                        </td>
+                        <td>
+                            <input ng-required="true" ng-Focus name="transportid{{$index}}" type="text" ng-model="list.transportid"/>
+                            <span class="errTip ng-hide" ng-show="arriveCargoForm['transportid'+$index].$dirty && arriveCargoForm['transportid'+$index].$error.required">必填</span>
+                        </td>
+                        <td>
+                            <input ng-required="true" ng-Focus name="supplierid{{$index}}" type="text" ng-model="list.supplierid"/>
+                            <span class="errTip ng-hide" ng-show="arriveCargoForm['supplierid'+$index].$dirty && arriveCargoForm['supplierid'+$index].$error.required">必填</span>
+                        </td>
+                        <td>
+                            <input ng-required="true" ng-Focus name="thvolume{{$index}}" type="text" ng-model="list.thvolume"/>
+                            <span class="errTip ng-hide" ng-show="arriveCargoForm['thvolume'+$index].$dirty && arriveCargoForm['thvolume'+$index].$error.required">必填</span>
+                        </td>
+                        <td>
+                            <input ng-required="true" ng-Focus name="thnum{{$index}}" type="text" ng-model="list.thnum"/>
+                            <span class="errTip ng-hide" ng-show="arriveCargoForm['thnum'+$index].$dirty && arriveCargoForm['thnum'+$index].$error.required">必填</span>
+                        </td>
+                        <td>
+                            <input ng-required="true" ng-Focus name="expectdate{{$index}}" type="text" class="Wdate" ng-model="list.expectdate" date-Picker/>
+                            <span class="errTip ng-hide" ng-show="arriveCargoForm['expectdate'+$index].$dirty && arriveCargoForm['expectdate'+$index].$error.required">必填</span>
+                        </td>
+                        <td>
+                            <input ng-required="true" ng-Focus name="createdate{{$index}}" type="text" class="Wdate" ng-model="list.createdate" date-Picker/>
+                            <span class="errTip ng-hide" ng-show="arriveCargoForm['createdate'+$index].$dirty && arriveCargoForm['createdate'+$index].$error.required">必填</span>
+                        </td>
+                        <td>
+                            <input type="text" ng-model="list.appointmentno"/>
+                        </td>
+                        <td>
+                            <input type="text" ng-model="list.appointpepleno"/>
+                        </td>
+                    </tr>
+                    <tr ng-repeat="list in uploadList">
+                        <td>
+                            <input type="checkbox" class="checkBox" ng-checked="checkAll" ng-click="updateSelection($event,list,$index)"/>
+                        </td>
+                        <td>
+                            <input ng-required="true" ng-Focus name="transportid{{$index}}" type="text" ng-model="list.transportid"/>
+                            <span class="errTip ng-hide" ng-show="arriveCargoForm['transportid'+$index].$dirty && arriveCargoForm['transportid'+$index].$error.required">必填</span>
+                        </td>
+                        <td>
+                            <input ng-required="true" ng-Focus name="supplierid{{$index}}" type="text" ng-model="list.supplierid"/>
+                            <span class="errTip ng-hide" ng-show="arriveCargoForm['supplierid'+$index].$dirty && arriveCargoForm['supplierid'+$index].$error.required">必填</span>
+                        </td>
+                        <td>
+                            <input ng-required="true" ng-Focus name="thvolume{{$index}}" type="text" ng-model="list.thvolume"/>
+                            <span class="errTip ng-hide" ng-show="arriveCargoForm['thvolume'+$index].$dirty && arriveCargoForm['thvolume'+$index].$error.required">必填</span>
+                        </td>
+                        <td>
+                            <input ng-required="true" ng-Focus name="thnum{{$index}}" type="text" ng-model="list.thnum"/>
+                            <span class="errTip ng-hide" ng-show="arriveCargoForm['thnum'+$index].$dirty && arriveCargoForm['thnum'+$index].$error.required">必填</span>
+                        </td>
+                        <td>
+                            <input ng-required="true" ng-Focus name="expectdate{{$index}}" type="text" class="Wdate" ng-model="list.expectdate" date-Picker/>
+                            <span class="errTip ng-hide" ng-show="arriveCargoForm['expectdate'+$index].$dirty && arriveCargoForm['expectdate'+$index].$error.required">必填</span>
+                        </td>
+                        <td>
+                            <input ng-required="true" ng-Focus name="createdate{{$index}}" type="text" class="Wdate" ng-model="list.createdate" date-Picker/>
+                            <span class="errTip ng-hide" ng-show="arriveCargoForm['createdate'+$index].$dirty && arriveCargoForm['createdate'+$index].$error.required">必填</span>
+                        </td>
+                        <td>
+                            <input type="text" ng-model="list.appointmentno"/>
+                        </td>
+                        <td>
+                            <input type="text" ng-model="list.appointpepleno"/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="gerSub">
+                <a href="index.html#/arriveCargoinfoList">返回</a>
+                <button ng-click="addData()" class="subSave">保存</button>
+            </div>
+        </form>
+    </div>
+</div>

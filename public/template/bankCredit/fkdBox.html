@@ -1,0 +1,37 @@
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td style="width:70%">
+                    <strong style="width:120px;">付款单申请号</strong>
+                    <input class="text" style="width:250px;" type="text" name="$parent.ZSQNO"  ng-init="$parent.ZSQNO=''" ng-model="$parent.ZSQNO" placeholder="请输入付款单申请号">
+                </td>
+                <td>
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+                </td>
+        </table>
+    </div>
+</form>
+<table class="orangestyle table">
+    <thead>
+    <tr>
+        <th>付款单申请号</th>
+        <th>供应商名称</th>
+        <th>付款方式</th>
+        <th>实际付款金额</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody ng-class="fkWsList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in fkWsList">
+        <td>{{list.ZSQNO}}</td>
+        <td>{{list.ZSKDW}}</td>
+        <td>{{list.ZFKFS}}</td>
+        <td>{{list.ZSJFKJE}}</td>
+        <td>
+            <a href="javascript:;" ng-click="fkdwSelect($index,list)">选择</a>
+        </td>
+    </tr>
+    <tr class="tip"><td colspan="5">没有查到此付款单</td></tr>
+    </tbody>
+</table>

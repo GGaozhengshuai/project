@@ -1,0 +1,77 @@
+<!--<div class="mainright">-->
+    <div class="item">借出单查询</div>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>借出单编号</strong>
+                    <input class="text" type="text"  ng-init="code=''" ng-model="code" placeholder="请输入借出单编号">
+                </td>
+                <td>
+                    <strong>产品线</strong>
+                    <input class="text" type="text" ng-init="productline=''"  ng-model="productline" placeholder="请输入产品线">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>借出客户名称</strong>
+                    <input class="text" type="text"  ng-init="clientname=''"  ng-model="clientname" placeholder="请输入借出客户">
+                </td>
+                <td>
+                    <strong>借货人</strong>
+                    <input class="text" type="text" ng-init="username=''"  ng-model="username" placeholder="请输入借货人">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+                    <a ng-if="opprev.loanBillOrder_add" class="searchbtn2 searchbtn2bot addBtn" href="/index.html#/loanBillOrderAdd">新建借出单</a>
+                    <a ng-if="opprev.renewBillOrderAdd_history" class="searchbtn2 searchbtn2bot viewBtn" href="/index.html#/renewBillOrder">查看续借记录</a>
+                    <a ng-if="opprev.returnBillOrderAdd_history" class="searchbtn2 searchbtn2bot viewBtn" href="/index.html#/returnBillOrder">查看还回记录</a>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+    <div class="item">查询结果</div>
+    <table class="orangestyle table">
+        <thead>
+        <tr>
+            <th>借出单编号</th>
+            <!--<th>销售人员</th>-->
+            <th>借出类型</th>
+            <th>产品线</th>
+            <th>借出客户名称</th>
+            <th>借货人</th>
+            <th>借出天数</th>
+            <th>续借天数</th>
+            <th width="105px">操作</th>
+        </tr>
+        </thead>
+        <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+            <tr ng-repeat="list in dataList">
+                <td>
+                    <a class="underline" target="_blank" href="index.html#/loanBillView?id={{list._id}}">{{list.code}}</a>
+                </td>
+                <!--<td>{{list.user.name}}</td>-->
+                <td>{{{'ZA1':'厂商借用','ZA2':'代理商借用','ZA3':'内部借用','ZA4':'借货转销售'}[list.lendbase.lendtype] || list.lendbase.lendtype}}</td>
+                <td>{{list.lendbase.productline}}</td>
+                <td>{{list.client.name}}</td>
+                <td>{{list.user.name}}</td>
+                <td>{{list.lendbase.days}}</td>
+                <td>{{list.lendbase.renewdays}}</td>
+                <td class="czBtn">
+                    <a ng-if="opprev.renewBillOrderAdd" target="_blank" class="handleBtn renewBtn" title="续借" ng-hide="list.processinfo.inprocess || list.processinfo.status==2"  href="index.html#/renewBillOrderAdd?code={{list.code}}&ZJCDH={{list.ZJCDH}}"></a>
+                    <span  ng-if="opprev.renewBillOrderAdd" class="handleBtn renewBtn disabled ng-hide" title="续借" ng-show="list.processinfo.inprocess || list.processinfo.status==2 "></span>
+                    <a ng-if="opprev.returnBillOrderAdd" target="_blank" class="handleBtn loanBillBtn" title="借出还回" ng-hide="list.processinfo.inprocess || list.processinfo.status==2" href="index.html#/returnBillOrderAdd?code={{list.code}}&ZJCDH={{list.ZJCDH}}&id={{list._id}}"></a>
+                    <span  ng-if="opprev.returnBillOrderAdd" class="handleBtn loanBillBtn disabled ng-hide" title="借出还回" ng-show="list.processinfo.inprocess || list.processinfo.status==2"></span>
+                    <a class="handleBtn printBtn" title="打印" href="/print/printest.html?uri=/productlend/printview&code={{list.code}}" target="_blank"></a>
+                    <a class="handleBtn detailBtn" title="详情" href="index.html#/loanBillView?id={{list._id}}" target="_blank"></a>
+                </td>
+            </tr>
+            <tr class="tip"><td colspan="8">没有查到借出单</td></tr>
+        </tbody>
+    </table>
+    <pagination conf="paginationConf"></pagination>

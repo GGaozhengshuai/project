@@ -1,0 +1,80 @@
+<div class="viewTable">
+    <ul>
+        <li><strong>客户名称：</strong><span>{{ORDER_DATA.KUNNR}}</span></li>
+        <li><strong>信用等级：</strong><span>{{ORDER_DATA.GRUPP}}</span></li>
+        <li><strong>信用额度：</strong><span>{{ORDER_DATA.KLIMK}}</span></li>
+        <li><strong>可用额度：</strong><span>{{ORDER_DATA.ZKYED}}</span></li>
+        <li><strong>信用天数：</strong><span>{{ORDER_DATA.DBPAY}}</span></li>
+        <li><strong>应收金额：</strong><span>{{ORDER_DATA.ZYSJE}}</span></li>
+        <li><strong>超期(超期1~30天)：</strong><span>{{ORDER_DATA.ZCQJE}}</span></li>
+        <li><strong>呆账(超期31天以上)：</strong><span>{{ORDER_DATA.ZDZJE}}</span></li>
+
+    </ul>
+</div>
+<div class="addTable">
+    <h5>应收列表</h5>
+    <table class="tab_data">
+        <thead class="tab_header">
+        <tr>
+            <th>客户编号</th>
+            <th>名称</th>
+            <th>销售订单号</th>
+            <th>业务应收编号</th>
+            <th>应收全额</th>
+            <th>未核销<br/>金额</th>
+            <th>账龄起始日期</th>
+            <th>账龄<br>(天)</th>
+            <th>已计划<br>金额</th>
+            <th>业务应收<br>创建方式</th>
+            <th>应收来源</th>
+            <th>超期<br>天数</th>
+        </thead>
+        <tbody class="tab_body">
+        <tr ng-repeat="list in ysList">
+            <td>{{list.KUNNR}}</td>
+            <td>{{list.NAME1}}</td>
+            <td>{{list.VBELN}}</td>
+            <td>{{list.ZYWYS}}</td>
+            <td>{{list.ZYSJE}}</td>
+            <td>{{list.WHXJE}}</td>
+            <td>{{list.ZQSRQ}}</td>
+            <td>{{list.ZZL}}</td>
+            <td>{{list.ZJHJE}}</td>
+            <td>{{list.ZYSMS}}</td>
+            <td>{{list.ZYSLY}}</td>
+            <td>{{list.ZCQTS}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="addTable">
+    <h5>未使用返点记录</h5>
+    <table class="tab_data">
+        <thead class="tab_header">
+        <tr>
+            <th>返点编号</th>
+            <th>返点供应商</th>
+            <th>事业部</th>
+            <th>返点所属<br>客户名称</th>
+            <th>返点类型</th>
+            <th>返点来源</th>
+            <th>生效日期</th>
+            <th>返点金额</th>
+            <th>可用金额</th>
+        </tr>
+        </thead>
+        <tbody class="tab_body">
+        <tr ng-repeat="list in wsyfdList | filter:fun">
+            <td>{{list.code}}</td>
+            <td>{{list.provider}}</td>
+            <td>{{list.department.name}}</td>
+            <td>{{list.client.name}}</td>
+            <td>{{list.bonusbase.type}}</td>
+            <td>{{list.bonusbase.source}}</td>
+            <td>{{list.bonusinfo.start | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td>{{list.bonusmoney.total}}</td>
+            <td>{{list.bonusmoney.total-list.bonusmoney.freeze-list.bonusmoney.used}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

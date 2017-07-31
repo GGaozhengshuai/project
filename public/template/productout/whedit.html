@@ -1,0 +1,166 @@
+<h3 class="genTitle genTitleBot"><em></em><span>放货信息维护编辑</span></h3>
+
+<div class="cusCont">
+    <div class="generForm">
+        <form novalidate name="invoiceForm">
+            <ul>
+                <li class="tli">
+                    <strong>单据编号：</strong><span>
+                    <input type="text" ng-disabled="true" ng-model="ORDER_DARA.code"></span>
+                </li>
+                <li class="tli">
+                    <strong>客户名称：</strong><span>
+                    <input type="text" ng-disabled="true" ng-model="ORDER_DARA.client"></span>
+                </li>
+                <li class="tli"></li>
+                <li class="formUpStyle">
+                    <strong>上传附件：</strong>
+                    <input uploadifyfile btnname="上传附件" />
+                    <span>(可上传多个)</span>
+                    <div ng-repeat="list in uploadArr">
+                        <div class='showImg'><a target='_blank' href='{{list.fileName}}'>{{list.fliePath}}</a><span ng-click="delupload($index)" style='margin-left: 5px;cursor: pointer;'>删除</span></div>
+                    </div>
+                    <div class="clear"></div>
+                </li>
+            </ul>
+            <div class="addTable" id="occTable">
+                <div class="czAddBtn">
+                    <input excle-uploadify btnname="导入放货信息维护" excleData="Filedata" url="/cargooutinfo/importnew" ng-model="Filedata">
+                    <a href="/doc/fhxxwhdz.xlsx" class="downloadmb">下载模板</a>
+                    <a href=""  ng-click="add()">添加</a>
+                    <a href=""  ng-click="Delist()">删除</a>
+                </div>
+                <table id="cgList">
+                    <tr>
+                        <th><input type="checkbox" ng-click="allCheck()" ng-model="all"/></th>
+                        <th>来源</th>
+                        <th><font>*</font>销售合同号</th>
+                        <th><font>*</font>收货人姓名</th>
+                        <th><font>*</font>手机号码</th>
+                        <th>固定电话</th>
+                        <th><font>*</font>省</th>
+                        <th><font>*</font>市</th>
+                        <th><font>*</font>详细地址</th>
+                        <th>邮编</th>
+                        <th><font>*</font>签收方式</th>
+                        <th>站点</th>
+                        <th><a href="" ng-click="add()">添加</a></th>
+                    </tr>
+                    <tr class="list" ng-repeat="list in Cglist">
+                        <td>
+                            <input type="checkbox" ng-checked="all" ng-click="checkDel($index)"/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" type="text" ng-model="enumSourceType[list.source]" value=""/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" type="text"  title="{{ORDER_DARA.code}}" value="{{ORDER_DARA.code}}" required/>
+                        </td>
+                        <td>
+                            <input type="text" ng-model="list.contact" value="" required/>
+                        </td>
+                        <td ng-class="invoiceForm['mobile'+$index].$dirty && (invoiceForm['mobile'+$index].$error.required || invoiceForm['mobile'+$index].$error.phonenum) ? 'hasErrTip' : ''">
+                            <input phone-Validation ng-Focus name="mobile{{$index}}" maxlength="11" type="text" ng-model="list.mobile" maxlength="11" title="11位手机号" value="" required/>
+                            <!--<span class="errTip" ng-if="invoiceForm['mobile'+$index].$dirty && invoiceForm['mobile'+$index].$error.phonenum && !invoiceForm['mobile'+$index].$error.$focused">11位手机号</span>-->
+                        </td>
+                        <td ng-class="invoiceForm['phone'+$index].$dirty && (invoiceForm['phone'+$index].$error.required || invoiceForm['phone'+$index].$error.telnum) ? 'hasErrTip' : ''">
+                            <input tel-Validation name="phone{{$index}}" ng-Focus type="text" ng-model="list.phone" maxlength="20" title="格式不正确" value=""/>
+                            <!--<p class="errTip" ng-if="invoiceForm['phone'+$index].$dirty && invoiceForm['phone'+$index].$error.telnum &&!invoiceForm['phone'+$index].$focused ">格式不正确</p>-->
+                        </td>
+                        <td title="{{countryData}}">
+                            <select style="width:80px;" ng-model="list.province" ng-change="list.city=''" ng-required="true" >
+                                <option value="">--请选择--</option>
+                                <option ng-repeat=" p in countryData" value="{{p.PROVINCE.CODE}}">{{p.PROVINCE.TITLE}}</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select style="width:80px;" ng-change="ba(list.city)" ng-model="list.city" ng-required="true" >
+                                <option value="">--请选择--</option>
+                                <option ng-repeat=" c in getField(countryData, 'CODE',list.province).CITY" value="{{c.CODE}}">{{c.TITLE}}</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input  type="text" ng-model="list.address" maxlength="100" value="" required/>
+                        </td>
+                        <td ng-class="invoiceForm['postcode'+$index].$dirty && (invoiceForm['postcode'+$index].$error.required || invoiceForm['postcode'+$index].$error.postcode) ? 'hasErrTip' : ''">
+                            <input postcode-Validation name="postcode{{$index}}" ng-Focus type="text" ng-model="list.postcode" maxlength="6" title="6位数字" value=""/>
+                            <!--<p class="errTip" ng-if="invoiceForm['postcode'+$index].$dirty && invoiceForm['postcode'+$index].$error.postcode && !invoiceForm['postcode'+$index].$focused ">6位数字</p>-->
+                        </td>
+                        <td>
+                            <select ng-model="list.sign" title="{{list.sign}}" ng-init="list.sign='收货人签字+日期'" required>
+                                <option value="">请选择</option>
+                                <option value="收货人签字+日期">收货人签字+日期</option>
+                                <option value="收货人签字">收货人签字</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input  type="text" ng-model="list.station" value=""/>
+                        </td>
+                        <td><a href="" ng-click="delete($index,'addList')">删除</a></td>
+                    </tr>
+                    <tr class="listError" ng-repeat="list in Filedata">
+                        <td>
+                            <input type="checkbox" ng-model="all" ng-click="filelist($index)">
+                        </td>
+                        <td>
+                            <input ng-disabled="true" type="text" ng-model="enumSourceType[list.source]" value=""/>
+                        </td>
+                        <td ng-class="list.orderno.toLowerCase() !== ORDER_DARA.code.toLowerCase() ? 'hasErrhtTip': ''">
+                            <input  ng-maxlength="220"  ng-disabled="true" type="text" name="orderno{{$index}}"  ng-model="list.orderno" title="{{list.orderno}}" value="" required/>
+                        </td>
+                        <td>
+                            <input ng-disabled="!(editAdd  && list.status != 'inprocess')" type="text" ng-model="list.contact" value="" required/>
+                        </td>
+                        <td ng-class="invoiceForm['mobile'+$index].$dirty && (invoiceForm['mobile'+$index].$error.required || invoiceForm['mobile'+$index].$error.phonenum) ? 'hasErrTip' : ''">
+                            <input phone-Validation ng-Focus name="mobile{{$index}}" maxlength="11" ng-disabled="!(editAdd && list.status != 'inprocess')" type="text" ng-model="list.mobile" maxlength="11" value="" required/>
+                            <span class="errTip" ng-if="invoiceForm['mobile'+$index].$dirty && invoiceForm['mobile'+$index].$error.phonenum && !invoiceForm['mobile'+$index].$error.$focused">11位手机号</span>
+                        </td>
+                        <td ng-class="invoiceForm['phone'+$index].$dirty && (invoiceForm['phone'+$index].$error.required || invoiceForm['phone'+$index].$error.telnum) ? 'hasErrTip' : ''">
+                            <input tel-Validation name="phone{{$index}}" ng-Focus ng-disabled="!(editAdd && list.status != 'inprocess')"type="text" ng-model="list.phone" maxlength="20" value=""/>
+                            <p class="errTip" ng-if="invoiceForm['phone'+$index].$dirty && invoiceForm['phone'+$index].$error.telnum &&!invoiceForm['phone'+$index].$focused ">格式不正确</p>
+                        </td>
+                        <td>
+                            <select style="width:80px;" ng-model="list.province" title="{{list.province}}" ng-change="list.city=''" ng-disabled="!(editAdd && list.status != 'inprocess')" ng-required="true" >
+                                <option value="">--请选择--</option>
+                                <option ng-repeat=" p in countryData" value="{{p.PROVINCE.CODE}}">{{p.PROVINCE.TITLE}}</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select style="width:80px;" ng-change="aaa()" ng-model="list.city" title="{{list.city}}" ng-disabled="!(editAdd && list.status != 'inprocess')" ng-required="true" >
+                                <option value="">--请选择--</option>
+                                <option ng-repeat=" c in getField(countryData, 'CODE',list.province).CITY" value="{{c.CODE}}">{{c.TITLE}}</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input  ng-disabled="!(editAdd && list.status != 'inprocess')" type="text" ng-model="list.address" maxlength="100" value="" required/>
+                        </td>
+                        <td>
+                            <input  ng-disabled="!(editAdd && list.status != 'inprocess')" type="text" ng-model="list.postcode" maxlength="6" value=""/>
+                        </td>
+                        <td>
+                            <select ng-model="list.sign" title="{{list.sign}}" ng-init="list.sign='收货人签字+日期'" required>
+                                <option value="">请选择</option>
+                                <option value="收货人签字+日期">收货人签字+日期</option>
+                                <option value="收货人签字">收货人签字</option>
+                            </select>
+                            <!--  <input type="text" ng-model="list.sign" ng-disabled="!(editAdd && list.status != 'inprocess')"/>-->
+                        </td>
+                        <td>
+                            <input  type="text" ng-model="list.station" value=""/>
+                        </td>
+                        <td><a href="" ng-click="delete($index,'fileList')">删除</a></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="gerSub">
+                <a href="index.html#/productoutOrder">返回</a>
+                <button ng-click="addData(ORDER_DARA,'save')" ng-class="(invoiceForm.$invalid) || Btndis == false ? 'displaySub' : 'subSave'" ng-disabled="invoiceForm.$invalid || Btndis == false">保存</button>
+                <button ng-click="addData(ORDER_DARA, 'apply')"  ng-class="(invoiceForm.$invalid) || Btndis == false ? 'displaySub' : 'subApply'" ng-disabled="invoiceForm.$invalid || Btndis == false">提交审批</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div id="cusBox" class="dialog cusBox" title="添加发货清单" ng-include="'template/productout/addbox.html'"></div>
+<div id="ccBox" class="dialog cusBox" title="查看发货清单" ng-include="'template/productout/viewBox.html'"></div>
+<div id="approversDialog" class="dialog cusBox" title="选择下一审批人" ng-include="'template/common/approvers.html'" ></div>
+

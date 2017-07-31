@@ -1,0 +1,29 @@
+<div class="generForm boxForm">
+    <form novalidate name="deptForm">
+        <ul>
+            <li>
+                <strong style="width:110px;">部门:</strong>
+                <input class="text" style="width:175px" type="text" required ng-init="$parent.orgname=''" name="orgname" ng-model="$parent.orgname" ng-readonly="true" placeholder="请输入部门" ng-click="employee()">
+
+                <input type="hidden" ng-model="$parent.orgid"/>
+            </li>
+            <li>
+                <strong style="width:110px;">部门担保额度:</strong>
+                <input class="text" style="width:175px" type="number"ng-init="$parent.deptlimit=''" required ng-Focus keepnumber-Validation  name="deptlimit" ng-model="$parent.deptlimit" placeholder="请输入部门担保额度">
+                <span class="errTip ng-hide" ng-show="deptForm.deptlimit.$dirty && deptForm.deptlimit.$error.keepnum && !deptForm.deptlimit.$focused">最多两位小数的正数</span>
+
+
+            </li>
+            <!--<li>
+                <strong style="width:110px;">记录人:</strong>
+                <input class="text" style="width:175px" ng-disabled="true" type="text"  ng-init="$parent.username=''" ng-model="$parent.username" placeholder="">
+                <input type="hidden" ng-model="$parent.userid"/></li>-->
+        </ul>
+        <div class="gerSub">
+            <a href="javascript:;" ng-click="closeTqhk()" class="closeBtn">关闭</a>
+            <button ng-click="addData()"  ng-class="deptForm.$invalid == true ? 'displaySub' : 'subSave'" ng-disabled="deptForm.$invalid || invoRready">添加</button>
+
+        </div>
+    </form>
+</div>
+

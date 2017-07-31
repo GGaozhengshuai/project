@@ -1,0 +1,54 @@
+<h3 class="genTitle genTitleBot"><em></em><span>借款冲销</span></h3>
+<div class="cusCont">
+    <div class="generForm">
+        <form novalidate name="myForm">
+            <ul>
+                <li class="tli">
+                    <strong>借款单号：</strong>
+                    <input type="text" ng-model="ORDER_DATA.code" ng-disabled="true">
+                </li>
+                <li class="tli">
+                    <strong>借款人：</strong>
+                    <input type="text" ng-model="ORDER_DATA.user.name" ng-disabled="true">
+                    <input type="hidden" ng-model="ORDER_DATA.user._id">
+                    <input type="hidden" ng-model="ORDER_DATA.user.login">
+                </li>
+                <li class="tli">
+                    <strong>借款部门：</strong>
+                    <input type="text" ng-model="ORDER_DATA.department.name" ng-disabled="true">
+                    <input type="hidden" value="" ng-model="ORDER_DATA.department._id"/>
+                </li>
+                <li class="tli">
+                    <strong>资金性质：</strong>
+                    <input type="text" ng-model="ORDER_DATA.fin.name" ng-disabled="true">
+                </li>
+                <li class="tli">
+                    <strong>借款金额：</strong>
+                    <input type="text" ng-model="ORDER_DATA.brw_amount" ng-disabled="true">
+                </li>
+                <li class="tli">
+                    <strong>本单未还金额：</strong>
+                    <input type="text" ng-model="ORDER_DATA.cur_brw" ng-disabled="true">
+                </li>
+                <li class="tli">
+                    <strong>冲销日期：</strong>
+                    <input class="text" type="text" ng-init="chargeoffdate=today" ng-model="chargeoffdate" ng-disabled="true">
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>冲销原因：</strong>
+                    <select ng-model="reason" ng-init="reason=''" name="reason" ng-required="true">
+                        <option value="">请选择</option>
+                        <option value="01">当前期间回转</option>
+                        <option value="02">关闭期间回转</option>
+                    </select>
+                    <span class="errTip ng-hide" ng-show="myForm.reason.$dirty && userForm.reason .$error.required">必填</span>
+                </li>
+            </ul>
+
+            <div class="gerSub">
+                <a href="index.html#/loanManageOrder">取消</a>
+                <button ng-click="chargeoff()"  class="subSave">冲销</button>
+            </div>
+        </form>
+    </div>
+</div>

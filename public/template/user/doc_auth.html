@@ -1,0 +1,213 @@
+<h3 class="genTitle genTitleBot"><em></em><span>单据权限管理</span></h3>
+<div class="addTable">
+    <table class="orangestyle table">
+        <thead>
+        <tr>
+            <th width="20%">单据中文名称</th>
+            <th width="20%">单据英文名称</th>
+            <th width="45%">角色列表</th>
+            <th width="15%" style="text-align: center;"><a href="javascript: void(0);" ng-click="newDoc()" class="btnAdd" title="添加" ></a></th>
+        </tr>
+        </thead>
+        <tbody ng-class="doclenth > 0 ? 'meg' : 'noMegTip'">
+        <tr ng-if="docAdding">
+            <td>
+                <!-- <input type="text" ng-model="newDocValue.desc" placeholder="请输入单据中文名"/> -->
+                <select ng-model="newDocData.data" class="busSel" ng-options="docType as docType.desc for docType in all_docTypes" ng-change="newDocSelected()">
+                    <option value="">请选择单据类型</option>
+                </select>
+            </td>
+            <td>{{newDocKey.ename}}</td>
+            <td>
+                <span class="delTag" ng-repeat="(roleName, roleValue) in newDocValue.roles">
+                    <a href="javascript: void(0);" ng-click="roleDetail('new', newDocKey, newDocValue.desc, roleName, roleValue)">{{roleName}}</a>
+                    <a class="delMarke" href="javascript: void(0);" ng-click="roleDelete('new', newDocKey, roleName)">x</a>
+                </span>
+                <select id="new_docrole_select" style="width: 100px;" ng-model="newRole" class="busSel" ng-options="m as m.name+'('+m.text+')' for m in all_roles" ng-change="newRoleChange('new', newRole, newDocKey)">
+                    <option value="">增加角色</option>
+                </select>
+            </td>
+            <td>
+                <a href="javascript: void(0);" ng-click="newDocSave()">新增</a>
+                <a href="javascript: void(0);" ng-click="newDocCancel()">取消</a>
+            </td>
+        </tr>
+        <tr ng-repeat="(docKey, docValue) in dataList">
+            <td>{{docValue.desc}}</td>
+            <td>{{docKey}}</td>
+            <td>
+                <span class="delTag" ng-repeat="(roleName, roleValue) in docValue.roles">
+                    <a href="javascript: void(0);" ng-click="roleDetail('', docKey, docValue.desc, roleName, roleValue)">{{roleName}}</a>
+                    <a class="delMarke" href="javascript: void(0);" ng-click="roleDelete('', docKey, roleName)">x</a>
+                </span>
+                <select id="new_role" style="width: 100px;" ng-model="newRole" class="busSel" ng-options="m as m.name+'('+m.text+')' for m in all_roles" ng-change="newRoleChange('', newRole, docKey)">
+                    <option value="">增加角色</option>
+                </select>
+            </td>
+            <td>
+                <a href="javascript: void(0);" ng-click="docSave(docKey)">保存</a>
+                <a href="javascript: void(0);" ng-click="docDelete(docKey)">删除</a>
+            </td>
+        </tr>
+        <tr class="tip"><td colspan="9">没有查询到单据权限</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- 角色展示/编辑 弹出框 -->
+<div id="role_detail" class="emBox" style="display:none">
+    <div style="padding: 0px;" class="addTable">
+        <table class="orangestyle table">
+            <thead>
+            <tr>
+                <th width="25%">分项</th>
+                <th width="75%">参数项</th>
+                <!-- <th width="15%">操作</th> -->
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>ops</td>
+                <td>
+                    <!-- <span class="delTag" ng-repeat="ops in currentRole.ops">
+                        <a href="javascript: void(0);">{{ops}}</a>
+                        <a class="delMarke" href="javascript: void(0);" ng-click="opsDelete($index)">x</a>
+                    </span>
+                    <select style="width: 100px;" ng-model="newOps" class="busSel" ng-options="opss as opss.name for opss in all_ops" ng-change="newOpsChange(newOps)">
+                        <option value="">增加ops</option>
+                    </select> -->
+                    {{currentRole.ops}}
+                </td>
+                <!-- <td>
+                    <a href="javascript: void(0);" ng-click="">修改</a>
+                    <a href="javascript: void(0);" ng-click="">删除</a>
+                </td> -->
+            </tr>
+            <tr>
+                <td>params</td>
+                <td>
+                    <span class="delTag" ng-repeat="(paramsonKey, paramsonValue) in currentRole.params">
+                        <a href="javascript: void(0);" ng-click="paramgraDetail(paramsonKey, paramsonValue)">{{paramsonKey}}</a>
+                        <a class="delMarke" href="javascript: void(0);" ng-click="paramsonDelete(paramsonKey)">x</a>
+                    </span>
+                    <span class="addInput">
+                        <input type="text" name="newParam" ng-model="newParamName" />
+                        <i href="javascript: void(0);" ng-click="paramAdd(newParamName)"></i>
+                    </span>
+                </td>
+                <!-- <td>
+                    <a href="javascript: void(0);" ng-click="">修改</a>
+                    <a href="javascript: void(0);" ng-click="">删除</a>
+                </td> -->
+            </tr>
+            <tr>
+                <td>lmts</td>
+                <td>
+                    <span class="delTag" ng-repeat="lmt in currentRole.lmts">
+                        <a href="javascript: void(0);" ng-click="">{{lmt.name + '(' + lmt.text + ')'}}</a>
+                        <a class="delMarke" href="javascript: void(0);" ng-click="lmtDelete($index)">x</a>
+                    </span>
+                    <select style="width: 100px;" ng-model="newLmt" class="busSel" ng-options="m as m.name+'('+m.text+')' for m in lmtsList" ng-change="newLmtSelected()">
+                        <option value="">增加lmt</option>
+                    </select>
+                    <!-- <span class="addInput">
+                        <input type="text" name="newLmt" ng-model="newLmtName" />
+                        <i href="javascript: void(0);" ng-click="lmtAdd(newLmtName)"></i>
+                    </span> -->
+                </td>
+                <!-- <td>
+                    <a href="javascript: void(0);" ng-click="">修改</a>
+                    <a href="javascript: void(0);" ng-click="">删除</a>
+                </td> -->
+            </tr>
+            <tr ng-if="currentRole.default">
+                <td>default</td>
+                <td>
+                    <input type="text" ng-model="currentRole.default" value="currentRole.default" />
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<!-- params子项/编辑 弹出框 -->
+<div id="paramgra_detail" class="emBox" style="display:none">
+    <div class="addTable" style="padding: 0px;">
+        <table class="orangestyle table">
+            <thead>
+            <tr>
+                <th width="85%">参数项</th>
+                <th width="15%">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td width="85%"><input type="text" ng-model="newParamgra_model.name" /></td>
+                <td width="15%"><a href="javascript:;" ng-click="newParamgra()" class="btnAdd" title="添加"></a></td>
+            </tr>
+            <tr ng-repeat="item in paramgraList">
+                <td width="85%">{{item}}</td>
+                <td width="15%"><a href="javascript: void(0);" ng-click="paramgraDelete($index)">删除</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<!-- lmts子项/编辑 弹出框 -->
+<div id="lmt_detail" class="emBox" style="display:none">
+    <div class="addTable" style="padding: 0px;">
+        <table class="orangestyle table">
+            <thead>
+            <tr>
+                <th width="15%">参数项</th>
+                <th width="65%">参数值</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td width="15%">type</td>
+                <td width="65%">
+                    <select class="busSel" ng-model="lmtData.type">
+                        <option label="请选择"></option>
+                        <option value="fun" label="fun（同步方法）"></option>
+                        <option value="afun" label="afun（异步方法）"></option>
+                        <option value="conf" label="conf（条件配置）"></option>
+                    </select>
+                </td>
+            </tr>
+            <!-- <tr ng-repeat="(key, value) in lmtData">
+                <td width="15%">{{key}}</td>
+                <td width="65%"><input type="text" ng-model="lmtData[key]" value="{{value}}" /></td>
+            </tr> -->
+            <tr>
+                <td width="15%">name</td>
+                <td width="65%"><input type="text" ng-model="lmtData.name"/></td>
+            </tr>
+            <tr ng-if="lmtData.type !== 'conf'">
+                <td width="15%">args</td>
+                <td width="65%"><input type="text" placeholder="多个参数请以逗号分隔" ng-model="lmtData.args"/></td>
+            </tr>
+            <tr ng-if="lmtData.type === 'conf'">
+                <td width="15%">fld</td>
+                <td width="65%"><input type="text" ng-model="lmtData.fld"/></td>
+            </tr>
+            <tr ng-if="lmtData.type === 'conf'">
+                <td width="15%">op</td>
+                <td width="65%"><input type="text" ng-model="lmtData.op"/></td>
+            </tr>
+            <tr ng-if="lmtData.type === 'conf'">
+                <td width="15%">vp</td>
+                <td width="65%"><input type="text" ng-model="lmtData.vp"/></td>
+            </tr>
+            <tr>
+                <td width="15%">text</td>
+                <td width="65%"><input type="text" ng-model="lmtData.text" placeholder="为{{lmtData.name}}增加中文描述"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

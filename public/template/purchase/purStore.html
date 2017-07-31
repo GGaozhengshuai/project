@@ -1,0 +1,98 @@
+<h3 class="genTitle"><em></em><span>库存调整</span></h3>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>申请单号</strong>
+                    <input class="text" type="text" name="SQDH"  ng-init="SQDH=''" ng-model="SQDH" placeholder="">
+                </td>
+                <td>
+                    <strong>业务类型</strong>
+                    <select ng-model="ZTYPE" ng-init="ZTYPE=''">
+                        <option value="">请选择</option>
+                        <option value="A1">跨仓库调拨</option>
+                        <option value="A2">仓库内转移</option>
+                        <option value="A3">仓库产品报废</option>
+                        <option value="A4">产品组装拆卸</option>
+                        <option value="A5">产品拆箱</option>
+                        <option value="A6">销售退货库存转移</option>
+                        <option value="A7">内部部门领用申请</option>
+                        <option value="A8">内部领用发货到资产时</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>申请人</strong>
+                    <input class="text" type="text" name="ERNAM"  ng-init="ERNAM=''" ng-model="ERNAM" placeholder="">
+                </td>
+                <td>
+                    <strong>申请部门</strong>
+                    <select name="" id="" name="CDEPT"  ng-init="CDEPT=''" ng-model="CDEPT">
+                        <option value="">请选择</option>
+                        <option value="1000">信息产品事业群</option>
+                        <option value="2000">合作业务部</option>
+                        <option value="3000">医疗产品部</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>申请日期</strong>
+                    <input type="text" ng-model="CDATE" class="text Wdate" date-Picker ng-readonly="true">
+                </td>
+                <!--<td>-->
+                    <!--<strong>审批状态</strong>-->
+                    <!--<select ng-model="ZZSPZT" ng-init="ZZSPZT=''">-->
+                        <!--<option value="">请选择</option>-->
+                    <!--</select>-->
+                <!--</td>-->
+                <td>
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<div class="item ng-scope">查询结果</div>
+<!--<div class="viewTable ng-scope">
+    <table class="tab_data">-->
+<table class="orangestyle table">
+        <thead class="tab_header">
+        <tr>
+            <th>申请单号</th>
+            <th>业务类型</th>
+            <th>库存类型</th>
+            <th>申请人</th>
+            <th>申请部门</th>
+            <th>申请日期</th>
+            <th>成本中心</th>
+            <th>总金额</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody class="tab_body">
+            <tr ng-repeat="list in dataList">
+                <td><a class="underline" target="_blank" href="index.html#/purStoreView/{{list.SQDH}}?type={{list.ZTYPE}}">{{list.SQDH}}</a></td>
+                <td>{{businessType[list.ZTYPE]}}</td>
+                <td>{{list.ZKCLX}}</td>
+                <td>{{list.ERNAM}}</td>
+                <td>{{{'1000':'信息产品事业群','2000':'合作业务部','3000':'医疗产品部'}[list.CDEPT]}}</td>
+                <td>{{list.CDATE | date: 'yyyy-MM-dd'}}</td>
+                <td>{{list.KOSTL | getName:enumObj.KOSTL:'text':'code'}}</td>
+                <td>{{list.CZJJE | number : 2}}</td>
+                <td class="czBtn">
+                    <div class="handlerBox">
+
+                    <a class="handleBtn printBtn" href="/print/printest.html?uri=/stock/printcpcx&SQDH={{list.SQDH}}" ng-show="list.ZTYPE == 'A4'"target="_blank" title="打印"></a>  <!--产品拆箱-->
+                    <a class="handleBtn printBtn" href="/print/printest.html?uri=/stock/printstock&SQDH={{list.SQDH}}" ng-if="list.ZTYPE != 'A5' && list.ZTYPE !='A4'"target="_blank" title="打印"></a> <!--A1A2A3打印-->
+                    <a class="handleBtn printBtn" href="/print/printest.html?uri=/stock/printcpzz&SQDH={{list.SQDH}}" ng-show="list.ZTYPE == 'A5'"target="_blank" title="打印"></a>   <!--产品组装拆卸-->
+                    <a class="handleBtn detailBtn" target="_blank" href="index.html#/purStoreView/{{list.SQDH}}?type={{list.ZTYPE}}" title="详情"></a>
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+<!--</div>-->
+<pagination conf="paginationConf"></pagination>

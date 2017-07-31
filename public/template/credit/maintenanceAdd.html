@@ -1,0 +1,110 @@
+<h3 class="genTitle genTitleBot"><em></em><span>客户额度信息维护</span></h3>
+<div class="cusCont">
+    <div class="generForm">
+        <form novalidate name="myForm">
+            <div class="addTable">
+                <table class="tab_data">
+                <thead>
+                <tr>
+                    <th><font>*</font>客户编码</th>
+                    <th><font>*</font>客户名称</th>
+                    <th><font>*</font>授信额度</th>
+                    <th>有效开始<br>时间</th>
+                    <th><font>*</font>信用天数</th>
+                    <th>预付款比例（%）</th>
+                    <th>信用状况</th>
+                    <th><font>*</font>信用<br>等级</th>
+                    <th><font>*</font>客户信<br>用预警</th>
+                    <th>是否<br>收取延支</th>
+                    <th>记录人</th>
+                    <th ng-if="fkjl">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td ng-class="myForm.cuscode.$dirty && myForm.cuscode.$error.required ? 'hasErrTip' : ''">
+                        <input ng-required="true" name="cuscode" type="text" ng-readonly="true"  ng-model="userList.cuscode" placeholder="请选择客户" ng-click="cusBox()">
+                        <span class="errTip ng-hide" ng-show="myForm.cuscode.$dirty && myForm.cuscode.$error.required">必填</span>
+                    </td>
+                    <td ng-class="myForm.cusname.$dirty && myForm.cusname.$error.required ? 'hasErrTip' : ''">
+                        <input ng-required="true" ng-readonly="true" ng-model="userList.cusname" name="cusname" ng-click="cusBox()"
+                               type="text" placeholder="请选择客户"/>
+                        <span class="errTip ng-hide" ng-show="myForm.cusname.$dirty && myForm.cusname.$error.required">必填</span>
+                    </td>
+                    <td ng-class="myForm.creditmoney.$dirty && (myForm.creditmoney.$error.required || myForm.creditmoney.$error.numtwo) ? 'hasErrTip' : ''">
+                        <input type="text" ng-model="userList.creditmoney" name="creditmoney" ng-Focus numtwo-Validation ng-required="true" placeholder="请输入信用额度">
+                        <span class="errTip ng-hide" ng-show="myForm.creditmoney.$dirty && myForm.creditmoney.$error.required && !myForm.creditmoney.$focused">必填</span>
+                        <span class="errTip ng-hide" ng-show="myForm.creditmoney.$dirty && myForm.creditmoney.$error.numtwo && !myForm.creditmoney.$focused">小数点后保留两位</span>
+                    </td>
+                    <td><input type="text" ng-readonly="true" ng-model="userList.startdate" value="" placeholder="当前时间"></td>
+                    <td ng-class="myForm.days.$dirty &&  myForm.days.$error.integer ? 'hasErrTip' : ''">
+                        <input ng-Focus integer-Validation ng-model="userList.days" ng-required="true" name="days" type="text" maxlength="20" placeholder="请输入信用天数"/>
+                        <span class="errTip ng-hide" ng-show="myForm.days.$dirty && myForm.days.$error.integer && !myForm.days.$focused">请输入整数</span>
+                        <span class="errTip ng-hide" ng-show="myForm.days.$dirty && myForm.days.$error.required && !myForm.days.$focused">必填</span>
+                    </td>
+                    <td ng-class="myForm.advancepayment.$dirty &&  myForm.advancepayment.$error.numtwo ? 'hasErrTip' : ''">
+                        <input ng-model="userList.advancepayment" ng-Focus numtwo-Validation name="advancepayment" type="text" placeholder="请输入预付款"/>
+                        <span class="errTip ng-hide" ng-show="myForm.advancepayment.$dirty && myForm.advancepayment.$error.numtwo && !myForm.advancepayment.$focused">小数点后保留两位</span>
+                    </td>
+                    <td><input ng-model="userList.xyzk" type="text" maxlength="100" placeholder="请输入信用状况"/></td>
+                    <td ng-class="myForm.xydj.$dirty &&  myForm.xydj.$error.required ? 'hasErrTip' : ''">
+                        <select ng-model="userList.xydj" name="xydj" ng-required="true">
+                            <option value="">请选择</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                            <option value="E">E</option>
+                        </select>
+                        <span class="errTip ng-hide" ng-show="myForm.xydj.$dirty && myForm.xydj.$error.required">必填</span>
+                    </td>
+                    <!--2017-3-3 6004 【客户信用管理】“客户信用预警” 变更和 新增 时候 信用预警里面的选项内容请改为无、中、差-->
+                    <td>
+                        <select ng-model="userList.khxyyj" ng-required="true" name="khxyyj">
+                            <option value="">请选择</option>
+                            <option value="无">无</option>
+                            <option value="中">中</option>
+                            <option value="差">差</option>
+                        </select>
+                        <span class="errTip ng-hide" ng-show="myForm.khxyyj.$dirty && myForm.khxyyj.$error.required">必填</span>
+                    </td>
+                    <td>
+                        <select ng-model="userList.isreceive" ng-init="userList.isreceive='否'" name="isreceive">
+                            <option value="">请选择</option>
+                            <option value="必须">必须</option>
+                            <option value="建议">建议</option>
+                            <option value="否">否</option>
+                        </select>
+                        <span class="errTip ng-hide" ng-show="myForm.isreceive.$dirty && myForm.isreceive.$error.required">必填</span>
+                    </td>
+                    <td><input ng-model="userList.jlr" ng-disabled="true" type="text" placeholder="记录人"/></td>
+                </tr>
+                <tr ng-repeat="list in ORDER_DATA" ng-if="list.status != 1" class="list">
+                    <td>{{list.cuscode}}</td>
+                    <td>{{list.cusname}}</td>
+                    <td>{{list.creditmoney}}</td>
+                    <td>{{list.startdate | date : 'yyyy-MM-dd'}}</td>
+                    <td>{{list.days}}</td>
+                    <td>{{list.advancepayment}}</td>
+                    <td>{{list.xyzk}}</td>
+                    <td>{{list.xydj}}</td>
+                    <td>{{list.khxyyj}}</td>
+                    <td>{{list.isreceive}}</td>
+                    <td>{{list.jlr}}</td>
+                    <td ng-if="fkjl"><a href="" ng-click="delItem($index, list._id)">删除</a></td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+            <div class="gerSub">
+                <a href="index.html#/creditmaintenance">返回</a>
+                <button ng-click="addData(userList, 'save')" class="subSave">保存
+                </button>
+                <!--<button ng-click="addData(ORDER_DATA, 'apply')" class="subSave">保存并提交-->
+                <!--</button>-->
+            </div>
+        </form>
+    </div>
+</div>
+<div id="cusBox" class="dialog cusBox" title="选择客户" ng-include="'template/contract/cusBox.html'"
+     ng-controller="cusCusBoxCtrl"></div>

@@ -1,0 +1,90 @@
+<h3 class="genTitle genTitleBot"><em></em><span>到单申请</span></h3>
+<div class="cusCont">
+    <div class="generForm">
+        <form novalidate name="invoiceForm">
+            <ul>
+                <li class="tli">
+                    <strong>到单申请号：</strong>
+                    <span>{{purchaseList.ZSQNO}}</span>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>到单日期：</strong>
+                    <span>{{purchaseList.ZDDAT}}</span>
+                </li>
+
+                <li class="tli">
+                    <strong><font>*</font>到单/付汇日汇率：</strong>
+                    <span>{{purchaseList.ZRHL}}</span>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>是否押汇：</strong>
+                    <select ng-model="purchaseList.ZSFYH" ng-disabled="true" ng-required="true">
+                        <option value="">请选择</option>
+                        <option value="是">是</option>
+                        <option value="否">否</option>
+                    </select>
+                </li>
+                <div ng-if="billType">
+                    <li class="tli">
+                        <strong><font>*</font>押汇期限（天）：</strong>
+                        <span>{{purchaseList.ZYHQX}}</span>
+                        <!--<input type="text" ng-model="purchaseList.ZYHQX" ng-disabled="true" ng-change="Date(purchaseList.ZDDAT,purchaseList.ZYHQX)" required/>-->
+                    </li>
+                    <li class="tli">
+                        <strong><font>*</font>承付（押汇）日期：</strong>
+                        <span>{{purchaseList.ZCFDAT}}</span>
+                        <!--<input type="text" ng-model="purchaseList.ZCFDAT" ng-disabled="true" required/>-->
+                    </li>
+                </div>
+                <li class="tli">
+                    <strong><font>*</font>实际融资方式：</strong>
+                    <span>{{purchaseList.ZRZFS}}</span>
+                    <!--<input type="text" ng-model="purchaseList.ZRZFS" ng-disabled="true" required />-->
+                </li>
+                <li class="clear"></li>
+            </ul>
+            <div class="addTable">
+                <div class="genTitle2">
+                    <div>
+                        <strong>列表信息</strong>
+                    </div>
+                </div>
+                <table id="listTable">
+                    <tr>
+                        <th><font>*</font>采购订单号</th>
+                        <th>境外采购付款方式</th>
+                        <th>开证付汇申请号</th>
+                        <th>付款类型</th>
+                        <th ng-if="Ifshow">已开证付汇金额</th>
+                        <th ng-if="Ifshow">已到单金额</th>
+                        <th><font>*</font>到单金额</th>
+                        <th>备注</th>
+                    </tr>
+                    <tr ng-repeat="list in comeList" class="list">
+                        <td>
+                            <input type="text" ng-disabled="true" ng-model="list.EBELN">
+                        </td>
+                        <td><input type="text" ng-model="list.ZFKFS" ng-disabled="true"></td>
+                        <td><input type="text" ng-model="list.ZKZFH" ng-disabled="true"></td>
+                        <td><input type="text" ng-disabled="true" ng-model="list.ZFKLX"></td>
+                        <td ng-if="Ifshow"><input type="number" ng-disabled="true" ng-model="list.ZKZFHJE"></td>
+                        <td ng-if="Ifshow"><input type="number" ng-disabled="true" ng-model="list.YDDJE" ></td>
+                        <td>
+                            <input type="text" value="{{list.ZDDJE | number : 2}}" ng-disabled="true">
+                        </td>
+                        <td>
+                            <input  type="text" value="" ng-model="list.ZBZ" ng-disabled="true"/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="clear"></div>
+<div class="gerSub">
+    <a class="subSave" href="index.html#/receiptsEdit?processId={{processId}}&nodeId={{nodeId}}" ng-if="editBtn">编辑</a>
+</div>
+<div class="apCot" ng-if="apCot" >
+    <div ng-include="'template/common/apply.html'"></div>
+</div>

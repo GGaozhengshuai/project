@@ -1,0 +1,73 @@
+<div class="czAddBtn">
+    <a href="" class="downloadmb" ng-click="downLoad()">下载清单</a>
+    <!--// # @bug5592  @wangjingfeng  @20170320   更改接口为 excleConfw()    -->
+    <input excle-Updata="{{excleConfw}}" get-upload-callback="getUploadCallback(uploadCallData)" ng-model="Filedata"/>
+</div>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td ng-if="Required">
+                    <strong>库房名称</strong>
+                    <select ng-model="currentAddress"  ng-options="m.code as m.name for m in enumDepotFX" ng-change="stockSearch(currentAddress)">
+                        <option value="">请选择</option>
+                    </select>
+                    <span style="color:red;" ng-if="Required">*必填</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<table class="orangestyle table" id="wlTable">
+    <thead>
+        <tr class="alllist">
+            <th><input type="checkbox" ng-model="all" ng-click="allCheck($event)"/></th>
+            <th>行项目号</th>
+            <th>内部物料编码</th>
+            <th>原厂物料编码</th>
+            <th>型号</th>
+            <th>描述</th>
+            <th>物料类型</th>
+            <th>销售数量</th>
+            <th>单价</th>
+            <th>未放货数量</th>
+            <th>本次放货数量</th>
+            <th ng-if="STOCK">本人占用</th>
+            <th ng-if="STOCK">可占用</th>
+            <th ng-if="STOCK">库存数量</th>
+        </tr>
+    </thead>
+    <tbody ng-class="glaList.length > 0 ? 'meg' : 'noMegTip'">
+        <tr ng-repeat="list in glaList" class="list">
+            <td><input class="checkBox" name="checkbox"  type="checkbox" ng-click="singleCheck($index,list)"  ng-checked="list.checkAll"/></td>
+            <td>{{list.posnr}}</td>
+            <td>{{list.code}}</td>
+            <td>{{list.oemcode}}</td>
+            <td>{{list.model}}</td>
+            <td class="pre" title="{{list.note}}">{{list.note | cutfield:true:10:'...'}}
+                <input type="hidden" value="{{list.note}}"/>
+            </td>
+            <td>{{MTART[list.category]}}
+                <input type="hidden" value="{{list.category}}"/>
+            </td>
+            <td>{{list.total}}</td>
+            <td>{{list.price}}</td>
+            <td>{{list.sum}}</td>
+            <td>
+                <input type="number" ng-init="list.num=''" ng-class="(list.num > list.sum  || list.num > list.yzy + list.kzy || list.num > list.stockNum) || (ADD_DATA.ordertype == 'ZC01' && list.pstyv == 'ZTA2' && list.num > list.stock) ? 'errorInpborder' : 'rightInpborder' " style="width:100px;" title="放货数不能大于未放货数且不能大于本人占用+可占用" ng-model="list.num" ng-blur="changeNum(list)">
+                <input type="hidden" value="{{list.sybz}}"/>
+                <input type="hidden" value="{{list.posnr}}"/>
+            </td>
+            <td ng-hide="true">{{list.stock}}</td>
+            <td ng-hide="true">{{list.pstyv}}</td>
+            <td ng-if="STOCK">{{list.yzy}}</td>
+            <td ng-if="STOCK">{{list.kzy}}</td>
+            <td ng-if="STOCK">{{list.stockNum}}</td>
+        </tr>
+        <tr class="tip"><td colspan="10">该订单当前无可放货的物料</td></tr>
+    </tbody>
+</table>
+<div class="gerSub">
+    <a href="" ng-click="close()" class="closeBtn">关闭</a>
+    <button  class="subSave" ng-click="addSelect()">确定</button>
+</div>

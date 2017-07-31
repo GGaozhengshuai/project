@@ -1,0 +1,72 @@
+
+  <!--  <div class="c-wrap">
+        <h3 class="ct">查看用户</h3>
+        <form class="c-mod">
+            <div class="line">
+                <span class="label">用户名：</span>
+                <span class="">{{viewUser.login}}</span>
+            </div>
+            <div class="line">
+                <span class="label">用户名：</span>
+                <span class="">{{viewUser.pwd}}</span>
+            </div>
+            <div class="line">
+                <span class="label">手机号：</span>
+                <span class="">13426018668</span>
+            </div>
+            <div class="line">
+                <span class="label">邮箱：</span>
+                <span class="">sophie@qq.com</span>
+            </div>
+            <div class="line">
+                <span class="label">电话：</span>
+                <span class="">010-22345678</span>
+            </div>
+            <div class="line">
+                <span class="label">部门：</span>
+                <span class="">技术部</span>
+            </div>
+            <div class="line">
+                <span class="label">地址：</span>
+                <span class="">湖南省衡阳市石鼓区五一路45号901</span>
+            </div>
+            <div class="line">
+                <span class="label">权限：</span>
+                <span class="">管理员</span>
+            </div>
+            <div class="line">
+                <span class="label">创建时间：</span>
+                <span class="">2015-10-20</span>
+            </div>
+            <div class="line">
+                <span class="label">备注：</span>
+                <span class=""></span>
+            </div>
+        </form>
+    </div>-->
+<h3 class="genTitle"><em></em><span>员工查询</span></h3>
+<ul class="generNav">
+    <li class="active"><a href="javascript:;">查看用户</a></li>
+</ul>
+
+<div id="mainView">
+    <div class="viewTable ng-scope">
+        <ul>
+            <li><strong>登录名：</strong><span>{{ORDER_DATA.login}}</span></li>
+            <li><strong>用户名：</strong><span>{{ORDER_DATA.name}}</span></li>
+            <li><strong>手机号：</strong><span>{{ORDER_DATA.contact.phone}}</span></li>
+            <li><strong>邮箱：</strong><span>{{ORDER_DATA.contact.email}}</span></li>
+            <li><strong>电话：</strong><span>{{ORDER_DATA.contact.tel}}</span></li>
+            <li><strong>部门：</strong><span>{{ORDER_DATA.orgname}}</span></li>
+            <li><strong>办事处：</strong><span>{{ORDER_DATA.office}}</span></li>
+            <li><strong>职位：</strong><span>{{ORDER_DATA.title}}</span></li>
+            <li><strong>销售小组：</strong><span>{{ORDER_DATA.belongaddr}}</span></li>
+            <div class="clearfix"></div>
+            <li class="list_con"><strong>菜单角色：</strong><span>{{ORDER_DATA.busi_roles}}</span></li>
+            <div class="clearfix"></div>
+            <li class="list_con"><strong>权限：</strong><span>{{ORDER_DATA.opprev}}</span></li>
+            <li><strong>创建时间：</strong><span>{{}}</span></li>
+            <li class="list_con"><strong>备注：</strong><span>{{}}</span></li>
+        </ul>
+    </div>
+</div>

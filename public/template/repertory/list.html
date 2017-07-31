@@ -1,0 +1,88 @@
+<!--<div class="mainright">-->
+    <div class="item">库存查询</div>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>物料编码</strong>
+                    <input class="text" type="text" name="MATNR"  ng-init="MATNR=''" ng-model="MATNR" placeholder="请输入物料编码">
+                </td>
+                <td>
+                    <strong>供应商物料编码</strong>
+                    <input class="text" ng-init="BISMT=''" type="text" name="BISMT" ng-model="BISMT" placeholder="请输入供应商物料编码">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>物料组</strong>
+                    <select ng-model="MATKL" ng-init="MATKL=''" ng-options="m.code as m.name for m in stockType.MATKL">
+                        <option value="">请选择</option>
+                    </select>
+                </td>
+                <td>
+                    <strong>库存类型</strong>
+                    <select ng-model="ZKCLX" ng-init="ZKCLX='分销库存'">
+                        <option value="项目库存">项目库存</option>
+                        <option value="分销库存">分销库存</option>
+                        <option value="样机库存">样机库存</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <!--<td>
+                    <strong>工厂</strong>
+                    <select  ng-model="WERKS" ng-init="WERKS=''">
+                        <option value="">请选择</option>
+                        <option value="1000">中建材信息工厂</option>
+                    </select>
+                </td>-->
+                <td>
+                    <strong>库存地点</strong>
+                    <select ng-model="LGORT" ng-init="LGORT=''" ng-options="m.code as m.name for m in stockType.LGORT1">
+                        <option value="">请选择</option>
+                    </select>
+                </td>
+                <td>
+                    <strong>规格型号</strong>
+                    <input type="text" class="text" ng-model="ZZGKXH" placeholder="请输入规格型号"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="button" value="查询" class="searchbtn2"  ng-click="search()">
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+    <div class="item">查询结果</div>
+    <table class="orangestyle table" id="occTable">
+        <thead>
+        <tr>
+            <th>物料编码</th>
+            <th>物料组</th>
+            <th>供应商物料编码</th>
+            <th>规格型号</th>
+            <th>描述</th>
+            <th>库存数量</th>
+            <th>库存地点</th>
+        </tr>
+        </thead>
+        <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+            <tr ng-repeat="list in dataList" class="list">
+                <td>{{list.MATNR}}</td>
+                <td>{{list.MATKL | getName:stockType.MATKL:'name':'code'}}</td>
+                <td>{{list.BISMT}}</td>
+                <td>{{list.ZZGKXH}}</td>
+                <td class="pre" title="{{list.MAKTX}}">{{list.MAKTX | limitTo:10}}...</td>
+                <td>{{list.LABST}}</td>
+                <td>{{list.LGORT | getName:stockType.LGORT1:'name':'code'}}</td>
+            </tr>
+            <tr class="tip"><td colspan="10">没有查到库存</td></tr>
+        </tbody>
+    </table>
+
+<pagination conf="paginationConf" manual="true"></pagination>
+
+

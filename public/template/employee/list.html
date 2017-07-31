@@ -1,0 +1,116 @@
+    <div class="item"><i class="leftborder"></i>创建工作流</div>
+
+    <ul class="deptlist">
+        <li><a ng-click="getEmployee()" href="javascript:;">中建材集团</a><span>&gt</span></li>
+        <li ng-repeat="list in employeeNav"><a ng-click="getEmployee(list._id,list.orgname)" href="javascript:;">{{list.orgname}}</a><span>&gt</span></li>
+    </ul><label></label>
+    <div class="left_wrap fl employeeWrap">
+        <div class="title_wrap clearfix">
+            <span class="fl" ng-bind="empName"></span>
+            <a class="fr" href="javascript:;" ng-click="addBox('add')">新增部门</a>
+        </div>
+        <div class="content_wrap scroll">
+            <ul ng-class="employeeList.length > 0 ? 'aa' : 'noMegTip'">
+                <li class="strip" ng-repeat="list in employeeList" pId="{{list.pid}}" id="{{list._id}}">
+                    <a  class="title" href="javascript:;" ng-click="getEmployee(list._id,list.orgname)">{{list.orgname}}({{list.grandsoncount}})</a>
+                    <span class="icons fr">
+                        <!--<i class="icon add" title="增加部门"></i>-->
+                        <i class="icon edit" ng-click="addBox('edit', list._id,list.orgname)"  title="编辑部门"></i>
+                        <i class="icon delete" ng-click="deleteEmployee(list._id,$index)" title="删除部门"></i>
+                    </span>
+                </li>
+                <li class="strip noMegLi">没有子部门请添加</li>
+            </ul>
+        </div>
+        <!--<i class="figure"></i>-->
+    </div>
+    <i class="icon rightpoint"></i>
+    <div class="right_wrap fr">
+        <div class="title_wrap clearfix">
+            <span class="fl">{{empName}}员工</span>
+            <a class="fr" href="javascript:;" ng-click="addEmUser()">新增部门员工</a>
+        </div>
+        <div class="content_wrap scroll">
+            <!--<div class="content_icon">-->
+            <!--<i class="handpoint icon"></i>-->
+            <!--<p>请选择具体部门</p>-->
+            <!--</div>-->
+
+            <div class="content_title clearfix">
+                <span class="fl">姓名</span>
+                <span class="fr">操作</span>
+            </div>
+            <ul ng-class="employeeUser.length > 0 ? 'aa' : 'noMegTip'">
+                <li class="strip" ng-repeat="list in employeeUser">
+                    <a  class="title" href="javascript:;" ng-click="">{{list.name}}</a>
+                    <span class="icons fr">
+                        <i class="icon edit" ng-click="addEmUser(list._id, 'edit')" title="编辑员工"></i>
+                        <i class="icon delete" ng-click="deleteUser(list._id,$index)" title="删除员工"></i>
+                    </span>
+                </li>
+                <li class="strip noMegLi">此部门没有员工请添加</li>
+            </ul>
+
+        </div>
+    </div>
+
+<div id="dialog" class="dialog" title="新建部门" >
+    <div class="deptlist clearfix">
+        <span class="fl">所属部门：{{empName}}</span>
+        <span class="fr"><i class="icon write"></i>更改部门</span>
+    </div>
+    <form>
+        <div class="ct">
+            <div class="ct_strip">
+                <span class="label">部门名称</span>
+                <input placeholder="请输入部门名称" type="text" name="orgName" class="ct_input" ng-model="orgName" maxlength="150">
+                <input  type="hidden" name="pId"  ng-model="pId">
+                <input  type="hidden" name="orgId"  ng-model="orgId">
+            </div>
+            <!--<div class="ct_strip">
+                <span class="label">创建人</span>
+                <input  type="text" name="department" class="ct_input">
+            </div>
+            <div class="ct_strip">
+                <textarea placeholder="备注"></textarea>
+            </div>-->
+        </div>
+    </form>
+</div>
+<div id="dialog2" class="dialog" title="添加新员工" >
+    <div class="deptlist clearfix">
+        <span class="fl">所属部门：{{empName}}</span>
+        <span class="fr"><i class="icon write"></i>更改部门</span>
+    </div>
+    <form novalidate name="userForm">
+        <div class="ct">
+            <div class="ct_strip">
+                <span class="label"><font>*</font>用户名</span>
+                <input type="text" name="login" required ng-disabled="userData._id!=''" class="ct_input" ng-model="userData.login" value="" placeholder="请填写邮箱账号">
+                <input type="hidden" name="_id" ng-model="userData._id">
+            </div>
+            <div class="ct_strip">
+                <span class="label"><font>*</font>密码</span>
+                <input type="text" name="pwd" class="ct_input" ng-model="userData.pwd" placeholder="请填写密码">
+            </div>
+            <div class="ct_strip">
+                <span class="label"><font>*</font>姓名</span>
+                <input type="text" name="name" required class="ct_input" ng-model="userData.name" placeholder="请填写真实姓名">
+            </div>
+            <div class="ct_strip">
+                <span class="label"><font>*</font>部门</span>
+                <input type="text" name="orgname" ng-disabled="true" class="ct_input" ng-model="userData.orgname">
+                <input type="hidden" name="_id" ng-disabled="true" class="ct_input" ng-model="userData.orgid">
+            </div>
+            <div class="ct_strip">
+                <span class="label"><font>*</font>职称</span>
+                <input type="text" name="title" class="ct_input" ng-model="userData.title" placeholder="请填写职位名称">
+            </div>
+            <div class="gerSub">
+                <a ng-click="closeUser()" ng-hide="ready" href="javascript:;" class="closeBtn">取消</a>
+                <button ng-click="addUser(userData)" ng-class="userForm.$invalid == true ? 'displaySub' : 'subSave'" ng-disabled="userForm.$invalid">保存</button>
+            </div>
+
+        </div>
+    </form>
+</div>

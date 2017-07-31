@@ -1,0 +1,112 @@
+<div class="Socket-MsgShow" ng-if='SocketServe.msg && SocketServe.msg.length > 0'>
+    <div class="ms-head" ng-if='SocketServe.msg && SocketServe.msg.length > 0'>
+        <span class="pull-left m-l">
+            <img class="m-t-xs" ng-src="../../img/message/msg.png" height='40'  alt="" />
+        </span>
+        <span class="ms-head-title pull-left m-l fz14">
+            您有{{SocketServe.msg.length}}条新的消息
+        </span>
+        <span class="ms-head-close pull-right m-r-md">
+            <a href="javascript:void(0);" ng-click="SocketServe.msg=[]" class="ms-footer-right"><img ng-src="../../img/message/close.png" height='24'  alt="" /></a>
+        </span>
+    </div>
+    <div class="ms-content" id="content-flex">
+        <ul>
+            <li ng-repeat='sc in SocketServe.msg | limitTo: 6 ' >
+                <div class="ms-content-b">
+                    <!--<div class="ms-content-icon text-center">-->
+                        <!--<div>-->
+                            <!--<img ng-src="../../img/message/msg.png" height='42'  alt="" />-->
+                            <!--<div class="clear"></div>-->
+                            <!--<span class="fz12 m-t-xs">消息</span>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <div class="ms-content-body">
+                        <div class='msgContent-3line msg' >
+                            <span class="title">{{sc.title}}</span>
+                        </div>
+                        <div class='ms-content-info'>
+                            <!-- <div class="msgContent-2line">{{sc.content | ignorebr}}</div>
+                            <div class="clear"></div> -->
+                            <span class="msg">{{sc.timestamp | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+                            <span class="ms-content-click"  ng-click='SockctMsgCart(sc)'>查看详情</span>
+                        </div>
+                        <!--<div class="ms-close fz12" ng-click="SocketMsgMowe(sc._id)">忽略</div>-->
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="ms-footer">
+        <a href="javascript:void(0);" class="ms-footer-left m-l fz12" ng-click="previousMsg()">上一条</a>
+        <a href="javascript:void(0);" class="ms-footer-right m-r fz12" ng-click="nextMsg()">下一条</a>
+    </div>
+    <!--<div class="ms-footer" ng-if='SocketServe.msg && SocketServe.msg.length > 0'>-->
+        <!--<a href="/index.html#/listMessage" ng-click="SocketServe.msg=[]" class="ms-footer-left">更多消息</a>-->
+        <!--<a href="javascript:void(0);" ng-click="SocketServe.msg=[]" class="ms-footer-right">忽略全部</a>-->
+    <!--</div>-->
+</div>
+<style >
+    .Socket-MsgShow{position:fixed;z-index:999;right:20px;bottom:20px;box-shadow:0 2px 6px rgba(0,0,0,0.5);text-shadow:none;width:308px;overflow: hidden;}
+    .Socket-MsgShow a{color:#fff;}
+    .Socket-MsgShow ul{padding: 0;margin: 0;display: block;}
+    .Socket-MsgShow ul li{list-style: none;}
+    .Socket-MsgShow .pull-left{float: left}
+    .Socket-MsgShow .pull-right{float: right}
+    .Socket-MsgShow .fz12 {font-size: 12px;}
+    .Socket-MsgShow .fz14 {font-size: 14px;}
+    .Socket-MsgShow .fz16 {font-size: 16px;}
+    .Socket-MsgShow .clear {clear: both;}
+    .Socket-MsgShow .m-t-xs{margin-top: 3px;}
+    .Socket-MsgShow .m-l{margin-left: 5px;}
+    .Socket-MsgShow .m-l-xs{margin-left: 3px;}
+    .Socket-MsgShow .m-r{margin-right: 5px;}
+    .Socket-MsgShow .m-r-xs{margin-right: 3px;}
+    .Socket-MsgShow .m-r-md{margin-right: 10px;}
+
+    .Socket-MsgShow .text-center{text-align: center;}
+    .Socket-MsgShow .ms-content{color:#fff;overflow: hidden;white-space: nowrap;width: 616px;}
+    .Socket-MsgShow .ms-content ul{padding:0}
+
+    .Socket-MsgShow .ms-content li{display: inline-block;background-color:#5891c8;}
+    .Socket-MsgShow .ms-content li:hover{background-color: #559ed3;}
+    .Socket-MsgShow .ms-content .ms-content-b{padding: 10px;height: 106px;}
+    .Socket-MsgShow .ms-content .ms-content-icon{width:80px; font-size:22px;display:block;float:left;padding:5px 10px 5px 10px;}
+    .Socket-MsgShow .ms-content .ms-content-icon i{color:#fff;}
+    .Socket-MsgShow .ms-content .ms-content-body{width:288px;height: 86px;float:left; position:relative;padding: 0 10px;}
+    .Socket-MsgShow .ms-content .ms-content-body .ms-content-title{font-size: 13px;font-weight: bold;clear: both;margin: 0px 0px 10px 0;line-height: 18px;}
+    .Socket-MsgShow .ms-content .ms-content-body .ms-content-title .times{float: right}
+    .Socket-MsgShow .ms-content .ms-content-body .pointer{cursor: pointer;}
+    .Socket-MsgShow .ms-content .ms-content-body .ms-content-title.msg{min-height:24px;}
+    .Socket-MsgShow .ms-content .ms-content-body .ms-content-info{font-size: 12px;color: #fff; clear: both;bottom: 5px;border-bottom: 1px solid #4c89c5;position: absolute;right: 10px;left: 10px;}
+    .Socket-MsgShow .ms-content .ms-content-body .ms-content-info .ms-content-click{cursor:pointer;color:#fff;float: right;border-bottom: 0 solid #fff;}
+    .Socket-MsgShow .ms-content .ms-content-body .ms-content-info .ms-content-click:hover{color:#fff;}
+    .Socket-MsgShow .ms-content .ms-content-body .ms-content-footer{font-size: 12px;color: #444; clear: both;}
+    .Socket-MsgShow .ms-content-body .ms-close{color:#333!important;cursor:pointer;text-align:center;padding:3px 6px 3px 6px;color:#fff;position:absolute;top:-10px;right:-10px;display:none;}
+    .Socket-MsgShow .ms-content-body .ms-close:hover{background-color:#6254b2;color:#fff!important;}
+    /*.Socket-MsgShow .ms-content li:hover .ms-close{display: block;}*/
+    /*.Socket-MsgShow .ms-content li:hover{background-color: #eee}*/
+
+    .Socket-MsgShow .ms-head{color:#fff;background-color: #4c89c5;height: 50px;display: block;}
+    .Socket-MsgShow .ms-head .ms-head-title{line-height: 40px;}
+    .Socket-MsgShow .ms-head .ms-head-close{margin: 10px 10px 0 0}
+
+    .Socket-MsgShow .ms-footer{font-size:12px;line-height:30px;height:30px;clear:both;background-color:#4c89c5;z-index: 1000;position: relative;}
+    .Socket-MsgShow .ms-footer a{color:#fff;}
+    .Socket-MsgShow .ms-footer a:hover{color:#fff;}
+    .Socket-MsgShow .ms-footer a.ms-footer-left{float:left;margin-left:10px;}
+    .Socket-MsgShow .ms-footer a.ms-footer-right{float:right;margin-right:10px;}
+
+</style>
+
+
+
+<div id="msgdialogs" class="dialog" title="消息">
+    <div class="msgdialogBody">
+        <div class="msgdialog-title">{{msgData.title}}</div>
+        <div class="msgdialog-info">发件人：{{msgData.sender.name}}  &nbsp;&nbsp; {{msgData.timestamp | date:'yyyy-MM-dd HH:mm:ss'}}</div>
+        <hr>
+        <div class="msgdialog-body" ng-bind-html="msgData.content | to_trusted"></div>
+    </div>
+</div>

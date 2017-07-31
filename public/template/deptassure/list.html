@@ -1,0 +1,127 @@
+<div class="item">部门担保查询</div>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>部门担保申请号：</strong>
+                    <input class="text" type="text" name="code"  ng-init="code=''" ng-model="code" placeholder="">
+                </td>
+                <td>
+                    <strong>申请部门：</strong>
+                    <input type="text" name="orgname " ng-init="orgname =''"  ng-model="orgname " class="text" placeholder="">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>销售合同号：</strong>
+                    <input class="text" type="text" name="contractno"  ng-init="contractno=''" ng-model="contractno" placeholder="">
+                </td>
+                <td>
+                    <strong>是否已释放：</strong>
+                    <select ng-model="isfree" ng-init="isfree='否'">
+                        <option value="是">是</option>
+                        <option value="否">否</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>客户名称：</strong>
+                    <input class="text" type="text" name="stomer"  ng-init="stomer=''" ng-model="stomer" placeholder="">
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a class="searchbtn2 searchbtn2bot exportBtn" href="javascript:;" ng-click="exportexcel()" ng-if="opprev.deptassureOrder_export">导出现状</a>
+                </td>
+                <td>
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+                    <input ng-if="opprev.deptassureOrder_free" type="button" value="释放" class="searchbtn2 searchbtn2bot distractBtn" ng-click="listBox()">
+                    <a ng-if="opprev.deptassureOrder_add" href="/index.html#/deptassureAdd" class="searchbtn2 searchbtn2bot addBtn">新建部门担保</a>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<div class="item">查询结果</div>
+<div class="tableWrap">
+    <div class="tableLeft" >
+<table class="orangestyle table" id="occTable">
+    <thead>
+    <tr id="list">
+        <th><span><input type="checkbox"  class="checkBox" name="checkbox" id="allcheck" ng-model="checkAll" ng-click="allCheck($event,dataList)"></span></th>
+        <th><span>部门担保申请号</span></th>
+        <th><span>申请人</span></th>
+        <th><span>申请部门</span></th>
+        <th><span>销售合同号</span></th>
+        <th><span>客户名称</span></th>
+        <th><span>销售人员</span></th>
+        <th><span>销售部门</span></th>
+        <th class="right"><span>原担保金额</span></th>
+        <th class="right"><span>未释金额</span></th>
+        <th class="right"><span>部门担保额度</span></th>
+        <th class="right"><span>部门担保剩余额度</span></th>
+        <th><span>日期</span></th>
+        <th><span>是否释放</span></th>
+        <th><span>释放日期</span></th>
+        <!--<th>操作</th>-->
+    </tr>
+    </thead>
+    <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in dataList" class="list">
+        <td><span><input ng-click="checkSelect($index,list.code,list.orgname,list.oneorgid ,list._id)" class="checkBox" name="checkbox{{$index}}" type="checkbox" ng-checked="checkAll" /></span></td>
+        <td title="{{list.code}}"><span><a class="underline" target="_blank" href="index.html#/deptassureView/{{list._id}}"> {{list.code}}</a></span></td>
+
+        <td><span>{{list.proposer}}</span></td>
+        <td><span>{{list.orgname}}</span></td>
+        <td ng-show="false"><span>{{list.orgid}}</span></td>
+        <td title="{{list.contractno}}"><span>{{list.contractno| cutfield:true:13:'...'}}</span></td>
+        <td title="{{list.stomer}}"><span>{{list.stomer| cutfield:true:9:'...'}}</span></td>
+        <td><span title="{{list.salesname}}">{{list.salesname | cutfield:true:20:'...'}}</span></td>
+        <td><span>{{list.salesorgname}}</span></td>
+        <td class="right"><span>{{list.assuremoney| currency : '￥'}}</span></td>
+        <td class="right"><span>{{(list.assuremoney-list.freemoney)| currency : '￥'}}</span></td>
+        <td class="right"><span>{{list.deptlimit| currency : '￥'}}</span></td>
+        <td class="right"><span>{{list.deptunused| currency : '￥'}}</span></td>
+        <td><span>{{list.creatdate | date: 'yyyy-MM-dd '}}</span></td>
+        <td><span>{{list.isfree}}</span></td>
+        <td><span>{{list.freedate| date: 'yyyy-MM-dd '}}</span></td>
+        <!--<td>-->
+<!--&lt;!&ndash;-->
+            <!--<a target="_blank" ng-href="index.html#/deptassureEdit?sapid={{list._id}}">编辑</a>-->
+<!--&ndash;&gt;-->
+            <!--<a target="_blank" href="/print/print.html?uri=/deptassure/printview&_id={{list._id}}">打印</a>-->
+        <!--</td>-->
+    </tr>
+    <tr class="tip"><td colspan="14">没有查到此部门担保号</td></tr>
+    </tbody>
+</table>
+    </div>
+    <div class="tableHandler">
+        <table class="orangestyle table">
+            <thead>
+            <tr>
+                <th><span>操作</span></th>
+            </tr>
+            </thead>
+            <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+            <tr ng-repeat="list in dataList">
+
+                <td>
+                    <div class="handlerBox">
+                        <a class="handleBtn printBtn" target="_blank" href="/print/print.html?uri=/deptassure/printview&_id={{list._id}}" title="打印"></a>
+                        <a target="_blank" href="index.html#/deptassureView/{{list._id}}" class="handleBtn detailBtn" title="详情"></a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<pagination conf="paginationConf"></pagination>
+
+<div id="listBox" class="dialog cusBox" title="" ng-include="'template/deptassure/listBox.html'"></div>

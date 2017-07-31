@@ -1,0 +1,146 @@
+<h3 class="genTitle"><em></em>
+  <span>采购订单</span>
+  <span ng-if="activeTab == 2">审批详情</span>
+</h3>
+
+<ul class="generNav">
+  <li ng-class="{active:activeTab == 1}"><a href="javascript:void(0);" ng-mousedown='htTab(1)'>采购订单详情</a></li>
+  <li ng-class="{active:activeTab == 2}"><a href="javascript:void(0);" ng-mousedown='htTab(2)'>审批详情</a></li>
+  <!--<li ng-class="{active:activeTab == 3}"><a href="javascript:void(0);" ng-mousedown='htTab(3)'>文档下载</a></li>-->
+</ul>
+
+<div id="mainView">
+    <!--<div class="czAddBtn">
+        <a href="javascript:;" ng-click="viewpurchase()" class="changhtBtn">查看采购申请</a>
+        <a ng-if="opprev.purOrder_doc" target="_blank" href="/index.html#/docDownload/{{purchaseList.EBELN}}" class="addContractbtn">查看电子文档</a>
+        <a target="_blank" href="javascript:;" class="changInfoBtn" ng-click="contractdetails($event,purchaseList.ZZPO)">查看销售详情</a>
+    </div>-->
+    <ul class="btnwrap">
+        <li class="btnList">
+            <a class="moreBtn">关联单据查询 <i class="triangle"></i></a>
+            <ul class="subBtnlist subBtn">
+                <li><a href="javascript:;" ng-click="viewpurchase()">查看采购申请</a></li>
+                <li ng-if="opprev.purOrder_doc"><a target="_blank" href="/index.html#/docDownload/{{purchaseList.EBELN}}">查看电子文档</a></li>
+                <li><a target="_blank" href="javascript:;" ng-click="contractdetails($event,purchaseList.ZZPO,purchaseList.ZZSDPO)">查看销售详情</a></li>
+            </ul>
+        </li>
+    </ul>
+    <div class="viewTable ng-scope">
+      <div ng-if="activeTab == 1">
+        <ul>
+            <li><strong>采购订单号：</strong><span>{{purchaseList.EBELN}}</span></li>
+            <li><strong>采购凭证日期：</strong><span>{{purchaseList.BEDAT}}</span></li>
+            <li><strong>操作标识：</strong><span>{{{'I':'新增','U':'修改','D':'作废'}[purchaseList.ZOPERATION] || purchaseList.ZOPERATION}}</span></li>
+            <li><strong>采购订单凭证类型：</strong><span>{{arrparseJson(enumObj, 'BSART')[purchaseList.BSART]}}</span></li>
+            <li><strong>采购组织：</strong><span>{{arrparseJson(enumObj, 'EKORG')[purchaseList.EKORG]}}</span></li>
+            <li><strong>采购组：</strong><span>{{arrparseJson(enumObj, 'EKGRP')[purchaseList.EKGRP]}}</span></li>
+            <li><strong>供应商订单号：</strong><span>{{purchaseList.ZZPO}}</span></li>
+            <li><strong>供应商名称：</strong><span>{{purchaseList.LIFNR_NAME + purchaseList.LIFNR_NAME2}}</span></li>
+            <li><strong>产品线：</strong><span>{{arrparseJson(enumObj, 'ZZCP')[purchaseList.ZZCP]}}</span></li>
+            <li><strong>运输方式：</strong><span>{{purchaseList.ZZYS}}</span></li>
+            <li><strong>二级经销商名称：</strong><span>{{purchaseList.ZZEJ}}</span></li>
+            <li><strong>最终客户名称：</strong><span>{{purchaseList.ZZKH}}</span></li>
+            <li><strong>付款方式：</strong><span>{{purchaseList.ZZFK}}</span></li>
+            <li><strong>付款条款：</strong><span>{{purchaseList.ZTERM}}</span></li>
+            <li><strong>项目名称：</strong><span>{{purchaseList.ZZXM}}</span></li>
+            <li><strong></strong><span></span></li>
+            <li><strong>合同原金额：</strong><span>{{purchaseList.ZZZJY  | number : 2}}</span></li>
+            <li><strong>合同总金额：</strong><span>{{(purchaseList.ZZZJY - purchaseList.ZZSBFD - purchaseList.ZZFWFD)  | number : 2}}</span></li>
+            <li><strong>设备使用返点金额：</strong><span>{{purchaseList.ZZSBFD  | number : 2}}</span></li>
+            <li><strong>服务使用返点金额：</strong><span>{{purchaseList.ZZFWFD | number : 2}}</span></li>
+            <li><strong>币别：</strong><span>{{arrparseJson(enumObj, 'WAERS')[purchaseList.WAERS]}}</span></li>
+            <li><strong>创建者：</strong><span>{{purchaseList.ERNAM}}</span></li>
+            <li><strong>是否提前下单：</strong><span>{{purchaseList.ZZTQXD}}</span></li>
+            <li class="list_con"><strong>项目说明：</strong><span>{{purchaseList.note}}</span></li>
+            <li class="list_con"><strong>采购订单清单：</strong><span style="text-decoration: underline;cursor: pointer" ng-click="show()">展开详细采购清单∨</span></li>
+        </ul>
+        <table class="tab_data" ng-show="emerge">
+            <thead class="tab_header">
+            <tr>
+                <th>行项目</th>
+                <th>物料组</th>
+                <th>物料编码</th>
+                <th>物料描述</th>
+                <th>数量</th>
+                <th>单位</th>
+                <th>税率</th>
+                <th>小计</th>
+                <th>交货日期</th>
+                <th>退货标示</th>
+            </tr>
+            </thead>
+            <tbody class="tab_body">
+            <tr ng-repeat="list in dataList">
+                <td>{{list.EBELP}}</td>
+                <td>{{arrparseJson(enumObj, 'MATKL')[list.MATKL]}}</td>
+                <td>{{list.MATNR}}</td>
+                <td>{{list.TXZ01}}</td>
+                <td>{{list.MENGE}}</td>
+                <td>{{arrparseJson(enumObj, 'MEINS')[list.MEINS]}}</td>
+                <td>{{arrparseJson(enumObj, 'MWSKZ')[list.MWSKZ]}}</td>
+                <td>{{list.BRTWR | number : 2}}</td>
+                <td>{{list.EINDT}}</td>
+                <th ><span ng-if="list.RETPO == 'X' ? true : false">是</span><span ng-if="list.RETPO == '' ? true : false">否</span></th>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    </div>
+    <div class="applyLog" ng-if="activeTab == 2">
+      <table>
+        <thead>
+        <tr>
+          <th class="th1">审批人</th>
+          <th class="th2">审批时间</th>
+          <th class="th3">审批状态</th>
+          <th class="th4">审批意见</th>
+        </tr>
+        </thead>
+          <tbody ng-repeat="list in processlog">
+          <tr  ng-show="$index==(processlog.length-1)"><td ng-class="$index%2?'blueBack':'orgBack'" colspan="4">新建审批流</td></tr>
+          <tr ng-show="$index!=(processlog.length-1)"><td ng-class="$index%2?'blueBack':'orgBack'" colspan="4">第{{processlog.length-1-$index}}次变更审批流</td></tr>
+          <tr ng-repeat="item in list.processlog">
+              <td>{{item.sender.name}}</td>
+              <td>{{item.createDate | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+              <td>{{item.operation}}</td>
+              <td>{{item.content.comment}}</td>
+          </tr>
+          </tbody>
+      </table>
+    </div>
+    <!--<div class="applyLog" ng-if="activeTab == 3">-->
+        <!--<div class="czAddBtn">-->
+            <!--<a class="addContractbtn">批量下载</a>-->
+        <!--</div>-->
+        <!--<table>-->
+            <!--<thead>-->
+            <!--<tr>-->
+                <!--<th><input type="checkbox"/></th>-->
+                <!--<th>文档类型</th>-->
+                <!--<th>文档名</th>-->
+                <!--<th>上传者</th>-->
+                <!--<th>上传日期</th>-->
+                <!--<th>文件大小</th>-->
+                <!--<th>操作</th>-->
+            <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody>-->
+            <!--<tr ng-repeat="doc in dataList">-->
+                <!--<td><input type="checkbox" ng-checked="all"/></td>-->
+                <!--<td>{{(doc.dm_doc_type_name)}}</td>-->
+                <!--<td>{{(doc.dm_doc_name)}}</td>-->
+                <!--<td>{{(doc.dm_uploader_name)}}</td>-->
+                <!--<td>{{(doc.dm_upload_datetime)}}</td>-->
+                <!--<td>{{(doc.stream_size)/1024/1024 | number:2}} MB</td>-->
+                <!--<td><a style="margin-top: 9px;" class="handleBtn downloadbg" target="_self" href={{(doc.dm_upload_file_path)}} download="{{doc.dm_doc_name}}"></a></td>-->
+            <!--</tr>-->
+            <!--<tr class="tip"><td colspan="6">{{doc_info}}</td></tr>-->
+            <!--</tbody>-->
+        <!--</table>-->
+        <!--<pagination conf="viewDocsPaginationConf"></pagination>-->
+    <!--</div>-->
+</div>
+<pagination conf="paginationConf" ng-show="emerge && activeTab == 1"></pagination>
+<div id="chsBox" class="dialog cusBox" title="查看采购申请" ng-include="'template/purchase/OpurchaseList.html'"></div>
+<div id="purListBox" class="dialog cusBox" title="查看销售详情" ng-include="'template/purchase/purList.html'"></div>

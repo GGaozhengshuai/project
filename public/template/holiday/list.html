@@ -1,0 +1,77 @@
+<div class="item">请休假查询</div>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong><font>*</font>申请人姓名:</strong>
+                    <input class="text" type="text" name="name"  ng-model="name" placeholder="" ng-disabled="true">
+                </td>
+                <td>
+                    <strong>请假类型：</strong>
+                    <select ng-model="off_type"  name="off_type">
+                        <option value="">--请选择--</option>
+                        <option ng-repeat=" p in holidayData" value="{{p.code}}">{{p.name}}</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong><font>*</font>查询开始日期:</strong>
+                    <input class="text Wdate" type="text"  name="begin_date"  date-Picker ng-readonly="true" ng-change="dateLimit(begin_date,end_date)"  ng-model="begin_date" placeholder="请选择日期">
+<!--
+                    <input  class=" text" type="text" onfocus="WdatePicker({skin:'whyGreen',dateFmt: 'yyyy-MM', minDate: '#{%y-5}-MM', maxDate: '#{%y+5}-MM' })"/>
+-->
+
+                </td>
+                <td>
+                    <strong><font>*</font>查询结束日期:</strong>
+                    <input class="text Wdate" type="text" name="end_date"  date-Picker ng-readonly="true" ng-change="dateLimit(begin_date,end_date)"  ng-model="end_date" placeholder="请选择日期">
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search()" ng-disabled="dayOk">
+                    <a class="searchbtn2 searchbtn2bot addBtn" href="/index.html#/holidayAdd">新建休假</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<div class="item">查询结果</div>
+<table class="orangestyle table">
+    <thead>
+    <tr>
+        <th>申请人</th>
+        <th>申请人部门</th>
+        <th>请假类型</th>
+        <th>请假开始日期</th>
+        <th>请假开始时间</th>
+        <th>请假结束日期</th>
+        <th>请假结束时间</th>
+        <th>合计天数</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in dataList">
+        <td >{{list.username}}</td>
+        <td >{{list.department}}</td>
+        <td >{{getField(holidayData, 'code',list.type).name}}</td>
+        <td>{{list.begin_date}}</td>
+        <td>{{list.begin_time}}</td>
+        <td >{{list.end_date}}</td>
+        <td >{{list.end_time}}</td>
+        <td >{{list.days}}</td>
+        <td class="czBtn">
+            <a class="handleBtn invalidBtn" target="_blank" href="javascript:;" ng-click="destroy(list.docno,$index)" ng-show="list.cancel" title="作废"></a>
+            <span class="handleBtn invalidBtn disabled ng-hide"  ng-hide="list.cancel"></span>
+            <a class="handleBtn detailBtn" target="_blank" href="index.html#/holidayView/{{list.docno}}" title="详情"></a>
+        </td>
+    </tr>
+    <tr class="tip"><td colspan="9">没有查到请休假单</td></tr>
+    </tbody>
+</table>
+<pagination conf="paginationConf"></pagination>
+

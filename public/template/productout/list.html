@@ -1,0 +1,128 @@
+<div class="item">放货单查询</div>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>单据编号</strong>
+                    <input class="text" type="text" name="" ng-init="orderno=''" ng-model="orderno" placeholder="">
+                </td>
+                <td>
+                    <strong>交货单号</strong>
+                    <input class="text" type="text" name="" ng-init="sapcode=''" ng-model="sapcode" placeholder="">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>放货单编号</strong>
+                    <input class="text" type="text" name="" ng-init="code=''" ng-model="code" placeholder="">
+                </td>
+                <td>
+                    <strong>客户名称</strong>
+                    <input class="text" type="text" name="" ng-init="client=''" ng-model="client" placeholder="">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>申请部门</strong>
+                    <input class="text" type="text" name="" ng-init="department=''" ng-model="department" placeholder="">
+                </td>
+                <td>
+                    <strong>销售人员</strong>
+                    <input class="text" type="text" name="" ng-init="sale=''" ng-model="sale" placeholder="">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>要求到货日期起始</strong>
+                    <input class="text Wdate" ng-readonly="true" ng-model="fromdate" type="text" date-Picker name="" ng-init="fromdate=''" placeholder="">
+                </td>
+                <td>
+                    <strong>要求到货日期结束</strong>
+                    <input class="text Wdate" ng-readonly="true" type="text" ng-model="todate" date-Picker name="" ng-init="todate=''" placeholder="">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>状态：</strong>
+                    <select ng-model="status" ng-init="status='valid'">
+                        <option value="">请选择</option>
+                        <option value="valid">有效</option>
+                        <option value="invalid">作废</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+                    <!--<a class="searchbtn2 searchbtn2bot addBtn" href="/index.html#/productoutWh">新建放货申请</a>-->
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<div class="item">查询结果</div>
+<div class="tableWrap">
+    <div class="tableLeft" style="margin-right: 125px;">
+<table class="orangestyle table" style="width:115%">
+    <thead>
+    <tr>
+        <th><span>放货单编号</span></th>
+        <th><span>单据编号</span></th>
+        <th><span>销售订单编号</span></th>
+        <th><span>客户名称</span></th>
+        <th><span>申请部门</span></th>
+        <th><span>销售人员</span></th>
+        <th><span>放货总金额</span></th>
+        <th><span>运输方式</span></th>
+        <th><span>库房名称</span></th>
+        <th><span>出库方式</span></th>
+        <!--<th>操作</th>-->
+    </tr>
+    </thead>
+    <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in dataList">
+        <td><span><a target="_blank" class="underline" href="index.html#/productoutView/{{list._id}}">{{list.code}}</a></span></td>
+        <td><span>{{list.contract.code}}</span></td>
+        <td><span>{{list.ordercode}}</span></td>
+        <td><span title="{{list.contract.client}}">{{list.contract.client | cutfield:true:20:'...'}}</span></td>
+        <td><span>{{list.contract.department}}</span></td>
+        <td><span>{{list.contract.sale}}</span></td>
+        <td><span>{{list.money  | currency : '￥'}}</span></td>
+        <td><span>{{signWay[list.dest.transtype]}}</span></td>
+        <td><span title="{{list.dest.lgort | getName:siteDepot:'name':'code'}}">{{list.dest.lgort |getName:siteDepot:'name':'code'| cutfield:true:4:'...'}}</span></td>
+        <td><span>{{enumCargooutType[list.dest.cargoouttype] | cutfield:true:5:'...'}}</span></td>
+       <!-- <td>
+            &lt;!&ndash;<a target="_blank" href="index.html#/productoutView/{{list._id}}">查看</a>&ndash;&gt;
+            <a target="_blank" href="" ng-click="productoutChange(list._id,list.xtph)">变更</a>
+            <a href="" ng-if="list.info.status == 'valid'" ng-click="clickNullify(list._id,list.sapcode)">作废</a>
+            <a href="/print/printest.html?uri=/productout/printview&code={{list.code}}" target="_blank">打印</a>
+        </td>-->
+    </tr>
+    <tr class="tip"><td colspan="10"><span>没有查到放货申请</span></td></tr>
+    </tbody>
+</table>
+    </div>
+    <div class="tableHandler" style="width: 125px;">
+        <table class="orangestyle table">
+            <thead>
+            <tr>
+                <th><span>操作</span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="list in dataList">
+
+                <td>
+                    <div class="handlerBox">
+                        <a ng-if="opprev.productoutOrder_cancellation" class="handleBtn invalidBtn" href="" ng-class="list.info.status == 'valid' ? '' : 'visibhidden'" ng-click="clickNullify(list)" title="作废"></a>
+                        <a ng-if="opprev.productoutOrder_change" class="handleBtn editBtn" target="_blank" href="" ng-click="productoutChange(list._id,list.xtph)" title="变更"></a>
+                        <!--<a class="handleBtn printBtn" href="/print/printest.html?uri=/productout/printview&code={{list.code}}" target="_blank" title="打印"></a>-->
+                        <a class="handleBtn printBtn" href="/print/printht.html?uri=/productout/printview&code={{list.code}}" target="_blank" title="打印"></a>
+                        <a class="handleBtn detailBtn" target="_blank" href="index.html#/productoutView/{{list._id}}" title="详情"></a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<pagination conf="paginationConf"></pagination>

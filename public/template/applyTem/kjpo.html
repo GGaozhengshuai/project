@@ -1,0 +1,57 @@
+<h3 class="genTitle"><em></em><span>框架合同</span></h3>
+<ul class="generNav">
+    <li class="active"><a href="javascript:;">框架合同详情</a></li>
+</ul>
+
+<div id="mainView">
+    <div class="viewTable">
+        <ul>
+            <li><strong>公司代码：</strong><span>{{purchaseList.BUKRS}}</span></li>
+            <li><strong>采购组织：</strong><span>{{enumEKORG[purchaseList.EKORG]}}</span></li>
+            <li><strong>采购组：</strong><span>{{enumEKGRP[purchaseList.EKGRP]}}</span></li>
+            <li class="list_con"><strong>供应商编号：</strong><span>{{purchaseList.LIFNR}}</span></li>
+            <li class="list_con"><strong>供应商描述：</strong><span>{{purchaseList.NAME1+ purchaseList.NAME2}}</span></li>
+            <li class="list_con"><strong>框架合同号：</strong><span>{{purchaseList.EBELN}}</span></li>
+            <li class="list_con"><strong>框架合同类型：</strong><span>{{enumBSART[purchaseList.BSART]}}</span></li>
+            <li class="list_con"><strong>采购凭证日期：</strong><span>{{purchaseList.BEDAT}}</span></li>
+            <li class="list_con"><strong>有效起始日期：</strong><span>{{purchaseList.KDATB}}</span></li>
+            <li class="list_con"><strong>有效截至日期：</strong><span>{{purchaseList.KDATE}}</span></li>
+            <!--<li class="list_con"><strong>付款条款：</strong><span>{{purchaseList.ZTERM}}</span></li>-->
+            <li class="list_con"><strong>货币：</strong><span>{{enumWAERS[purchaseList.WAERS]}}</span></li>
+            <li class="list_con"><strong>框架总金额：</strong><span>{{purchaseList.KTWRT}}</span></li>
+        </ul>
+        <table class="tab_data">
+            <thead class="tab_header">
+            <tr>
+                <th>行项目</th>
+                <th>物料编码</th>
+                <th>物料组</th>
+                <th>物料描述</th>
+                <th>数量</th>
+                <th>单位</th>
+                <th>单价（未税）</th>
+                <th>库存地点</th>
+                <!--<th>工厂</th>-->
+            </tr>
+            </thead>
+            <tbody class="tab_body">
+            <tr ng-repeat="list in dataList">
+                <td>{{list.EBELP}}</td>
+                <td>{{list.MATNR}}</td>
+                <td>{{enumMATKL[list.MATKL]}}</td>
+                <td>{{list.TXZ01}}</td>
+                <td>{{list.MENGE}}</td>
+                <td>{{list.MEINS}}</td>
+                <td>{{list.NETPR}}</td>
+                <td>{{enumLGORT[list.LGORT]}}</td>
+                <!--<td>{{list.WERKS}}</td>-->
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <pagination conf="paginationConf"></pagination>
+
+        <div class="apCot" ng-if="apCot" >
+            <div ng-include="'template/common/apply.html'"></div>
+        </div>
+    </div>

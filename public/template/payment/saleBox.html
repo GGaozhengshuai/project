@@ -1,0 +1,32 @@
+<table class="orangestyle table">
+    <thead>
+    <tr>
+        <th>销售合同号</th>
+        <th>客户名称</th>
+        <th>合同类型</th>
+        <th>合同金额</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody ng-class="saleDataList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in saleDataList">
+        <td>{{list.contractbase.contractno}}</td>
+        <td>{{list.contractbase.stomer}}</td>
+        <td>{{list.contractbase.contracttype}}</td>
+        <td>{{list.contractbase.contractmoney}}</td>
+        <td>
+            <a  style="text-decoration:underline" href="javascript:;" ng-click="cusXy(list.contractbase.stomerid,list.contractbase.stomer)" >客户信用情况</a>
+            <a ng-show="list.contractbase.classification==0" style="text-decoration:underline" target="_blank" href="index.html#/contractOrderView?id={{list._id}}" >查看合同</a>
+            <a ng-show="list.contractbase.classification==1" style="text-decoration:underline" target="_blank" href="index.html#/iecontractView?id={{list._id}}" >查看合同</a>
+            <a  style="text-decoration:underline" target="_blank" href="/index.html#/bmdbList?cusName={{list.contractbase.stomer}}" >部门担保</a>
+<!--
+            <a style="text-decoration:underline" target="_blank" href="index.html#/getMoney?orderid={{list.contractbase.salesorderid[0].orderid}}">收款情况</a>
+-->
+        </td>
+    </tr>
+    <tr class="tip"><td colspan="5">没有查到销售合同</td></tr>
+    </tbody>
+</table>
+<div class="gerSub">
+    <button  class="subSave" ng-click="$parent.saleSelect()">确定</button>
+</div>

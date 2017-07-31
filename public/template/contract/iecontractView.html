@@ -1,0 +1,319 @@
+<h3 class="genTitle"><em></em><span>进出口销售合同查看</span></h3>
+
+<ul class="generNav" ng-init="ht.activeTab = 1">
+    <li ng-class="{active:ht.activeTab == 1}"><a href="javascript:;" ng-mousedown="ht.activeTab = 1">销售合同</a></li>
+    <li ng-class="{active:ht.activeTab == 2}"><a href="javascript:;" ng-mousedown="ht.activeTab = 2">产品清单</a></li>
+    <li ng-class="{active:ht.activeTab == 3}"><a href="javascript:;" ng-mousedown="ht.activeTab = 3" >成本分析</a></li>
+    <li ng-class="{active:ht.activeTab == 4}"><a href="javascript:;" ng-mousedown="ht.activeTab = 4">审批详情</a></li>
+</ul>
+<div id="mainView">
+    <!--<div class="czAddBtn" style="margin-top:10px;">
+        <a ng-if="opprev.iecontractOrder_detail" target="_blank" href="/index.html#/getsalesorder?id={{Id}}" class="defenseBtn">查看销售详情</a>
+        <a ng-if="versions && opprev.iecontractOrder_contentchange_cancle" href="javascript:;" ng-click="cancleIeBaseChange()" class="cancelchangInfoBtn">取消变更</a>
+        <a ng-if="versions && opprev.iecontractOrder_contentchange" href="javascript:;" ng-click="baseIeChange()" class="changInfoBtn">基本信息变更</a>
+        &lt;!&ndash;<a ng-if="versions && opprev.iecontractOrder_billchange_cancle" href="javascript:;" ng-click="cancleIeBillChange()" class="cancelchangqdBtn">取消清单变更</a>&ndash;&gt;
+        <a ng-if="versions && opprev.iecontractOrder_billchange"  href="javascript:;" ng-click="billIeChange()" class="changqdBtn">清单变更</a>
+        <a ng-if="versions && opprev.iecontractOrder_release" href="/index.html#/productoutWh?id={{ORDER_DATA.contractno}}" class="defenseBtn">放货信息维护</a>
+        <a ng-if="opprev.iecontractOrder_doc" target="_blank" href="/index.html#/docDownload/{{ORDER_DATA.contractno}}" class="addContractbtn">查看电子文档</a>
+    </div>-->
+    <ul class="btnwrap">
+        <li class="btnList">
+            <!--<li class="btnList" ng-if="spfuht&&(opprev.contractOrder_detail || opprev.contractOrder_release) || opprev.contractOrder_doc">-->
+            <a class="moreBtn">关联单据查询 <i class="triangle"></i></a>
+            <ul class="subBtnlist subBtn">
+                <li ng-if="opprev.iecontractOrder_detail"><a target="_blank" href="/index.html#/getsalesorder?id={{Id}}">查看销售详情</a></li>
+                <li ng-if="versions && opprev.iecontractOrder_release"><a target="_blank" href="/index.html#/productoutWh?id={{ORDER_DATA.contractno}}">放货信息维护</a></li>
+                <li ng-if="opprev.contractOrder_doc"><a target="_blank" href="/index.html#/docDownload/{{ORDER_DATA.contractno}}">查看电子文档</a></li>
+                <li><a ng-click="viewCGDD('{{groupno}}','{{saleOrderid}}')" href="javascript:;">查看采购订单</a></li>
+            </ul>
+        </li>
+        <li class="btnList" ng-if="versions && opprev.iecontractOrder_contentchange_cancle"><a href="javascript:;" ng-click="cancleIeBaseChange()" class="defenseBtn">取消变更</a></li>
+        <li class="btnList" ng-if="versions && opprev.iecontractOrder_contentchange"><a href="javascript:;" ng-click="baseIeChange()" class="defenseBtn">基本信息变更</a></li>
+        <li class="btnList" ng-if="versions && opprev.iecontractOrder_billchange"><a href="javascript:;" ng-click="billIeChange()" class="defenseBtn">清单变更</a></li>
+
+    </ul>
+    <div class="ng-hide" ng-show="ht.activeTab == 1">
+        <div class="viewTable">
+
+            <h4 class="genH4">基本信息</h4>
+            <ul>
+                <li><strong>销售主体：</strong><span>{{ORDER_DATA.escompany}}</span></li>
+                <li><strong>合同类型：</strong><span>{{ORDER_DATA.contracttype}}</span></li>
+                <li><strong>合同编号：</strong><span>{{ORDER_DATA.contractno}}</span></li>
+                <li><strong>销售订单编号：</strong><span>{{ORDER_DATA.salesorderid[0].orderid}}</span></li>
+                <li><strong>项目类型：</strong><span>{{ORDER_DATA.projecttype}}</span></li>
+                <li><strong>需方合同编号：</strong><span>{{ORDER_DATA.customercontractno}}</span></li>
+                <li><strong>销售人员姓名：</strong><span>{{ORDER_DATA.salesname}}</span></li>
+                <li><strong>申请部门：</strong><span>{{ORDER_DATA.salesorgnanme}}</span></li>
+                <li><strong>商务人员：</strong><span>{{ORDER_DATA.tradername}}</span></li>
+                <li><strong>客户名称：</strong><span>{{ORDER_DATA.stomer}}</span></li>
+                <li><strong>关务人员：</strong><span>{{doorman[ORDER_DATA.doorman]}}</span></li>
+                <li><strong>开票客户：</strong><span>{{ORDER_DATA.KPstomer}}</span></li>
+                <li><strong>产品线：</strong><span>{{ORDER_DATA.product}}</span></li>
+                <li><strong>最终用户：</strong><span>{{ORDER_DATA.finalconsumer}}</span></li>
+                <li><strong>币种：</strong><span>{{currencyName[ORDER_DATA.currencytype]}}</span></li>
+                <li><strong>合同金额：</strong><span>{{ORDER_DATA.contractmoney | number : 2}}</span></li>
+                <li><strong>开票税率：</strong><span>{{ORDER_DATA.receipttype}}</span></li>
+                <li><strong>付款方式：</strong><span>{{ORDER_DATA.paytype}}</span></li>
+                <li><strong>配套服务：</strong><span>{{ORDER_DATA.cp}}</span></li>
+                <li><strong>结算方式：</strong><span>{{ORDER_DATA.counttype}}</span></li>
+                <li><strong>是否双主体：</strong><span>{{ORDER_DATA.is2body}}</span></li>
+                <li ng-if="ORDER_DATA.is2body == '是'? true : false"><strong>内部结算合同金额：</strong><span>{{ORDER_DATA.interiooney | number : 2}}</span></li>
+                <li><strong>运输方式：</strong><span>{{transferway}}</span></li>
+                <li ng-if="ORDER_DATA.is2body == '是'? true : false"><strong>双主体订单号：</strong><span>{{ORDER_DATA.indoorOrderId}}</span></li>
+                <li><strong>计划账期（天）：</strong><span>{{ORDER_DATA.planday}}</span></li>
+                <li><strong>货期要求：</strong><span>{{ORDER_DATA.paymentdate | date: 'yyyy-MM-dd'}}</span></li>
+                <li><strong>签订日期：</strong><span>{{ORDER_DATA.effectdate | date: 'yyyy-MM-dd'}}</span></li>
+                <li><strong>生效日期：</strong><span>{{ORDER_DATA.effectdate2 | date: 'yyyy-MM-dd'}}</span></li>
+                <li><strong>业务应收创建方式：</strong><span>{{ORDER_DATA.receivabletype}}</span></li>
+                <li class="list_con" ng-if="ORDER_DATA.businessremarks"><strong>商务备注：</strong><span>{{ORDER_DATA.businessremarks}}</span></li>
+                <li class="list_con" ng-if="ORDER_DATA.backorders.length>0"><strong>退货订单号：</strong><span><em ng-repeat="list in ORDER_DATA.backorders" style="margin-right:5px;">{{list}}</em></span></li>
+                <li class="list_con"><strong>合同收款条款：</strong><span>{{ORDER_DATA.contactreceivablesconditionshowarea}}</span></li>
+                <li class="list_con"><strong>备注：</strong><span>{{ORDER_DATA.remarks}}</span></li>
+            </ul>
+            <div class="clear"></div>
+            <h4 class="genH4">需方商务联系人</h4>
+            <ul>
+                <li><strong>商务联系人姓名：</strong><span>{{ORDER_DATA.contactname}}</span></li>
+                <li><strong>商务联系人电话：</strong><span>{{ORDER_DATA.contactphone}}</span></li>
+                <li><strong>商务联系人邮箱：</strong><span>{{ORDER_DATA.contactemail}}</span></li>
+                <li><strong>商务联系人职位：</strong><span>{{ORDER_DATA.contacttitle}}</span></li>
+            </ul>
+            <div class="clear"></div>
+            <h4 class="genH4">交货地点和联系人</h4>
+            <div class="addTable">
+                <table class="tab_data">
+                    <thead class="tab_header">
+                    <tr>
+                        <th>收货人姓名</th>
+                        <th>手机号</th>
+                        <th>固定电话</th>
+                        <th>省</th>
+                        <th>市</th>
+                        <th>详细地址</th>
+                        <th>邮编</th>
+                    </tr>
+                    </thead>
+                    <tbody class="tab_body">
+                    <tr ng-repeat="list in ORDER_DATA.receiver">
+                        <td>{{list.name}}</td>
+                        <td>{{list.phone}}</td>
+                        <td>{{list.tel}}</td>
+                        <!--<td>{{list.province ? getField(countryData, 'CODE',list.province).TITLE : list.province}}</td>-->
+                        <!--<td>{{list.city ? getField(countryData, 'CODE',list.city).TITLE : list.city}}</td>-->
+                        <td>{{list.province | province:countryData}}</td>
+                        <td>{{list.city | province:countryData}}</td>
+                        <td>{{list.address}}</td>
+                        <td>{{list.zipcode}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="ng-hide" ng-show="ht.activeTab == 2">
+        <h4 class="genH4">清单物料</h4>
+        <div class="addTable">
+            <table class="tab_data">
+                <thead class="tab_header">
+                <tr>
+                    <th>内部物料编码</th>
+                    <th>原厂物料编码</th>
+                    <th>型号</th>
+                    <th>描述</th>
+                    <th>数量</th>
+                    <th>单价</th>
+                    <th>小计</th>
+                </tr>
+                </thead>
+                <tbody class="tab_body">
+                <tr ng-repeat="list in lend">
+                    <td>{{list.goodscode}}</td>
+                    <td>{{list.sourcegoodscode}}</td>
+                    <td>{{list.version}}</td>
+                    <td>{{list.sourcegoodsdesc}}</td>
+                    <td>{{list.count}}</td>
+                    <td>{{list.unitprice}}</td>
+                    <td>{{list.singTotal | number:2}}</td>
+                </tr>
+                <tr ng-repeat="list in purchase">
+                    <td>{{list.goodscode}}</td>
+                    <td>{{list.sourcegoodscode}}</td>
+                    <td>{{list.version}}</td>
+                    <td>{{list.sourcegoodsdesc}}</td>
+                    <td>{{list.count}}</td>
+                    <td>{{list.unitprice}}</td>
+                    <td>{{list.singTotal | number:2}}</td>
+                </tr>
+                <tr ng-repeat="list in upload">
+                    <td>{{list.goodscode}}</td>
+                    <td>{{list.sourcegoodscode}}</td>
+                    <td>{{list.version}}</td>
+                    <td>{{list.sourcegoodsdesc}}</td>
+                    <td>{{list.count}}</td>
+                    <td>{{list.unitprice}}</td>
+                    <td>{{list.singTotal | number:2}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="ng-hide" ng-show="ht.activeTab == 3">
+        <div class="viewTable">
+            <h4 class="genH4">利润</h4>
+            <!--转口-->
+            <div class="addTable" ng-if="cbfxZk"> <!--ng-if='cbfxZk'-->
+                <table style="margin-top:0;">
+                    <tr>
+                        <th></th>
+                        <th>利润（外币）</th>
+                        <th>合约利润率</th>
+                    </tr>
+                    <tr>
+                        <td>公司利润</td>
+                        <td>{{ieprofit.zkLirunWbi}}</td><!--销售合同金额-采购合同金额-->
+                        <td>{{ieprofit.zkHeyuelirunlv}}%</td><!--利润（外币）/销售合同金额-->
+                    </tr>
+                </table>
+            </div>
+            <!--出口-->
+            <div class="addTable" ng-if='cbfxCk'> <!--ng-if='cbfxCk'-->
+                <table style="margin-top:0;">
+                    <tr>
+                        <th></th>
+                        <th>利润（外币）</th>
+                        <th>利润（RMB）</th>
+                        <th>合约利润率</th>
+                    </tr>
+                    <tr>
+                        <td>公司利润(含退税)</td>
+                        <td><!--{{foreign_tax}}--></td>
+                        <td>{{ieprofit.RMB_tax}}</td>
+                        <td>{{ieprofit.ratio_tax}}%</td>
+                    </tr>
+                    <tr>
+                        <td>公司利润(不含退税)</td>
+                        <td>{{ieprofit.foreign}}</td>
+                        <td>{{ieprofit.RMB}}</td>
+                        <td>{{ieprofit.ratio}}%</td>
+                    </tr>
+                </table>
+            </div>
+            <h4 class="genH4" ng-if='cbfxCk'>成本分析</h4>
+            <div class="addTable" ng-if='cbfxCk'><!--ng-if='cbfxCk'-->
+                <table style="margin-top:10px;">
+                    <tr>
+                        <th>税率</th>
+                        <th>合同金额（外币）</th>
+                        <th>合同金额（RMB）</th>
+                        <th>预估成本（外币）</th>
+                        <th>预估成本（RMB）</th>
+                        <th>外采成本</th>
+                        <th>配套采购</th>
+                        <th>第三方服务</th>
+                    </tr>
+                    <tr ng-repeat="list in othercost" class="list">
+                        <td>{{list.thetype}}%</td>
+                        <td>{{list.money}}</td>
+                        <td>{{list.moneyRMB}}</td>
+                        <td>{{list.predictorderscost}}</td>
+                        <td>{{list.orderscostRMB}}</td>
+                        <td>{{list.outorderost}}</td>
+                        <td>{{list.mating}}</td>
+                        <td>{{list.third}}</td>
+                    </tr>
+                </table>
+            </div>
+            <!--其他合同类型-->
+            <div class="addTable" ng-if="cbfxOther">
+                <table style="margin-top:0;">
+                    <tr>
+                        <th></th>
+                        <th>毛利（含税)</th>
+                        <th>毛利（不含税)</th>
+                        <th>合约利润率</th>
+                    </tr>
+                    <tr>
+                        <td>公司利润</td>
+                        <td>{{ieprofit.moHanshui}}</td>
+                        <td>{{ieprofit.moBuHanshui}}</td>
+                        <td>{{ieprofit.heYuelirun}}%</td>
+                    </tr>
+                </table>
+            </div>
+            <h4 class="genH4" ng-if='cbfxCk'>成本分析</h4>
+            <div class="addTable" ng-if="cbfxOther">
+                <table>
+                    <tr>
+                        <th>税率</th>
+                        <th>合同金额（含税）</th>
+                        <th>预估成本汇总</th>
+                        <th>外采成本</th>
+                        <th>配套采购</th>
+                        <th>第三方服务</th>
+                    </tr>
+                    <tr ng-repeat="list in othercost" class="list">
+                        <td>{{list.thetype}}%</td>
+                        <td>{{list.money | currency : '￥'}}</td>
+                        <td>{{list.orderscost}}</td>
+                        <td>{{list.outorderost}}</td>
+                        <td>{{list.mating}}</td>
+                        <td>{{list.third}}</td>
+                    </tr>
+                </table>
+            </div>
+            <h4 class="genH4">费用明细</h4>
+            <ul>
+                <li class="list_con">
+                    <strong>采购申请号：</strong>
+                    <span><a class="aLink" target="_blank" href="/index.html#/purchaseView/{{list}}" ng-repeat="list in CBFX.purchaseids">{{list}}</a></span>
+                </li>
+                <li><strong>采购币种：</strong><span>{{CBFX.outpurchasecurrency}}</span></li>
+                <li><strong>实时汇率：</strong><span>{{CBFX.exchangerate}}</span></li>
+                <li><strong>销售合同金额：</strong><span>{{CBFX.contractmoney}}</span></li>
+                <li><strong>采购成本：</strong><span>{{CBFX.outpurchasecost | number:2}}</span></li>
+                <li><strong>银行费：</strong><span>{{CBFX.bankfee}}</span></li>
+                <li><strong>代理费：</strong><span>{{CBFX.proxyfee}}</span></li>
+                <li><strong>国际运费：</strong><span>{{CBFX.outtrance}}</span></li>
+                <li><strong>报关杂费：</strong><span>{{CBFX.duties2}}</span></li>
+                <li><strong>保险费：</strong><span>{{CBFX.insurance}}</span></li>
+                <li><strong>国内运费：</strong><span>{{CBFX.intrance}}</span></li>
+                <li><strong>其他：</strong><span>{{CBFX.otherfee}}</span></li>
+                <li><strong>押汇利息：</strong><span>{{CBFX.documentaryinterest}}</span></li>
+                <li><strong>关税：</strong><span>{{CBFX.duties}}</span></li>
+                <li><strong>增值税：</strong><span>{{CBFX.addedtax}}</span></li>
+                <li ng-if="cbfxOther"><strong>综合汇率：</strong><span>{{CBFX.generalrate}}</span></li>
+                <li><strong>厂家服务：</strong><span>{{CBFX.factoryservice}}</span></li>
+                <li ng-if="cbfxOther"><strong>内部合同结算金额：</strong><span>{{CBFX.interiooney}}</span></li>
+                <li ng-if="cbfxZk"><strong>成本：</strong><span>{{CBFX.cost}}</span></li>
+                <li ng-if="cbfxCk"><strong>预计退税金额：</strong><span>{{CBFX.predictbacktax}}</span></li>
+            </ul>
+        </div>
+      </div>
+    <div class="applyLog" ng-if="ht.activeTab == 4">
+        <table>
+            <thead>
+            <tr>
+                <th class="th1">审批人</th>
+                <th class="th2">审批时间</th>
+                <th class="th3">审批状态</th>
+                <th class="th4">审批意见</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="list in processlog">
+                <td>{{list.sender.name}}</td>
+                <td>{{list.createDate | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td>{{list.operation}}</td>
+                <td>{{list.content.comment}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="clear"></div>
+    <!--<div class="gerSub">
+        <a href="index.html#/contractOrderEdit?relationId={{Id}}" ng-if="fushuEditBtn">编辑附属合同</a>
+    </div>-->
+</div>
+<div id="listPoheader" class="dialog cusBox" title="查看采购订单" ng-include="'template/contract/listPoheader.html'"></div>

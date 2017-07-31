@@ -1,0 +1,230 @@
+<h3 class="genTitle"><em></em><span>付款申请单</span></h3>
+<ul class="generNav" ng-init="ht.activeTab = 1">
+    <li ng-class="{active:ht.activeTab == 1}"><a href="javascript:;" ng-mousedown='htTab(1)'>付款申请单</a></li>
+    <li ng-class="{active:ht.activeTab == 2}"><a href="javascript:;" ng-mousedown='htTab(2)'>审批详情</a></li>
+</ul>
+<div id="mainView">
+    <div class="viewTable">
+        <div ng-if="ht.activeTab == 1">
+
+            <div  class="czAddBtn"><a target="_blank" href="/print/printht.html?uri=/credit/printview&ZSQNO={{ORDER_DATA.ZSQNO}}" class="viewBtn">打印</a></div>
+            <div class="clear"></div>
+            <div>
+                <input type="button" value="新建银行授信申请单" class="searchbtn2 searchbtn2bot" ng-click="bankGoBox()" ng-if="bankShow&&ORDER_DATA.ZHB=='N'">
+            </div>
+            <ul>
+                <li ng-if="!payState"><strong>付款申请号：</strong><span>{{ORDER_DATA.ZSQNO}}</span></li>
+                <li ng-if="payState"><strong>合并付款单号：</strong><span>{{ORDER_DATA.ZSQNO}}</span></li>
+                <li><strong>申请日期：</strong><span>{{ORDER_DATA.ZSQRQ}}</span></li>
+                <li><strong>部门：</strong><span>{{ORDER_DATA.ZSQBM}}</span></li>
+                <li><strong class="blueTille">付款主体：</strong><span class="blue">{{{1000:"中建材信息技术股份有限公司",9000:"中建材集团进出口公司",9001:"中国建材（香港）有限公司"}[ORDER_DATA.ZFKZT]}}</span></li>
+                <li><strong class="blueTille">供应商名称：</strong><span title="{{ORDER_DATA.ZSKDW}}" class="blue">{{ORDER_DATA.ZSKDW}}</span></li>
+                <li><strong>供应商编号：</strong><span>{{ORDER_DATA.LIFNR}}</span></li>
+                <li><strong>银行名称：</strong><span title="{{ORDER_DATA.ZYHMC_CN}}">{{ORDER_DATA.ZYHMC_CN}}</span></li>
+                <li><strong>银行帐号：</strong><span title="{{ORDER_DATA.ZYHZH}}">{{ORDER_DATA.ZYHZH}}</span></li>
+                <li><strong>汇入地点（省）：</strong><span>{{getField(provinceData, 'BLAND',ORDER_DATA.PROVZ ).BEZEI}}</span></li>
+                <li><strong>汇入地点（市）：</strong><span>{{ORDER_DATA.ORT01}}</span></li>
+                <li><strong>付款方式：</strong><span>{{ORDER_DATA.ZFKFS}}</span></li>
+                <li><strong>付款种类：</strong><span>{{BU1}}-{{BU2}}{{BU3}}</span></li>
+                <li><strong class="blueTille">货币种类：</strong><span class="blue">{{WAERS}}</span></li>
+                <li><strong>资金占用部门：</strong><span>{{{1000:'信息产品事业群',2000:'合作业务部',3000:'医疗产品部',9900:'综合'}[ORDER_DATA.ZBM]}}</span></li>
+                <li><strong>成本中心：</strong><span>{{cenData[ORDER_DATA.KOSTL]}}</span></li>
+                <li><strong>申请付款金额：</strong><span>{{ORDER_DATA.ZSQJE | number:2}}</span></li>
+                <li><strong>未核销金额：</strong><span>{{ORDER_DATA.ZWHXJE | number:2}}</span></li>
+
+                <li><strong>计划付款时间：</strong><span>{{ORDER_DATA.ZJHDAT}}</span></li>
+                <li ng-if="type1"><strong>开证/付汇银行：</strong><span>{{ORDER_DATA.ZKZBANK}}</span></li>
+                <li><strong class="blueTille">实际付款金额：</strong><span class="blue">{{ORDER_DATA.ZSJFKJE | number:2}}</span></li>
+                <li><strong>是否合并付款：</strong><span>{{{Y:"是",N:"否"}[ORDER_DATA.ZHB]}}</span></li>
+                <li><strong>垫付款情况：</strong><span>{{ORDER_DATA.ZDFQK}}</span></li>
+                <li ng-if="!payState"><strong>合并付款单号：</strong><span>{{ORDER_DATA.ZSQNO_HB}}</span></li>
+                <li><strong>实际付款时间：</strong><span>{{ORDER_DATA.ZSJDAT}}</span></li>
+                <li><strong>申请人：</strong><span>{{ORDER_DATA.AUFUSER0}}</span></li>
+                <li ng-if="!payState"><strong>采购商务：</strong><span>{{ORDER_DATA.ZCGSW}}</span></li>
+                <li><strong>上传附件：</strong><span><a href="{{ORDER_DATA.ZURL}}" style="text-decoration:underline">{{ORDER_DATA.ZURLNAM}}</a></span></li>
+
+                <li class="list_con"><strong>付款状态：</strong><span>{{ORDER_DATA.ZFKSTA}}</span></li>
+                <li class="list_con"><strong>直发地址：</strong><span>{{ORDER_DATA.ZZFDZ}}</span></li>
+                <li class="list_con"><strong style="float: left">备注：</strong><pre><span style="float: left;width: 96%">{{ORDER_DATA.ZBZ}}</span></pre></li>
+                <!-- <li class="list_con"><strong>备注：</strong><span>{{ORDER_DATA.ZFKSTA}}</span></li>-->
+            </ul>
+            <div class="gerSub" ng-if="transportShow">
+                <a class="dwonTem" href="javascript:;" ng-click="transportClick()">关联运输委托单</a>
+            </div>
+            <div class="addTable" ng-if="payState">
+                <h5>付款详情</h5>
+                <table class="tab_data">
+                    <thead class="tab_header">
+                    <tr>
+                        <th>付款申请单号</th>
+                        <th>供应商订单号</th>
+                        <th>采购订单号</th>
+                        <th>付款种类</th>
+                        <th>付款方式</th>
+                        <th>申请付款金额</th>
+                        <th>实际支付金额</th>
+                        <!-- <th>未核销金额</th>-->
+                        <th>计划付款时间</th>
+                        <th>申请人</th>
+                    </tr>
+                    </thead>
+                    <tbody class="tab_body">
+                    <tr ng-repeat="list in payList">
+                        <td>
+                            <a href="index.html#/paymentOrderView/{{list.ZSQNO}}" style="text-decoration:underline;color: #003eff ">{{list.ZSQNO}}</a>
+                        </td>
+                        <td>{{list.ZZPO}}</td>
+                        <td>{{list.EBELN}}</td>
+                        <td>{{getField(payData, 'CODE1',list.ZFKZL.substring(0,2)).TITLE}}</td>
+                        <td>{{list.ZFKFS}}</td>
+                        <td>{{list.ZSQJE | number:2}}</td>
+                        <td>{{list.ZSJFKJE| number:2}}</td>
+                        <!-- <td>{{list.ZWHXJE | number:2}}</td>-->
+                        <td>{{list.ZJHDAT}}</td>
+                        <td>{{list.AUFUSER0}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="addTable" ng-if="cgOrder">
+                <h5>采购订单</h5>
+                <table class="tab_data">
+                    <thead class="tab_header">
+                    <tr>
+                        <th>采购订单号</th>
+                        <th>供应商订单号</th>
+                        <th>采购组织</th>
+                        <th>订单类型</th>
+                        <th>产品线</th>
+                        <th>运输方式</th>
+                        <th>采购商务</th>
+                        <th>交货日期</th>
+                        <th>订单金额</th>
+                        <th>应付编号</th>
+                        <th>应付金额</th>
+                        <th>申请支付金额</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody class="tab_body">
+                    <tr ng-repeat="list in cgList">
+                        <td title="{{list.EBELN}}">{{list.EBELN}}</td>
+                        <td title="{{list.ZZPO}}">{{list.ZZPO}}</td>
+                        <td title="{{enumObj.EKORG[list.EKORG]}}">{{enumObj.EKORG[list.EKORG]}}</td>
+                        <td title="{{enumObj.BSART[list.BSART]}}">{{enumObj.BSART[list.BSART]}}</td>
+                        <td title="{{enumObj.ZZCP[list.ZZCP]}}">{{enumObj.ZZCP[list.ZZCP]}}</td>
+                        <td title="{{list.ZZYS}}">{{list.ZZYS}}</td>
+                        <td title="{{list.ZSWRY}}">{{list.ZSWRY}}</td>
+                        <td title="{{list.ZZJHRQ}}">{{list.ZZJHRQ}}</td>
+                        <td title="{{list.ZPOJE}}">{{list.ZPOJE}}</td>
+                        <td title="{{list.ZYWYF}}">{{list.ZYWYF}}</td>
+                        <td title="{{list.ZYFJE}}">{{list.ZYFJE| number:2}}</td>
+                        <td title="{{list.ZSQJE}}">{{list.ZSQJE| number:2}}</td>
+                        <td>
+                            <a class="underline" target="_blank" ng-if="list.EKORG != '9000' && list.EKORG != '9001' && list.BSART != 'ZB6' && list.BSART != 'ZB7' && list.BSART != 'ZB8'" href="index.html#/purOrderView/{{list.EBELN}}">采购详情</a>
+                            <a class="underline" target="_blank" ng-if="list.EKORG == '9000' || list.EKORG == '9001'" href="index.html#/pojckView/{{list.EBELN}}">采购详情</a>
+                            <a class="underline" target="_blank" ng-if="list.BSART == 'ZB6' || list.BSART == 'ZB7' || list.BSART == 'ZB8'" href="index.html#/purMaintainView/{{list.EBELN}}">采购详情</a>
+                            <a style="text-decoration:underline" href="javascript:;" ng-click="saleDir($index,list.ZZPO,list.ZZSDPO)">销售详情</a>
+                            <a style="text-decoration:underline" href="javascript:;" ng-click="incomDir($index,list.ZZPO,list.ZZSDPO)">收款情况</a>
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p class="fr totleNumBox">申请支付金额小计：<span>{{sumcgList | number:2}}</span></p>
+
+            </div>
+            <div class="addTable" ng-if="cgOrder">
+                <h5>冲抵核销信息</h5>
+                <table class="tab_data" id="cxList">
+                    <thead class="tab_header">
+                    <tr>
+                        <th>冲抵类型</th>
+                        <th>流水号</th>
+                        <th>供应商订单号</th>
+                        <th>采购订单号</th>
+                        <th>冲抵金额</th>
+                    </tr>
+                    </thead>
+                    <tbody class="tab_body">
+                    <tr ng-repeat="list in cxList">
+                        <td>{{list.ZCDLX}}</td>
+                        <td>{{list.ZSQNO_YF}}</td>
+                        <td>{{list.ZZPO}}</td>
+                        <td>{{list.EBELN}}</td>
+                        <td>{{list.ZCDJE| number:2}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p class="fr totleNumBox">冲抵核销信息合计：<span>{{sumcxList}}</span></p>
+
+            </div>
+            <div class="addTable" ng-if="glOrder">
+                <h5>费用申请单</h5>
+                <table class="tab_data" id="nbList">
+                    <thead class="tab_header">
+                    <tr>
+                        <th>费用申请单号</th>
+                        <th>费用流水号</th>
+                        <th>申请标题</th>
+                        <th>预算总金额</th>
+                        <th>未使用金额</th>
+                        <th>本次申请支付金额</th>
+                    </tr>
+                    </thead>
+                    <tbody class="tab_body">
+                    <tr ng-repeat="list in nbList">
+                        <td><a style="text-decoration: underline" target="_blank" href="index.html#/insideOrderView/{{list.AUFNR}}">{{list.AUFNR}}</a></td>
+                        <td>{{list.AUFEX}}</td>
+                        <td title="{{list.ZSQNR}}">{{list.ZSQNR| cutfield:true:15:'...'}}</td>
+                        <td>{{list.ZYSJE| number:2}}</td>
+                        <td>{{(list.ZYSJE-list.ZYFP)| number:2}}</td>
+                        <td>{{list.ZSQJE | number:2}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p class="fr totleNumBox">费用申请单合计：<span>{{sumnbList | number:2}}</span></p>
+
+            </div>
+            <div class="gerSub">
+                <button ng-click="addData()"  class="subApply" ng-show="zfShow&&ORDER_DATA.ZFKSTA=='未付款'">作废</button>
+                <a target="_blank" href="javascript:;" ng-click="pay1Chge(ORDER_DATA.ZSQNO)" ng-show="hbEdit">变更</a>
+
+            </div>
+        </div>
+
+        <div class="applyLog" ng-if="ht.activeTab == 2">
+            <h3 class="genTitle"><em></em><span>审批记录</span></h3>
+            <table>
+                <thead>
+                <tr>
+                    <th class="th1">审批人</th>
+                    <th class="th2">审批时间</th>
+                    <th class="th3">审批状态</th>
+                    <th class="th4">审批意见</th>
+                </tr>
+                </thead>
+                <tbody ng-repeat="list in processlog">
+                <tr  ng-hide="list.typename=='付款作废'"><td class="blueBack" colspan="4">新建审批流</td></tr>
+                <tr ng-show="list.typename=='付款作废'"><td  class="orgBack" colspan="4">作废审批流</td></tr>
+                <tr ng-repeat="item in list.processlog">
+                    <td>{{item.sender.name}}</td>
+                    <td>{{item.createDate | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td>{{item.operation}}</td>
+                    <td>{{item.content.comment}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+<!--
+<input type="button" value="新建银行授信申请单" class="searchbtn2 searchbtn2bot" ng-click="bankGoBox()" ng-if="bankShow">
+<a class="searchbtn2 searchbtn2bot addBtn" href="/index.html#//bankCreditOrderView/{{id}}" ng-if="bank1Show">新建银行授信</a>
+-->
+<div id="saleBox" class="dialog cusBox" title="销售详情" ng-include="'template/payment/saleBox.html'"></div>
+<div id="incomeBox" class="dialog cusBox" title="收款情况" ng-include="'template/payment/incomeBox.html'"></div>
+<div id="transportBox" class="dialog cusBox" title="" ng-include="'template/payment/transport.html'"></div>

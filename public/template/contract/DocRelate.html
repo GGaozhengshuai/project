@@ -1,0 +1,96 @@
+<div class="item">采销单据关联</div>
+<!--<form name="myForm">-->
+        <!--<div class="genSearch">-->
+            <!--&lt;!&ndash;<div class="" ng-show="ht.activeTab == 1">&ndash;&gt;-->
+            <!--<div class="generForm">-->
+                <!--<form novalidate name="invoiceForm">-->
+                    <!--<ul class="noMargin">-->
+                        <!--<li class="list_con">-->
+                            <!--<strong><font  ng-if="ifPtxs">*</font>选择销售合同：</strong>-->
+                            <!--<input class="text" ng-readonly="true"  ng-disabled="ifPtxsBot" ng-model="matingContract" ng-click="contractBox()" type="text" placeholder="请选择销售合同"/>-->
+                            <!--<input ng-model="matingContractId" type="hidden" placeholder=""/>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</form>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="genSearch">-->
+            <!--&lt;!&ndash;<div class="" ng-show="ht.activeTab == 1">&ndash;&gt;-->
+                <!--<div class="generForm">-->
+                    <!--<form novalidate name="invoiceForm">-->
+                        <!--<ul class="noMargin">-->
+                            <!--<li class="list_con">-->
+                                <!--<strong><font>*</font>供应商订单号：</strong>-->
+                                <!--<textarea class="checkbox" type="text" name="list_cons"  ng-init="list_cons=''" ng-model="list_cons" placeholder="请输入供应商订单号"></textarea>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                    <!--</form>-->
+                    <!--<div class="gerSub">-->
+                        <!--<button ng-click="addData()" class="subApply" >保存</button>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+<!--</form>-->
+<!--<div id="contractBox" class="dialog cusBox" title="选择销售合同" ng-include="'template/contract/contractBox.html'" ng-controller="contractBoxCtrl"></div>-->
+
+<div class="cusCont tab_cont">
+    <div class="generForm">
+        <form novalidate name="invoiceForm">
+            <div class="genTitle2">
+                <div>
+                    <strong>选择销售合同</strong>
+                </div>
+            </div>
+            <ul class="noMargin">
+                <li class="tli">
+                    <strong><font  ng-if="ifPtxs">*</font>选择销售合同：</strong>
+                    <input class="text" ng-readonly="true"  ng-disabled="ifPtxsBot" ng-model="matingContract" ng-click="contractBox()" type="text" placeholder="请选择销售合同"/>
+                    <input ng-model="matingContractId" type="hidden" placeholder=""/>
+                </li>
+            </ul>
+            <div class="genTitle2">
+                <div>
+                    <strong>销售合同基本信息</strong>
+                </div>
+            </div>
+            <div class="addTable">
+                <table id="sktkList">
+                    <tr>
+                        <th>合同编号</th>
+                        <th>销售订单号</th>
+                        <th>客户名称</th>
+                        <th>合同类型</th>
+                        <th>项目名称</th>
+                        <th>合同金额</th>
+                    </tr>
+                    <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+                        <tr ng-repeat="list in dataList">
+                            <td>{{list.contractbase.contractno}}</td>
+                            <td>{{list.contractbase.salesorderid[0].orderid}}</td>
+                            <td title="{{list.contractbase.stomer}}">{{list.contractbase.stomer}}</td>
+                            <td>{{list.contractbase.contracttype}}</td>
+                            <td>{{list.contractbase.project}}</td>
+                            <td>{{list.contractbase.contractmoney}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="genTitle2">
+                <div>
+                    <strong>供应商订单号</strong>
+                </div>
+            </div>
+            <ul class="noMargin">
+                <li class="list_con">
+                    <strong><font>*</font>供应商订单号：</strong>
+                    <textarea class="checkbox" type="text" name="list_cons"  ng-init="list_cons=''" ng-model="list_cons" placeholder="请输入供应商订单号，当填写多个时，请使用英文逗号进行隔开"></textarea>
+                </li>
+            </ul>
+
+            <div class="gerSub">
+                <button ng-click="addData()" class="subApply" >保存</button>
+            </div>
+        </form>
+    </div>
+</div><div id="contractBox" class="dialog cusBox" title="选择销售合同" ng-include="'template/contract/contractBox.html'" ng-controller="contractBoxCtrl"></div>

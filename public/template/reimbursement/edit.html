@@ -1,0 +1,524 @@
+<h3 class="genTitle genTitleBot"><em></em><span>编辑报销单</span></h3>
+<div class="cusCont">
+    <div class="generForm">
+        <form novalidate name="myForm">
+            <ul>
+                <li class="tli">
+                    <strong><font>*</font>流水号：</strong>
+                    <input type="text" ng-required="true" ng-model="ORDER_DATA.code" ng-disabled="true">
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>报销申请日期：</strong>
+                    <input type="text" ng-readonly="true" ng-init="ORDER_DATA.applydate=today" ng-model="ORDER_DATA.applydate" ng-disabled="true">
+                </li>
+                <li class="tli">
+                    <strong>报销人：</strong>
+                    <input type="text" ng-required="true" ng-model="ORDER_DATA.user.name" ng-disabled="true">
+                    <input type="hidden" ng-model="ORDER_DATA.user._id">
+                    <input type="hidden" ng-model="ORDER_DATA.user.login">
+                </li>
+                <li class="tli">
+                    <strong>报销部门：</strong>
+                    <input type="text" ng-required="true" ng-model="ORDER_DATA.department.name" ng-disabled="true">
+                    <input type="hidden" value="" ng-model="ORDER_DATA.department._id"/>
+                </li>
+                <!--<li class="tli">
+                    <strong><font>*</font>费用归属部门：</strong>
+                    <select ng-required="true" ng-init="ORDER_DATA.finance.belong='本部门'" ng-model="ORDER_DATA.finance.belong">
+                        <option value="本部门">本部门</option>
+                        <option value="总经办">总经办</option>
+                    </select>
+                </li>-->
+
+                <li class="clear"></li>
+                <li>
+                    <strong>是否关联费用申请单：</strong>
+                    <!--<select ng-init="ORDER_DATA.hasfysqd='0'" ng-model="ORDER_DATA.hasfysqd" ng-disabled="ctype" ng-change="chanegeFYSQD()">-->
+                    <select ng-init="ORDER_DATA.hasfysqd='0'" ng-model="ORDER_DATA.hasfysqd" ng-change="chanegeFYSQD()">
+                        <!--<option value="">请选择</option>-->
+                        <option value="0">否</option>
+                        <option value="1">是</option>
+                    </select>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>费用种类：</strong>
+                    <!--<input ng-disabled="ORDER_DATA.hasfysqd=='1'" type="text" ng-readonly="true" ng-click="selTypestrFn()" ng-model="ORDER_DATA.cost.typestr" ng-required="true" name="typestr" placeholder="请选择费用种类">-->
+                    <input type="text" ng-readonly="true" ng-click="selTypestrFn()" ng-model="ORDER_DATA.cost.typestr" ng-required="true" name="typestr" placeholder="请选择费用种类">
+                    <input type="hidden" ng-model="ORDER_DATA.cost.costtype">
+                    <span class="errTip ng-hide" ng-show="myForm.typestr.$dirty && myForm.typestr.$error.required">必填</span>
+                </li>
+                <!--<li class="clear"></li>-->
+                <li class="tli">
+                    <strong><font>*</font>成本中心：</strong>
+                    <input type="text" style="width: 200px;"
+                           ng-value="ORDER_DATA.finance.costcenter | getName:costcenterSel :'text':'code'"
+                           ng-disabled="fixedcoscenter || ORDER_DATA.hasfysqd=='1'" ng-required="true" ng-readonly="true"
+                           ng-click="selCostcenterFn()" placeholder="请选择成本中心">
+                    <input type="hidden" name="treecostcenter" ng-required="true" ng-model="ORDER_DATA.finance.costcenter">
+                    <span class="errTip ng-hide"
+                          ng-show="myForm.treecostcenter.$dirty && myForm.treecostcenter.$error.required">必填</span>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>票据类型：</strong>
+                    <select ng-model="invoicetype" ng-required="ORDER_DATA.cost.costtype.indexOf('49')==-1 && !invoicetypeOnlyRead" name="invoicetype" ng-hide="invoicetypeOnlyRead">
+                        <option value="">请选择</option>
+                        <option ng-if="y.status != 'x'" ng-repeat="(x,y) in categorySel" value="{{x}}|{{y.text}}">{{y.text}}</option>
+                    </select>
+                    <input type="text" class="ng-hide" ng-model="ORDER_DATA.cost.invoicetypestr" ng-disabled="true" ng-show="invoicetypeOnlyRead">
+                    <span class="errTip ng-hide" ng-show="myForm.invoicetype.$dirty && myForm.invoicetype.$error.required">必填</span>
+                </li>
+                <li class="clear"></li>
+                <li class="tli" ng-if="!typejd && !typend">
+                    <strong><font>*</font>费用期间-起始月份：</strong>
+                    <input type="text" class="Wdate" date-Picker dateParam='{"dateFmt":"yyyy-MM"}' get-upload-callback="dateCallback()" ng-readonly="true" ng-model="$parent.ORDER_DATA.cost.fromdate" ng-required="true" placeholder="请选择日期" name="fromdate">
+                    <span class="errTip ng-hide" ng-show="myForm.fromdate.$dirty && myForm.fromdate.$error.required">必填</span>
+                </li>
+                <li class="tli" ng-if="!typejd && !typend">
+                    <strong><font>*</font>费用期间-截止月份：</strong>
+                    <input type="text" id="enddate" class="Wdate" date-Picker dateParam='{"dateFmt":"yyyy-MM"}' get-upload-callback="dateCallback(callbackDate)" ng-readonly="true" ng-model="$parent.ORDER_DATA.cost.enddate" ng-required="true" placeholder="请选择日期" name="enddate">
+                    <span class="errTip ng-hide" ng-show="myForm.enddate.$dirty && myForm.enddate.$error.required">必填</span>
+                </li>
+                <li class="tli" ng-if="typejd">
+                    <strong><font>*</font>费用期间-起始季度：</strong>
+                    <input style="width: 100px;" type="text" class="Wdate" date-Picker dateParam='{"dateFmt":"yyyy"}' ng-readonly="true" ng-model="$parent.fromdate" ng-required="true" placeholder="请选择日期" name="fromdatejddata">
+                    <span style="float:left; margin:0 5px;">-</span>
+                    <select style="width: 85px;" name="fromdatejd" ng-model="$parent.fromdatejd" ng-change="dateCallback()" ng-disabled="!$parent.fromdate" ng-required="true">
+                        <option value="">请选择</option>
+                        <option value="1">第一季度</option>
+                        <option value="2">第二季度</option>
+                        <option value="3">第三季度</option>
+                        <option value="4">第四季度</option>
+                    </select>
+                    <span class="errTip ng-hide" ng-show="myForm.fromdatejd.$dirty && myForm.fromdatejd.$error.required || myForm.fromdatejddata.$dirty && myForm.fromdatejddata.$error.required">必填</span>
+                </li>
+                <li class="tli" ng-if="typejd">
+                    <strong><font>*</font>费用期间-截止季度：</strong>
+                    <span class="ng-hide" ng-show="$parent.fromdate">{{$parent.fromdate}}<i style="margin: 0 10px;">-</i></span>
+                    <select style="width: 145px;" name="enddatejd" ng-required="true" ng-model="$parent.enddatejd" ng-change="dateCallback($parent.enddatejd)">
+                        <option value="">请选择</option>
+                        <option value="1">第一季度</option>
+                        <option value="2">第二季度</option>
+                        <option value="3">第三季度</option>
+                        <option value="4">第四季度</option>
+                    </select>
+                    <span class="errTip ng-hide" ng-show="myForm.enddatejd.$dirty && myForm.enddatejd.$error.required">必填</span>
+                </li>
+                <li class="tli" ng-if="typend">
+                    <strong><font>*</font>费用期间-起始年份：</strong>
+                    <input type="text" class="Wdate" date-Picker dateParam='{"dateFmt":"yyyy"}' get-upload-callback="dateCallback()" ng-readonly="true" ng-model="$parent.ORDER_DATA.cost.fromdate" ng-required="true" placeholder="请选择日期" name="fromdate">
+                    <span class="errTip ng-hide" ng-show="myForm.fromdate.$dirty && myForm.fromdate.$error.required">必填</span>
+                </li>
+                <li class="tli" ng-if="typend">
+                    <strong><font>*</font>费用期间-截止年份：</strong>
+                    <input type="text" ng-model="$parent.ORDER_DATA.cost.enddate" ng-required="true" ng-disabled="true">
+                    <!--<input type="text" class="Wdate" date-Picker dateParam='{"dateFmt":"yyyy"}' get-upload-callback="dateCallback(callbackDate)" ng-disabled="true" ng-readonly="true" ng-model="$parent.ORDER_DATA.cost.enddate" ng-required="true" placeholder="请选择日期" name="enddate">-->
+                    <span class="errTip ng-hide" ng-show="myForm.enddate.$dirty && myForm.enddate.$error.required">必填</span>
+                </li>
+                <!--<li class="tli">
+                    <strong>未使用额度：</strong>
+                    <input type="text" ng-disabled="true" ng-model="ORDER_DATA.wsyed">
+                </li>-->
+                <!--<li class="tli">
+                    <strong><font>*</font>附件张数：</strong>
+                    <input type="text" ng-required="true" integer-Validation ng-Focus ng-model="ORDER_DATA.cost.attanum" name="attanum" placeholder="请输入附件张数">
+                    <span class="errTip ng-hide" ng-show="myForm.attanum.$dirty && myForm.attanum.$error.required">必填</span>
+                    <span class="errTip ng-hide" ng-show="myForm.attanum.$dirty && myForm.attanum.$error.integer && !myForm.attanum.$focused">正整数</span>
+                </li>-->
+                <!--<li class="tli">
+                    <strong>是否关联费用申请单：</strong>
+                    <select ng-init="ORDER_DATA.hasfysqd='0'" ng-model="ORDER_DATA.hasfysqd" ng-disabled="ctype" ng-change="chanegeFYSQD()">
+                        &lt;!&ndash;<option value="">请选择</option>&ndash;&gt;
+                        <option value="0">否</option>
+                        <option value="1">是</option>
+                    </select>
+                </li>-->
+                <li class="clear"></li>
+                <li>
+                    <strong>备注/出差事由：</strong>
+                    <textarea ng-model="ORDER_DATA.extra.note" maxlength="200" placeholder="不超过200字符"></textarea>
+                </li>
+                <li>
+                    <strong>打印备注：</strong>
+                    <textarea ng-model="ORDER_DATA.extra.printnote" maxlength="40" placeholder="不超过40字符"></textarea>
+                </li>
+                <li class="formUpStyle cwzlBox" id="cwzlBox">
+                    <strong>附件：</strong>
+                    <input uploadify-More btnname="上传附件" fileName="fj" ng-model="fj" />
+                    <span style="padding-left: 10px;">(可上传多个)</span>
+                    <div>
+                        <div class='showImg' ng-repeat="list in fj"><a target='_blank' href='{{list.filePath}}'>{{list.fileName}}</a><span ng-click="delupload($index, 'fj')" style='margin-left: 5px;cursor: pointer;'>删除</span></div>
+                    </div>
+                </li>
+            </ul>
+            <div class="ng-hide" ng-show="ORDER_DATA.hasfysqd=='1'">
+                <div class="genTitle2">
+                    <div>
+                        <strong>费用申请单信息</strong>
+                    </div>
+                    <!--<div class="czAddBtn">
+                        <a href="doc/plwlmb.xlsx">下载模板</a>
+                        <input excle-Updata="{{excleConfFysq}}" ng-model="excleFysqData"/>
+                    </div>-->
+                </div>
+                <p style="text-align: right; padding-right: 20px; line-height: 20px;"><span>本次使用金额小计：</span>{{ZBXJETotal | number:2}}</p>
+                <div class="addTable" style="min-height: 82px; overflow: auto;">
+                    <table class="tab_data">
+                        <tr>
+                            <th><font>*</font>费用申请单号</th>
+                            <th>申请流水号</th>
+                            <th>申请标题</th>
+                            <th>类型</th>
+                            <th>成本中心</th>
+                            <th>未使用金额</th>
+                            <th>本次使用金额</th>
+                            <th width="80"><a href="javascript:;" ng-click="comeAdd('fysqd')" title="添加" class="btnAdd"></a></th>
+                        </tr>
+                        <tr ng-repeat="list in ORDER_DATA.fysqd" class="list">
+                            <td ng-class="myForm['AUFNR'+$index].$dirty && myForm['AUFNR'+$index].$error.required ? 'hasErrTip' : ''">
+                                <input type="text" ng-readonly="true" ng-model="list.AUFNR" ng-click="purchaseClick($index,ORDER_DATA)" ng-required="ORDER_DATA.hasfysqd=='1'" name="AUFNR{{$index}}">
+                                <span class="errTip ng-hide" ng-show="myForm['AUFNR'+$index].$dirty && myForm['AUFNR'+$index].$error.required">必填</span>
+                            </td>
+                            <td><input type="text" ng-value="list.ZINORD" ng-disabled="true" ></td>
+                            <td><input type="text" ng-value="list.ZSQNR" ng-disabled="true" ></td>
+                            <td>
+                                <input type="text" ng-disabled="true" value="{{list.ZFYLXTxt}}">
+                                <!--<input type="text" ng-disabled="true" value="{{ORDER_DATA.cost.typestr}}">-->
+                                <input type="hidden" ng-model="list.ZFYLX">
+                            </td>
+                            <td>
+                                <!--<input type="text" ng-disabled="true" value="{{ORDER_DATA.finance.costcenter | getName:costcenterSel :'text':'code'}}">-->
+                                <input type="text" ng-disabled="true" value="{{list.RESPCCTR | getName:costcenterSel :'text':'code'}}">
+                            </td>
+                            <!--<td><input type="text" ng-model="list.wsyje" ng-disabled="true" ></td>-->
+                            <td><input type="text" ng-value="list.wsyje | number:2" ng-disabled="true" ></td>
+                            <td>
+                                <input type="text" ng-model="list.ZBXJE" ng-required="ORDER_DATA.hasfysqd=='1'" name="ZBXJE{{$index}}" ng-Focus ng-blur="ZBXJEBlurFn()">
+                                <span class="errTip ng-hide" ng-show="myForm['ZBXJE'+$index].$dirty && myForm['ZBXJE'+$index].$error.required">必填</span>
+                                <span class="errTip ng-hide" ng-show="list.ZBXJE  > list.wsyje && !myForm['ZBXJE'+$index].$focused ">本次申请金额不能大于未使用额度</span>
+                            </td>
+                            <td><a href="javascript:;" ng-click="comeDel($index,'fysqd')">删除</a></td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+            <div class="ng-hide" ng-show="(invoicetypeOnlyRead ? ORDER_DATA.cost.invoicetype : invoicetype).indexOf('025') == -1">
+                <div class="genTitle2">
+                    <div>
+                        <strong>日常报销</strong>
+                    </div>
+                </div>
+                <div class="generForm">
+                    <ul>
+                        <!--<li class="tli">
+                            <strong><font>*</font>票据类型：</strong>
+                            <select ng-model="invoicetype" ng-required="ORDER_DATA.cost.costtype.indexOf('49')==-1 && !invoicetypeOnlyRead" name="invoicetype" ng-hide="invoicetypeOnlyRead">
+                                <option value="">请选择</option>
+                                <option ng-repeat="(x,y) in categorySel" value="{{x}}|{{y.text}}">{{y.text}}</option>
+                            </select>
+                            <input type="text" class="ng-hide" ng-model="ORDER_DATA.cost.invoicetypestr" ng-readonly="true" ng-show="invoicetypeOnlyRead">
+                            <span class="errTip ng-hide" ng-show="myForm.invoicetype.$dirty && myForm.invoicetype.$error.required">必填</span>
+                        </li>-->
+                        <li class="tli">
+                            <strong><font>*</font>报销金额：</strong>
+                            <input type="text" ng-required="(invoicetypeOnlyRead ? ORDER_DATA.cost.invoicetype : invoicetype).indexOf('025') == -1" ng-Focus numtwo-Validation ng-blur="getReimlimitperiod()" ng-init="ORDER_DATA.amount=0" ng-model="ORDER_DATA.amount" name="amount" placeholder="请输入报销金额">
+                            <span class="errTip ng-hide" ng-show="myForm.amount.$dirty && myForm.amount .$error.required">必填</span>
+                            <span class="errTip ng-hide" ng-show="myForm.amount.$dirty && myForm.amount.$error.numtwo && !myForm.amount.$focused">小数点后保留两位</span>
+                        </li>
+
+                        <li class="tli">
+                            <strong><font>*</font>附件张数：</strong>
+                            <input style="width: 200px;" type="text" ng-required="(invoicetypeOnlyRead ? ORDER_DATA.cost.invoicetype : invoicetype).indexOf('025') == -1" integer-Validation ng-Focus ng-model="ORDER_DATA.cost.attanum" name="attanum" placeholder="请输入附件张数">
+                            <span class="errTip ng-hide" ng-show="myForm.attanum.$dirty && myForm.attanum.$error.required">必填</span>
+                            <span class="errTip ng-hide" ng-show="myForm.attanum.$dirty && myForm.attanum.$error.integer && !myForm.attanum.$focused">正整数</span>
+                        </li>
+                        <li class="tli">
+                            <strong style="width: 162px;"><font>*</font>是否有增值税专用发票：</strong>
+                            <select ng-model="ORDER_DATA.cost.haszzs" name="haszzsrc" ng-change="changehaszzs(ORDER_DATA.cost.haszzs)"
+                                    ng-required="(invoicetypeOnlyRead ? ORDER_DATA.cost.invoicetype : invoicetype).indexOf('025') == -1">
+                                <option value="">请选择</option>
+                                <option value="是">是</option>
+                                <option value="否">否</option>
+                            </select>
+                            <span class="errTip ng-hide"
+                                  ng-show="myForm.haszzsrc.$dirty && myForm.haszzsrc.$error.required">必填</span>
+                        </li>
+                        <li class="tli">
+                            <strong><font ng-if="ORDER_DATA.cost.haszzs=='是'">*</font>发票税额：</strong>
+                            <input type="text" ng-disabled="ORDER_DATA.cost.haszzs!=='是'" ng-model="ORDER_DATA.cost.tax" name="taxrc2" ng-Focus numtwo-Validation ng-required="(invoicetypeOnlyRead ? ORDER_DATA.cost.invoicetype : invoicetype).indexOf('025') == -1 && ORDER_DATA.cost.haszzs=='是'">
+                            <span class="errTip ng-hide" ng-show="myForm.taxrc2.$dirty && myForm.taxrc2.$error.required">必填</span>
+                            <span class="errTip ng-hide" ng-show="myForm.taxrc2.$dirty && myForm.taxrc2.$error.numtwo && !myForm.taxrc2.$focused">小数点后保留两位</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="ng-hide" ng-show="(invoicetypeOnlyRead ? ORDER_DATA.cost.invoicetype : invoicetype).indexOf('025') && ((invoicetypeOnlyRead ? ORDER_DATA.cost.invoicetype : invoicetype).indexOf('025') !== -1)">
+                <div class="genTitle2">
+                    <div>
+                        <strong>差旅报销</strong>
+                    </div>
+                </div>
+                <div class="addTable">
+                    <div class="maxline3">
+                        <table class="tab_data">
+                            <tr>
+                                <th><font>*</font>出差开始时间</th>
+                                <th><font>*</font>出差起始地点</th>
+                                <th><font>*</font>出差截止时间</th>
+                                <th><font>*</font>出差终止地点</th>
+                                <th><font>*</font>交通工具</th>
+                                <th><font>*</font>远途交通报销金额</th>
+                                <th>备注</th>
+                                <th><a href="javascript:;" ng-click="comeAdd('tripcost')" title="添加" class="btnAdd"></a></th>
+                            </tr>
+                            <tr ng-repeat="list in ORDER_DATA.cost.tripcost" class="list">
+                                <td ng-class="myForm['startdate'+$index].$dirty && myForm['startdate'+$index].$error.required ? 'hasErrTip' : ''">
+                                    <input type="text" class="Wdate" date-Picker  ng-readonly="true" ng-required="(invoicetypeOnlyRead ? ORDER_DATA.cost.invoicetype : invoicetype).indexOf('025') && ((invoicetypeOnlyRead ? ORDER_DATA.cost.invoicetype : invoicetype).indexOf('025') !== -1)" name="startdate{{$index}}" ng-Focus ng-model="list.startdate" placeholder="请输入日期">
+                                    <p class="errTip" ng-if="myForm['startdate'+$index].$dirty && myForm['startdate'+$index].$error.required &&!myForm['address'+$index].$focused ">必填</p>
+                                </td>
+                                <td ng-class="myForm['origin'+$index].$dirty && myForm['origin'+$index].$error.required ? 'hasErrTip' : ''">
+                                    <input type="text" ng-required="(invoicetypeOnlyRead ? ORDER_DATA.cost.invoicetype : invoicetype).indexOf('025') && ((invoicetypeOnlyRead ? ORDER_DATA.cost.invoicetype : invoicetype).indexOf('025') !== -1)" name="origin{{$index}}" ng-Focus ng-model="list.origin" maxlength="10">
+                                    <p class="errTip" ng-if="myForm['origin'+$index].$dirty && myForm['origin'+$index].$error.required &&!myForm['origin'+$index].$focused ">必填</p>
+                                </td>
+                                <td ng-class="myForm['enddate'+$index].$dirty && myForm['enddate'+$index].$error.required ? 'hasErrTip' : ''">
+                                    <input type="text" class="Wdate" date-Picker  ng-readonly="true" ng-required="(invoicetypeOnlyRead ? ORDER_DATA.cost.invoicetype : invoicetype).indexOf('025') && ((invoicetypeOnlyRead ? ORDER_DATA.cost.invoicetype : invoicetype).indexOf('025') !== -1)" name="enddate{{$index}}" ng-Focus ng-model="list.enddate" placeholder="请输入日期">
+                                    <p class="errTip" ng-if="myForm['enddate'+$index].$dirty && myForm['enddate'+$index].$error.required &&!myForm['enddate'+$index].$focused ">必填</p>
+                                </td>
+                                <td ng-class="myForm['dest'+$index].$dirty && myForm['dest'+$index].$error.required ? 'hasErrTip' : ''">
+                                    <input type="text" ng-required="(invoicetypeOnlyRead ? ORDER_DATA.cost.invoicetype : invoicetype).indexOf('025') && ((invoicetypeOnlyRead ? ORDER_DATA.cost.invoicetype : invoicetype).indexOf('025') !== -1)" name="dest{{$index}}" ng-Focus ng-model="list.dest" maxlength="10">
+                                    <p class="errTip" ng-if="myForm['dest'+$index].$dirty && myForm['dest'+$index].$error.required &&!myForm['dest'+$index].$focused ">必填</p>
+                                </td>
+                                <td ng-class="myForm['trans'+$index].$dirty && myForm['trans'+$index].$error.required ? 'hasErrTip' : ''">
+                                    <select ng-required="(invoicetypeOnlyRead ? ORDER_DATA.cost.invoicetype : invoicetype).indexOf('025') && ((invoicetypeOnlyRead ? ORDER_DATA.cost.invoicetype : invoicetype).indexOf('025') !== -1)" name="trans{{$index}}" ng-Focus ng-model="list.trans">
+                                        <option value="">请选择</option>
+                                        <option value="飞机">飞机</option>
+                                        <option value="轮船">轮船</option>
+                                        <option value="火车">火车</option>
+                                        <option value="汽车">汽车</option>
+                                    </select>
+                                    <p class="errTip" ng-if="myForm['trans'+$index].$dirty && myForm['trans'+$index].$error.required &&!myForm['trans'+$index].$focused ">必填</p>
+                                </td>
+                                <td ng-class="myForm['money'+$index].$dirty && (myForm['money'+$index].$error.required || myForm['money'+$index].$error.numtwo) ? 'hasErrTip' : ''">
+                                    <input ng-required="(invoicetypeOnlyRead ? ORDER_DATA.cost.invoicetype : invoicetype).indexOf('025') && ((invoicetypeOnlyRead ? ORDER_DATA.cost.invoicetype : invoicetype).indexOf('025') !== -1)" name="money{{$index}}" ng-Focus type="text" ng-model="list.money" ng-Focus numtwo-Validation ng-blur="jtjehzFn()" >
+                                    <span class="errTip ng-hide" ng-show="myForm['money'+$index].$dirty && myForm['money'+$index].$error.numtwo && !myForm.tripcostmoney.$focused">小数点后保留两位</span>
+                                    <p class="errTip" ng-if="myForm['money'+$index].$dirty && myForm['money'+$index].$error.required &&!myForm['money'+$index].$focused ">必填</p>
+                                </td>
+                                <td><input type="text" ng-model="list.note"></td>
+                                <td><a href="javascript:;" ng-click="comeDel($index,'tripcost')">删除</a></td>
+                            </tr>
+                            <tr>
+                                <td colspan="4"></td>
+                                <td class="tab_data_th">远途交通报销金额汇总</td>
+                                <td><input type="text" ng-disabled="true" ng-init="ORDER_DATA.cost.jtjehz=0" ng-model="ORDER_DATA.cost.jtjehz"></td>
+                                <td colspan="2"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="generForm">
+                    <ul>
+                        <li class="tli">
+                            <strong><font>*</font>市内交通费：</strong>
+                            <input type="text" ng-blur="amountclsum()" ng-Focus numtwo-Validation ng-required="(invoicetypeOnlyRead ? ORDER_DATA.cost.invoicetype : invoicetype).indexOf('025') && ((invoicetypeOnlyRead ? ORDER_DATA.cost.invoicetype : invoicetype).indexOf('025') !== -1)" ng-init="ORDER_DATA.cost.citytranscost=0" name="citytranscost" ng-model="ORDER_DATA.cost.citytranscost">
+                            <span class="errTip ng-hide" ng-show="myForm.citytranscost.$dirty && myForm.citytranscost.$error.required">必填</span>
+                            <span class="errTip ng-hide" ng-show="myForm.citytranscost.$dirty && myForm.citytranscost.$error.numtwo && !myForm.citytranscost.$focused">小数点后保留两位</span>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>住宿费：</strong>
+                            <input type="text" ng-blur="amountclsum()" ng-Focus numtwo-Validation ng-required="(invoicetypeOnlyRead ? ORDER_DATA.cost.invoicetype : invoicetype).indexOf('025') && ((invoicetypeOnlyRead ? ORDER_DATA.cost.invoicetype : invoicetype).indexOf('025') !== -1)" ng-init="ORDER_DATA.cost.accomcost=0" ng-model="ORDER_DATA.cost.accomcost" name="accomcost">
+                            <span class="errTip ng-hide" ng-show="myForm.accomcost.$dirty && myForm.accomcost.$error.required">必填</span>
+                            <span class="errTip ng-hide" ng-show="myForm.accomcost.$dirty && myForm.accomcost.$error.numtwo && !myForm.accomcost.$focused">小数点后保留两位</span>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>其他费用：</strong>
+                            <input type="text" ng-blur="amountclsum()" ng-Focus numtwo-Validation ng-required="(invoicetypeOnlyRead ? ORDER_DATA.cost.invoicetype : invoicetype).indexOf('025') && ((invoicetypeOnlyRead ? ORDER_DATA.cost.invoicetype : invoicetype).indexOf('025') !== -1)" ng-init="ORDER_DATA.cost.othercost=0" ng-model="ORDER_DATA.cost.othercost" name="othercost">
+                            <span class="errTip ng-hide" ng-show="myForm.othercost.$dirty && myForm.othercost.$error.required">必填</span>
+                            <span class="errTip ng-hide" ng-show="myForm.othercost.$dirty && myForm.othercost.$error.numtwo && !myForm.othercost.$focused">小数点后保留两位</span>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>报销金额汇总：</strong>
+                            <input type="text" ng-blur="getReimlimitperiod()" ng-disabled="true" ng-model="amountcl" name="amountcl" ng-init="amountcl=0">
+                            <span class="errTip ng-hide" ng-show="myForm.amountcl.$dirty && myForm.amountcl.$error.required">必填</span>
+                        </li>
+                        <li class="clear"></li>
+                        <li>
+                            <strong><font>*</font>附件张数：</strong>
+                            <input style="width: 200px;" type="text" ng-required="true" integer-Validation ng-Focus ng-model="ORDER_DATA.cost.attanum" name="attanum" placeholder="请输入附件张数">
+                            <span class="errTip ng-hide" ng-show="myForm.attanum.$dirty && myForm.attanum.$error.required">必填</span>
+                            <span class="errTip ng-hide" ng-show="myForm.attanum.$dirty && myForm.attanum.$error.integer && !myForm.attanum.$focused">正整数</span>
+                        </li>
+                        <li class="tli">
+                            <strong style="width: 162px;"><font>*</font>是否有增值税专用发票：</strong>
+                            <select ng-model="ORDER_DATA.cost.haszzs" ng-change="changehaszzs(ORDER_DATA.cost.haszzs)" name="haszzs" ng-required="(invoicetypeOnlyRead ? ORDER_DATA.cost.invoicetype : invoicetype).indexOf('025') && ((invoicetypeOnlyRead ? ORDER_DATA.cost.invoicetype : invoicetype).indexOf('025') !== -1)">
+                                <option value="">请选择</option>
+                                <option value="是">是</option>
+                                <option value="否">否</option>
+                            </select>
+                            <span class="errTip ng-hide" ng-show="myForm.haszzs.$dirty && myForm.haszzs.$error.required">必填</span>
+                        </li>
+
+                        <li class="tli">
+                            <strong><font ng-if="ORDER_DATA.cost.haszzs=='是'">*</font>发票税额：</strong>
+                            <input ng-disabled="ORDER_DATA.cost.haszzs!=='是'" type="text" ng-model="ORDER_DATA.cost.tax" name="taxrc"  ng-Focus numtwo-Validation
+                                   ng-required="(invoicetypeOnlyRead ? ORDER_DATA.cost.invoicetype : invoicetype).indexOf('025') && ((invoicetypeOnlyRead ? ORDER_DATA.cost.invoicetype : invoicetype).indexOf('025') !== -1) && ORDER_DATA.cost.haszzs=='是'">
+                            <span class="errTip ng-hide"
+                                  ng-show="myForm.taxrc.$dirty && myForm.taxrc.$error.required">必填</span>
+                            <span class="errTip ng-hide" ng-show="myForm.taxrc.$dirty && myForm.taxrc.$error.numtwo && !myForm.taxrc.$focused">小数点后保留两位</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div >
+                <div class="genTitle2">
+                    <div>
+                        <strong>财务信息</strong>
+                    </div>
+                </div>
+                <div class="generForm">
+                    <ul>
+                        <li class="tli">
+                            <strong>本次报销金额：</strong>
+                            <input type="hidden" ng-disabled="true" ng-model="ORDER_DATA.cost.amount">
+                            <input type="text" ng-disabled="true" ng-value="ORDER_DATA.cost.amount | number:2">
+                        </li>
+                        <li class="tli">
+                            <strong>借款未还金额：</strong>
+                            <input type="text" ng-disabled="true" ng-value="ORDER_DATA.finance.loan | number:2">
+                            <!--<input type="text" ng-disabled="true" ng-model="ORDER_DATA.finance.loan">-->
+                        </li>
+
+                        <li class="tli">
+                            <strong>本次还款金额：</strong>
+                            <!--<input type="text" value="{{ORDER_DATA.cost.amount > ORDER_DATA.finance.loan ? ORDER_DATA.finance.loan : ORDER_DATA.finance.amount}}">-->
+                            <input type="text" ng-init="ORDER_DATA.finance.returnmoney=0" name="returnmoney" ng-Focus numtwo-Validation ng-model="ORDER_DATA.finance.returnmoney">
+                            <span class="errTip ng-hide" ng-show="myForm.returnmoney.$dirty && myForm.returnmoney.$error.numtwo && !myForm.returnmoney.$focused">小数点后保留两位</span>
+                        </li>
+                        <li class="tli">
+                            <strong>实际财务应付金额：</strong>
+                            <!--<input type="text" ng-disabled="true" ng-model="ORDER_DATA.finance.due">-->
+                            <input type="text" ng-disabled="true" value="{{(ORDER_DATA.cost.amount - ORDER_DATA.finance.returnmoney) | number:2}}">
+                        </li>
+                        <!--<li class="tli">
+                            <strong>执行业务人员：</strong>
+                            <input type="text" ng-disabled="true" ng-model="ORDER_DATA.finance.businessor.name">
+                        </li>
+                        <li class="tli">
+                            <strong>业务标记时间：</strong>
+                            <input type="text" ng-disabled="true" ng-model="ORDER_DATA.finance.businessdate">
+                        </li>
+                        <li class="tli">
+                            <strong>执行财务人员：</strong>
+                            <input type="text" ng-disabled="true" ng-model="ORDER_DATA.finance.financer.name">
+                        </li>
+                        <li class="tli">
+                            <strong>财务标记时间：</strong>
+                            <input type="text" ng-disabled="true" ng-model="ORDER_DATA.finance.financedate">
+                        </li>
+                        <li class="tli">
+                            <strong>凭证生成时间：</strong>
+                            <input type="text" ng-disabled="true" ng-model="ORDER_DATA.finance.certdate">
+                        </li>
+                        <li class="tli">
+                            <strong>会计年度：</strong>
+                            <input type="text" ng-disabled="true" ng-model="ORDER_DATA.finance.certyear">
+                        </li>-->
+                        <!--<li class="tli">
+                            <strong>执行总经办人员：</strong>
+                            <input type="text" ng-disabled="true" ng-model="ORDER_DATA.finance.officer.name">
+                        </li>
+                        <li class="tli">
+                            <strong>总经办标记时间：</strong>
+                            <input type="text" ng-disabled="true" ng-model="ORDER_DATA.finance.officedate">
+                        </li>
+                        <li class="tli">
+                            <strong>总经理审核标记时间：</strong>
+                            <input type="text" ng-disabled="true" ng-model="ORDER_DATA.finance.managerdate">
+                        </li>-->
+                        <li class="clear"></li>
+                        <li>
+                            <strong>财务备注信息：</strong>
+                            <!--<span>{{ORDER_DATA.finance.note}}</span>-->
+                            <textarea name="" ng-model="ORDER_DATA.finance.note" ng-disabled="true"></textarea>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <div class="genTitle2">
+                    <div>
+                        <strong>本人当期报销信息</strong>
+                    </div>
+                </div>
+                <div class="addTable">
+                    <div class="maxline3">
+                        <table class="tab_data">
+                            <tr>
+                                <th><span ng-if="typejd">季度</span><span ng-if="typend">年份</span><span ng-if="!typejd && !typend">月份</span></th>
+                                <th>已分配额度</th>
+                                <th>已消耗额度</th>
+                                <th>本单使用额度</th>
+                            </tr>
+                            <tr ng-repeat="list in ORDER_DATA.limit" class="list">
+                                <td>{{list.year}}{{list.year ? '年' :''}}{{list.month ? typejd ? '第'+list.month+'季度' : list.month+'月': ''}}</td>
+                                <!--<td>{{list.month}}</td>-->
+                                <td>{{list.amount | number:2}}</td>
+                                <td>{{list.used | number:2}}</td>
+                                <td>{{list.using | number:2}}</td>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="genTitle2">
+                    <div>
+                        <strong>本人当年报销信息</strong>
+                    </div>
+                </div>
+                <div class="addTable">
+                    <table class="tab_data">
+                        <tr>
+                            <th>本科目当前有效额度</th>
+                            <th>本科目当前总额度</th>
+                            <th>本科目已使用额度</th>
+                        </tr>
+                        <tr ng-repeat="list in reimlimityearData" class="list">
+                            <td>{{list.free | number:2}}</td>
+                            <td>{{list.amount | number:2}}</td>
+                            <td>{{list.used | number:2}}</td>
+                    </table>
+                </div>
+            </div>
+            <!--<div>
+                <div class="genTitle2">
+                    <div>
+                        <strong>部门全年报销汇总信息</strong>
+                    </div>
+                </div>
+                <div class="addTable">
+                    <table class="tab_data">
+                        <tr>
+                            <th>间接费用-本年累计已分配额度</th>
+                            <th>间接费用-本年累计已审核额度</th>
+                        </tr>
+                        <tr ng-repeat="list in ORDER_DATA.bmqnbxhzxx" class="list">
+                            <td>{{list.bkmdqyxed | number:2}}</td>
+                            <td>{{list.bkmdqzed | number:2}}</td>
+                    </table>
+                </div>
+            </div>-->
+            <div class="gerSub">
+                <a href="index.html#/reimbursementOrder">返回</a>
+                <button ng-click="addData(ORDER_DATA, 'save')"  class="subSave">保存</button>
+                <button ng-click="addData(ORDER_DATA, 'apply')"  class="subApply">保存并提交</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--<div id="fysqBox" class="dialog cusBox" title="选择费用申请单" ng-include="'template/reimbursement/fysqbox.html'" ng-controller="fysqboxCtrl"></div>-->
+<div id="fysqBox" class="dialog cusBox" title="选择费用申请单" ng-include="'template/reimbursement/fysqbox.html'"></div>
+<div id="costCategory" class="dialog cusBox" title="选择费用种类" ng-include="'template/reimbursement/costCategory.html'"></div>
+<div id="costCenterDialog" class="dialog cusBox" title="选择成本中心" ng-include="'template/reimbursement/costCenter.html'"></div>
+<!--<div id="approversDialog" class="dialog cusBox" title="选择下一审批人" ng-include="'template/common/approvers.html'" ></div>-->
+

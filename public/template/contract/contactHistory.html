@@ -1,0 +1,23 @@
+<table class="orangestyle table">
+    <thead>
+    <tr>
+        <th>合同编号</th>
+        <th>订单编号</th>
+        <th>销售主体</th>
+        <th>需方合同编号</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody ng-class="contractHistory.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in contractHistory">
+        <td>{{list.contractbase.contractno}}</td>
+        <td>{{list.contractbase.salesorderid[0].orderid}}</td>
+        <td>{{list.contractbase.escompany}}</td>
+        <td>{{list.contractbase.customercontractno}}</td>
+        <td>
+            <a target="_blank" href="index.html#/contractOrderView?id={{list._id}}">查看</a>
+        </td>
+    </tr>
+    <tr class="tip"><td colspan="5">没有查到</td></tr>
+    </tbody>
+</table>

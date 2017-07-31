@@ -1,0 +1,163 @@
+<h3 class="genTitle genTitleBot"><em></em><span>单据类型</span></h3>
+<div class="addTable" style="padding: 0px;">
+    <table class="orangestyle table">
+        <tr>
+            <th width="10%">中文名称</th>
+            <th width="10%">英文名称</th>
+            <th width="55%">规则lmts</th>
+            <th width="10%">数据来源</th>
+            <th width="15%"><a href="javascript: void(0);" ng-click="newDocAdd()" class="btnAdd" title="添加" ></a></th>
+        </tr>
+        <tr ng-if="docAdding">
+            <td>
+                <input type="text" ng-model="newDoc.desc" value="newDoc.desc" placeholder="请输入单据中文名"/>
+            </td>
+            <td>
+                <input type="text" ng-model="newDoc.name" value="newDoc.name" placeholder="请输入单据英文名"/>
+            </td>
+            <td>
+                <span class="delTag" ng-repeat="lmt in newDoc.lmts">
+                    <a href="javascript: void(0);" ng-click="lmtDetail('new', lmt, $index, dataListIndex)">{{lmt.name + '(' + lmt.text + ')'}}</a>
+                    <a class="delMarke" href="javascript: void(0);" ng-click="lmtDelete('new', $index)">x</a>
+                </span>
+                <span class="addInput">
+                    <input type="text" name="newLmt.name" ng-model="newLmt.name" />
+                    <i href="javascript: void(0);" ng-click="lmtAdd('new', newLmt.name)"></i>
+                </span>
+            </td>
+            <td>
+                <!-- <input type="text" ng-model="newDoc.datasrc" value="newDoc.datasrc" placeholder="请输入数据来源"/> -->
+                <select ng-model="newDoc.datasrc">
+                    <option value="">请选择数据来源</option>
+                    <option value="sapsql">sapsql</option>
+                    <option value="mongo">mongo</option>
+                </select>
+            </td>
+            <td>
+                <a href="javascript: void(0);" ng-click="newDocSave()">新增</a>
+                <a href="javascript: void(0);" ng-click="newDocCancel()">取消</a>
+            </td>
+        </tr>
+        <tr ng-repeat="list in dataList" ng-init="dataListIndex = $index">
+            <td><input type="text" ng-readonly="readonly_array[$index]" ng-class="!readonly_array[$index] ? 'editable' : 'noedit'" ng-model="list.desc" value="{{list.desc}}"/></td>
+            <!-- <td><input type="text" ng-readonly="readonly_array[$index]" ng-class="!readonly_array[$index] ? 'editable' : 'noedit'" ng-model="list.name" value="{{list.name}}"/></td> -->
+            <td>{{list.name}}</td>
+            <td>
+                <span class="delTag" ng-repeat="lmt in list.lmts">
+                    <a href="javascript: void(0);" ng-click="lmtDetail('', lmt, $index, dataListIndex)">{{lmt.name + '(' + lmt.text + ')'}}</a>
+                    <a class="delMarke" href="javascript: void(0);" ng-click="lmtDelete('', $index, dataListIndex)">x</a>
+                </span>
+                <span ng-if="!readonly_array[$index]" class="addInput">
+                    <input type="text" name="newLmt.name" ng-model="newLmt.name"/>
+                    <i href="javascript: void(0);" ng-click="lmtAdd('', newLmt.name, $index)"></i>
+                </span>
+            </td>
+            <td>
+                <!-- <input type="text" ng-readonly="readonly_array[$index]" ng-class="!readonly_array[$index] ? 'editable' : 'noedit'" ng-model="list.datasrc" value="{{list.datasrc}}"/> -->
+                <select ng-disabled="readonly_array[$index]" ng-model="list.datasrc">
+                    <option value="sapsql">sapsql</option>
+                    <option value="mongo">mongo</option>
+                </select>
+            </td>
+            <td>
+                <a href="" ng-click="save($index)">保存</a>
+                <a href="" ng-click="editToggle($index)">修改</a>
+                <a href="" ng-click="delete($index)">删除</a>
+            </td>
+        </tr>
+
+    </table>
+</div>
+
+<div id="lmt_detail" class="emBox" style="display:none">
+    <div class="addTable" style="padding: 0px;">
+        <table class="orangestyle table">
+            <thead>
+            <tr>
+                <th width="15%">参数项</th>
+                <th width="65%">参数值</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td width="15%">type</td>
+                <td width="65%">
+                    <select class="busSel" ng-model="lmtData.type">
+                        <option label="请选择"></option>
+                        <option value="fun" label="fun（同步方法）"></option>
+                        <option value="afun" label="afun（异步方法）"></option>
+                        <option value="conf" label="conf（条件配置）"></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td width="15%">name</td>
+                <td width="65%"><input type="text" ng-model="lmtData.name"/></td>
+            </tr>
+            <tr ng-if="lmtData.type !== 'conf'">
+                <td width="15%">args</td>
+                <td width="65%"><input type="text" placeholder="多个参数请以逗号分隔" ng-model="lmtData.args"/></td>
+            </tr>
+            <tr ng-if="lmtData.type === 'conf'">
+                <td width="15%">fld</td>
+                <td width="65%"><input type="text" ng-model="lmtData.fld"/></td>
+            </tr>
+            <tr ng-if="lmtData.type === 'conf'">
+                <td width="15%">op</td>
+                <td width="65%"><input type="text" ng-model="lmtData.op"/></td>
+            </tr>
+            <tr ng-if="lmtData.type === 'conf'">
+                <td width="15%">vp</td>
+                <td width="65%"><input type="text" ng-model="lmtData.vp"/></td>
+            </tr>
+            <tr>
+                <td width="15%">text</td>
+                <td width="65%"><input type="text" ng-model="lmtData.text" placeholder="为{{lmtData.name}}增加中文描述"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<!-- <div id="docbox" class="dialog docbox">
+    <table class="orangestyle table">
+        <thead>
+        <tr>
+            <th>中文名称</th>
+            <th>英文名称</th>
+            <th>数据来源</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="list1 in addlist">
+            <td><input type="text" ng-model="list1.desc"/></td>
+            <td><input type="text" ng-model="list1.name"/></td>
+            <td><input type="text" ng-model="list1.datasrc"/></td>
+            <td><a href="" ng-click="itemsave(list1)">保存</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div> -->
+
+<!-- <div id="chbox" class="dialog chbox">
+    <table class="orangestyle table">
+        <thead>
+        <tr>
+            <th>中文名称</th>
+            <th>英文名称</th>
+            <th>数据来源</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="list1 in changelist">
+            <td><input type="text" ng-model="list1.desc"/></td>
+            <td><input type="text" ng-model="list1.name"/></td>
+            <td><input type="text" ng-model="list1.datasrc"/></td>
+            <td><a href="" ng-click="itemChangeSave(list1)">保存</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div> -->

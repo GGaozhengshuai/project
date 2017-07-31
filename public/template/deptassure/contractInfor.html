@@ -1,0 +1,43 @@
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>合同编号</strong>
+                    <input class="text" type="text" name="contractno"  ng-init="$parent.contractno=''" ng-model="$parent.contractno" placeholder="请输入合同编号">
+                </td>
+                <td>
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<table class="orangestyle table">
+    <thead>
+    <tr>
+        <th>合同编号</th>
+        <th>销售人员名称</th>
+        <th>销售部门</th>
+        <th>客户名称</th>
+        <th>事业部</th>
+        <th>合同金额</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in dataList">
+        <td>{{list.contractbase.contractno}}</td>
+        <td>{{list.contractbase.salesname}}</td>
+        <td>{{list.contractbase.salesorgnanme}}</td>
+        <td title="{{list.contractbase.stomer}}">{{list.contractbase.stomer}}</td>
+        <td>{{list.contractbase.salesorgnanme2}}</td>
+        <td>{{list.contractbase.contractmoney}}</td>
+        <td class="czBtn">
+            <a ng-click="selectContr(list.contractbase.contractno,list.contractbase.salesname,list.contractbase.salesorgnanme,list.contractbase.stomer,list.contractbase.salesorgnanme2,list.contractbase.contractmoney)" href="javascript:;">选择</a>
+        </td>
+    </tr>
+    <tr class="tip"><td colspan="10">没有查到合同</td></tr>
+    </tbody>
+</table>
+<pagination  manual="true" conf="paginationConf"></pagination>

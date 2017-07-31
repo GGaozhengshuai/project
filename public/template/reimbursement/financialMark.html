@@ -1,0 +1,102 @@
+<div class="item">业务/财务标记</div>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td colspan="2">
+                    <strong style="height: 80px;">报销单号：</strong>
+                    <textarea style="height: 80px; width: 85%;" ng-init="code=''" ng-model="code" id="markIpt"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="button" ng-if="opprev.financialMark_mark" value="标记" class="searchbtn2" ng-click="markFn()">
+                    <!--<input type="button" value="取消" class="searchbtn2 searchbtn2bot" ng-click="cancelFn()">-->
+                    <input type="button" ng-if="opprev.financialMark_marksend" value="标记并传送" class="searchbtn2 addBtn searchbtn2bot" ng-click="sendFn()">
+                </td>
+            </tr>
+
+        </table>
+    </div>
+</form>
+
+<div class="item">查询结果</div>
+<div style="overflow-x: auto">
+    <table class="orangestyle table" style="width: 130%">
+        <thead>
+        <tr>
+        <tr>
+            <th width="20px"><input type="checkbox" ng-model="checkAll" ng-click="allCheck($event)"></th>
+            <th>流水号</th>
+            <th>报销人</th>
+            <th>报销部门</th>
+            <th>报销申请日期</th>
+            <th>附件<br>张数</th>
+            <th>票据类型</th>
+            <th>费用种类</th>
+            <th>费用期间-<br>起始月份</th>
+            <th>截止<br>月份</th>
+            <th>报销金额汇总</th>
+            <th>税额</th>
+            <th>实际财务<br>应付金额</th>
+            <th>财务标<br>记时间</th>
+            <th>业务标<br>记时间</th>
+            <th>会计<br>凭证号</th>
+            <!--<th>制单人</th>-->
+        </tr>
+        </tr>
+        </thead>
+        <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+        <tr ng-repeat="list in dataList">
+            <td><input ng-click="updateSelection($event,list.code,$index)" class="checkBox"
+                       name="checkbox{{$index}}" type="checkbox" ng-checked="checkAll"/></td>
+            <td>{{list.code}}</td>
+            <td>{{list.user.name}}</td>
+            <td>{{list.department.name}}</td>
+            <td>{{list.applydate | date: 'yyyy-MM-dd'}}</td>
+            <td>
+                <span ng-show="businessFlag" class="ng-hide">{{list.cost.attanum}}</span>
+                <input ng-show="financeFlag" class="ng-hide" style="width: 30px;"  type="text" ng-model="list.cost.attanum">
+            </td>
+            <td ng-if="list.cost.invoicetype !== '1849025'">
+                <select ng-show="financeFlag" class="ng-hide" style="width: 80px;" ng-model="list.invoicetype">
+                    <option ng-repeat="(x,y) in selectType.categorySel[list.cost.category].sub[list.cost.costtype.substr(-2)].sub" value="{{x}}|{{y.text}}">{{y.text}}</option>
+                </select>
+                <span ng-show="businessFlag" class="ng-hide">{{list.cost.invoicetypestr}}</span>
+            </td>
+            <td ng-if="list.cost.invoicetype == '1849025'">差旅费</td>
+            <td>{{list.cost.typestr}}</td>
+            <td>{{list.cost.fromdate}}</td>
+            <td>{{list.cost.enddate}}</td>
+            <td>{{list.cost.amount|number:2}}</td>
+            <td>
+                <input ng-show="financeFlag" class="ng-hide" style="width: 70px; padding-left: 5px;" type="text" ng-model="list.cost.tax">
+                <span ng-show="businessFlag" class="ng-hide">{{list.cost.tax}}</span>
+            </td>
+            <td>{{list.finance.due|number:2}}</td>
+            <td>{{list.finance.financedate | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td>{{list.finance.businessdate | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td>{{list.finance.certcode}}</td>
+            <!--<td>{{list.zdr}}</td>-->
+        </tr>
+        <tr class="tip">
+            <td colspan="17">没有查到报销单</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<!--<pagination conf="paginationConf"></pagination>-->
+<div class="dialog" title="标记并传送" id="sendDialog">
+    <form novalidate name="userForm" class="generForm">
+        <ul class="ct">
+            <li class="ct_strip">
+                <strong ><font>*</font>日期：</strong>
+                <input style="width: auto;" type="text" class="text Wdate" date-Picker ng-readonly="true" ng-init="finance.certdate=today" ng-model="finance.certdate"  placeholder="请选择日期">
+            </li>
+            <li class="gerSub">
+                <a href="" ng-click="cancelFn()" class="closeBtn">取消</a>
+                <button ng-click="sendConfirmFn(finance)" class="subSave">标记并传送</button>
+            </li>
+        </ul>
+    </form>
+</div>

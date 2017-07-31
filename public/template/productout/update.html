@@ -1,0 +1,118 @@
+<h3 class="genTitle genTitleBot"><em></em><span>放货申请单新建</span></h3>
+<div class="cusCont">
+    <div class="generForm">
+        <h4 class="genH4">基本信息</h4>
+        <form novalidate name="invoiceForm">
+            <ul>
+                <li class="tli">
+                    <strong>放货单编号：</strong>
+                    <input type="text" ng-disabled="true" ng-model="ADD_DATA.code">
+                </li>
+                <li class="tli">
+                    <strong>申请部门：</strong>
+                    <input  type="text" placeholder="" ng-disabled="true" ng-model="ADD_DATA.contract.department"/>
+                </li>
+                <li class="tli">
+                    <strong>销售订单号：</strong>
+                    <input  type="text" placeholder="" ng-disabled="true" ng-model="ADD_DATA.contract.ordercode"/></li>
+                <li class="tli">
+                    <strong>销售人员姓名：</strong>
+                    <input ng-disabled="true" type="text" placeholder="" ng-model="ADD_DATA.contract.sale"/>
+                </li>
+                <li class="tli">
+                    <strong>客户名称：</strong>
+                    <input type="text" ng-disabled="true" ng-model="ADD_DATA.contract.client">
+                </li>
+                <li class="tli">
+                    <strong>要求签收方式：</strong>
+                    <input ng-disabled="true" type="text" placeholder="" ng-model="ADD_DATA.dest.sign"/>
+                </li>
+                <li class="tli">
+                    <strong>运输方式：</strong>
+                    <input type="text" ng-disabled="true" ng-model="ADD_DATA.dest.transtype">
+                </li>
+                <li class="tli">
+                    <strong>放货总金额：</strong>
+                    <input type="text" ng-disabled="true" placeholder="" ng-model="ADD_DATA.money">
+                </li>
+                <li class="tli">
+                    <strong>库房名称：</strong>
+                    <input type="text" ng-disabled="true" placeholder="" ng-model="ADD_DATA.dest.lgort">
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>要求到货日期：</strong>
+                    <input type="text" placeholder="" class="Wdate" date-Picker ng-model="ADD_DATA.deliverydate">
+                </li>
+                <li class="clear"></li>
+                <li>
+                    <strong>备注：</strong>
+                    <textarea  ng-maxlength="200" name="remark" ng-model="ADD_DATA.note" placeholder="最多200个字符"></textarea>
+                    <span class="errTip" ng-show="invoiceForm.remark.$error.maxlength">超过200个字符</span>
+                </li>
+
+            </ul>
+            <div class="addTable">
+                <h4 class="genH4">送货地址信息</h4>
+                <table class="tab_data">
+                    <thead class="tab_header">
+                    <tr>
+                        <th>站点</th>
+                        <th>省</th>
+                        <th>市</th>
+                        <th>收货人姓名</th>
+                        <th>固定电话</th>
+                        <th>手机号码</th>
+                        <th>收货人身份证号</th>
+                        <th>详细地址</th>
+                        <th>邮编</th>
+                    </thead>
+                    <tbody class="tab_body">
+                    <tr ng-repeat="list in glCgList">
+                        <td>{{list.site}}</td>
+                        <td>{{list.province}}</td>
+                        <td>{{list.city}}</td>
+                        <td>{{list.contact}}</td>
+                        <td>{{list.phone}}</td>
+                        <td>{{list.mobile}}</td>
+                        <td>{{list.idcard}}</td>
+                        <td>{{list.address}}</td>
+                        <td>{{list.postcode}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="text-align: center;margin-top: 20px;width:100%"><button type="button" style="width:95%" ng-click="zkList()" id="spreadBtn">展开送货清单信息∨</button></div>
+            <div class="clear"></div>
+            <div class="addTable" ng-show="dgList">
+                <h4 class="genH4">送货清单信息</h4>
+                <table class="tab_data">
+                    <thead class="tab_header">
+                    <tr>
+                        <th>内部物料编码</th>
+                        <th>原厂物料编码</th>
+                        <th>型号</th>
+                        <th>描述</th>
+                        <th>放货数量</th>
+                    </tr>
+                    </thead>
+                    <tbody class="tab_body">
+                    <tr ng-repeat="list in addCgList">
+                        <td>{{list.code}}</td>
+                        <td>{{list.oemcode}}</td>
+                        <td>{{list.model}}</td>
+                        <td>{{list.note}}</td>
+                        <td>{{list.sum}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="gerSub">
+                <a href="index.html#/productoutWh">返回</a>
+                <button ng-click="addData(ADD_DATA, 'save')"  ng-class="invoiceForm.$invalid == true ? 'displaySub' : 'subSave'" ng-disabled="invoiceForm.$invalid || invoRready">保存</button>
+                <button ng-click="addData(ADD_DATA, 'apply')"  ng-class="invoiceForm.$invalid == true ? 'displaySub' : 'subApply'" ng-disabled="invoiceForm.$invalid || invoRready">保存并提交</button>
+                <!--<button ng-click="update(addInvo,'addInvoice')"  ng-class="myForm.$invalid == true ? 'displaySub' : 'subSave'" ng-disabled="invoiceForm.$invalid || invoRready">保存</button>
+                <button ng-click="update(addInvo,'addInvoice')"  ng-hide="invoApproveBtn" ng-class="myForm.$invalid == true ? 'displaySub' : 'subSave'" ng-disabled="invoiceForm.$invalid || invoRready">提交审批</button>
+            --></div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,78 @@
+<h3 class="genTitle genTitleBot"><em></em><span>销售返点冻结</span></h3>
+<div class="cusCont">
+    <div class="generForm">
+        <form novalidate name="invoiceForm">
+            <ul>
+                <li class="tli">
+                    <strong>返点编号：</strong>
+                    <input ng-disabled="true" ng-model="ORDER_DATA.code" type="text" placeholder=""/>
+                </li>
+                <li class="tli">
+                    <strong>返点供应商：</strong>
+                    <input ng-model="ORDER_DATA.provider" ng-disabled="true" type="text" placeholder=""/>
+                </li>
+                <li class="tli">
+                    <strong>事业部：</strong>
+                    <input ng-model="ORDER_DATA.department.name" ng-disabled="true" type="text" placeholder=""/>
+                </li>
+                <!--<li class="tli">-->
+                    <!--<strong>产品线：</strong>-->
+                    <!--<input ng-model="ORDER_DATA.secondary" ng-disabled="true" type="text" placeholder=""/>-->
+                <!--</li>-->
+                <li class="tli">
+                    <strong>返点所属客户名称：</strong>
+                    <input ng-model="ORDER_DATA.client.name" ng-disabled="true" type="text" placeholder=""/>
+                </li>
+                <li class="tli">
+                    <strong>返点使用客户名称：</strong>
+                    <input ng-model="ORDER_DATA.user.name" ng-disabled="true" type="text" placeholder=""/>
+                </li>
+                <li class="tli">
+                    <strong>返点类型：</strong>
+                    <input ng-model="ORDER_DATA.bonusbase.type" ng-disabled="true" type="text" placeholder=""/>
+                </li>
+                <li class="tli">
+                    <strong>备注：</strong>
+                    <input ng-model="ORDER_DATA.bonusbase.note" ng-disabled="true" type="text" placeholder=""/>
+                </li>
+                <li class="tli">
+                    <strong>生效日期：</strong>
+                    <input type="text" ng-disabled="true" value="{{ORDER_DATA.bonusinfo.start | date: 'yyyy-MM-dd HH:mm:ss'}}"/>
+                </li>
+                <li class="tli">
+                    <strong>返点金额（原始值）：</strong>
+                    <input ng-disabled="true" value="{{ORDER_DATA.bonusmoney.origintotal.toFixed(2)}}" ng-disabled="true" type="text" placeholder=""/>
+                </li>
+                <li class="tli">
+                    <strong>返点金额：</strong>
+                    <input required value="{{ORDER_DATA.bonusmoney.total.toFixed(2)}}" type="text" ng-disabled="true" placeholder=""/>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>冻结金额：</strong>
+                    <input ng-model="ORDER_DATA.bonusmoney.freeze" ng-style="djMoney" ng-blur="freezeNum(ORDER_DATA.bonusmoney.freeze,ORDER_DATA.bonusmoney.total-ORDER_DATA.bonusmoney.used)" type="number" placeholder=""/>
+                </li>
+                <li class="tli">
+                    <strong>已用金额：</strong>
+                    <input required value="{{ORDER_DATA.bonusmoney.used.toFixed(2)}}" ng-disabled="true" type="text" placeholder=""/>
+                </li>
+                <li class="tli">
+                    <strong>可用金额：</strong>
+                    <input required type="text" ng-disabled="true" value="{{(ORDER_DATA.bonusmoney.total-ORDER_DATA.bonusmoney.freeze-ORDER_DATA.bonusmoney.used).toFixed(2)}}" placeholder=""/>
+                </li>
+
+                <li class="clear"></li>
+                <li>
+                    <strong><font ng-if="ifBhBot">*</font>冻结原因：</strong>
+                    <textarea ng-required="ifBhBot"  ng-maxlength="200"  name="comment" ng-model="ORDER_DATA.comment" placeholder="最多200个字符"></textarea>
+                    <span class="errTip" ng-show="invoiceForm.comment.$dirty && invoiceForm.comment.$error.maxlength">超过200个字符</span>
+                </li>
+
+            </ul>
+
+            <div class="gerSub">
+                <a href="index.html#/salesbonusOrder">返回</a>
+                <button ng-click="addData(ORDER_DATA)" id="change" ng-class="invoiceForm.$invalid == true ? 'displaySub' : 'subSave'" ng-disabled="invoiceForm.$invalid || invoRready">保存</button>
+            </div>
+        </form>
+    </div>
+</div>

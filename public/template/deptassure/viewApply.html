@@ -1,0 +1,36 @@
+<h3 class="genTitle"><em></em><span>部门担保</span></h3>
+<div id="mainView">
+    <div class="viewTable ng-scope">
+        <ul>
+            <li ng-if="ORDER_DATA.code!= '' ? true : false"><strong>部门担保申请号：</strong><span>{{ORDER_DATA.code}}</span></li>
+            <li ng-if="ORDER_DATA.orgname!= '' ? true : false"><strong>申请人部门：</strong><span>{{ORDER_DATA.orgname}}</span></li>
+
+            <li ng-if="ORDER_DATA.creatdate!= '' ? true : false"><strong>日期：</strong><span>{{ORDER_DATA.creatdate| date: 'yyyy-MM-dd '}}</span></li>
+            <!--<li><strong>关联单据类型：</strong><span>{{ORDER_DATA.billtype}}</span></li>
+            <li><strong>关联单据号：</strong><span>{{ORDER_DATA.billno}}</span></li>-->
+            <li><strong>销售合同号：</strong><span>{{ORDER_DATA.contractno}}</span></li>
+            <li><strong>销售人员：</strong><span>{{ORDER_DATA.salesname}}</span></li>
+            <li><strong>销售部门：</strong><span>{{ORDER_DATA.salesorgname}}</span></li>
+            <li><strong>事业部：</strong><span>{{ORDER_DATA.salesorgname2}}</span></li>
+            <li><strong>客户名称：</strong><span>{{ORDER_DATA.stomer}}</span></li>
+            <li><strong>合同金额：</strong><span>{{ORDER_DATA.contractmoney}}</span></li>
+
+            <li><strong>担保金额：</strong><span>{{ORDER_DATA.assuremoney| currency : '￥'}}</span></li>
+            <li><strong>担保比例：</strong><span>{{ORDER_DATA.assurebl}}</span></li>
+
+
+            <li><strong>部门担保额度：</strong><span>{{ORDER_DATA.deptlimit| currency : '￥'}}</span></li>
+            <li><strong style="width: 141px">部门担保已使用额度：</strong><span>{{ORDER_DATA.deptused| currency : '￥'}}</span></li>
+            <li><strong>部门担保剩余额度：</strong><span>{{ORDER_DATA.deptunused| currency : '￥'}}</span></li>
+            <li><strong>创建人：</strong><span>{{ORDER_DATA.creator.name }}</span></li>
+            <li><strong>申请人：</strong><span>{{ORDER_DATA.proposer}}</span></li>
+            <li class="clear"></li>
+            <li class="list_con" ><strong>备注：</strong><span>{{ORDER_DATA.remark}}</span></li>
+
+        </ul>
+    </div>
+</div>
+<div class="clear"></div>
+<div class="gerSub">
+    <a class="subSave" ng-if="editBtn" href="index.html#/deptassureEdit?processId={{processId}}&nodeId={{nodeId}}">编辑</a>
+</div>

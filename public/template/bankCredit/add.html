@@ -1,0 +1,270 @@
+<h3 class="genTitle genTitleBot"><em></em><span>银行授信</span></h3>
+<div class="cusCont">
+    <div class="generForm">
+        <form novalidate name="invoiceForm">
+            <ul>
+                <!--<li class="tli">
+                    <strong><font>*</font>银行授信流水号：</strong>
+                    <input required ng-model="ORDER_DATA.code" type="text" placeholder="系统自动生成"/>
+                </li>-->
+                <li class="tli">
+                    <strong><font>*</font>授信品种：</strong>
+                    <select ng-model="ORDER_DATA.credittype" ng-required="true" name="credittype" ng-disabled="ifShow" ng-change="sxpz(ORDER_DATA.credittype)">
+                        <option value="">请选择</option>
+                        <option value="银行承兑汇票">银行承兑汇票</option>
+                        <option value="流动资金贷款">流动资金贷款</option>
+                        <option value="国内信用证">国内信用证</option>
+                        <option value="保函">保函</option>
+                        <option value="商业承兑汇票">商业承兑汇票</option>
+                        <option value="供应链融资">供应链融资</option>
+                        <option value="应收账款保理">应收账款保理</option>
+                    </select>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.credittype.$dirty && invoiceForm.credittype.$error.required">必填</span>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>申请主体：</strong>
+                    <select ng-model="ORDER_DATA.creditbody" ng-disabled="creditbodyEdiet" ng-init="ORDER_DATA.creditbody='1000'" name="creditbody" ng-required="true">
+                        <option value="">请选择</option>
+                        <option value="1000">中建材信息技术股份有限公司</option>
+                        <option value="9000">中建材集团进出口公司</option>
+                        <option value="9001">中国建材（香港）有限公司</option>
+                    </select>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.creditbody.$dirty && invoiceForm.creditbody.$error.required">必填</span>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>授信金额：</strong>
+                    <input ng-required="true" ng-model="ORDER_DATA.creditmoney" ng-Focus bigzero-Validation name="creditmoney"  type="number" placeholder="保留两位小数"/>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.creditmoney.$dirty && invoiceForm.creditmoney.$error.bigzero && !invoiceForm.creditmoney.$focused">小数点后保留两位的正数</span>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.creditmoney.$dirty && invoiceForm.creditmoney.$error.required && !invoiceForm.creditmoney.$focused">必填</span>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>业务员：</strong>
+                    <input ng-readonly="true" ng-click="userBox()" ng-required="true" ng-model="ORDER_DATA.username" name="username" type="text" placeholder="请点击选择业务员"/>
+                    <input ng-model="ORDER_DATA.userid" type="hidden" placeholder=""/>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.username.$dirty && invoiceForm.username.$error.required">必填</span>
+                </li>
+                <li class="tli">
+                    <strong>业务部门：</strong>
+                    <input ng-disabled="true" ng-model="ORDER_DATA.orgname" name="orgname" type="text" placeholder="请先选择业务人员"/>
+                    <input ng-model="ORDER_DATA.orgid" type="hidden" placeholder=""/>
+                    <!--<span class="errTip ng-hide" ng-show="invoiceForm.orgname.$dirty && invoiceForm.orgname.$error.required">必填</span>-->
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>货币种类：</strong>
+                    <select ng-model="ORDER_DATA.moneycountry" name="moneycountry" ng-required="true" ng-disabled="ifShow">
+                        <option value="">请选择</option>
+                        <option value="CNY">人民币</option>
+                        <option value="EUR">欧元</option>
+                        <option value="USD">美元</option>
+                        <option value="CHF">瑞士法郎</option>
+                        <option value="HKD">港币</option>
+                        <option value="JPY">日元</option>
+                    </select>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.moneycountry.$dirty && invoiceForm.moneycountry.$error.required">必填</span>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>应交银行保证金：</strong>
+                    <input ng-required="true" ng-model="ORDER_DATA.margin" ng-Focus numtwo-Validation name="margin" type="text" placeholder="保留两位小数" />
+                    <span class="errTip ng-hide" ng-show="invoiceForm.margin.$dirty && invoiceForm.margin.$error.numtwo && !invoiceForm.margin.$focused">小数点后保留两位</span>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.margin.$dirty && invoiceForm.margin.$error.required && !invoiceForm.margin.$focused">必填</span>
+                </li>
+                <!--<li class="tli">
+                    <strong>申请日期：</strong>
+                    <input class="Wdate" date-Picker ng-readonly="true" ng-model="ORDER_DATA.start" type="text" placeholder="请选择日期"/>
+                </li>-->
+                <li class="tli" ng-if="ifBhBot">
+                    <strong><font>*</font>合同项目名称：</strong>
+                    <input ng-click="htBox()" ng-required="true" ng-readonly="true" ng-model="ORDER_DATA.project" name="project" type="text" placeholder=""/>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.project.$dirty && invoiceForm.project.$error.required">必填</span>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>资金占用部门：</strong>
+                    <select ng-disabled="ifzjzybm" ng-model="ORDER_DATA.ZBM" ng-change="zjzybm(ORDER_DATA.ZBM)" required>
+                        <option value="">请选择</option>
+                        <option value="1000">信息产品事业群</option>
+                        <option value="2000">合作业务部</option>
+                        <option value="3000">医疗产品部</option>
+                        <option value="9900">综合</option>
+                    </select>
+                    <input type="hidden" ng-model="ORDER_DATA.ZBMID"/>
+                </li>
+                <li class="tli" ng-if="ifBh">
+                    <strong><font>*</font>供应商名称：</strong>
+                    <input ng-required="true" ng-click="gysBox()" title="{{ORDER_DATA.ZSKDW}}" ng-readonly="true" ng-disabled="ifShow" name="ZSKDW" ng-model="ORDER_DATA.ZSKDW" type="text" placeholder="请点击选择供应商名称"/>
+                    <input ng-model="ORDER_DATA.providerid" type="hidden" placeholder="" />
+                    <span class="errTip ng-hide" ng-show="invoiceForm.ZSKDW.$dirty && invoiceForm.ZSKDW.$error.required">必填</span>
+                </li>
+                <li class="tli" ng-if="ifBhBot">
+                    <strong>客户名称：</strong>
+                    <input ng-disabled="true" name="stomer" ng-model="ORDER_DATA.stomer" type="text" placeholder="请先选择合同项目名称"/>
+                    <input  ng-model="ORDER_DATA.clientid" type="hidden" placeholder=""/>
+                    <!--<span class="errTip ng-hide" ng-show="invoiceForm.stomer.$dirty && invoiceForm.stomer.$error.required">必填</span>-->
+                </li>
+                <li class="tli" ng-if="ifBhBot">
+                    <strong><font>*</font>保函类型：</strong>
+                    <select ng-model="ORDER_DATA.loitype" name="loitype" ng-required="true">
+                        <option value="">请选择</option>
+                        <option value="投标保函">投标保函</option>
+                        <option value="预付款保函">预付款保函</option>
+                        <option value="履约保函">履约保函</option>
+                        <option value="质量维修保函">质量维修保函</option>
+                    </select>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.loitype.$dirty && invoiceForm.loitype.$error.required">必填</span>
+                </li>
+                <li class="tli" ng-if="ifBhBot">
+                    <strong><font>*</font>销售合同号：</strong>
+                    <input ng-required="true" ng-model="ORDER_DATA.contractno" ng-click="htBox()" name="contractno" type="text" placeholder="请先选择合同项目名称"/>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.contractno.$dirty && invoiceForm.contractno.$error.required">必填</span>
+                </li>
+                <li class="tli" ng-if="ifBhBot">
+                    <strong>销售合同金额：</strong>
+                    <input ng-disabled="true" ng-model="ORDER_DATA.contractmoney" name="contractmoney" type="number" placeholder="请先选择合同项目名称"/>
+                    <!--<span class="errTip ng-hide" ng-show="invoiceForm.contractmoney.$dirty && invoiceForm.contractmoney.$error.required">必填</span>-->
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>授信业务期限(天)：</strong>
+                    <input ng-required="true" ng-model="ORDER_DATA.limitdays" ng-Focus integer-Validation name="limitdays"  type="number" placeholder="请输入授信业务期限"/>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.limitdays.$dirty && invoiceForm.limitdays.$error.numtwo && !invoiceForm.limitdays.$focused">小数点后保留两位</span>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.limitdays.$dirty && invoiceForm.limitdays.$error.required && !invoiceForm.limitdays.$focused">必填</span>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>授信业务办理银行：</strong>
+                    <!--<select ng-model="ORDER_DATA.bank.id" ng-required="true" ng-change="bankSelect(ORDER_DATA.bank.id,m.bank)"  ng-options="m._id as m.bank for m in bklistItem">
+                        <option value="">请选择</option>
+                    </select>-->
+                    <select ng-model="ORDER_DATA.bank.id" name="bandid" ng-init="ORDER_DATA.bank.id=''" ng-required="true" ng-change="bankSelect(ORDER_DATA.bank.id)"  ng-options="m._id as m.bank for m in bklistItem">
+                        <option value="">请选择</option>
+                    </select>
+                    <input type="hidden" ng-model="ORDER_DATA.bank.name"/>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.bandid.$dirty && invoiceForm.bandid.$error.required">必填</span>
+                </li>
+                <li class="clear"></li>
+                <li>
+                    <strong><font ng-if="ifBhBot">*</font>备注：</strong>
+                    <textarea ng-required="ifBhBot"  maxlength="200"  name="remark" ng-model="ORDER_DATA.remark" placeholder="最多200个字符"></textarea>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.remark.$dirty && invoiceForm.remark.$error.required">必填</span>
+                </li>
+                <li class="formUpStyle">
+                    <strong>上传附件：</strong>
+                    <input url="/resource/uploadfile" uploadify-All btnname="上传附件" type="file"  ng-model="ORDER_DATA.attachment" placeholder="">
+                    <a target="_blank" class="link" href="{{ORDER_DATA.attachment}}">{{docName}}</a>
+                </li>
+            </ul>
+            <div class="addTable" ng-if="ifBh">
+                <h5>付款单</h5>
+                <table id="itemTable">
+                    <tr>
+                        <th><font ng-if="label">*</font>付款申请号</th>
+                        <th>供应商名称</th>
+                        <th>付款方式</th>
+                        <th>实际付款金额</th>
+                        <th>资金占用部门</th>
+                        <th>状态</th>
+                        <th><a href="javascript:;" ng-click="bankFkAdd()" title="添加" class="btnAdd"></a></th>
+                    </tr>
+                    <tr  ng-repeat="list in bankF1kList">
+                        <td>
+                            <input  ng-readonly="true"   ng-model="list.ZSQNO" type="text" value=""/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.ZSKDW" type="text" value=""/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.ZFKFS" type="text" value=""/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.ZSJFKJE" type="text" value=""/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" type="text" ng-model="list.ZBM" value=""/>
+                        </td>
+                        <td>
+                            <a target="_self" href="index.html#/paymentOrderView/{{list.ZSQNO}}" ng-show="list.show">详细</a>
+                            <a href="javascript:;" ng-click="bankFkDel($index)" ng-if="bankCancel">删除</a>
+                        </td>
+                    </tr>
+                    <tr class="list" ng-repeat="list in bankFkList">
+                        <td ng-class="invoiceForm['ZSQNO'+$index].$dirty && invoiceForm['ZSQNO'+$index].$error.required ? 'hasErrTip' : ''">
+                            <input ng-required="label" ng-click="bankFkBox($index)" name="ZSQNO{{$index}}" ng-readonly="true" placeholder="请点击选择付款单"  ng-model="list.ZSQNO" type="text" value=""/>
+                            <span class="errTip" ng-if="invoiceForm['ZSQNO'+$index].$dirty && invoiceForm['ZSQNO'+$index].$error.required ">必填</span>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.ZSKDW" type="text" value=""/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.ZFKFS" type="text" value=""/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.ZSJFKJE" type="text" value=""/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.ZBM" type="text" value=""/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.ZFKSTA" type="text" value=""/>
+                        </td>
+                        <td>
+                            <a target="_blank" href="index.html#/paymentOrderView/{{list.ZSQNO}}" ng-show="list.show">详细</a>
+                            <a href="javascript:;" ng-click="bankFkDel($index)">删除</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <span>金额合计：{{ORDER_DATA.jehj}}</span><!--<input ng-disabled="true" ng-model="ORDER_DATA.jehj" type="text" value=""/>-->
+                        </td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+            <ul>
+                <li class="tli">
+                    <strong style="width:200px;">部门已使用银行授信额度：</strong>
+                    <input ng-disabled="true"   value="{{ORDER_DATA.deptused | currency:'￥'}}" type="text" placeholder=""/>
+                </li>
+                <li class="tli">
+                    <strong style="margin-left: 30px;">部门可用银行授信额度：</strong>
+                    <input ng-disabled="true"   value="{{ORDER_DATA.deptunused | currency:'￥'}}" type="text" placeholder=""/>
+                </li>
+                <li class="clear"></li>
+                <li class="tli">
+                    <strong style="width:200px;">银行已使用人民币授信额度：</strong>
+                    <input ng-disabled="true"  value="{{ORDER_DATA.usedrmb| currency:'￥'}}" type="text" placeholder=""/>
+                </li>
+                <li class="tli">
+                    <strong style="width:200px;">银行可用人民币授信额度：</strong>
+                    <input ng-disabled="true"  value="{{ORDER_DATA.unusedrmb | currency:'￥'}}" type="text" placeholder=""/>
+                </li>
+                <!--<li class="tli">
+                    <strong><font>*</font>开立日：</strong>
+                    <input required ng-model="ORDER_DATA.end" type="text" placeholder="保留两位小数"/>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>到期日：</strong>
+                    <input required ng-model="ORDER_DATA.duedate" type="text" placeholder="保留两位小数"/>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>额度转回日期：</strong>
+                    <input required ng-model="ORDER_DATA.moneybackdate" type="text" placeholder="保留两位小数"/>
+                </li>-->
+            </ul>
+            <div class="gerSub">
+                <a href="index.html#/bankCreditOrder">返回</a>
+                <button ng-click="addData(ORDER_DATA, 'save')"  class="subSave">保存</button>
+                <button ng-click="addData(ORDER_DATA, 'apply')"  class="subApply">保存并提交</button>
+                <!--<button ng-click="addData(ORDER_DATA, 'save')"  ng-class="invoiceForm.$invalid == true ? 'displaySub' : 'subSave'" ng-disabled="invoiceForm.$invalid || invoRready">保存</button>
+                <button ng-click="addData(ORDER_DATA, 'apply')"  ng-class="invoiceForm.$invalid == true ? 'displaySub' : 'subApply'" ng-disabled="invoiceForm.$invalid || invoRready">保存并提交</button>
+                --><!--<button ng-click="update(addInvo,'addInvoice')"  ng-class="myForm.$invalid == true ? 'displaySub' : 'subSave'" ng-disabled="invoiceForm.$invalid || invoRready">保存</button>
+                <button ng-click="update(addInvo,'addInvoice')"  ng-hide="invoApproveBtn" ng-class="myForm.$invalid == true ? 'displaySub' : 'subSave'" ng-disabled="invoiceForm.$invalid || invoRready">提交审批</button>
+            --></div>
+        </form>
+    </div>
+</div>
+<div id="userBox" class="dialog cusBox" title="选择人员" ng-include="'template/bankCredit/userBox.html'" ng-controller="userNameBoxCtrl"></div>
+<div id="bankFkBox" class="dialog cusBox" title="选择付款单" ng-include="'template/bankCredit/fkdBox.html'" ng-controller="fkdBoxCtrl"></div>
+<div id="gysBoxBox" class="dialog cusBox" title="选择供应商" ng-include="'template/bankCredit/gysBox.html'" ng-controller="gysBoxCtrl"></div>
+<div id="yhhtBox" class="dialog cusBox" title="选择合同" ng-include="'template/bankCredit/yhhtBox.html'" ng-controller="yhhtBoxCtrl"></div>

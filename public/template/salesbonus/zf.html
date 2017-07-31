@@ -1,0 +1,30 @@
+<h3 class="genTitle"><em></em><span>销售返点作废</span></h3>
+<ul class="generNav">
+    <li class="active"><a href="javascript:;">销售返点作废</a></li>
+</ul>
+
+<div id="mainView">
+    <div class="viewTable ng-scope">
+        <ul>
+            <li><strong>返点供应商：</strong><span>{{ORDER_DATA.provider}}</span></li>
+            <li><strong>事业部：</strong><span>{{ORDER_DATA.department.name}}</span></li>
+            <!--<li><strong>产品线：</strong><span>{{ORDER_DATA.secondary}}</span></li>-->
+            <li><strong>返点所属客户名称：</strong><span>{{ORDER_DATA.client.name}}</span></li>
+            <li><strong>返点使用客户名称：</strong><span>{{ORDER_DATA.user.name}}</span></li>
+            <li><strong>返点类型：</strong><span>{{ORDER_DATA.bonusbase.type}}</span></li>
+            <li><strong>返点编号：</strong><span>{{ORDER_DATA.code}}</span></li>
+            <li><strong>备注：</strong><span>{{ORDER_DATA.bonusbase.note}}</span></li>
+            <li><strong>激励受益类型：</strong><span>{{ORDER_DATA.bonusbase.benefit}}</span></li>
+            <li><strong>生效日期：</strong><span>{{ORDER_DATA.bonusinfo.start | date: 'yyyy-MM-dd HH:mm:ss'}}</span></li>
+            <li><strong>失效日期：</strong><span>{{ORDER_DATA.bonusinfo.end | date: 'yyyy-MM-dd HH:mm:ss'}}</span></li>
+            <li><strong>返点金额：</strong><span>{{ORDER_DATA.bonusmoney.total.toFixed(2)}}</span></li>
+            <li><strong>可用金额：</strong><span>{{(ORDER_DATA.bonusmoney.total-ORDER_DATA.bonusmoney.freeze-ORDER_DATA.bonusmoney.used).toFixed(2)}}</span></li>
+        </ul>
+    </div>
+</div>
+
+<div class="gerSub" style="clear: both;">
+    <a href="index.html#/salesbonusOrder">返回</a>
+    <a href="javascript:;" ng-click="nullify(ORDER_DATA)" style="background: #ea3f35;">作废</a>
+</div>
+<div id="zfBox" class="dialog cusBox" title="备注" ng-include="'template/salesbonus/note.html'"></div>

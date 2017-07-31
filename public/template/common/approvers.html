@@ -1,0 +1,14 @@
+<form novalidate name="userForm" class="generForm">
+    <ul class="ct">
+        <li class="ct_strip">
+            <strong><font>*</font>选择下一个审批人：</strong>
+            <select ng-model="nextApply" ng-init="nextApply='0'" ng-required="true" name="nextApply">
+                <option ng-repeat=" d in receivers" value="{{$index}}">{{d.name}}</option>
+            </select>
+        </li>
+        <li class="gerSub">
+            <button ng-click="applyFn(nextApply)" class="subSave">确定</button>
+        </li>
+
+    </ul>
+</form>

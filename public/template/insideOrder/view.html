@@ -1,0 +1,121 @@
+<h3 class="genTitle"><em></em>
+    <span>费用申请单</span>
+    <span ng-if="activeTab == 2">审批详情</span>
+</h3>
+<ul class="generNav">
+    <li ng-class="{active:activeTab == 1}"><a href="javascript:void(0);" ng-mousedown='htTab(1)'>费用申请单</a></li>
+    <li ng-class="{active:activeTab == 2}"><a href="javascript:void(0);" ng-mousedown='htTab(2)'>审批详情</a></li>
+</ul>
+<div id="mainView">
+    <div class="viewTable ng-scope">
+        <div ng-if="activeTab == 1">
+            <ul>
+            <li><strong>申请流水号：</strong><span>{{ORDER_DATA.ZINORD}}</span></li>
+            <li><strong>费用申请单号：</strong><span>{{ORDER_DATA.AUFNR}}</span></li>
+            <li><strong>公司名称：</strong><span>{{BUKRSTxt[ORDER_DATA.BUKRS]}}</span></li>
+            <li><strong>成本中心：</strong><span>{{ORDER_DATA.RESPCCTR | getName:costcenterSel :'text':'code'}}</span></li>
+            <li><strong>费用申请单类型：</strong><span>{{categorySel[ORDER_DATA.ZFYLX.substr(0,2)].text}}-{{categorySel[ORDER_DATA.ZFYLX.substr(0,2)].sub[ORDER_DATA.ZFYLX.substr(2,2)].text}}{{categorySel[ORDER_DATA.ZFYLX.substr(0,2)].sub[ORDER_DATA.ZFYLX.substr(2,2)].sub[ORDER_DATA.ZFYLX.substr()].text ? '-'+categorySel[ORDER_DATA.ZFYLX.substr(0,2)].sub[ORDER_DATA.ZFYLX.substr(2,2)].sub[ORDER_DATA.ZFYLX.substr()].text:''}}</span></li>
+            <!--<li><strong>费用申请单类型：</strong><span>{{AUARTTxt[ORDER_DATA.AUART]}}</span></li>-->
+            <li><strong>预算金额：</strong><span>{{ORDER_DATA.ZSQJE | currency : '￥'}}</span></li>
+            <li><strong>追加预算金额：</strong><span>{{ORDER_DATA.ZZJYSJE | currency : '￥'}}</span></li>
+            <li><strong>未使用金额：</strong><span>{{(DontuseMoney.total - (DontuseMoney.used + DontuseMoney.using)).toFixed(2)| currency : '￥'}}</span></li>
+            <li><strong>总预算金额：</strong><span>{{ORDER_DATA.ZZJE | currency : '￥'}}</span></li>
+            <li><strong>费用申请单状态：</strong><span>{{{'01':'完结','02':'正常','03':'作废'}[ORDER_DATA.ASTNR]}}</span></li>
+            <li class="list_con"><strong>申请标题：</strong><span>{{ORDER_DATA.ZSQNR}}</span></li>
+            <li class="list_con" ng-if="ddms"><strong>事由：</strong><span>{{ORDER_DATA.USER3.describe +'；'+ ORDER_DATA.USER3.instructions}}</span></li>
+            <li class="list_con" ng-if="ddms1"><strong>事由：</strong><span>{{ORDER_DATA.USER3}}</span></li>
+            <li><strong>创建人：</strong><span>{{ORDER_DATA.USER0}}</span></li>
+            <li><strong>所属部门：</strong><span>{{ORDER_DATA.USER6}}</span></li>
+            <li><strong>创建时间：</strong><span>{{ORDER_DATA.USER5 | date: 'yyyy-MM-dd'}}</span></li>
+            </ul>
+
+            <div class="addTable">
+                <div class="genTitle2">
+                    <div>
+                        <strong>费用使用详情</strong>
+                    </div>
+                </div>
+                <table class="tab_data">
+                    <thead class="tab_header">
+                        <tr>
+                            <th>类型</th>
+                            <th>单号</th>
+                            <th>使用金额</th>
+                            <th>申请人</th>
+                            <th>申请日期</th>
+                        </tr>
+                    </thead>
+                    <tbody class="tab_body">
+                        <tr ng-repeat="list in DontuseMoney.details.fk">      <!--付款审批完成-->
+                            <td>{{list.TYPE}}</td>
+                            <td ng-show="opprev.paymentOrder && opprev.insideOrder"><a style="text-decoration: underline;" class="underline" href="index.html#/paymentOrderView/{{list.AUFNR}}" target="_blank">{{list.AUFNR}}</a></td>
+                            <td ng-hide="opprev.paymentOrder && opprev.insideOrder">{{list.AUFNR}}</td>
+                            <td>{{list.ZSQJE}}</td>
+                            <td>{{list.USER}}</td>
+                            <td>{{list.ZSQRQ}}</td>
+                        </tr>
+                        <tr ng-repeat="list in DontuseMoney.details.fking">      <!--付款审批中-->
+                            <td>{{list.TYPE}}</td>
+                            <td ng-show="opprev.paymentOrder && opprev.insideOrder"><a style="text-decoration: underline;" class="underline" href="index.html#/paymentOrderView/{{list.AUFNR}}" target="_blank">{{list.AUFNR}}</a></td>
+                            <td ng-hide="opprev.paymentOrder && opprev.insideOrder">{{list.AUFNR}}</td>
+                            <td>{{list.ZSQJE}}</td>
+                            <td>{{list.USER}}</td>
+                            <td>{{list.ZSQRQ}}</td>
+                        </tr>
+                        <tr ng-repeat="list in DontuseMoney.details.bx">      <!--报销审批完成-->
+                            <td>{{list.TYPE}}</td>
+                            <td>{{list.AUFNR}}</td>
+                            <td>{{list.ZSQJE}}</td>
+                            <td>{{list.USER}}</td>
+                            <td>{{list.ZSQRQ}}</td>
+                        </tr>
+                        <tr ng-repeat="list in DontuseMoney.details.bxing">      <!--报销审批中-->
+                            <td>{{list.TYPE}}</td>
+                            <td>{{list.AUFNR}}</td>
+                            <td>{{list.ZSQJE}}</td>
+                            <td>{{list.USER}}</td>
+                            <td>{{list.ZSQRQ}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div class="clear"></div>
+            <div class="gerSub">
+                <a class="subSave changqdBtn" href="index.html#/insideOrderEdit?sapid={{ORDER_DATA.AUFNR}}" ng-hide="(alreadyAppend && opprev.insideOrder_addmore) || (ORDER_DATA.ASTNR == '01' || ORDER_DATA.ASTNR == '03')">追加预算</a>
+            </div>
+        </div>
+
+    </div>
+    <div class="applyLog" ng-if="activeTab == 2">
+        <h3 class="genTitle"><em></em><span>审批记录</span></h3>
+        <table>
+            <thead>
+            <tr>
+                <th class="th1">审批人</th>
+                <th class="th2">审批时间</th>
+                <th class="th3">审批状态</th>
+                <th class="th4">审批意见</th>
+            </tr>
+            </thead>
+            <tbody ng-repeat="list in processlog">
+            <tr  ng-show="list.typename=='费用申请单'&&list.doc.content.model.ZZJYSJE"><td class="blueBack" colspan="4">追加预算审批流</td></tr>
+            <tr  ng-show="list.typename=='费用申请单'&&!list.doc.content.model.ZZJYSJE"><td class="blueBack" colspan="4">费用申请单审批流</td></tr>
+            <tr ng-show="list.typename=='费用申请单作废'"><td  class="orgBack" colspan="4">费用申请单作废审批流</td></tr>
+            <tr ng-repeat="item in list.processlog">
+                <td>{{item.sender.name}}</td>
+                <td>{{item.createDate | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td>{{item.operation}}</td>
+                <td>{{item.content.comment}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--<pagination conf="paginationConf"></pagination>-->
+
+</div>
+<!--
+<div class="applyOper">
+
+</div>-->

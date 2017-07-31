@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>打印</title>
+    <script type="text/javascript" src="/js/lib/jquery/jquery-1.11.3.js"></script>
+    <link rel="stylesheet" href="/css/print.css">
+</head>
+<body style="text-align: center;">
+<div>
+    <iframe src="" style="margin:0 auto;" scrolling="no" id="external-frame"></iframe>
+</div>
+
+<div id="printbtn" style="display:none;"><button onclick="print()">打印</button></div>
+<script>
+    var LODOP; //声明为全局变量
+    function CheckIsInstall() {
+        try{
+            var LODOP=getLodop();
+            if (LODOP.VERSION) {
+                if (LODOP.CVERSION)
+                    alert("当前有C-Lodop云打印可用!\n C-Lodop版本:"+LODOP.CVERSION+"(内含Lodop"+LODOP.VERSION+")");
+                else
+                    alert("本机已成功安装了Lodop控件！\n 版本号:"+LODOP.VERSION);
+
+            }
+        }catch(err){
+        }
+    }
+
+
+
+
+    var ifm = window.frames[0]
+    function print(){ifm.print();}
+    function ready(){
+        console.log('ready')
+        setIframeHeight(document.getElementById('external-frame'));
+        $('#printbtn').show();
+        CreateOneFormPage();
+    }
+    function setIframeHeight(iframe) {
+        if (iframe) {
+            var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
+            if (iframeWin.document.body) {
+                iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
+            }
+        }
+    };
+    window.onload = function(){
+        var str = window.location.search;
+        var uri = str.substring(0 ,str.indexOf('&'));
+        var param = str.substr(uri.length + 1)
+        uri = uri.substr(5) + '?' + param;
+        ifm.location.href = uri;
+//        ifm.onload = function(){
+//            ready();
+//        }
+//        ifm.location.href = '/template/check/printpurchase.html';
+    }
+
+
+
+
+    function  CreateOneFormPage(){
+        LODOP=getLodop();
+        LODOP.PRINT_INIT("");
+        LODOP.SET_PRINT_PAGESIZE (2, 0, 0,"A4");
+        LODOP.SET_PRINT_MODE("PRINT_PAGE_PERCENT","Auto-Width");
+        LODOP.SET_PRINT_STYLEA(0,"Horient",2); //水平居中
+    }
+</script>
+</body>
+</html>

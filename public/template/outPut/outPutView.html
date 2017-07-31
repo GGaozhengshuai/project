@@ -1,0 +1,53 @@
+<h3 class="genTitle">
+    <em></em>
+    <span>进销项开票查看</span>
+</h3>
+<ul class="generNav">
+    <li class="active"><a href="javascript:void(0)">进销项开票查看</a></li>
+</ul>
+
+<div id="mainView">
+    <div>
+        <div class="viewTable ng-scope">
+            <div class="genTitle2">
+                <div>
+                    <strong>销项待开数据</strong>
+                </div>
+            </div>
+            <ul>
+                <li ng-if="wljdatapower || sydatapower || lssdatapower"><strong>{{todo_it_fx.text}}发票额(万元)：</strong><span>{{todo_it_fx.amount}}</span></li>
+                <li ng-if="wljdatapower || sydatapower || lssdatapower"><strong>{{todo_it_xm.text}}发票额(万元)：</strong><span>{{todo_it_xm.amount}}</span></li>
+                <li ng-if="wljdatapower || sydatapower || lssdatapower"><strong>{{todo_it_other.text}}发票额(万元)：</strong><span>{{todo_it_other.amount}}</span></li>
+                <li ng-if="yxydatapower || sydatapower || lssdatapower"><strong>{{todo_yl.text}}发票额(万元)：</strong><span>{{todo_yl.amount}}</span></li>
+                <li ng-if="yxydatapower || sydatapower || lssdatapower"><strong>{{todo_hz.text}}发票额(万元)：</strong><span>{{todo_hz.amount}}</span></li>
+                <li ng-if="sydatapower || lssdatapower"><strong style="font-weight: bold;">销项待开合计发票额(万元)：</strong><span style="font-weight: bold;">{{(todo_it_fx.amount + todo_it_xm.amount + todo_it_other.amount + todo_yl.amount + todo_hz.amount).toFixed(2)}}</span></li>
+            </ul>
+            <div class="genTitle2">
+                <div>
+                    <strong>进项数据</strong>
+                </div>
+            </div>
+            <ul>
+                <li ng-if="yhldatapower || sydatapower || lssdatapower "><strong>{{got_cw.text}}发票额(万元)：</strong><span>{{got_cw.amount}}</span></li>
+                <li ng-if="wljdatapower || sydatapower || lssdatapower"><strong>{{got_hw_sw.text}}发票额(万元)：</strong><span>{{got_hw_sw.amount}}</span></li>
+                <li ng-if="wljdatapower || sydatapower || lssdatapower"><strong>{{pending_hw.text}}发票额(万元)：</strong><span>{{pending_hw.amount}}</span></li>
+                <li ng-if="wljdatapower || sydatapower || lssdatapower"><strong>{{processing_hw.text}}发票额(万元)：</strong><span>{{processing_hw.amount}}</span></li>
+                <li ng-if="wljdatapower || sydatapower || lssdatapower"><strong>{{committed_hw.text}}发票额(万元)：</strong><span>{{committed_hw.amount}}</span></li>
+                <li ng-if="sxydatapower || sydatapower || lssdatapower"><strong>{{expect_zgs.text}}发票额(万元)：</strong><span>{{expect_zgs.amount}}</span></li>
+                <li ng-if="yxydatapower || sydatapower || lssdatapower"><strong>{{expect_yl.text}}发票额(万元)：</strong><span>{{expect_yl.amount}}</span></li>
+                <li ng-if="lgqdatapower || sydatapower || lssdatapower"><strong>{{expect_nbq.text}}发票额(万元)：</strong><span>{{expect_nbq.amount}}</span></li>
+                <li ng-if="sydatapower || lssdatapower"><strong style="font-weight: bold;">预期进项发票合计发票额(万元)：</strong><span style="font-weight: bold;">{{(got_cw.amount+got_hw_sw.amount+pending_hw.amount+processing_hw.amount+committed_hw.amount+expect_zgs.amount+expect_yl.amount+expect_nbq.amount).toFixed(2)}}</span></li>
+            </ul>
+            <div class="genTitle2">
+                <div>
+                    <strong>汇总</strong>
+                </div>
+            </div>
+            <ul>
+                <li ng-if="sydatapower || lssdatapower || wljdatapower || yxydatapower"><strong style="font-weight: bold;">{{confirmed.text}}发票额(万元)：</strong><span style="font-weight: bold;">{{confirmed.amount.toFixed(2)}}</span></li>
+                <li ng-if="sydatapower || lssdatapower"><strong style="font-weight: bold;">{{heji_jxx.text}} 发票额(万元)：</strong><span style="font-weight: bold;">{{heji_jxx.amount.toFixed(2)}}</span></li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div>

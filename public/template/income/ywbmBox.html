@@ -1,0 +1,19 @@
+<table class="orangestyle table" id="ccTable">
+    <thead>
+    <tr>
+        <th>业务应收编码</th>
+        <th>未核销金额</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody ng-class="xshthList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in xshthList">
+        <td>{{list.ZYWYS}}</td>
+        <td>{{list.WHXJE}}</td>
+        <td>
+            <a href="javascript:;" ng-click="ywSelect(list.ZYWYS,list.WHXJE)">选择</a>
+        </td>
+    </tr>
+    <tr class="tip" ng-show="xshthList.length==0"><td colspan="3">没有查到业务应收编码</td></tr>
+    </tbody>
+</table>

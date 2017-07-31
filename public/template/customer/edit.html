@@ -1,0 +1,402 @@
+<h3 class="genTitle genTitleBot"><em></em><span>修改客户信息</span></h3>
+<div id="tabs">
+    <ul class="generNav" ng-init="ht.activeTab = 1">
+        <li ng-class="{active:ht.activeTab == 1}"><a href="javascript:;" ng-mousedown='htTab(1)'>客户基本信息</a></li>
+        <li ng-class="{active:ht.activeTab == 2}" ><a href="javascript:;" ng-mousedown='htTab(2)'>客户联系信息</a></li>
+        <li ng-class="{active:ht.activeTab == 3}" ><a href="javascript:;" ng-mousedown='htTab(3)'>客户开票信息</a></li>
+        <li ng-class="{active:ht.activeTab == 4}"><a href="javascript:;" ng-mousedown='htTab(4)'>客户注册信息</a></li>
+    </ul>
+    <div class="cusCont tab_cont">
+
+        <div class="" ng-show="ht.activeTab == 1">
+            <div class="generForm">
+                <form novalidate name="myForm">
+                    <ul class="noMargin">
+                        <li class="tli">
+                            <strong><font>*</font>客户类型：</strong>
+                            <select  ng-required="true" ng-model="addApp.CENTRAL_DATA.KTOKD"  name="KTOKD" ng-change="change(addApp.CENTRAL_DATA.KTOKD)" ng-disabled="ywChange">
+                                <option value="">请选择</option>
+                                <option value="ZC01">业务客户</option>
+                                <option value="ZC04">财务客户</option>
+                            </select>
+
+                            <span class="errTip ng-hide" ng-show="myForm.KTOKD.$dirty && myForm.KTOKD.$error.required">必填</span>
+                        </li>
+                        <li class="tli">
+                            <strong><font>*</font>客户名称：</strong>
+                            <input  ng-required="true" ng-disabled="!cusOver" already="old" ng-maxlength="80" remote-validation ng-model="addApp.CENTRAL_DATA.NAME1" ng-show="over" name="NAME1" type="text" value="" new="false" param="NAME1:'{{addApp.CENTRAL_DATA.NAME1}}'" placeholder="请填写客户名称" />
+                            <input   ng-model="addApp.CENTRAL_DATA.NAME1" name="NAME1" type="text" value="" ng-readonly="true" ng-show="!over"/>
+                            <span  class="errTip ng-hide" ng-show="myForm.NAME1.$error.remote||myForm.KTOKD.$error.remote">客户名称已存在！</span>
+                            <span  class="errTip ng-hide" ng-show="myForm.NAME1.$dirty && myForm.NAME1.$error.required">必填</span>
+                            <span  class="errTip ng-hide" ng-show="myForm.NAME1.$dirty && myForm.NAME1.$error.maxlength">最长80字符</span>
+
+                        </li>
+                         <li class="tli" ng-hide="cusOver">
+                             <strong>新客户名称：</strong>
+                             <input     remote-validation already="old" ng-maxlength="80" ng-model="addApp.CENTRAL_DATA.NEWNAME" name="NEWNAME" type="text" value="" new="true" param="NAME1:'{{addApp.CENTRAL_DATA.NEWNAME}}'" placeholder="" ng-change="cusNewName(addApp.CENTRAL_DATA.NEWNAME)"/>
+                             <span class="errTip ng-hide" ng-show="myForm.NEWNAME.$error.remote||myForm.KTOKD.$error.remote">客户名称已存在！</span>
+                             <span class="errTip ng-hide" ng-show="myForm.NEWNAME.$dirty||myForm.NEWNAME.$error.maxlength">最长80字符</span>
+                         </li>
+                        <li class="tli"><strong>客户名称(英文)：</strong>
+                            <input  ng-model="addApp.CENTRAL_DATA.NAME2" ng-Focus engname-Validation name="NAME2" type="text" value="" placeholder="请填写英文名称"/>
+                            <span class="errTip ng-hide" ng-show="myForm.NAME2.$dirty && myForm.NAME2.$error.engname">英文名称</span>
+
+                        </li>
+                        <li class="tli"><strong>币种：</strong><select  ng-model="addApp.CENTRAL_DATA.WAERS" name="WAERS">
+                            <option value="">请选择</option>
+                            <option value="CNY" selected>人民币</option>
+                            <option value="USD">美元</option>
+                            <option value="EUR">欧元</option>
+                        </select></li>
+                        <li class="tli"><strong>固定电话：</strong>
+                            <input  ng-model="addApp.CENTRAL_DATA.TELF1" space-Validation name="TELF1" type="text" value="" placeholder="请填写电话" ng-maxlength="16"/>
+                            <span class="errTip ng-hide" ng-show="myForm.TELF1.$dirty && myForm.TELF1.$error.maxlength">最长16位</span>
+                            <span class="errTip ng-hide" ng-show="myForm.TELF1.$dirty && myForm.TELF1.$error.spaceWord">不能有空格</span>
+
+                        </li>
+                        <li class="tli"><strong>手机号：</strong>
+                            <input  ng-model="addApp.CENTRAL_DATA.TELF2"  name="TELF2" space-Validation type="text" value="" placeholder="请填写手机号码" ng-maxlength="16"/>
+                            <span class="errTip ng-hide" ng-show="myForm.TELF2.$dirty && myForm.TELF2.$error.maxlength">最长16位</span>
+                            <span class="errTip ng-hide" ng-show="myForm.TELF2.$dirty && myForm.TELF2.$error.spaceWord">不能有空格</span>
+                        </li>
+                        <li class="tli"><strong>传真：</strong>
+                            <input  ng-model="addApp.CENTRAL_DATA.TELFX" space-Validation name="TELFX" type="text" value="" placeholder="请填写传真号" ng-maxlength="31"/>
+                            <span class="errTip ng-hide" ng-show="myForm.TELFX.$dirty && myForm.TELFX.$error.maxlength">最长31位</span>
+                            <span class="errTip ng-hide" ng-show="myForm.TELFX.$dirty && myForm.TELFX.$error.spaceWord">不能有空格</span>
+
+                        </li>
+                        <li class="tli">
+                            <strong><font ng-if="addApp.CENTRAL_DATA.STRAS">*</font>邮政编码：</strong><input ng-Focus postcode-Validation  ng-model="addApp.CENTRAL_DATA.PSTLZ" maxlength="6" name="PSTLZ" type="text" ng-required="addApp.CENTRAL_DATA.STRAS"  value="" placeholder="请填写邮政编码"/>
+                            <span class="errTip ng-hide" ng-show="myForm.PSTLZ.$dirty && myForm.PSTLZ.$error.postcode && !myForm.PSTLZ.$focused">6位数字</span>
+                            <span ng-if="addApp.CENTRAL_DATA.STRAS" class="errTip ng-hide" ng-show="myForm.PSTLZ.$dirty && myForm.PSTLZ.$error.required">有地址则邮编必填</span>
+
+                        </li>
+                        <!--<li class="tli" ng-if="Invoice">
+                            <strong><font>*</font>是否填写开票信息：</strong>
+                            <select  required ng-model="addApp.CENTRAL_DATA.ifkaipiao" name="ifkaipiao" ng-change="kpChange(addApp.CENTRAL_DATA.ifkaipiao)">
+                                <option value="">请选择</option>
+                                <option value="是">是</option>
+                                <option value="否">否</option>
+                            </select>
+                            <span class="errTip ng-hide" ng-show="myForm.ifkaipiao.$dirty && myForm.ifkaipiao.$error.required">必填</span>
+
+                        </li>-->
+                        <div class="clear"></div>
+                        <li class="list_con">
+                            <strong>详细地址：</strong>
+                            <textarea ng-model="addApp.CENTRAL_DATA.STRAS" ng-maxlength="60" name="STRAS" value="" placeholder="请填写详细地址" ng-change="stras(addApp.CENTRAL_DATA.STRAS)"></textarea>
+                            <span class="errTip ng-hide" ng-show="myForm.STRAS.$dirty && myForm.STRAS.$error.maxlength">最多60字符</span>
+
+                        </li>
+                        <li>
+                            <strong><font>*</font>所在地区：</strong>
+                            <select ng-model="countrySel" name="countrySel" required  ng-options="c.TITLE for c in countryData" ng-change="countryChange()">
+                                <option value="">--请选择--</option>
+                            </select>
+                            <span class="errTip ng-hide" ng-show="myForm.countrySel.$dirty && myForm.countrySel.$error.required">必填</span>
+
+                            <select ng-model="provinceSel" name='provinceSel' ng-required="countrySel.PROVINCE.length"  ng-show="countrySel.PROVINCE.length" ng-change="citySel=''"  ng-options="p.TITLE for p in countrySel.PROVINCE">
+                                <option value="">--请选择--</option>
+                            </select>
+                            <span class="errTip ng-hide" ng-show="myForm.provinceSel.$dirty && myForm.provinceSel.$error.required">必填</span>
+
+                            <select ng-model="citySel" name="citySel" ng-required="provinceSel.CITY.length" ng-show="provinceSel.CITY.length" ng-options="c.TITLE for c in provinceSel.CITY">
+                                <option value="">--请选择--</option>
+                            </select>
+                            <span class="errTip ng-hide" ng-show="myForm.citySel.$dirty && myForm.citySel.$error.required">必填</span>
+
+                        </li>
+                    </ul>
+                    <div class="gerSub">
+                        <a href="index.html#/customerList" ng-hide="over">返回</a>
+                        <a href="index.html#/index" ng-show="over">返回</a>
+                        <button ng-click="addData('addApplication','save')" class="subSave">保存</button>
+                        <button ng-click="addData('addApplication','next')" class="subSave">下一步</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="ng-hide" ng-show="ht.activeTab == 2">
+            <div class="generForm">
+                <form novalidate name="linkForm">
+                    <div class="addTable">
+                        <h4 class="genH4">客户联系人</h4>
+                        <table>
+                            <tr>
+                                <th>姓名</th>
+                                <th>电话</th>
+                                <th>职位</th>
+                                <th>岗位</th>
+                                <th>通讯地址</th>
+                                <th><a href="javascript:;" ng-click="coustomerAdd('addLink')" title="添加" class="btnAdd"></a></th>
+                            </tr>
+                            <tr ng-repeat="list in addLinkList" class="list">
+                                <td>
+                                    <input  ng-model="list.NAME1" type="text" value="" />
+                                </td>
+                                <td ng-class="linkForm['TELF1'+$index].$dirty &&  linkForm['TELF1'+$index].$invalid? 'hasErrTip' : ''">
+                                    <input  name="TELF1{{$index}}"  ng-model="list.TELF1"  type="text" value="" ng-maxlength="16"/>
+                                    <p class="errTip" ng-if="linkForm['TELF1'+$index].$dirty && linkForm['TELF1'+$index].$invalid">最多16位</p>
+                                </td>
+                                <td>
+                                    <input ng-model="list.TITEL_AP" type="text" value="" />
+                                </td>
+                                <td>
+                                    <input ng-model="list.ABTPA" type="text" value="" />
+                                </td>
+                                <td>
+                                    <input ng-model="list.PARAU" type="text" value="" />
+                                </td>
+                                <td><a href="javascript:;" ng-click="coustomerDel($index,'addLink')">删除</a></td>
+                            </tr>
+                        </table>
+                        <h4 class="genH4">常用收货地址</h4>
+                        <table>
+                            <tr>
+                                <th>收货人姓名</th>
+                                <th>手机号</th>
+                                <th>所在省</th>
+                                <th>所在市</th>
+                                <th>收货详细地址</th>
+                                <th>邮政编码</th>
+                                <th>身份证号</th>
+                                <th>备注</th>
+                                <th><a href="javascript:;" ng-click="coustomerAdd('addAddress')" title="添加" class="btnAdd"></a></th></tr>
+                            <tr ng-repeat="list in addAddressList">
+                                <td>
+                                    <input ng-model="list.ZCNEE_NAME"  type="text" value=""  />
+                                </td>
+                                <td ng-class="linkForm['ZCNEE_MOBILE'+$index].$dirty &&  linkForm['ZCNEE_MOBILE'+$index].$invalid? 'hasErrTip' : ''">
+                                    <input  name="ZCNEE_MOBILE{{$index}}"  ng-model="list.ZCNEE_MOBILE"  type="text" value="" ng-maxlength="16"/>
+                                    <p class="errTip" ng-if="linkForm['ZCNEE_MOBILE'+$index].$dirty && linkForm['ZCNEE_MOBILE'+$index].$invalid">最多16位</p>
+                                </td>
+                                <td>
+                                    <select ng-model="list.ZCNEE_PROVINCE" ng-change="list.ZCNEE_CITY=''" >
+                                        <option value="">--请选择--</option>
+                                        <option ng-repeat=" p in countryData2" value="{{p.PROVINCE.CODE}}">{{p.PROVINCE.TITLE}}</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select ng-model="list.ZCNEE_CITY"   >
+                                        <option value="">--请选择--</option>
+                                        <option ng-repeat=" c in getField(countryData2, 'CODE',list.ZCNEE_PROVINCE).CITY" value="{{c.CODE}}">{{c.TITLE}}</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input ng-model="list.ZCNEE_ADDRESS" maxlength="100" type="text" value="" ng-change="addrChange(list.ZCNEE_ADDRESS,$index)"/>
+                                </td>
+                                <td ng-class="linkForm['ZCNEE_PSTLZ'+$index].$dirty &&  linkForm['ZCNEE_PSTLZ'+$index].$error.postcode ? 'hasErrTip' : ''">
+                                    <input postcode-Validation name="ZCNEE_PSTLZ{{$index}}" ng-Focus ng-model="list.ZCNEE_PSTLZ"  type="text" value="" maxlength="6"/>
+                                    <p class="errTip" ng-if="linkForm['ZCNEE_PSTLZ'+$index].$dirty && linkForm['ZCNEE_PSTLZ'+$index].$error.postcode&&!linkForm['ZCNEE_PSTLZ'+$index].$focused">6位数字</p>
+                                </td>
+                                <td ng-class="linkForm['ZCNEE_CARD'+$index].$dirty &&  linkForm['ZCNEE_CARD'+$index].$error.cardnum ? 'hasErrTip' : ''">
+                                    <input card-Validation name="ZCNEE_CARD{{$index}}" ng-Focus ng-model="list.ZCNEE_CARD"  type="text" value="" maxlength="18"/>
+                                    <p class="errTip" ng-if="linkForm['ZCNEE_CARD'+$index].$dirty && linkForm['ZCNEE_CARD'+$index].$error.cardnum&&!linkForm['ZCNEE_CARD'+$index].$focused">15或18位身份证号</p>
+                                </td>
+                                <td>
+                                    <input ng-model="list.ZCNEE_MEMO"  type="text" value="" />
+                                </td>
+                                <td><a href="javascript:;" ng-click="coustomerDel($index,'addAddress')">删除</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="gerSub">
+                        <a href="index.html#/customerList" ng-hide="over">返回</a>
+                        <a href="index.html#/index" ng-show="over">返回</a>
+                        <button ng-click="addData('link','save')" class="subSave">保存</button>
+                        <button ng-click="addData('link','next')" class="subSave">下一步</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <div class="ng-hide" ng-show="ht.activeTab ==3">
+            <div class="generForm">
+                <form novalidate name="modelForm">
+                    <ul class="noMargin">
+                        <!--<li class="tli">
+                            <strong>客户名称：</strong><span ng-bind="processName"></span>
+                            &lt;!&ndash;<input type="hidden" ng-init="addReg.REGISTER_DATA.processId=processId" ng-model="addInvo.BANK_DATA.processId" value="{{processId}}"/>&ndash;&gt;
+                        </li>-->
+                        <li class="tli"><strong>客户名称：</strong><input ng-readonly="true" ng-model="processName"  type="text" value="" placeholder=""/></li>
+
+                        <li class="tli"><strong>开票名称：</strong>
+                            <input  ng-model="addInvo.BANK_DATA.KOINH" name="KOINH" type="text" value="" placeholder=""/>
+                        </li>
+                        <li class="tli"><strong><font ng-show="addInvo.BANK_DATA.KOINH">*</font>是否一般纳税人：</strong>
+                            <select  ng-model="addInvo.BANK_DATA.BKONT" name="BKONT" ng-required="addInvo.BANK_DATA.KOINH" ng-change="bkont(addInvo.BANK_DATA.BKONT)"><option value="">请选择</option><option value="是">是</option><option value="否">否</option></select>
+                            <span class="errTip ng-hide" ng-show="modelForm.BKONT.$dirty && modelForm.BKONT.$error.required">必填</span>
+
+                        </li>
+                        <li class="tli"><strong><font ng-show="reMust">*</font>纳税人识别号：</strong>
+                            <input  ng-model="addInvo.BANK_DATA.STCEG" ng-Focus ratnum-Validation name="STCEG"   type="text" ng-required="reMust" value="" placeholder="" />
+                            <span class="errTip ng-hide" ng-show="modelForm.STCEG.$dirty && modelForm.STCEG.$error.required">必填</span>
+                            <span class="errTip ng-hide" ng-show="modelForm.STCEG.$dirty && modelForm.STCEG.$error.ratcode &&!modelForm.STCEG.$focused">15或18位数字+字母</span>
+
+                        </li>
+                        <li class="tli"><strong><font ng-show="reMust">*</font>电话：</strong>
+                            <input  ng-model="addInvo.BANK_DATA.BKREF" ng-maxlength="18" name="BKREF" type="text" value="" placeholder="" ng-required="reMust"/>
+                            <span class="errTip ng-hide" ng-show="modelForm.BKREF.$dirty && modelForm.BKREF.$invalid">最多18位</span>
+                            <span class="errTip ng-hide" ng-show="modelForm.BKREF.$dirty && modelForm.BKREF.$error.required">必填</span>
+
+                        </li>
+                       <!-- <li class="tli"><strong><font>*</font>电话：</strong>
+                            <input  ng-model="addInvo.BANK_DATA.BKREF" ng-Focus telphone-Validation name="BKREF" type="text" value="" placeholder="" ng-required="addInvoMust"/>
+                            <span class="errTip ng-hide" ng-show="modelForm.BKREF.$dirty && modelForm.BKREF.$error.telphonenum&&!modelForm.BKREF.$focused">格式不正确</span>
+                            <span class="errTip ng-hide" ng-show="modelForm.BKREF.$dirty && modelForm.BKREF.$error.required">必填</span>
+
+                        </li>-->
+                        <li class="tli"><strong><font ng-show="reMust">*</font>开户行：</strong>
+                            <input  ng-model="addInvo.BANK_DATA.BRNCH"  maxlength="40" ng-Focus name="BRNCH" type="text" value="" placeholder="" ng-required="reMust"/>
+                            <span class="errTip ng-hide" ng-show="modelForm.BRNCH.$dirty && modelForm.BRNCH.$error.required">必填</span>
+                            <span class="errTip ng-hide" ng-show="modelForm.BRNCH.$dirty && modelForm.BRNCH.$invalid&&!modelForm.BRNCH.$focused">0-40位字符</span>
+
+                        </li>
+                        <li class="tli"><strong><font ng-show="reMust">*</font>账号：</strong>
+                            <input  ng-model="addInvo.BANK_DATA.BANKA" bank-Validation name="BANKA" ng-Focus type="text" value="" placeholder="" ng-required="reMust" maxlength="30"/>
+                            <span class="errTip ng-hide" ng-show="modelForm.BANKA.$dirty && modelForm.BANKA.$error.banknum&&!modelForm.BANKA.$focused">0-30位数字</span>
+                            <span class="errTip ng-hide" ng-show="modelForm.BANKA.$dirty && modelForm.BANKA.$error.required">必填</span>
+                        </li>
+                        <div class="clear"></div>
+                        <li class="list_con"><strong><font ng-show="reMust">*</font>地址：</strong>
+                            <textarea ng-model="addInvo.BANK_DATA.STRAS" name="STRAS" type="text" value="" ng-Focus maxlength="50" placeholder="" ng-required="reMust"></textarea>
+                            <span class="errTip ng-hide" ng-show="modelForm.STRAS.$dirty && modelForm.STRAS.$error.required">必填</span>
+                            <span class="errTip ng-hide" ng-show="modelForm.STRAS.$dirty && modelForm.STRAS.$invalid&&!modelForm.STRAS.$focused">0-50字符</span>
+
+                        </li>
+                    </ul>
+                    <div  class="gerSub">
+                        <a href="index.html#/customerList" ng-hide="over">返回</a>
+                        <a href="index.html#/index" ng-show="over">返回</a>
+                        <button ng-click="addData('addInvoice','save')" class="subSave" >保存</button>
+                        <button ng-click="addData('addInvoice','next')" class="subSave" >下一步</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="ng-hide" ng-show="ht.activeTab ==4">
+            <div class="generForm">
+                <form novalidate name="regForm">
+                    <ul class="noMargin">
+                        <li class="tli"><strong>客户名称：</strong><input ng-readonly="true" ng-model="processName" type="text" value="" placeholder=""/></li>
+                        <li class="tli">
+                            <strong><font ng-show="cusMoney">*</font>机构类型：</strong>
+                            <select  ng-change="hide()" ng-required="cusMoney" ng-model="addReg.REGISTER_DATA.ZORG_TYPE" name="ZORG_TYPE">
+                                <option value="">请选择</option>
+                                <option value="企业法人">企业法人</option>
+                                <option value="国家机关法人">国家机关法人</option>
+                                <option value="事业单位法人">事业单位法人</option>
+                                <option value="社会团体法人">社会团体法人</option>
+                                <option value="其他机构">其他机构</option>
+                            </select>
+                            <span class="errTip ng-hide" ng-show="regForm.ZORG_TYPE.$dirty && regForm.ZORG_TYPE.$error.required">必填</span>
+
+                        </li><!--当是企业客户的时候才可以手动输入组织机构代码-->
+                        <li  class="tli">
+                            <strong><font ng-if="require">*</font>企业执照号：</strong>
+                            <input   ng-if="hideaddReg" ng-required="require" checkzorg-Validation space-Validation ng-model="addReg.REGISTER_DATA.ZORG_CODE" name="ZORG_CODE"  param="ZORG_CODE:'{{addReg.REGISTER_DATA.ZORG_CODE}}'" type="text" value="" placeholder="" />
+                            <span class="errTip" ng-if="hideaddReg" ng-show="regForm.ZORG_CODE.$error.remoteorg&& !regForm.ZORG_CODE.$focused">{{orgType}}中此企业执照号已存在！</span>
+
+                            <span class="errTip  ng-hide" ng-if="hideaddReg" ng-show="regForm.ZORG_CODE.$dirty && regForm.ZORG_CODE.$error.required">必填</span>
+                            <span class="errTip  ng-hide" ng-if="hideaddReg" ng-show="regForm.ZORG_CODE.$dirty && regForm.ZORG_CODE.$error.spaceWord">不能有空格</span>
+
+                            <!--
+                                                        <span class="errTip ng-hide" ng-if="!hideaddReg" ng-show="regForm.ZORG_CODE.$dirty && regForm.ZORG_CODE.$error.onlynum&& !regForm.ZORG_CODE.$focused">1-13位数字、字母、横杠</span>
+                            -->
+                            <input  name="ZORG_CODE" ng-readonly="true"   ng-if="!hideaddReg" ng-model="addReg.REGISTER_DATA.ZORG_CODE" type="text" value="" placeholder="自动生成"/>
+                            <span>(机构代码/注册码)</span>
+                        </li>
+<!--
+                        <li class="tli"><strong>企业营业执照注册码：</strong><input  ng-model="addReg.REGISTER_DATA.ZBUSI_CODE" type="text" value="" placeholder=""/></li>
+-->
+                        <li class="tli"><strong><font ng-if="require">*</font>住所(经营场所)：</strong><input ng-required="require"  ng-model="addReg.REGISTER_DATA.ZBUSI_ADDR" name="ZBUSI_ADDR" type="text" value="" placeholder=""/>
+                            <span class="errTip ng-hide" ng-show="regForm.ZBUSI_ADDR.$dirty && regForm.ZBUSI_ADDR.$error.required">必填</span>
+
+                        </li>
+                        <li class="tli"><strong><font ng-if="require">*</font>法定代表人姓名：</strong><input ng-required="require" ng-Focus name="ZLEGAL_NAME" ng-maxlength="20"  ng-model="addReg.REGISTER_DATA.ZLEGAL_NAME" type="text" value="" placeholder=""/>
+                            <span class="errTip ng-hide" ng-show="regForm.ZLEGAL_NAME.$dirty && regForm.ZLEGAL_NAME.$error.required">必填</span>
+                            <span class="errTip ng-hide" ng-show="regForm.ZLEGAL_NAME.$dirty && regForm.ZLEGAL_NAME.$invalid&& !regForm.ZLEGAL_NAME.$focused">最长20字符</span>
+
+                        </li>
+                        <li class="tli"><strong><font ng-if="require">*</font>成立日期：</strong><input ng-required="require"  ng-model="addReg.REGISTER_DATA.ZFOUND_DATE" name="ZFOUND_DATE" class="Wdate" date-Picker  type="text" value="" placeholder=""/>
+                            <span class="errTip ng-hide" ng-show="regForm.ZFOUND_DATE.$dirty && regForm.ZFOUND_DATE.$error.required">必填</span>
+
+                        </li>
+                        <li class="tli"><strong>注册资本：</strong><input  ng-model="addReg.REGISTER_DATA.ZREGIST" type="text" value="" placeholder=""/></li>
+                        <li class="tli"><strong>实收资本：</strong><input  ng-model="addReg.REGISTER_DATA.ZINCOME" type="text" value="" placeholder=""/></li>
+                        <li class="tli">
+                            <strong>公司类型：</strong>
+                            <select  ng-model="addReg.REGISTER_DATA.ZCOM_TYPE">
+                                <option value="">请选择</option>
+                                <option value="有限责任公司">有限责任公司</option>
+                                <option value="股份有限责任公司">股份有限责任公司</option>
+                                <option value="个人独资企业">个人独资企业</option>
+                                <option value="合伙企业">合伙企业</option>
+                                <option value="其他">其他</option>
+                            </select>
+                        </li>
+                        <li class="tli">
+                            <strong>税务登记注册类型：</strong>
+                            <select ng-disabled="regRready" ng-model="addReg.REGISTER_DATA.ZTAX_TYPE">
+                                <option value="">请选择</option>
+                                <option value="私营有限责任公司">私营有限责任公司</option>
+                                <option value="其他有限责任公司">其他有限责任公司</option>
+                                <option value="其他">其他</option>
+                            </select>
+                        </li>
+                        <div class="clear"></div>
+                        <li class="tli"><strong>组织机构有效期起：</strong><input  class="Wdate" date-Picker  ng-model="addReg.REGISTER_DATA.ZREGIST_BEGIN" type="text" value="" placeholder=""/></li>
+                        <li class="tli"><strong>组织机构有效期止：</strong><input  class="Wdate" date-Picker ng-model="addReg.REGISTER_DATA.ZREGIST_END" type="text" value="" placeholder=""/></li>
+                        <li class="tli"><strong>营业期限起：</strong><input  class="Wdate" date-Picker  ng-model="addReg.REGISTER_DATA.ZBUSI_BEGIN" type="text" value="" placeholder=""/></li>
+                        <li class="tli"><strong>营业期限止：</strong><input  class="Wdate" date-Picker ng-model="addReg.REGISTER_DATA.ZBUSI_END" type="text" value="" placeholder=""/></li>
+
+                        <li class="clear"></li>
+                        <li class="formUpStyle" id="formUpStyle1">
+                            <strong><font ng-if="require">*</font>执照证件：</strong>
+                            <input uploadify btnname="上传附件"/>
+                            <div class="clear"></div>
+                            <div ng-repeat="list in pics">
+                                <div class='showImg' ng-if="list.ZFILETYPE=='10'"><img ng-src='{{list.ZFTP}}'/><span>{{list.ZFILE_NAME}}</span><span class='del' ng-if="over" style='margin-left: 5px' ng-click="picDel($index)">删除</span></div>
+                                <div class='showImg' ng-if="list.ZFILETYPE=='20'"><a target='_blank' href='{{list.ZFTP}}'>{{list.ZFILE_NAME}}</a><span class='del' ng-if="over" style='margin-left: 5px' ng-click="picDel($index)">删除</span></div>
+                            </div>
+                        </li>
+                       <!-- <li class="formUpStyle" id="formUpStyle2">
+                            <strong>税务登记证：</strong>
+                            <input uploadify btnname="上传税务登记证"/>
+                            <div class="clear"></div>
+                            <div ng-repeat="list in pics">
+                                <div class='showImg' ng-if="list.ZFILETYPE=='20'"><img ng-src='{{list.ZFTP}}'/></div>
+                            </div>
+                        </li>
+                        <li class="formUpStyle" id="formUpStyle3">
+                            <strong>组织机构证：</strong>
+                            <input uploadify btnname="组织机构代码证"/>
+                            <div class="clear"></div>
+                            <div ng-repeat="list in pics">
+                                <div class='showImg' ng-if="list.ZFILETYPE=='30'"><img ng-src='{{list.ZFTP}}'/></div>
+
+                            </div>
+                        </li>-->
+                    </ul>
+                    <div class="genTitle2">
+                        <div>
+                            <strong>提交审批原因</strong>
+                        </div>
+                    </div>
+                    <div class="applyCommit" style="margin-top: 0px;">
+                        <textarea class="applytext" ng-model="comment" placeholder="提交审批原因"></textarea>
+                    </div>
+                    <div class="gerSub">
+                        <a href="index.html#/customerList" ng-hide="over">返回</a>
+                        <a href="index.html#/index" ng-show="over">返回</a>
+                        <button ng-click="addData('addRegMessage','save')" class="subSave">保存</button>
+
+                        <button ng-click="addData('addRegMessage','update')" class="subSave">提交</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="warmingBox" class="dialog cusBox" title="" ng-include="'template/customer/warming.html'"></div>

@@ -1,0 +1,47 @@
+<div class="oluser">
+    <div class="generTitle">
+        <h3>在线用户</h3>
+    </div>
+    <div class="genSearch">
+        <div class="olbox">
+            <div class="olSquare alluserBtn"></div>
+            <span class="olTitle">总人数:<span class="olHighlight all">{{allCount}}</span>人</span>
+        </div>
+        <div class="olbox">
+            <div class="olSquare oluserBtn"></div>
+            <span class="olTitle">实时在线人数:<span class="olHighlight online">{{onlineCount}}</span>人</span>
+        </div>
+        <div class="olbox">
+            <div class="olSquare refreshBtn"></div>
+            <span class="olTitle">离线人数:<span class="olHighlight offline">{{offlineCount}}</span>人</span>
+        </div>
+    </div>
+    <div class="item"></div>
+    <a class="olBtn oluserBtn" href="javascript:;" ng-click="online_only()">在线用户</a>
+    <a class="olBtn alluserBtn" href="javascript:;" ng-click="all_users()">全部用户</a>
+    <a class="olBtn refreshBtn" href="javascript:;" ng-click="refresh()">手动刷新</a>
+    <table class="bluestyle table">
+        <thead>
+        <tr>
+            <th width="14%">用户名</th>
+            <th width="14%">姓名</th>
+            <th width="14%">部门</th>
+            <th width="24%">最近上线时间</th>
+            <th width="24%">最近下线时间</th>
+            <th width="10%">状态</th>
+        </tr>
+        </thead>
+        <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+        <tr class="messagelists" ng-repeat="list in dataList">
+            <td width="14%">{{list.login}}</td>
+            <td width="14%">{{list.name}}</td>
+            <td width="14%">{{list.orgname}}</td>
+            <td width="24%">{{list.logintime}}</td>
+            <td width="24%">{{list.logouttime}}</td>
+            <td width="10%">{{list.online && list.online === "online" ? "在线" : "离线"}}</td>
+        </tr>
+        <tr class="tip"><td colspan="5" rowspan="5">没有查询到用户</td></tr>
+        </tbody>
+    </table>
+    <msgpagination conf="paginationConf"></msgpagination>
+</div>

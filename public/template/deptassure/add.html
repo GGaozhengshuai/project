@@ -1,0 +1,93 @@
+<h3 class="genTitle genTitleBot"><em></em><span>部门担保申请</span></h3>
+<div class="cusCont">
+    <div class="generForm">
+        <form novalidate name="deptassureForm">
+            <ul>
+                <li class="tli">
+                    <strong>部门担保申请号：</strong>
+                    <input  ng-model="ORDER_DATA.code" ng-readonly="true" type="text" placeholder="系统自动生成"/>
+                </li>
+                <li class="tli">
+                    <strong>申请人部门：</strong>
+                    <input  ng-model="ORDER_DATA.orgname" ng-readonly="true" type="text" placeholder="申请人带出"/>
+                    <input  ng-model="ORDER_DATA.orgid" ng-hide="true" type="text" placeholder=""/>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>申请人：</strong>
+                    <input   ng-required="true" ng-model="ORDER_DATA.proposer" name="proposer" type="text" placeholder="" ng-click="proposerBox()" ng-readonly="true"/>
+                    <span class="errTip ng-hide" ng-show="deptassureForm.proposer.$dirty && deptassureForm.proposer.$error.required">必填</span>
+
+                </li>
+                <li class="tli"><strong>日期：</strong><input  ng-readonly="true" ng-model="ORDER_DATA.creatdate" type="text" placeholder=""/></li>
+               <!-- <li class="tli"><strong><font>*</font>关联单据类型：</strong>
+                    <select ng-model="ORDER_DATA.billtype" ng-required="true" name="billtype" ng-init="ORDER_DATA.billtype=''" ng-blur="bill(ORDER_DATA.billtype,ORDER_DATA.billno)" >
+                        <option value="">请选择</option>
+                        <option value="销售合同">销售合同</option>
+                        <option value="放货单">放货单</option>
+                        <option value="付款申请">付款申请</option>
+                    </select>
+                    <span class="errTip ng-hide" ng-show="deptassureForm.billtype.$dirty && deptassureForm.billtype.$error.required">必填</span>
+
+                </li>
+                <li class="tli"><strong><font>*</font>关联单据号：</strong>
+                    <input  ng-required="true" ng-model="ORDER_DATA.billno " name="billno" type="text" placeholder="" ng-blur="bill(ORDER_DATA.billtype,ORDER_DATA.billno)" maxlength="16"/>
+                    <span class="errTip ng-hide" ng-show="deptassureForm.billno.$dirty && deptassureForm.billno.$error.required">必填</span>
+
+                </li>-->
+                <li class="tli"><strong><font>*</font>销售合同号：</strong>
+                    <input ng-required="true"  ng-model="ORDER_DATA.contractno" name="contractno" type="text" placeholder="选择销售合同号" ng-click="contractBox()"/>
+                    <span class="errTip ng-hide" ng-show="deptassureForm.contractno.$dirty && deptassureForm.contractno.$error.required">必填</span>
+
+                </li>
+                <li class="tli"><strong>销售人员名称：</strong>
+                    <input  ng-readonly="true" ng-disabled="true" ng-model="ORDER_DATA.salesname" name="salesname" type="text" placeholder=""/>
+                    <!--<span class="errTip ng-hide" ng-show="deptassureForm.salesname.$dirty && deptassureForm.salesname.$error.required">必填</span>-->
+
+                </li>
+                <li class="tli"><strong>销售部门：</strong><input ng-disabled="true" ng-readonly="true" name="salesorgname" ng-model="ORDER_DATA.salesorgname" type="text" placeholder=""/>
+                    <!--<span class="errTip ng-hide" ng-show="deptassureForm.salesorgname.$dirty && deptassureForm.salesorgname.$error.required">必填</span>-->
+                </li>
+                <li class="tli">
+                    <strong>事业部：</strong><input ng-disabled="true" type="text" ng-readonly="true" name="salesorgname2" ng-model="ORDER_DATA.salesorgname2"/>
+                    <!--<span class="errTip ng-hide" ng-show="deptassureForm.salesorgname2.$dirty && deptassureForm.salesorgname2.$error.required">必填</span>-->
+                </li>
+                <li class="tli"><strong>客户名称：</strong><input ng-disabled="true" ng-readonly="true" ng-model="ORDER_DATA.stomer" name="stomer" type="text" placeholder=""/>
+                    <!--<span class="errTip ng-hide" ng-show="deptassureForm.stomer.$dirty && deptassureForm.stomer.$error.required">必填</span>-->
+
+                </li>
+                <li class="tli"><strong>合同金额：</strong><input type="number" ng-disabled="true" ng-model="ORDER_DATA.contractmoney"/></li>
+                <li class="tli"><strong><font>*</font>担保金额：</strong>
+                    <input ng-required="true" ng-Focus keepnumber-Validation  ng-model="ORDER_DATA.assuremoney" name="assuremoney" type="text" placeholder="" ng-disabled="!ORDER_DATA.contractno" ng-blur="assureChange(ORDER_DATA.assuremoney)"/>
+                    <span class="errTip ng-hide" ng-show="deptassureForm.assuremoney.$dirty && deptassureForm.assuremoney.$error.required">必填</span>
+                    <span class="errTip ng-hide" ng-show="deptassureForm.assuremoney.$dirty && deptassureForm.assuremoney.$error.keepnum && !deptassureForm.assuremoney.$focused">最多两位小数的正数</span>
+
+                </li>
+                <li class="tli"><strong><font>*</font>担保比例：</strong><input ng-Focus keepnumber-Validation type="text" ng-required="true" ng-model="ORDER_DATA.assurebl" name="assurebl" ng-disabled="!ORDER_DATA.contractno" ng-blur="assurebl(ORDER_DATA.assurebl)"/>
+                    <span class="errTip ng-hide" ng-show="deptassureForm.assurebl.$dirty && deptassureForm.assurebl.$error.required">必填</span>
+                    <span class="errTip ng-hide" ng-show="deptassureForm.assurebl.$dirty && deptassureForm.assurebl.$error.keepnum && !deptassureForm.assurebl.$focused">最多两位小数的正数</span>
+                </li>
+                <div class="clear"></div>
+                <li class="list_con"><strong><font>*</font>备注：</strong>
+                    <textarea maxlength="500" ng-model="ORDER_DATA.remark" name="remark" required placeholder="500字符"></textarea>
+                    <span class="errTip ng-hide" ng-show="deptassureForm.remark.$dirty && deptassureForm.remark.$error.required">必填</span>
+                    <span class="errTip ng-hide" ng-show="deptassureForm.remark.$dirty && deptassureForm.remark.$error.maxlength">最多500字符</span>
+
+                </li>
+                <li class="tli"><strong>部门担保额度：</strong><input ng-disabled="true" ng-readonly="true" ng-model="ORDER_DATA.deptlimit" type="text" placeholder=""/></li>
+                <li class="tli"><strong>部门担保已使用额度：</strong><input ng-disabled="true" ng-readonly="true" ng-model="ORDER_DATA.deptused" type="text" placeholder=""/></li>
+                <li class="tli"><strong>部门担保剩余额度：</strong><input ng-disabled="true"  ng-readonly="true" ng-model="ORDER_DATA.deptunused" type="text" placeholder=""/></li>
+            </ul>
+            <div class="gerSub">
+                <a href="index.html#/deptassureOrder">返回</a>
+                <button ng-click="addData(ORDER_DATA,'save')" class="subSave">保存</button>
+                <button ng-click="addData(ORDER_DATA,'updata')" class="subApply">提交</button>
+             </div>
+        </form>
+    </div>
+</div>
+<div id="proposerBox" class="dialog cusBox" title="选择人员" ng-include="'template/deptassure/userBox.html'" ng-controller="proposerBoxCtrl"></div>
+<div id="contractInforBox" class="dialog cusBox" title="选择人员" ng-include="'template/deptassure/contractInfor.html'" ng-controller="contractInforCtrl"></div>
+
+
+
+

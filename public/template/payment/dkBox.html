@@ -1,0 +1,47 @@
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td style="width: 75%">
+                    <strong style="width:68px;">流水号</strong>
+                    <input style="width:125px;" class="text" type="text" name="ZSQNO"  ng-init="ZSQNO=''" ng-model="$parent.ZSQNO" placeholder="请输入流水号">
+
+                    <strong style="margin-left:20px;width:115px;">供应商订单号</strong>
+                    <input style="width:125px;" class="text" type="text" name="ZZPO"  ng-init="ZZPO=''" ng-model="$parent.ZZPO" placeholder="请输入供应商订单号">
+                </td>
+                <td>
+                    <input type="button" value="查询" class="searchbtn2 no-mt" ng-click="search()">
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<table class="orangestyle table">
+    <thead>
+    <tr>
+        <th>流水号</th>
+        <th>供应商订单号</th>
+        <th>原始金额</th>
+        <th>可用冲抵金额</th>
+       <!-- <th>采购订单号</th>-->
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in dataList" ng-if="list.left > 0">
+        <td>{{list.ZLSH}}</td>
+        <td>{{list.ZZPO}}</td>
+        <td>{{list.ZJE.toFixed(2)}}</td>
+        <td>{{list.left.toFixed(2)}}</td>
+       <!-- <td>{{list.ZSQNO}}</td>-->
+        <td>
+            <a href="javascript:;" ng-click="cusSelect(list.ZLSH,list.ZZPO,list.left.toFixed(2),list.ZJE.toFixed(2))">选择</a>
+        </td>
+    </tr>
+    <tr ng-show="dataList.length > 0">
+        <td colspan="4">注释：可用冲抵金额为0的数据不显示</td>
+    </tr>
+    <tr class="tip"><td colspan="5">没有查到流水号</td></tr>
+    </tbody>
+</table>
+<pagination conf="paginationConf" manual="true"></pagination>

@@ -1,0 +1,117 @@
+
+<div class="item">补全成本分析</div>
+<form name="myForm">
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>销售合同号</strong>
+                    <input class="text" type="text" name="contractno"  ng-init="contractno=''" ng-model="contractno" placeholder="请输入合同编号">
+                </td>
+            </tr>
+            <td>
+                <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+            </td>
+            </tr>
+        </table>
+    </div>
+
+
+<div class="genTitle2">
+    <div>
+        <strong>成本分析</strong>
+    </div>
+</div>
+<div class="addTable">
+    <table>
+        <tr>
+            <th>税率</th>
+            <th>合同金额<br>（含税）</th>
+            <th>销售折抵<br>金额</th>
+            <th>订货成本</th>
+            <th>外采成本</th>
+            <th>采购折抵<br>金额</th>
+            <th>自提费用</th>
+            <th>现金折扣</th>
+            <th>其他费用</th>
+            <!--<th>项目费用</th>-->
+            <th>配套采购</th>
+            <th>第三方服务</th>
+        </tr>
+        <tr ng-repeat="list in cbfxObj" class="list">
+            <td>{{list.thetype}}%
+                <input ng-disabled="true" ng-model="list.thetype" type="hidden"/>
+                <input ng-disabled="true" ng-model="list.contractId" type="hidden"/>
+            </td>
+            <td>
+                <input ng-disabled="true" ng-model="list.money" type="text"/>
+            </td>
+            <td>
+                <input ng-disabled="true" ng-model="list.salerebate" type="text"/>
+            </td>
+            <td>
+                <input ng-Focus numtwo-Validation name="orderscost{{$index}}" ng-disabled="ifcbfxCy" ng-model="list.orderscost" type="text"/>
+                <p class="errTip" ng-if="cbfxForm['orderscost'+$index].$dirty && cbfxForm['orderscost'+$index].$error.numtwo&&!cbfxForm['orderscost'+$index].$focused ">请输入非负数</p>
+            </td>
+            <td>
+                <input ng-Focus numtwo-Validation name="outorderost{{$index}}" ng-disabled="ifcbfxCy"  ng-model="list.outorderost" type="text"/>
+                <p class="errTip" ng-if="cbfxForm['outorderost'+$index].$dirty && cbfxForm['outorderost'+$index].$error.numtwo&&!cbfxForm['outorderost'+$index].$focused ">请输入非负数</p>
+            </td>
+            <td>
+                <input ng-Focus numtwo-Validation name="purchaserebate{{$index}}" ng-disabled="ifcbfxCy" ng-model="list.purchaserebate" type="text"/>
+                <p class="errTip" ng-if="cbfxForm['purchaserebate'+$index].$dirty && cbfxForm['purchaserebate'+$index].$error.numtwo&&!cbfxForm['purchaserebate'+$index].$focused ">请输入非负数</p>
+            </td>
+            <td>
+                <input ng-Focus numtwo-Validation name="selfpickup{{$index}}" ng-disabled="ifcbfxCy" ng-model="list.selfpickup" type="text"/>
+                <p class="errTip" ng-if="cbfxForm['selfpickup'+$index].$dirty && cbfxForm['selfpickup'+$index].$error.numtwo&&!cbfxForm['selfpickup'+$index].$focused ">请输入非负数</p>
+            </td>
+            <td>
+                <input ng-Focus numtwo-Validation name="cashrebate{{$index}}" ng-disabled="ifcbfxCy" ng-model="list.cashrebate" type="text"/>
+                <p class="errTip" ng-if="cbfxForm['cashrebate'+$index].$dirty && cbfxForm['cashrebate'+$index].$error.numtwo&&!cbfxForm['cashrebate'+$index].$focused ">请输入非负数</p>
+            </td>
+            <td>
+                <input ng-disabled="true" ng-model="list.other" type="text"/>
+            </td>
+            <td>
+                <input ng-required="true" numtwo-Validation name="mating{{$index}}" ng-disabled="ifcbfxCy || cpIf || zyfwIf" ng-model="list.mating" type="text"/>
+                <p class="errTip" ng-if="cbfxForm['mating'+$index].$dirty && cbfxForm['mating'+$index].$error.numtwo && !cbfxForm['selfpickup'+$index].$focused">非负数</p>
+                <p class="errTip" ng-if="cbfxForm['mating'+$index].$dirty && cbfxForm['mating'+$index].$error.required && !cbfxForm['selfpickup'+$index].$focused">必填</p>
+            </td>
+            <td>
+                <input ng-disabled="true" ng-init="list.third=0" ng-model="list.third" type="text"/>
+            </td>
+        </tr>
+    </table>
+</div>
+    <div class="genTitle2">
+        <div>
+            <strong>清单物料</strong>
+        </div>
+    </div>
+    <div class="addTable">
+        <table class="tab_data">
+            <thead class="tab_header">
+            <tr>
+                <th>内部物料编码</th>
+                <th>数量</th>
+                <th>供应商订单号</th>
+                <th>单个物料成本</th>
+            </tr>
+            </thead>
+            <tbody class="tab_body">
+            <tr ng-repeat="list in dataList">
+                <td>{{list.goodscode}}</td>
+                <td>{{list.count}}</td>
+                <td>{{list.supplierorderid}}</td>
+                <td><input ng-disabled="false" ng-model="list.purchaseprice" type="text"/></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+<!--<div ng-if="cbfxObj.t2.length > 0 ? true : false"></div>-->
+<div class="gerSub">
+<button ng-click="addData()" class="subApply" >保存</button>
+</div>
+</form>
+

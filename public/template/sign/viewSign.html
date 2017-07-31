@@ -1,0 +1,49 @@
+<h3 class="genTitle"><em></em>
+  <span>签报单</span>
+  <span ng-if="activeTab == 2">审批详情</span>
+</h3>
+<ul class="generNav">
+  <li ng-class="{active:activeTab == 1}"><a href="javascript:;" ng-mousedown='htTab(1)'>签报单</a></li>
+  <li ng-class="{active:activeTab == 2}"><a href="javascript:;" ng-mousedown='htTab(2)'>审批详情</a></li>
+</ul>
+<div id="mainView">
+    <div ng-if="activeTab == 1">
+        <div  class="czAddBtn"><a target="_blank" href="/print/printht.html?uri=/sign/printview&_id={{ORDER_DATA._id}}&code={{ORDER_DATA.code}}" class="viewBtn">打印</a></div>
+
+        <div class="viewTable ng-scope">
+        <ul>
+            <li><strong>签报单号：</strong><span>{{ORDER_DATA.code}}</span></li>
+            <li><strong>签报人：</strong><span>{{ORDER_DATA.signpeople}}</span></li>
+            <li><strong>签报类型：</strong><span>{{ORDER_DATA.signtype}}</span></li>
+            <li><strong>签报部门：</strong><span>{{ORDER_DATA.signdept}}</span></li>
+            <li><strong>金额：</strong><span>{{ORDER_DATA.money | number:2}}</span></li>
+            <li><strong>申请人：</strong><span>{{ORDER_DATA.creator}}</span></li>
+            <li><strong>申请日期：</strong><span>{{ORDER_DATA.createdate| date: 'yyyy-MM-dd '}}</span></li>
+            <li class="list_con"><strong class="fl">会签单位：</strong><pre class="pre"><span>{{ORDER_DATA.signunit}}</span></pre></li>
+            <li class="list_con"><strong class="fl">签报标题：</strong><pre class="pre"><span>{{ORDER_DATA.signtitle}}</span></pre></li>
+            <li class="list_con"><strong class="fl">签报内容：</strong><pre class="pre"><span>{{ORDER_DATA.signcontent}}</span></pre></li>
+        </ul>
+    </div>
+  </div>
+  <div class="applyLog" ng-if="activeTab == 2">
+    <table>
+      <thead>
+      <tr>
+        <th class="th1">审批人</th>
+        <th class="th2">审批时间</th>
+        <th class="th3">审批状态</th>
+        <th class="th4">审批意见</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="list in processlog">
+        <td>{{list.sender.name}}</td>
+        <td>{{list.createDate | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+        <td>{{list.operation}}</td>
+        <td>{{list.content.comment}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="clear"></div>
+</div>

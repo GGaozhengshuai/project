@@ -1,0 +1,53 @@
+<div class="item">LIC新建</div>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <div class="czAddBtn" style="float: left;">
+                    <div class="gerSuba">
+                    <a class="addContractbtn" href="javascript:;" ng-click="userAdd()">&#12288;&#12288;手动添加&#12288;&#12288;</a>
+                    <a class="distractBtn" href="javascript:;" ng-checked="checkAll" ng-click="optDel($index,'userLinkList')">&#12288;&#12288;&#12288;删除&#12288;&#12288;&#12288;</a>
+                    <a class="downloadmb" href="doc/licmb.xlsx" style="margin-left: 28px;">&#12288;&#12288;下载模版&#12288;&#12288;</a>
+                    <input class="updata" excle-Updata="{{excleConfW1}}" get-upload-callback="changeSalesList(uploadCallData)" ng-model="excleWlData"/>
+                    <button ng-click="addData()" ng-class="userLinkList == '' ? 'displaySub':'subSave'" ng-disabled="userLinkList == ''">保存</button>
+                </div>
+                </div>
+            </tr>
+        </table>
+    </div>
+<!--点击新建-->
+<div class="addTable" style="margin-top: 20px;">
+    <table>
+        <tr class="allist">
+            <th ><input type="checkbox" ng-model="checkAll" id="allcheck" ng-click="addNumber($event)"></th>
+            <th width="19%"><font>*</font>原厂物料编码</th>
+            <th width="19%"><font>*</font>库存数量</th>
+            <th width="19%"><font>*</font>激活码</th>
+            <th width="19%"><font>*</font>供应商订单号</th>
+            <th width="20%">华为分批次号</th>
+            <th width="4%">操作</th>
+        </tr>
+    <tdbody>
+        <form name="myForm">
+            <tr ng-repeat="list in userLinkList" class="list">
+                <td><span><input ng-click="checkDel($index)" class="checkBox" type="checkbox" ng-checked="checkAll"/></span></td>
+                <td>
+                    <input ng-model="list.mcode" type="text" value="mcode" required name="myForm"/>
+                </td>
+                <td>
+                    <input ng-model="list.stocknum" type="number" value="stocknum" required name="myForm"/>
+                </td>
+                <td>
+                    <input ng-model="list.lickey" type="text" value="lickey" required name="myForm"/>
+                </td>
+                <td>
+                    <input ng-model="list.sorder" type="text" value="sorder" required name="myForm" />
+                </td>
+                <td>
+                    <input ng-model="list.batchnum" type="text" value="batchnum"/>
+                </td>
+                <td><a href="javascript:;" ng-click="userDel($index,'userLinkList')">删除</a></td>
+            </tr>
+        </form>
+    </tdbody>
+</table>
+</div>

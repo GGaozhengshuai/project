@@ -1,0 +1,470 @@
+<h3 class="genTitle"><em></em><span>客户信用查看</span></h3>
+<ul class="generNav" ng-init="ht.activeTab = creditShow ? 1 : 2">
+    <li ng-class="{active:ht.activeTab == 1}" ng-show="creditShow" class="active"><a href="javascript:;" ng-mousedown="ht.activeTab = 1">客户信用查看</a></li>
+    <li ng-class="{active:ht.activeTab == 2}" ng-hide="creditShow && loading" ng-init="loading=true"><a href="javascript:;" ng-mousedown="ht.activeTab = 2">客户信用情况</a></li>
+    <li ng-class="{active:ht.activeTab == 3}" ng-show="creditShow"><a href="javascript:;" ng-mousedown="ht.activeTab = 3">审批详情</a></li>
+</ul>
+
+<div id="mainView">
+    <div class="viewTable ng-scope ng-hide" ng-show="ht.activeTab == 1&&creditShow">
+        <ul>
+            <li><strong>客户名称：</strong><span>{{ORDER_DATA.cusname}}</span></li>
+            <li><strong>客户编号：</strong><span>{{ORDER_DATA.cuscode}}</span></li>
+            <li><strong>客户类型：</strong><span>{{ORDER_DATA.custype}}</span></li>
+            <li><strong>业务类型：</strong><span>{{ORDER_DATA.type}}</span></li>
+            <li><strong>建议信用额度：</strong><span>{{ORDER_DATA.advicecredit | number : 2}}</span></li>
+            <li><strong>建议首付款比例：</strong><span>{{ORDER_DATA.jysfkbl}}</span></li>
+            <li><strong>建议账期：</strong><span>{{ORDER_DATA.suggestpayday}}</span></li>
+            <li><strong>第三方资信调查：</strong><span>{{ORDER_DATA.dsfzxdc}}</span></li>
+            <li class="list_con"><strong>授信申请理由及客户说明：</strong><span ng-bind-html="ORDER_DATA.reasonandcusint | trustHtml"></span></li>
+            <li><strong>评分汇总：</strong><span>{{ORDER_DATA.scoresummary}}</span></li>
+            <li class="list_con"><strong>财务资料：</strong><span><a ng-repeat="list in ORDER_DATA.cwzl" style="padding-right: 15px;" class="underLine" href="{{list.filePath}}">{{list.fileName}}</a></span></li>
+            <li class="list_con"><strong>资质证明：</strong><span><a ng-repeat="list in ORDER_DATA.zzzm" style="padding-right: 15px;" class="underLine" href="{{list.filePath}}">{{list.fileName}}</a></span></li>
+            <li class="list_con"><strong>担保资料：</strong><span><a ng-repeat="list in ORDER_DATA.dbzl" style="padding-right: 15px;" class="underLine" href="{{list.filePath}}">{{list.fileName}}</a></span></li>
+            <li class="list_con"><strong>其它资料：</strong><span><a ng-repeat="list in ORDER_DATA.qtzl" style="padding-right: 15px;" class="underLine" href="{{list.filePath}}">{{list.fileName}}</a></span></li>
+        </ul>
+        <div class="clear"></div>
+        <div class="addTable creditpfTable">
+            <table>
+                <tr>
+                    <th>序号</th>
+                    <th>评价指标名称</th>
+                    <th>细分值</th>
+                    <th>评分值</th>
+                    <th>评价标准</th>
+                    <th>评分</th>
+                </tr>
+                <tbody class="tbd_1">
+                <tr>
+                    <td rowspan="4">1</td>
+                    <td rowspan="4">客户交易对象等级性质</td>
+                    <td rowspan="4">6分</td>
+                    <td>6分（100%）</td>
+                    <td>交易对象或最终客户含有国际国内知名企业，且实际交易总金额≥1000万元</td>
+                    <td>
+                        <input name="khjydxdjxz" ng-model="ORDER_DATA.khjydxdjxz" class="radio" type="radio" ng-disabled="true" value="6"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>4.8分（80%）</td>
+                    <td>交易对象或最终客户含有国际国内知名企业或其分支机构及子公司，且实际交易总金额≥500万元</td>
+                    <td>
+                        <input name="khjydxdjxz" ng-model="ORDER_DATA.khjydxdjxz" class="radio" type="radio" ng-disabled="true" value="4.8"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>3.6分（60%）</td>
+                    <td>与国际国内知名企业或其分支机构及子公司有成功交易记录</td>
+                    <td>
+                        <input name="khjydxdjxz" ng-model="ORDER_DATA.khjydxdjxz" class="radio" type="radio" ng-disabled="true" value="3.6"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>1.8分（30%）</td>
+                    <td>与其他企业有过成功交易记录</td>
+                    <td>
+                        <input name="khjydxdjxz" ng-model="ORDER_DATA.khjydxdjxz" class="radio" type="radio" ng-disabled="true" value="1.8"/>
+                    </td>
+                </tr>
+                </tbody>
+                <tbody  class="tbd_2">
+                <tr>
+                    <td rowspan="3">2</td>
+                    <td rowspan="3">客户来源</td>
+                    <td rowspan="3">3分</td>
+                    <td>3分（100%）</td>
+                    <td>中标、生产厂商介绍、长期合作伙伴介绍等</td>
+                    <td>
+                        <input name="cussource" ng-model="ORDER_DATA.cussource" class="radio" type="radio" ng-disabled="true" value="3"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2分（66%）</td>
+                    <td>普通合作伙伴介绍等</td>
+                    <td>
+                        <input name="cussource" ng-model="ORDER_DATA.cussource" class="radio" type="radio" ng-disabled="true" value="2"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>1分（33%）</td>
+                    <td>陌生客户</td>
+                    <td>
+                        <input name="cussource" ng-model="ORDER_DATA.cussource" class="radio" type="radio" ng-disabled="true" value="1"/>
+                    </td>
+                </tr>
+                </tbody>
+                <tbody  class="tbd_3">
+                <tr>
+                    <td>3</td>
+                    <td>与对方高层是否熟识</td>
+                    <td>2分</td>
+                    <td>2分（100%）</td>
+                    <td>很熟悉，与对方交往密切，有私人友谊。有则加分，无则零分</td>
+                    <td>
+                        <input name="ydfgcsfss" ng-checked="ORDER_DATA.ydfgcsfss" class="radio" type="checkbox" ng-disabled="true"/>
+                    </td>
+                </tr>
+                </tbody>
+                <tbody class="tbd_4">
+                <tr>
+                    <td rowspan="2">4</td>
+                    <td rowspan="2">预期年交易额度</td>
+                    <td rowspan="2">2分</td>
+                    <td>2分（100%）</td>
+                    <td>500万≤预期年交易额度</td>
+                    <td>
+                        <input name="yqnjyed" ng-model="ORDER_DATA.yqnjyed" class="radio" type="radio" ng-disabled="true" value="2"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>1分（50%）</td>
+                    <td>预期年交易额度＜500万</td>
+                    <td>
+                        <input name="yqnjyed" ng-model="ORDER_DATA.yqnjyed" class="radio" type="radio" ng-disabled="true" value="1"/>
+                    </td>
+                </tr>
+                </tbody>
+                <tbody class="tbd_5">
+                <tr>
+                    <td rowspan="3">5</td>
+                    <td rowspan="3">行业口碑</td>
+                    <td rowspan="3">3分</td>
+                    <td>3分（100%）</td>
+                    <td>业内众所周知，行业口碑及履约情况非常好</td>
+                    <td>
+                        <input name="industryreputation" ng-model="ORDER_DATA.industryreputation" class="radio" ng-disabled="true" type="radio" value="3"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2分（66%）</td>
+                    <td>经熟悉客户介绍得知，行业口碑及履约情况比较较好</td>
+                    <td>
+                        <input name="industryreputation" ng-model="ORDER_DATA.industryreputation" class="radio" ng-disabled="true" type="radio" value="2"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>1分（33%）</td>
+                    <td>不知道对方的行业口碑或者行业口碑及履约情况一般</td>
+                    <td>
+                        <input name="industryreputation" ng-model="ORDER_DATA.industryreputation" class="radio" ng-disabled="true" type="radio" value="1"/>
+                    </td>
+                </tr>
+                </tbody>
+                <tbody class="tbd_6">
+                <tr>
+                    <td rowspan="3">6</td>
+                    <td rowspan="3">经营场所</td>
+                    <td rowspan="3">6分</td>
+                    <td>6分（100%）</td>
+                    <td>高档写字楼</td>
+                    <td>
+                        <input name="premises" ng-model="ORDER_DATA.premises" type="radio" class="radio" ng-disabled="true" value="6"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>4分（66%）</td>
+                    <td>自有资产</td>
+                    <td>
+                        <input name="premises" ng-model="ORDER_DATA.premises" type="radio" class="radio" ng-disabled="true" value="4"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2分（33%）</td>
+                    <td>其他办公条件</td>
+                    <td>
+                        <input name="premises" ng-model="ORDER_DATA.premises" type="radio" class="radio" ng-disabled="true" value="2"/>
+                    </td>
+                </tr>
+                </tbody>
+                <tbody class="tbd_7">
+                <tr>
+                    <td rowspan="3">7</td>
+                    <td rowspan="3">公司规模</td>
+                    <td rowspan="3">6分</td>
+                    <td>6分（100%）</td>
+                    <td>50人以上</td>
+                    <td>
+                        <input name="companysize" ng-model="ORDER_DATA.companysize" type="radio" class="radio" ng-disabled="true" value="6"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>4分（66%）</td>
+                    <td>30~50人</td>
+                    <td>
+                        <input name="companysize" ng-model="ORDER_DATA.companysize" type="radio" class="radio" ng-disabled="true" value="4"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2分（33%）</td>
+                    <td>30人以下</td>
+                    <td>
+                        <input name="companysize" ng-model="ORDER_DATA.companysize" type="radio" class="radio" ng-disabled="true" value="2"/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <ul>
+            <li><strong>经营场所：</strong><span>{{ORDER_DATA.jycs}}</span></li>
+            <li><strong>成立日期：</strong><span>{{ORDER_DATA.builddate | date:'yyyy-MM-dd'}}</span></li>
+            <li><strong>年检年份：</strong><span>{{ORDER_DATA.njnf}}</span></li>
+            <li><strong>是否一般纳税人：</strong><span>{{ORDER_DATA.isybnsr}}</span></li>
+            <li><strong>有分支机构：</strong><span>{{ORDER_DATA.branch}}</span></li>
+            <!--<li class="list_con"><strong>风控评估：</strong><span>{{filterRole ? (ORDER_DATA.khbz | cutfield:true:20:'...') : ORDER_DATA.khbz}}</span></li>-->
+            <li class="list_con"><strong>风控评估：</strong><span ng-bind-html="filterRole ? (ORDER_DATA.khbz| trustHtml | cutfield:true:20:'...') : ORDER_DATA.khbz | trustHtml"></span></li>
+            <li class="list_con"><strong>资质说明：</strong><span ng-bind-html="ORDER_DATA.explainqualification | trustHtml"></span></li>
+            <li><strong>授信额度：</strong><span>{{ORDER_DATA.creditmoney | number : 2}}</span></li>
+            <li><strong>信用天数：</strong><span>{{ORDER_DATA.days}}</span></li>
+            <li><strong>预付款比例（%）：</strong><span>{{ORDER_DATA.advancepayment}}</span></li>
+            <li><strong>信用状况：</strong><span>{{ORDER_DATA.xyzk}}</span></li>
+            <li><strong>信用等级：</strong><span>{{ORDER_DATA.xydj}}</span></li>
+            <li><strong>客户信用预警：</strong><span>{{ORDER_DATA.khxyyj}}</span></li>
+            <li class="list_con"><strong>附件：</strong><span><a ng-repeat="list in ORDER_DATA.xyxx" style="padding-right: 15px;" class="underLine" href="{{list.filePath}}">{{list.fileName}}</a></span></li>
+            <!--<li class="list_con"><strong>附件：</strong><span><a class="underLine" href="{{ORDER_DATA.xyxx}}">{{ORDER_DATA.xyxxname}}</a></span></li>-->
+        </ul>
+        <div class="clear"></div>
+        <div class="addTable viewTable">
+            <table>
+                <tr>
+                    <th>数据年份</th>
+                    <th>营业收入</th>
+                    <th>净资产</th>
+                    <th>资产负债率(%)</th>
+                    <th>实收资本</th>
+                    <th>净利润</th>
+                    <th>经营活动所产生<br>的现金流量净值</th>
+                    <th>销售毛利率(%)</th>
+                    <th>总资产周转率(%)</th>
+                    <!--<th><a href="javascript:;" ng-click="userAdd('list1')">添加</a></th>-->
+                </tr>
+                <tr ng-repeat="list in ORDER_DATA.financialdata">
+                    <td>{{list.year}}</td>
+                    <td>{{list.yysr | number:2}}</td>
+                    <td>{{list.jzc | number:2}}</td>
+                    <td>{{list.zcfzl | parseInt}}</td>
+                    <td>{{list.sszc | number:2}}</td>
+                    <td>{{list.jlr | number:2}}</td>
+                    <td>{{list.jyhdcsxjljz | number:2}}</td>
+                    <td>{{list.xsmll | parseInt}}</td>
+                    <td>{{list.zzczzl | parseInt}}</td>
+                    <!--<td><a href="javascript:;" ng-click="userDel($index,'list1')">删除</a></td>-->
+                </tr>
+            </table>
+        </div>
+
+        <div class="addTable viewTable">
+            <table>
+                <tr>
+                    <th>担保类型</th>
+                    <th>担保金额</th>
+                    <th>生效时间</th>
+                    <th>失效时间</th>
+                    <th>说明</th>
+                    <!--<th width="60px"><a href="javascript:;" ng-click="userAdd('list2')">添加</a></th>-->
+                </tr>
+                <tr ng-repeat="list in ORDER_DATA.guaranteeinfo ">
+                    <td>{{list.dblx}}</td>
+                    <td>{{list.dbje}}</td>
+                    <td>{{list.startdate| date: 'yyyy-MM-dd'}}</td>
+                    <td>{{list.enddate | date: 'yyyy-MM-dd'}}</td>
+                    <td>{{list.instructions}}</td>
+                    <!--<td><a href="javascript:;" ng-click="userDel($index,'list2')">删除</a></td>-->
+                </tr>
+            </table>
+            <ul>
+              <li class="list_con"><strong>担保说明：</strong><span ng-bind-html="ORDER_DATA.guaranteeinfo.length>0 ? (ORDER_DATA.guaranteeinfo[0].explain | trustHtml) : ''"></span></li>
+                <!--<li class="list_con"><strong>担保说明：</strong><span>{{ORDER_DATA.explain}}</span></li>-->
+            </ul>
+        </div>
+        <div class="addTable viewTable2">
+            <h5>风控现场考察报告</h5>
+            <div style="width: 100%; overflow: hidden; overflow-x: scroll; height: 100%;">
+                <table class="tab_data" style="width: 130%">
+                    <thead class="tab_header">
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th colspan="3">应收及交易状况</th>
+                        <th colspan="2">办公环境</th>
+                        <th colspan="4">股东情况</th>
+                        <th colspan="4">经营状况</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th>创建者</th>
+                        <th>现场考<br>察时间</th>
+                        <th>客户<br>名称</th>
+                        <th>应收<br>金额</th>
+                        <th>呆账<br>金额</th>
+                        <th>历史2年<br>交易金额</th>
+                        <th>办公面积/<br>办公环境</th>
+                        <th>库存<br>状况</th>
+                        <th>财务是<br>否规范</th>
+                        <th>公司股<br>东构成</th>
+                        <th>大股东是否<br>关注生意</th>
+                        <th>股东对公司<br>的实际投入</th>
+                        <th>主营<br>业务</th>
+                        <th>主要<br>供应商</th>
+                        <th>现场考核其近<br>期的财务报告</th>
+                        <th>取得的<br>资质奖励</th>
+                        <th>行业口碑(其他<br>客户的评价)</th>
+                        <th>区域风控评价<br>及授信建议</th>
+                        <!--<th><a href="javascript:;" ng-click="userAdd('fkxcreport')">添加</a></th>-->
+                    </tr>
+                    </thead>
+                    <tbody class="tab_body">
+                    <tr ng-repeat="list in ORDER_DATA.fkxcreport">
+                        <td>{{list.createname}}</td>
+                        <td>{{list.xckcsj}}</td>
+                        <td>{{list.cusname}}</td>
+                        <td>{{list.ysje}}</td>
+                        <td>{{list.dzje}}</td>
+                        <td>{{list.lslnjyje}}</td>
+                        <td>{{list.bgmjorbghj}}</td>
+                        <td>{{list.kczk}}</td>
+                        <td>{{list.cwsfgf}}</td>
+                        <td>{{list.gsgdgc}}</td>
+                        <td>{{list.dgdsfgzsy}}</td>
+                        <td>{{list.gddgsdsjtr}}</td>
+                        <td>{{list.zyyw}}</td>
+                        <td>{{list.zygys}}</td>
+                        <td>{{list.xckhqjqdcwbg}}</td>
+                        <td>{{list.qddzzjl}}</td>
+                        <td>{{list.hykbqtkhpj}}</td>
+                        <td>{{list.qyfkpjjsxjy}}</td>
+                        <!--<td><a href="javascript:;" ng-click="userDel($index,'fkxcreport')">删除</a></td>-->
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="addTable">
+            <h5>催款函信息</h5>
+            <table class="tab_data">
+                <thead class="tab_header">
+                <tr>
+                    <th>发送时间</th>
+                    <th>合同类型</th>
+                    <th>合同号</th>
+                    <th>违约金额</th>
+                    <th>跟踪情况</th>
+                    <th>最后更新人</th>
+                    <th>最后更新时间</th>
+                    <!--<th><a href="javascript:;" ng-click="userAdd('callletter')">添加</a></th>-->
+                </tr>
+                </thead>
+                <tbody class="tab_body">
+                <tr ng-repeat="list in ORDER_DATA.callletter">
+                    <td>{{list.sendtime | date: 'yyyy-MM-dd'}}</td>
+                    <td>{{list.contracttype}}</td>
+                    <td>{{list.contractno}}</td>
+                    <td>{{list.defaultvalue}}</td>
+                    <td>{{list.trackinfo}}</td>
+                    <td>{{list.updatename}}</td>
+                    <td>{{list.updatedate | date: 'yyyy-MM-dd'}}</td>
+                    <!--<td><a href="javascript:;" ng-click="userDel($index,'callletter')">删除</a></td>-->
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="addTable">
+            <h5>律师函信息</h5>
+            <table class="tab_data">
+                <thead class="tab_header">
+                <tr>
+                    <th>发送时间</th>
+                    <th>合同类型</th>
+                    <th>合同号</th>
+                    <th>违约金额</th>
+                    <th>跟踪情况</th>
+                    <th>最后更新人</th>
+                    <th>最后更新时间</th>
+                    <!--<th><a href="javascript:;" ng-click="userAdd('lawyerletter')">添加</a></th>-->
+                </tr>
+                </thead>
+                <tbody class="tab_body">
+                <tr ng-repeat="list in ORDER_DATA.lawyerletter">
+                    <td>{{list.sendtime | date: 'yyyy-MM-dd'}}</td>
+                    <td>{{list.contracttype}}</td>
+                    <td>{{list.contractno}}</td>
+                    <td>{{list.defaultvalue}}</td>
+                    <td>{{list.trackinfo}}</td>
+                    <td>{{list.updatename}}</td>
+                    <td>{{list.updatedate | date: 'yyyy-MM-dd'}}</td>
+                    <!--<td><a href="javascript:;" ng-click="userDel($index,'lawyerletter')">删除</a></td>-->
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="addTable">
+            <h5>诉讼信息</h5>
+            <div style="width: 100%; overflow: hidden; overflow-x: scroll; height: 100%;">
+            <table class="tab_data" style="width: 150%">
+                <thead class="tab_header">
+                <tr>
+                    <th>销售人员</th>
+                    <th>所属业务部门</th>
+                    <th>合同类型</th>
+                    <th>合同号</th>
+                    <th>仲裁/诉讼机构</th>
+                    <th>律师费用</th>
+                    <th>仲裁/诉讼费用</th>
+                    <th>诉讼标的</th>
+                    <th>案由简述</th>
+                    <th>案件处理</th>
+                    <th>最后更新人</th>
+                    <th>最后更新时间</th>
+                    <!--<th><a href="javascript:;" ng-click="userAdd('lawsuitinfo')">添加</a></th>-->
+                </tr>
+                </thead>
+                <tbody class="tab_body">
+                <tr ng-repeat="list in ORDER_DATA.lawsuitinfo">
+                    <td>{{list.saler}}</td>
+                    <td>{{list.deptment}}</td>
+                    <td>{{list.contracttype}}</td>
+                    <td>{{list.contractno}}</td>
+                    <td>{{list.zcssjg}}</td>
+                    <td>{{list.layermon}}</td>
+                    <td>{{list.zcssfy}}</td>
+                    <td>{{list.ssbd}}</td>
+                    <td>{{list.ayjs}}</td>
+                    <td>{{list.ajcl}}</td>
+                    <td>{{list.updatename}}</td>
+                    <td>{{list.updatedate | date: 'yyyy-MM-dd'}}</td>
+                    <!--<td><a href="javascript:;" ng-click="userDel($index,'lawsuitinfo')">删除</a></td>-->
+                </tr>
+                </tbody>
+            </table>
+                </div>
+        </div>
+        <div class="clear"></div>
+
+        <div class="gerSub">
+            <a class="subSave" ng-hide="changeBtn" href="index.html#/creditOrderEdit?sapid={{ORDER_DATA._id}}">变更</a>
+            <a class="subSave disabledbtn ng-hide" ng-show="changeBtn" href="" title="正在审批中">变更</a>
+        </div>
+    </div>
+    <div class="viewTable ng-scope ng-hide" ng-show="ht.activeTab == 2||!creditShow" ng-include="'template/credit/creditTab.html'" ng-controller="creditTabCtrl"></div>
+  <div class="applyLog" ng-if="ht.activeTab == 3&&creditShow">
+    <table>
+      <thead>
+      <tr>
+        <th class="th1">审批人</th>
+        <th class="th2">审批时间</th>
+        <th class="th3">审批状态</th>
+        <th class="th4">审批意见</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="list in processlog">
+        <td>{{list.sender.name}}</td>
+        <td>{{list.createDate | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+        <td>{{list.operation}}</td>
+        <td>{{list.content.comment}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

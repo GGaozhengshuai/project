@@ -1,0 +1,55 @@
+
+<div class="item">我的草稿</div>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <!--<td>
+                    <strong>单据号</strong>
+                    <input class="text" type="text" name="orderid"  ng-init="orderid=''" ng-model="orderid" placeholder="请输入名称">
+                </td>-->
+                <td>
+                    <strong>订单类型</strong>
+                    <select ng-model="processtype" ng-options="m.code as m.name for m in getbilltype">
+                        <option value="">请选择</option>
+                        <option value="ZD01">采购申请</option>
+                        <option value="NBDD">费用申请单</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<div class="item">查询结果</div>
+<table class="orangestyle table">
+    <thead>
+    <tr>
+        <th>单据编号</th>
+        <th>类型</th>
+        <th>状态</th>
+        <th>申请时间</th>
+        <th>最后修改时间</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in dataList">
+        <td>{{list.title}}</td>
+        <td>{{list.typename}}</td>
+        <td><!--{{list.property.status}}-->草稿</td>
+        <td>{{list.property.createDate}}</td>
+        <td>{{list.property.finishDate}}</td>
+        <td>
+            <a ng-if="list.model.task=='D'" target="_blank" href="/index.html#/mkinvoiceView/{{list.model._id}}?recebill=2">查看</a>
+            <a ng-if="list.model.task!='D'" target="_blank" href="/index.html#/{{list.controller}}?myflag={{list.myflag}}&processId={{list.processId}}&nodeId={{list.node._id}}">查看</a>
+            <a href="javascript:;" ng-click="deleteDraftBill(list.controller,list.processId,list.node._id,$index)">删除</a>
+        </td>
+    </tr>
+    <tr class="tip"><td colspan="5">没有草稿内容</td></tr>
+    </tbody>
+</table>
+<pagination conf="paginationConf"></pagination>
+

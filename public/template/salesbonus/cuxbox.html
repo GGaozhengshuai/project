@@ -1,0 +1,29 @@
+<table class="orangestyle table">
+    <thead>
+    <tr>
+        <th>类型</th>
+        <th>销售合同编号</th>
+        <th>项目名称</th>
+        <th>客户名称</th>
+        <th>销售</th>
+        <th>已用金额</th>
+        <th>占用金额</th>
+        <th>使用日期</th>
+    </tr>
+    </thead>
+    <tbody ng-class="marketList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in marketList">
+        <td>{{list.status == 'transfer' ?  '转移' : '合同使用'}}</td>
+        <td>{{list.info.contract.code}}</td>
+        <td>{{list.info.contract.project}}</td>
+        <td>{{list.status == 'transfer' ? list.info.client : list.info.contract.client }}</td>
+        <td>{{list.info.contract.sale}}</td>
+        <td>{{list.status == 'used' || list.status == 'transfer' ? list.sum.toFixed(2) : ''}}</td>
+        <td>{{list.status == 'hold' ? list.sum.toFixed(2) : ''}}</td>
+        <td>{{list.date | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+    </tr>
+    <tr class="tip"><td colspan="8">没有关联合同信息</td></tr>
+    </tbody>
+</table>
+<!--
+<pagination conf="paginationConf"></pagination>-->

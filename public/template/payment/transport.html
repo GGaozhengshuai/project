@@ -1,0 +1,68 @@
+<form >
+    <div class="hGener" ng-if="addPage">
+        <a class="dwonTem" href="/doc/fhdhlb.xlsx" >下载模版</a>
+        <!--<input excle-Uploadify  btnname="上传单号" url="/credit/importdns?{{$parent.ORDER_DATA.ZSKDW}}" excleData="Filedata" ng-model="Filedata"/>-->
+        <input  excle-Updata="{{excleConf}}" ng-model="Filedata" get-upload-callback="getUploadCallback(uploadCallData)"/>
+    </div>
+    <div class="viewTable ng-scope">
+        <ul>
+            <li><strong>货代名称：</strong><span>{{$parent.ORDER_DATA.ZSKDW}}</span></li>
+            <li><strong>实际总费用小计：</strong><span>{{sum}}</span></li>
+        </ul>
+    </div>
+</form>
+<table class="orangestyle table">
+    <thead>
+    <tr>
+        <th>销售合同号</th>
+        <th>交货单号</th>
+        <th>客户名称</th>
+        <th>业务部门</th>
+        <th>放贷金额</th>
+        <th>运输方式</th>
+        <th>始发地</th>
+        <th>目的地</th>
+        <th>预估总费用</th>
+        <th>实际总费用</th>
+        <th ng-if="addPage">操作</th>
+    </tr>
+    </thead>
+    <tbody ng-class="(transportList.length > 0||ErrowList.length>0) ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in transportList">
+        <td>{{list.BSTNK}}</td>
+        <td>{{list.VBELN}}</td>
+        <td>{{list.NAME1}}</td>
+        <td>{{list.ZYWBM}}</td>
+        <td>{{list.ZFHZJE}}</td>
+        <td>{{list.ZVSART}}</td>
+        <td>{{list.ZSFDT}}</td>
+        <td>{{list.ZMDDT}}</td>
+        <td>{{list.ZYGZF}}</td>
+        <td>{{list.ZSJZF}}</td>
+        <td ng-if="addPage"><a href="javascript:;" ng-click="filedataDel($index,'right')">删除</a></td>
+
+    </tr>
+    <tr ng-repeat="list in ErrowList">
+        <td class="redColor">{{list.BSTNK}}</td>
+        <td class="redColor">{{list.VBELN}}</td>
+        <td class="redColor"> {{list.NAME1}}</td>
+        <td class="redColor">{{list.ZYWBM}}</td>
+        <td class="redColor">{{list.ZFHZJE}}</td>
+        <td class="redColor">{{list.ZVSART}}</td>
+        <td class="redColor">{{list.ZSFDT}}</td>
+        <td class="redColor">{{list.ZMDDT}}</td>
+        <td class="redColor">{{list.ZYGZF}}</td>
+        <td class="redColor">{{list.ZSJZF}}</td>
+        <td ng-if="addPage"><a href="javascript:;" ng-click="filedataDel($index,'errow')">删除</a></td>
+
+    </tr>
+    <tr class="tip"><td colspan="11">未查到相应运输委托单</td></tr>
+    </tbody>
+</table>
+<div class="gerSub" ng-show="addPage">
+    <a href="" ng-click="closeTransport()">取消</a>
+    <button ng-click="transportData()"  class="subSave" >保存</button>
+</div>
+<div class="gerSub" ng-hide="addPage">
+    <a href="" ng-click="closeTransport()">关闭</a>
+</div>

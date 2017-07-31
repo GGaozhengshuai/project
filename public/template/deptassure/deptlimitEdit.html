@@ -1,0 +1,20 @@
+<div class="generForm boxForm">
+    <form novalidate name="depForm">
+        <ul>
+            <li>
+                <strong style="width:110px;">部门:</strong>
+                <input class="text" style="width:175px" type="text" ng-model="$parent.part" ng-readonly="true" placeholder="">
+            </li>
+            <li>
+                <strong style="width:110px;">部门担保额度:</strong>
+                <input class="text" style="width:175px" type="number"ng-init="$parent.deptlimit=''" ng-Focus keepnumber-Validation required  name="deptlimit" ng-model="$parent.deptlimit" placeholder="请输入部门担保额度">
+                <span class="errTip ng-hide" ng-show="depForm.deptlimit.$dirty && depForm.deptlimit.$error.keepnum && !depForm.deptlimit.$focused">最多两位小数的正数</span>
+
+            </li>
+        </ul>
+        <div class="gerSub">
+            <a href="javascript:;" ng-click="closeTqhkE()" class="closeBtn">关闭</a>
+            <button ng-click="editDep()"  ng-class="depForm.$invalid == true ? 'displaySub' : 'subSave'" ng-disabled="depForm.$invalid || invoRready">确定</button>
+        </div>
+    </form>
+</div>

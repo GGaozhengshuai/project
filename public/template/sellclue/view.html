@@ -1,0 +1,165 @@
+<h3 class="genTitle"><em></em><span>销售线索</span></h3>
+
+<ul class="generNav" ng-init="ht.activeTab = 1">
+    <li ng-class="{active:ht.activeTab == 1}"><a href="javascript:;" ng-mousedown='htTab(1)'>销售线索新建</a></li>
+    <li ng-class="{active:ht.activeTab == 2}"><a href="javascript:;" ng-mousedown='htTab(2)'>销售线索跟踪表</a></li>
+    <li ng-class="{active:ht.activeTab == 3}"><a href="javascript:;" ng-mousedown='htTab(3)'>产品信息</a></li>
+</ul>
+<div id="mainView">
+    <div class="ng-hide" ng-show="ht.activeTab == 1">
+        <div class="viewTable">
+            <h4 class="genH4">基本信息</h4>
+            <ul>
+                <li><strong>销售线索号：</strong><span>{{ORDER_DATA.sellclueno}}</span></li>
+                <li><strong>日期：</strong><span>{{ORDER_DATA.createdate | date: 'yyyy-MM-dd'}}</span></li>
+                <li><strong>销售人员：</strong><span>{{ORDER_DATA.salesclerk}}</span></li>
+                <li><strong>部门：</strong><span>{{ORDER_DATA.department}}</span></li>
+                <li><strong>产品线：</strong><span>{{ORDER_DATA.productline}}</span></li>
+                <li><strong>项目名称：</strong><span>{{ORDER_DATA.projectname}}</span></li>
+                <li><strong>客户名称：</strong><span>{{ORDER_DATA.cusname}}</span></li>
+                <li><strong>客户信息说明：</strong><span>{{ORDER_DATA.cusinfo}}</span></li>
+                <li><strong>最终用户：</strong><span>{{ORDER_DATA.lastuser}}</span></li>
+                <li><strong>预计合同金额：</strong><span>{{ORDER_DATA.contractamount| currency : '￥'}}</span></li>
+                <li><strong>预估利润率%：</strong><span>{{ORDER_DATA.forecastprofit}}</span></li>
+                <li><strong>下单金额：</strong><span>{{ORDER_DATA.ordermoney| currency : '￥'}}</span></li>
+                <li><strong>行业：</strong><span>{{ORDER_DATA.trade}}</span></li>
+                <li><strong>细分行业：</strong><span>{{ORDER_DATA.tradedetail}}</span></li>
+                <li><strong>项目进度：</strong><span>{{ORDER_DATA.projectschedule}}</span></li>
+                <li><strong>项目进度%：</strong><span>{{ORDER_DATA.proscheduleprecent}}</span></li>
+                <li><strong>项目进度说明：</strong><span>{{ORDER_DATA.proscheduledeclare}}</span></li>
+                <li><strong>项目说明：</strong><span>{{ORDER_DATA.prodeclare}}</span></li>
+                <li><strong>项目丢失原因：</strong><span>{{ORDER_DATA.declareformisspro}}</span></li>
+                <li><strong>关联采购单据：</strong><span>{{ORDER_DATA.purchase}}</span></li>
+                <li><strong>采购金额：</strong><span>{{ORDER_DATA.purchaseamount| currency : '￥'}}</span></li>
+                <li><strong>关联销售单据：</strong><span>{{ORDER_DATA.billsales}}</span></li>
+                <li><strong>销售金额：</strong><span>{{ORDER_DATA.salesamount| currency : '￥'}}</span></li>
+                <li><strong>预计交货日期：</strong><span>{{ORDER_DATA.estimateddeliverydate| date: 'yyyy-MM-dd '}}</span></li>
+                <li><strong>预计下单日期：</strong><span>{{ORDER_DATA.estimatedorderdate| date: 'yyyy-MM-dd '}}</span></li>
+                <li><strong>预约签约日期：</strong><span>{{ORDER_DATA.signingdate| date: 'yyyy-MM-dd '}}</span></li>
+                <li><strong>销售技术支持人员：</strong><span>{{ORDER_DATA.technicistname}}</span></li>
+                <li><strong>创建人：</strong><span>{{ORDER_DATA.createname}}</span></li>
+                <li><strong>创建人所在部门：</strong><span>{{ORDER_DATA.createdep}}</span></li>
+                <li><strong>更新人：</strong><span>{{ORDER_DATA.updatename}}</span></li>
+                <li><strong>更新日期：</strong><span>{{ORDER_DATA.updatedate| date: 'yyyy-MM-dd '}}</span></li>
+                <li><strong>状态：</strong><span>{{ORDER_DATA.state}}</span></li>
+            </ul>
+            <div class="clear"></div>
+            <div class="gerSub" ng-show="ORDER_DATA.state=='有效'">
+                <a href="index.html#/sellclueEdit?sapid={{ORDER_DATA._id}}">变更</a>
+            </div>
+        </div>
+    </div>
+    <div class="ng-hide" ng-show="ht.activeTab == 2">
+        <div class="generForm">
+            <br/>
+            <form novalidate name="selltraceForm">
+                <div class="addTable">
+                    <table>
+                        <tr>
+                            <th>登录人姓名</th>
+                            <th>更新日期</th>
+                            <th>工作内容</th>
+                            <th><font>*</font>工作内容详细说明</th>
+                            <th>工作执行日期</th>
+                        </tr>
+                        <tr ng-repeat="list in sellclueList">
+                            <td>
+                                {{list.username}}
+                            </td>
+                            <td>
+                                {{list.updatedate | date: 'yyyy-MM-dd '}}
+                            </td>
+                            <td>
+                                {{list.workcontent}}
+                            </td>
+                            <td>
+                                {{list.workinfo}}
+                            </td>
+                            <td>
+                                {{list.workdate| date: 'yyyy-MM-dd '}}
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="genSearch">
+                        <table>
+                            <tr>
+                                <td>
+                                    <span>更新人：</span>
+                                    <span>{{sellclue.modifyname}}</span>
+                                </td>
+                                <td>
+                                    <span>更新日期：</span>
+                                    <span>{{sellclue.modifydate| date: 'yyyy-MM-dd '}}</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="gerSub" ng-show="ORDER_DATA.state=='有效'">
+            <a href="index.html#/sellclueEdit?sapid={{ORDER_DATA._id}}">变更</a>
+        </div>
+    </div>
+    <div class="ng-hide" ng-show="ht.activeTab == 3">
+        <div class="generForm">
+            <br/>
+            <form novalidate name="cbfxForm">
+                <div class="addTable">
+                    <table>
+                        <tr>
+                            <th>产品线</th>
+                            <th>产品型号</th>
+                            <th>型号描述</th>
+                            <th><font>*</font>数量</th>
+                            <th>预估金额小计</th>
+                            <th ng-hide="true">更新人</th>
+                            <th ng-hide="true">更新时间</th>
+                        </tr>
+                        <tr ng-repeat="list in productinfoList" class="list">
+                            <td>
+                                {{list.productline}}
+                            </td>
+                            <td>
+                                {{list.producttype}}
+                            </td>
+                            <td>
+                                {{list.typedescribe}}
+                            </td>
+                            <td>
+                                {{list.number}}
+                            </td>
+                            <td>
+                                {{list.expectamount| currency : '￥'}}
+                            </td>
+                            <td ng-hide="true">
+                                {{list.updatename}}
+                            </td>
+                            <td ng-hide="true">
+                                {{list.updatedate}}
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="genSearch">
+                        <table>
+                            <tr>
+                                <td>
+                                    <span>更新人：</span>
+                                    <span>{{PRODUCT.updatename}}</span>
+                                </td>
+                                <td>
+                                    <span>更新日期：</span>
+                                    <span>{{PRODUCT.updatedate| date: 'yyyy-MM-dd'}}</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </form>
+            <div class="gerSub" ng-show="ORDER_DATA.state=='有效'">
+                <a href="index.html#/sellclueEdit?sapid={{ORDER_DATA._id}}">变更</a>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>

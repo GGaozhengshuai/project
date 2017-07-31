@@ -1,0 +1,106 @@
+<div class="item">销售线索查询</div>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>销售线索号：</strong>
+                    <input class="text" type="text" name="sellclueno"  ng-init="sellclueno=''" ng-model="sellclueno" placeholder="">
+                </td>
+                <td>
+                    <strong>部门：</strong>
+                    <input type="text" name="department" ng-init="department=''"  ng-model="department" class="text" placeholder="">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>销售人员：</strong>
+                    <input class="text" type="text" name="salesclerk"  ng-init="salesclerk=''" ng-model="salesclerk" placeholder="">
+                </td>
+                <td>
+                    <strong>项目进度%：</strong>
+                    <select ng-model="proscheduleprecent" ng-init="proscheduleprecent=''">
+                        <option value="">请选择</option>
+                        <option value="0%">0%</option>
+                        <option value="5%">5%</option>
+                        <option value="10%">10%</option>
+                        <option value="50%">50%</option>
+                        <option value="75%">75%</option>
+                        <option value="90%">90%</option>
+                        <option value="100%">100%</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>预计下单开始日期:</strong>
+                    <input class="text Wdate" type="text" name="datebefore" ng-init="datebefore=''" date-Picker ng-readonly="true"   ng-model="datebefore" placeholder="请选择日期" ng-blur="dateafter=''">
+                </td>
+                <td>
+                    <strong>预计下单结束日期:</strong>
+                    <input class="text Wdate" type="text" name="dateafter" ng-init="dateafter=''" date-Picker ng-readonly="true"   ng-model="dateafter" placeholder="请选择日期" ng-blur="dataLimit()">
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input  type="button" value="导出" class="searchbtn2 distractBtn" ng-click="changeGo()">
+                    <input ng-if="opprev.sellclueOrder_transfer" type="button" value="转移" class="searchbtn2 distractBtn" ng-click="sellclueGo()">
+                    <input type="button" value="查询" class="searchbtn2 searchbtn2bot" ng-click="search()">
+<!--
+                    <a class="searchbtn2 searchbtn2bot exportBtn" href="javascript:;" ng-click="sellclueOut()">导出</a>
+-->
+                    <a ng-if="opprev.sellclueOrder_add" href="/index.html#/sellclueAdd" class="searchbtn2 searchbtn2bot addBtn">新建销售线索</a>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<div class="item">查询结果</div>
+<table class="orangestyle table" id="occTable">
+    <thead>
+    <tr>
+        <th><input type="checkbox" id="allCheck" ng-model="all" ng-click="allCheck(dataList)"></th>
+        <th>销售<br/>线索号</th>
+        <th>销售<br/>人员</th>
+        <th>部门</th>
+        <th>产品线</th>
+        <th>客户<br/>名称</th>
+        <th>项目<br/>进度%</th>
+        <th class="right">预计合<br/>同金额</th>
+        <th>预计下<br/>单日期</th>
+        <th>预计签<br/>约日期</th>
+        <th>预计交<br/>货日期</th>
+        <th>创建人</th>
+        <th>状态</th>
+        <th style="padding: 17px">操作</th>
+    </tr>
+    </thead>
+    <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in dataList" class="list">
+        <td><input ng-click="checkSelect($index,list._id)" class="checkBox" name="checkbox" type="checkbox" ng-checked="all"/></td>
+        <td title="{{list.sellclueno}}"><a class="underline" target="_blank" href="index.html#/sellclueView/{{list._id}}"> {{list.sellclueno}}</a></td>
+        <td>{{list.salesclerk}}</td>
+        <td>{{list.department}}</td>
+        <td>{{list.productline}}</td>
+        <td>{{list.cusname| cutfield:true:5:'...'}}</td>
+        <td>{{list.proscheduleprecent}}</td>
+        <td class="right">{{list.contractamount| currency : '￥'}}</td>
+        <td>{{list.estimatedorderdate| date: 'yyyy-MM-dd '}}</td>
+        <td>{{list.signingdate| date: 'yyyy-MM-dd '}}</td>
+        <td>{{list.estimateddeliverydate| date: 'yyyy-MM-dd'}}</td>
+        <td>{{list.createname}}</td>
+        <td>{{list.state}}</td>
+        <td class="czBtn">
+            <a class="handleBtn editBtn" target="_blank" ng-href="index.html#/sellclueEdit?sapid={{list._id}}" ng-hide="list.canEdit" title="编辑"></a>
+            <span class="handleBtn editBtn disabled ng-hide" ng-show="list.canEdit" ></span>
+
+            <a class="handleBtn detailBtn" target="_blank" href="index.html#/sellclueView/{{list._id}}" title="详情"></a>
+        </td>
+    </tr>
+    <tr class="tip"><td colspan="14">没有查到此销售线索</td></tr>
+    </tbody>
+</table>
+<pagination conf="paginationConf"></pagination>
+<div id="sellclueBox" class="dialog cusBox" title="请输入销售人员姓名" ng-include="'template/sellclue/sellclueBox.html'" ng-controller="sellclueBoxCtrl"></div>

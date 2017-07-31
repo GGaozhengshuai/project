@@ -1,0 +1,86 @@
+<h3 class="genTitle"><em></em><span>合并付款单</span></h3>
+<ul class="generNav">
+    <li class="active"><a href="javascript:;">合并付款单</a></li>
+</ul>
+<div id="mainView">
+    <div class="viewTable ng-scope">
+        <div style="overflow-y:hidden;overflow-x:auto; width: 100%;height: 100%">
+            <ul>
+                <li><strong>合并付款单号：</strong><span>{{ORDER_DATA.ZSQNO}}</span></li>
+                <li><strong>申请日期：</strong><span>{{ORDER_DATA.ZSQRQ}}</span></li>
+                <li><strong>部门：</strong><span>{{ORDER_DATA.ZSQBM}}</span></li>
+                <li><strong>付款主体：</strong><span>{{{1000:"中建材信息技术股份有限公司",9000:"中建材集团进出口公司",9001:"中国建材（香港）有限公司"}[ORDER_DATA.ZFKZT]}}</span></li>
+                <li><strong>供应商名称：</strong><span title="{{ORDER_DATA.ZSKDW}}">{{ORDER_DATA.ZSKDW}}</span></li>
+                <li><strong>供应商编号：</strong><span>{{ORDER_DATA.LIFNR}}</span></li>
+                <li><strong>银行名称：</strong><span title="{{ORDER_DATA.ZYHMC_CN}}">{{ORDER_DATA.ZYHMC_CN}}</span></li>
+                <li title="{{ORDER_DATA.ZYHZH}}"><strong><font>*</font>银行帐号：</strong>{{ORDER_DATA.ZYHZH}}</li>
+                <li ><strong>汇入地点（省）：</strong>
+                    {{getField(provinceData, 'BLAND',ORDER_DATA.PROVZ ).BEZEI}}
+                </li>
+                <li ><strong>汇入地点（市）：</strong>
+                    {{ORDER_DATA.ORT01}}
+                </li>
+                <li><strong><font>*</font>付款方式：</strong>{{ORDER_DATA.ZFKFS}}</li>
+                <li><strong>付款种类：</strong><span>{{BU1}}-{{BU2}}{{BU3}}</span></li>
+                <li><strong>货币种类：</strong><span>{{ORDER_DATA.WAERS}}</span></li>
+                <li><strong>资金占用部门：</strong><span>{{{1000:'信息产品事业群',2000:'合作业务部',3000:'医疗产品部',9900:'综合'}[ORDER_DATA.ZBM]}}</span></li>
+                <li><strong>成本中心：</strong><span>{{{1000:'信息产业事业群',2000:'合作业务部',3000:'医疗产品部'}[ORDER_DATA.KOSTL]}}</span></li>
+                <li><strong>申请付款金额：</strong><span>{{ORDER_DATA.ZSQJE}}</span></li>
+                <li><strong>未核销金额：</strong><span>{{ORDER_DATA.ZWHXJE}}</span></li>
+                <li><strong>计划付款时间：</strong><span>{{ORDER_DATA.ZJHDAT}}</span></li>
+                <li ng-if="type1"><strong>开证/付汇银行：</strong><span>{{ORDER_DATA.ZKZBANK}}</span></li>
+                <li><strong>实际付款金额：</strong><span>{{ORDER_DATA.ZSJFKJE}}</span></li>
+                <li><strong>是否合并付款：</strong><span>{{{Y:"是",N:"否"}[ORDER_DATA.ZHB]}}</span></li>
+                <li><strong>垫付款情况：</strong><span>{{ORDER_DATA.ZDFQK}}</span></li>
+                <li><strong>申请人：</strong><span>{{ORDER_DATA.AUFUSER0}}</span></li>
+                <li><strong>采购商务：</strong><span>{{ORDER_DATA.ZCGSW}}</span></li>
+                <li><strong>上传附件：</strong><span><a target="_blank" style="text-decoration:underline" class="link" href="{{ORDER_DATA.ZURL}}">{{ORDER_DATA.ZURLNAM}}</a></span></li>
+                <li class="list_con"><strong>直发地址：</strong><span>{{ORDER_DATA.ZZFDZ}}</span></li>
+                <li class="list_con"><strong style="float: left">备注：</strong><pre><span style="float: left;width: 96%">{{ORDER_DATA.ZBZ}}</span></pre></li>
+            </ul>
+            <div class="addTable">
+                <h5>付款详情</h5>
+                <table class="tab_data">
+                    <thead class="tab_header">
+                    <tr>
+                        <th>付款申请单号</th>
+                        <th>付款种类</th>
+                        <th>付款方式</th>
+                        <th>申请付款金额</th>
+                        <th>实际支付金额</th>
+                        <th>未核销金额</th>
+                        <th>计划付款时间</th>
+                        <th>申请人</th>
+                        <th><a href="javascript:;" ng-click="payAdd()" title="添加" class="btnAdd"></a></th>
+
+                    </tr>
+                    </thead>
+                    <tbody class="tab_body">
+                    <tr ng-repeat="list in payList">
+                        <td>
+                            <a href="index.html#/paymentOrderView/{{list.ZSQNO}}" style="text-decoration:underline;color: #003eff ">{{list.ZSQNO}}</a>
+                        </td>
+                        <td>{{getField(payData, 'CODE1',list.ZFKZL.substring(0,2)).TITLE}}</td>
+                        <td>{{list.ZFKFS}}</td>
+                        <td>{{list.ZSQJE}}</td>
+                        <td>{{list.ZSJFKJE}}</td>
+                        <td>{{list.ZWHXJE}}</td>
+                        <td>{{list.ZJHDAT}}</td>
+                        <td>{{list.AUFUSER0}}</td>
+                        <td>
+                            <a href="javascript:;" ng-click="comeDel($index,'payList')">取消合并</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="gerSub">
+            <a href="index.html#/paymentOrder">返回</a>
+            <button ng-click="addData(ORDER_DATA, 'save')"  class="subSave" >保存</button>
+            <button ng-click="addData(ORDER_DATA, 'apply')"  class="subApply">保存并提交</button>
+        </div>
+    </div>
+</div>
+<div id="payAddList" class="dialog cusBox" title="付款申请" ng-include="'template/payment/payAddList.html'"></div>

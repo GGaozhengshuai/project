@@ -1,0 +1,32 @@
+<h3 class="genTitle genTitleBot"><em></em><span>查看销售订单详情</span></h3>
+<div class="cusCont">
+    <div class="addTable">
+        <table>
+            <tr>
+                <th>行项目号</th>
+                <th>原厂物料号</th>
+                <th>内部物料编码</th>
+                <th>订单数量</th>
+                <th>原单价</th>
+                <th>原小计</th>
+                <th>分摊返点金额</th>
+                <th>已放货数量</th>
+                <th>退货数量</th>
+                <th>已使用返点金额</th>
+            </tr>
+            <tr ng-repeat="list in salesList" class="list">
+                <td>{{list.POSNR}}</td>
+                <td>{{list.BISMT}}</td>
+                <td>{{list.MATNR}}</td>
+                <td>{{list.KWMENG}}</td>
+                <td>{{list.NETPR}}</td>
+                <td>{{list.KWERT}}</td>
+                <td>{{list.ZREBATE}}</td>
+                <td>{{list.ZYFHSL}}</td>
+                <td>{{list.ZYFHSL - list.ZKTHSL}}</td>
+                <td>{{list.ZREBATE_USED}}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+

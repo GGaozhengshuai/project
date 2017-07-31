@@ -1,0 +1,419 @@
+<h3 class="genTitle genTitleBot"><em></em><span>付款申请单</span></h3>
+<div class="cusCont">
+    <!--<div class="gerSub" style="float: right">
+        <a ng-if="goShow" class="subApply" href="/index.html#/bankCreditOrderAdd?&proId={{processId}}&noId={{nodeId}}">新建银行授信申请单</a>
+    </div>-->
+    <div class="generForm">
+        <form novalidate name="invoiceForm">
+            <ul>
+                <li class="tli" ng-if="!payState">
+                    <strong>付款申请号：</strong>
+                    <input  ng-model="ORDER_DATA.ZSQNO" name="ZSQNO" ng-readonly="true" type="text" placeholder="系统自动生成"/>
+                </li>
+                <li class="tli" ng-if="payState">
+                    <strong>合并付款单号：</strong><input  ng-disabled="true" name="ZSQNO" ng-model="ORDER_DATA.ZSQNO" type="text" placeholder=""/>
+                </li>
+                <li class="tli">
+                    <strong>申请日期：</strong>
+                    <input  ng-model="ORDER_DATA.ZSQRQ" name="ZSQRQ" ng-readonly="true" type="text" placeholder=""/>
+                </li>
+                <li class="tli">
+                    <strong>部门：</strong>
+                    <input  ng-model="ORDER_DATA.ZSQBM" name="ZSQBM" ng-readonly="true" type="text" placeholder=""/>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>付款主体：</strong>
+                    <select ng-model="ORDER_DATA.ZFKZT" name="ZFKZT" ng-change="fkztChange()" ng-required="true">
+                        <option value="">请选择</option>
+                        <option value="1000">中建材信息技术股份有限公司</option>
+                        <option value="9000">中建材集团进出口公司</option>
+                        <option value="9001">中国建材（香港）有限公司</option>
+                    </select>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.ZFKZT.$dirty && invoiceForm.ZFKZT.$error.required">必填</span>
+                </li>
+                <li class="tli"><strong><font>*</font>供应商名称：</strong>
+                    <input ng-readonly="true" title="{{ORDER_DATA.ZSKDW}}" ng-click="customerBox()" ng-required="true" ng-model="ORDER_DATA.ZSKDW" name="ZSKDW" type="text" placeholder="请选择客户名称"/>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.ZSKDW.$dirty && invoiceForm.ZSKDW.$error.required">必填</span>
+
+                </li>
+                <li class="tli"><strong><font>*</font>供应商编号：</strong><input ng-readonly="true" name="LIFNR" ng-model="ORDER_DATA.LIFNR" type="text" placeholder=""/>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.LIFNR.$dirty && invoiceForm.LIFNR.$error.required">必填</span>
+
+                </li>
+                <li class="tli"><strong><font>*</font>银行名称：</strong><input title="{{ORDER_DATA.ZYHMC_CN}}" ng-required="true" name="ZYHMC_CN" ng-readonly="true" ng-model="ORDER_DATA.ZYHMC_CN" type="text" placeholder=""/>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.ZYHMC_CN.$dirty && invoiceForm.ZYHMC_CN.$error.required">必填</span>
+
+                </li>
+                <li class="tli"><strong><font>*</font>银行帐号：</strong><input title="{{ORDER_DATA.ZYHZH}}" ng-required="true" ng-readonly="true" name="ZYHZH" ng-model="ORDER_DATA.ZYHZH" type="text" placeholder=""/>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.ZYHZH.$dirty && invoiceForm.ZYHZH.$error.required">必填</span>
+
+                </li>
+                <li class="tli"><strong>汇入地点（省）：</strong><input   ng-disabled="true" name="PROVZ" ng-model="getField(provinceData, 'BLAND',ORDER_DATA.PROVZ ).BEZEI" type="text" placeholder=""/>
+
+                </li>
+                <li class="tli"><strong>汇入地点（市）：</strong><input ng-disabled="true" name="ORT01" ng-model="ORDER_DATA.ORT01" type="text" placeholder=""/>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>付款方式：</strong>
+                    <select ng-model="ORDER_DATA.ZFKFS" name="ZFKFS" ng-required="true" ng-change="typeChange(ORDER_DATA.ZFKFS)">
+                        <option value="">请选择</option>
+                        <option value="支票">支票</option>
+                        <option value="延期支票">延期支票</option>
+                        <option value="电汇">电汇</option>
+                        <option value="银行承兑汇票">银行承兑汇票</option>
+                        <option value="商业承兑汇票">商业承兑汇票</option>
+                        <option value="国内信用证">国内信用证</option>
+                        <option value="流动资金贷款">流动资金贷款</option>
+                        <option value="华为小额定期">华为小额定期</option>
+                        <option value="银承背书转让">银承背书转让</option>
+                        <option value="转口代付">转口代付</option>
+                        <option value="银行汇票">银行汇票</option>
+                    </select>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.ZFKFS.$dirty && invoiceForm.ZFKFS.$error.required">必填</span>
+
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>货币种类：</strong>
+                    <select ng-model="ORDER_DATA.WAERS" name="WAERS" required>
+                        <option value="">请选择</option>
+                        <option value="CNY">人民币</option>
+                        <option value="EUR">欧元</option>
+                        <option value="USD">美元</option>
+                        <option value="CHF">瑞士法郎</option>
+                        <option value="HKD">港币</option>
+                        <option value="JPY">日元</option>
+                    </select>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.WAERS.$dirty && invoiceForm.WAERS.$error.required">必填</span>
+
+                </li>
+                <div class="clear"></div>
+                <li>
+                    <strong><font>*</font>付款种类：</strong>
+                    <select ng-model="ORDER_DATA.BU1"  name="BU1" ng-disabled="payEdit" required ng-change="payChange(ORDER_DATA.BU1)">
+                        <option value="">--请选择--</option>
+                        <option ng-repeat=" p in payData| filter:filterFn" value="{{p.BU1.CODE1}}">{{p.BU1.TITLE}}</option>
+                    </select>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.BU1.$dirty && invoiceForm.BU1.$error.required">必填</span>
+                    <select ng-model="ORDER_DATA.BU2" ng-change="payChange2(ORDER_DATA.BU2)" name="BU2" required ng-show="getField(payData, 'CODE1',ORDER_DATA.BU1).BU2.length">
+                        <option value="">--请选择--</option>
+                        <option ng-repeat="m in getField(payData, 'CODE1',ORDER_DATA.BU1).BU2"  value="{{m.CODE2}}">{{m.TITLE}}</option>
+                    </select>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.BU2.$dirty && invoiceForm.BU2.$error.required">必填</span>
+                    <select ng-model="ORDER_DATA.BU3" name="BU3" ng-if="getField(payData, 'CODE2',ORDER_DATA.BU2).BU3.length" required>
+                        <option value="">--请选择票据种类或费用详情--</option>
+                        <option ng-repeat=" n in getField(payData, 'CODE2',ORDER_DATA.BU2).BU3" value="{{n.CODE3}}">{{n.TITLE}}</option>
+                    </select>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.BU3.$dirty && invoiceForm.BU3.$error.required&& getField(payData, 'CODE2',ORDER_DATA.BU2).BU3.length" >必填</span>
+                </li>
+
+                <li class="tli">
+                    <strong><font>*</font>资金占用部门：</strong>
+                    <select ng-model="ORDER_DATA.ZBM" ng-required="true" name="ZBM">
+                        <option value="">请选择</option>
+                        <option value="1000">信息产品事业群</option>
+                        <option value="2000">合作业务部</option>
+                        <option value="3000">医疗产品部</option>
+                        <option value="9900">综合</option>
+                    </select>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.ZBM.$dirty && invoiceForm.ZBM.$error.required">必填</span>
+
+                </li>
+                <li class="tli"><strong><font>*</font>申请付款金额：</strong><input  ng-model="ORDER_DATA.ZSQJE" required name="ZSQJE" ng-disabled="payState" type="number" placeholder=""/>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.ZSQJE.$dirty && invoiceForm.ZSQJE.$error.required">必填</span>
+                </li>
+                <li class="clear"></li>
+                <div class="clear"></div>
+                <li><strong><font ng-if="!centerShow">*</font>成本中心：</strong>
+                    <input ng-if="centerShow" ng-disabled="true" name="treecostcenter" type="text" ng-model="ORDER_DATA.KOSTL">
+
+                    <input ng-if="!centerShow" type="text" style="width: 200px;"
+                           ng-value="ORDER_DATA.KOSTL| getName:costcenterSel :'text':'code'"
+                           ng-required="true" ng-readonly="true"
+                           ng-click="payCostcenterFn()" placeholder="请选择成本中心">
+                    <input ng-if="!centerShow" type="hidden" name="treecostcenter" ng-required="true" ng-model="ORDER_DATA.KOSTL">
+                    <span ng-if="!centerShow" class="errTip ng-hide" ng-show="invoiceForm.treecostcenter.$dirty && invoiceForm.treecostcenter.$error.required">必填</span>
+
+                </li>
+                <li class="tli"><strong>未核销金额：</strong><input  ng-disabled="true" name="ZWHXJE" ng-model="ORDER_DATA.ZWHXJE" type="text" placeholder=""/>
+                </li>
+                <li class="tli"><strong>实际付款金额：</strong><input  ng-disabled="true" name="ZSJFKJE" ng-model="ORDER_DATA.ZSJFKJE" type="text" placeholder=""/>
+                </li>
+                <li class="tli"><strong>是否合并付款：</strong>
+                    <select ng-model="ORDER_DATA.ZHB" name="ZHB" ng-disabled="sfCol">
+                        <option value="Y">是</option>
+                        <option value="N">否</option>
+                    </select>
+                </li>
+                <li class="tli"><strong><font ng-if="!payState">*</font>垫付款情况：</strong>
+                    <select ng-model="ORDER_DATA.ZDFQK" name="ZDFQK" ng-if="!payState" ng-init="ORDER_DATA.ZDFQK='非垫付款'" required>
+                        <option value="">请选择</option>
+                        <option value="非垫付款">非垫付款</option>
+                        <option value="是垫付款-已返还">是垫付款-已返还</option>
+                        <option value="是垫付款-未返还">是垫付款-未返还</option>
+                    </select>
+                    <select ng-model="ORDER_DATA.ZDFQK" name="ZDFQK" ng-if="payState" ng-disabled="true">
+                        <option value="">请选择</option>
+                        <option value="非垫付款">非垫付款</option>
+                        <option value="是垫付款-已返还">是垫付款-已返还</option>
+                        <option value="是垫付款-未返还">是垫付款-未返还</option>
+                    </select>
+                    <span ng-if="!payState" class="errTip ng-hide" ng-show="invoiceForm.ZDFQK.$dirty && invoiceForm.ZDFQK.$error.required">必填</span>
+                </li>
+                <li class="tli" ng-if="!payState"><strong>合并付款单号：</strong><input  ng-disabled="true" name="ZSQNO_HB" ng-model="ORDER_DATA.ZSQNO_HB" type="text" placeholder=""/>
+                </li>
+                <li class="tli" ng-if="type1"><strong>开证/付汇银行：</strong><input  ng-model="ORDER_DATA.ZKZBANK" type="text" placeholder=""/></li>
+
+                <li class="tli"><strong>计划付款时间：</strong><input class="Wdate" date-Picker ng-model="ORDER_DATA.ZJHDAT" type="text" placeholder=""/></li>
+                <li class="tli" ng-show="payTime"><strong>实际付款时间：</strong><input class="Wdate" date-Picker ng-model="ORDER_DATA.ZSJDAT" type="text" placeholder=""/></li>
+                <li class="tli"><strong>申请人：</strong><input  ng-disabled="true" name="AUFUSER0" ng-model="ORDER_DATA.AUFUSER0" type="text" placeholder=""/>
+                </li>
+                <li class="tli" ng-if="!payState"><strong>采购商务：</strong><input  ng-disabled="true" name="ZCGSW" ng-model="ORDER_DATA.ZCGSW" type="text" placeholder=""/>
+                </li>
+                <div class="clear"></div>
+                <li class="formUpStyle">
+                    <strong>上传附件：</strong>
+
+                    <input url="/resource/uploadfile" uploadify-All btnname="上传附件" type="file"  ng-model="ORDER_DATA.ZURL" placeholder="">
+                    <a target="_blank" class="link" href="{{ORDER_DATA.ZURL}}">{{docName}}</a>
+                </li>
+                <li><strong>直发地址：</strong><textarea maxlength="200" ng-model="ORDER_DATA.ZZFDZ" placeholder="200字符"></textarea></li>
+                <li><strong>备注：</strong><textarea maxlength="500" ng-model="ORDER_DATA.ZBZ" placeholder="500字符"></textarea></li>
+            </ul>
+            <div class="gerSub" ng-if="transportShow">
+                <a class="dwonTem" href="javascript:;" ng-click="transportClick()">关联运输委托单</a>
+            </div>
+            <div class="addTable" ng-if="payState">
+                <h5>付款详情</h5>
+                <table>
+                    <tr>
+                        <th>付款申请单号</th>
+                        <th>供应商订单号</th>
+                        <th>采购订单号</th>
+                        <th>付款种类</th>
+                        <th>付款方式</th>
+                        <th>申请付款金额</th>
+                        <th>实际支付金额</th>
+                        <!--   <th>未核销金额</th>-->
+                        <th>计划付款时间</th>
+                        <th>申请人</th>
+                        <th><a href="javascript:;" ng-click="payAdd()" title="添加" class="btnAdd"></a></th>
+                    </tr>
+                    <tr ng-repeat="list in payList" class="list">
+                        <td>
+                            <a href="index.html#/paymentOrderView/{{list.ZSQNO}}" style="text-decoration:underline;color: #003eff ">{{list.ZSQNO}}</a>
+                        </td>
+                        <td>{{list.ZZPO}}</td>
+                        <td>{{list.EBELN}}</td>
+                        <td>{{getField(payData, 'CODE1',list.ZFKZL.substring(0,2)).TITLE}}</td>
+                        <td>{{list.ZFKFS}}</td>
+                        <td>{{list.ZSQJE}}</td>
+                        <td>{{list.ZSJFKJE}}</td>
+                        <!-- <td>{{list.ZWHXJE}}</td>-->
+                        <td>{{list.ZJHDAT}}</td>
+                        <td>{{list.AUFUSER0}}</td>
+                        <td>
+                            <a href="javascript:;" ng-click="comeDel($index,'payList')">取消合并</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="addTable" ng-if="cgOrder">
+                <h5>采购订单</h5>
+                <table id="cgList">
+                    <tr>
+                        <th>采购订单号</th>
+                        <th>供应商订单号</th>
+                        <th>采购组织</th>
+                        <th>订单类型</th>
+                        <th>产品线</th>
+                        <th>运输方式</th>
+                        <th>采购商务</th>
+                        <th>交货日期</th>
+                        <th>订单金额</th>
+                        <th>应付编号</th>
+                        <th>应付金额</th>
+                        <th>申请支付金额</th>
+                        <th><a href="javascript:;" ng-click="comeAdd('cgList')" title="添加" class="btnAdd"></a></th>
+                    </tr>
+                    <tr ng-repeat="list in cgList" class="list">
+                        <td title="{{list.EBELN}}">
+                            <input ng-model="list.EBELN" type="text" ng-readonly="true" ng-click="cgData($index)"/>
+                        </td>
+                        <td title="{{list.ZZPO}}">
+                            <input ng-readonly="true" ng-model="list.ZZPO" ng-disabled="true" type="text" value=""/>
+                        </td>
+                        <td title="{{list.EKORGTXT}}">
+                            <input  ng-model="list.EKORGTXT" ng-readonly="true" ng-disabled="true" type="text" value=""/>
+                            <input  ng-model="list.EKORG" type="hidden" value=""/>
+                        </td>
+                        <td title="{{list.BSARTTXT}}">
+                            <input  ng-model="list.BSARTTXT" ng-readonly="true" ng-disabled="true" type="text" value=""/>
+                            <input  ng-model="list.BSART" type="hidden" value=""/>
+                        </td>
+                        <td title="{{list.ZZCPTXT}}">
+                            <input ng-readonly="true" ng-model="list.ZZCPTXT" ng-disabled="true" type="text" value=""/>
+                            <input ng-model="list.ZZCP" type="hidden" value=""/>
+                        </td>
+
+                        <td title="{{list.ZZYS}}">
+                            <input  ng-model="list.ZZYS" type="text" value="" ng-disabled="true"/>
+                        </td>
+
+                        <td title="{{list.ZSWRY}}">
+                            <input ng-readonly="true" ng-model="list.ZSWRY" ng-disabled="true" type="text" value=""/>
+                        </td>
+                        <td title="{{list.ZZJHRQ}}">
+                            <input  ng-model="list.ZZJHRQ" type="text" value="" ng-disabled="true"/>
+                        </td>
+                        <td title="{{list.ZPOJE}}">
+                            <input  ng-model="list.ZPOJE" type="text" value="" ng-disabled="true"/>
+                        </td>
+                        <td title="{{list.ZYWYF}}">
+                            <input ng-disabled="true" ng-model="list.ZYWYF"  type="text" value=""/>
+                        </td>
+                        <td title="{{list.ZYFJE}}">
+                            <input  ng-readonly="true" ng-model="list.ZYFJE" type="text" value="" ng-disabled="true"/>
+                        </td>
+                        <td title="{{list.ZSQJE}}">
+                            <input ng-model="list.ZSQJE" ng-Focus keepnumber-Validation name="ZSQJE{{$index}}" class="listNum" type="text" ng-blur="sumFn(list.ZYFJE,list.ZSQJE,'cgList',$index)" value=""/>
+                            <p class="errTip" ng-if="invoiceForm['ZSQJE'+$index].$dirty && invoiceForm['ZSQJE'+$index].$error.keepnum&&!invoiceForm['ZSQJE'+$index].$focused">最多两位小数的非负数</p>
+
+                        </td>
+
+                        <td>
+                            <a class="underline" target="_blank" ng-if="list.EKORG != '9000' && list.EKORG != '9001' && list.BSART != 'ZB6' && list.BSART != 'ZB7' && list.BSART != 'ZB8'" href="index.html#/purOrderView/{{list.EBELN}}">采购详情</a>
+                            <a class="underline" target="_blank" ng-if="list.EKORG == '9000' || list.EKORG == '9001'" href="index.html#/pojckView/{{list.EBELN}}">采购详情</a>
+                            <a class="underline" target="_blank" ng-if="list.BSART == 'ZB6' || list.BSART == 'ZB7' || list.BSART == 'ZB8'" href="index.html#/purMaintainView/{{list.EBELN}}">采购详情</a>
+                            <a style="text-decoration:underline" href="javascript:;" ng-click="saleDir($index,list.ZZPO,list.ZZSDPO)">销售详情</a>
+                            <a style="text-decoration:underline" href="javascript:;" ng-click="incomDir($index,list.ZZPO,list.ZZSDPO)">收款情况</a>
+
+                            <a href="javascript:;" ng-click="comeDel($index,'cgList')">删除</a>
+                        </td>
+                    </tr>
+                    <!--<tr><td colspan="3">采购订单合计：</td></tr>-->
+                </table>
+                <p class="fr totleNumBox">申请支付金额小计：<span>{{sumcgList}}</span></p>
+            </div>
+            <div class="addTable" ng-if="cgOrder">
+                <h5>冲抵核销信息</h5>
+                <table id="cxList">
+                    <tr>
+                        <th>冲抵类型</th>
+                        <th>流水号</th>
+                        <th >供应商订单号</th>
+                        <th>原始金额</th>
+                        <th>可用冲抵金额</th>
+                        <th><font>*</font>采购订单号</th>
+                        <th>冲抵金额</th>
+                        <th><a href="javascript:;" ng-click="comeAdd('cxList')" title="添加" class="btnAdd"></a></th>
+                    </tr>
+                    <tr ng-repeat="list in cxList" class="list">
+                        <td>
+                            <select ng-model="list.ZCDLX" ng-change="cxSelect($index ,list.ZCDLX)" ng-disabled="list.dkChange">
+                                <option value="">请选择冲抵类型</option>
+                                <option value="抵扣款" ng-disabled="dkShow1">抵扣款</option>
+                                <option value="品牌基金/能力提升" ng-disabled="dkShow">品牌基金/能力提升</option>
+                                <option value="挂账款" ng-disabled="dkShow1">挂账款</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.ZSQNO_YF" type="text" value=""/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.ZZPO" type="text" value=""/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.ZJE" type="text" value=""/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.left" type="text" value=""/>
+                        </td>
+                        <td>
+                            <input  ng-model="list.EBELN" ng-disabled="list.dkChange" name="EBELN{{$index}}" required type="text" value="" ng-blur="cgCode(list.EBELN,$index)"/>
+                            <p class="errTip" ng-if="invoiceForm['EBELN'+$index].$dirty && invoiceForm['EBELN'+$index].$error.required">必填</p>
+
+                        </td>
+                        <td>
+                            <input ng-model="list.ZCDJE" ng-disabled="list.dkChange" ng-Focus required keepnumber-Validation name="ZCDJE{{$index}}"  class="listNum" type="text" ng-blur="sumFn1(list.left,list.ZCDJE,'cxList',$index)" value=""/>
+                            <p class="errTip" ng-if="invoiceForm['ZCDJE'+$index].$dirty && invoiceForm['ZCDJE'+$index].$error.keepnum&&!invoiceForm['ZCDJE'+$index].$focused">最多两位小数的非负数</p>
+                            <p class="errTip" ng-if="invoiceForm['ZCDJE'+$index].$dirty && invoiceForm['ZCDJE'+$index].$error.required">必填</p>
+
+                        </td>
+                        <td><a href="javascript:;" ng-hide="list.dkChange" ng-click="comeDel($index,'cxList')">删除</a></td>
+                    </tr>
+                    <!--<tr><td colspan="3">冲抵核销信息合计：</td></tr>-->
+                </table>
+                <p class="fr totleNumBox">冲抵核销信息合计：<span>{{sumcxList}}</span></p>
+
+            </div>
+            <div class="addTable" ng-if="glOrder">
+                <h5>费用申请单</h5>
+                <table id="nbList">
+                    <tr>
+                        <th>费用申请单号</th>
+                        <th>费用流水号</th>
+                        <th>申请标题</th>
+                        <th>预算总金额</th>
+                        <th>未使用金额</th>
+                        <th><font ng-show="fyShow">*</font>本次申请支付金额</th>
+                        <th><a href="javascript:;" ng-click="comeAdd('nbList')" title="添加" class="btnAdd"></a></th>
+                    </tr>
+                    <tr ng-repeat="list in nbList" class="list">
+                        <td>
+                            <input ng-readonly="true" ng-click="nbSelect($index)" ng-model="list.AUFNR" type="text" value=""/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.AUFEX" type="text" value=""/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true"  type="text" ng-value="list.ZSQNR| cutfield:true:15:'...'"/>
+                        </td>
+                        <td ng-show="false">{{list.ZSQNR}}</td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.ZYSJE" type="text" value=""/>
+                        </td>
+                        <td ng-hide="true">
+                            <input ng-disabled="true" ng-model="list.ZYFP" type="text" value=""/>
+                        </td>
+                        <td>
+                            <input ng-disabled="true" ng-model="list.WZYFP" type="text" value=""/>
+                        </td>
+                        <td>
+                            <input ng-model="list.ZSQJE" ng-required="fyShow" ng-Focus keepnumber-Validation name="ZSQJE{{$index}}" class="listNum" type="text" ng-blur="sumFn2(list.WZYFP,list.ZSQJE,'nbList',$index)" value=""/>
+                            <p class="errTip" ng-if="invoiceForm['ZSQJE'+$index].$dirty && invoiceForm['ZSQJE'+$index].$error.keepnum&&!invoiceForm['ZSQJE'+$index].$focused">最多两位小数的非负数</p>
+
+                        </td>
+                        <td><a href="javascript:;" ng-click="comeDel($index,'nbList')">删除</a></td>
+                    </tr>
+                </table>
+                <p class="fr totleNumBox">费用申请单合计：<span>{{sumnbList}}</span></p>
+
+            </div>
+            <div class="gerSub">
+                <a href="index.html#/insideOrder">返回</a>
+                <button ng-click="addData(ORDER_DATA, 'save')" class="subSave">保存</button>
+                <button ng-click="addData(ORDER_DATA, 'apply')" class="subApply" >保存并提交</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="tipBox" class="dialog cusBox" title="选择供应商" ng-include="'template/payment/box.html'" ng-controller="boxCtrl"></div>
+<div id="nbBox" class="dialog cusBox" title="选择费用申请单" ng-include="'template/payment/nbBox.html'" ng-controller="nbCtrl"></div>
+<div id="saleBox" class="dialog cusBox" title="销售详情" ng-include="'template/payment/saleBox.html'"></div>
+<div id="incomeBox" class="dialog cusBox" title="收款情况" ng-include="'template/payment/incomeBox.html'"></div>
+<div id="payAddList" class="dialog cusBox" title="付款申请" ng-include="'template/payment/payAddList.html'"></div>
+<div id="costCenterDialog" class="dialog cusBox" title="选择成本中心" ng-include="'template/payment/costCenter.html'"></div>
+<div id="transportBox" class="dialog cusBox" title="" ng-include="'template/payment/transport.html'"></div>
+<div  id="cxBox" class="dialog cusBox" title="冲抵核销-挂帐款">
+    <div ng-if="cxDialog"   ng-include="'template/payment/cxbox.html'" ng-controller="cxCtrl"></div>
+</div>
+<div  id="cxppBox" class="dialog cusBox" title="冲抵核销-品牌基金">
+    <div ng-if="cxppDialog"   ng-include="'template/payment/cxppbox.html'" ng-controller="cxppCtrl"></div>
+</div>
+<div  id="dkBox" class="dialog cusBox" title="冲抵核销-抵扣查询">
+    <div ng-if="openDialog"   ng-include="'template/payment/dkBox.html'" ng-controller="dkCtrl"></div>
+</div>
+<div  id="cgBox" class="dialog cusBox" title="选择采购订单">
+    <div ng-if="cgDialog"   ng-include="'template/payment/cgbox.html'" ng-controller="cgCtrl"></div>
+</div>

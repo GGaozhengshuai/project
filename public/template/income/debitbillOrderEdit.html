@@ -1,0 +1,102 @@
+<div class="item">票据台账编辑</div>
+<form novalidate name="debitbillForm">
+    <h4 class="genH4">票据信息</h4>
+    <div class="addTable" >
+        <div style="overflow-y:hidden;overflow-x:auto; width: 100%;height: 100%">
+        <table class="orangestyle table">
+            <thead>
+            <tr>
+                <th>票据编号</th>
+                <th><font>*</font>票据种类</th>
+                <th>票据单号</th>
+                <th><font>*</font>客户名称</th>
+              <!--  <th><font>*</font>出票人全称</th>
+                <th><font>*</font>付款银行</th>-->
+                <th><font>*</font>票据金额</th>
+               <!-- <th>贴息金额</th>
+                <th>背书次数</th>-->
+                <th>出票日期</th>
+                <th><font>*</font>到期日期</th>
+                <th><font>*</font>收票日期</th>
+                <th>备注</th>
+                <th><a href="javascript:;" ng-click="detAdd()" title="添加" class="btnAdd"></a></th>
+
+            </tr>
+            </thead>
+            <tbody ng-class="debitList.length > 0 ? 'meg' : 'noMegTip'">
+            <tr ng-repeat="list in debitList" >
+                <td>
+                    {{$index+1}}
+                </td>
+                <td>
+                    <select ng-model="list.ZPTYPE" name="ZPTYPE{{$index}}" required >
+                        <option value="">请选择</option>
+                        <option value="支票">支票</option>
+                        <option value="银行承兑汇票">银行承兑汇票</option>
+                        <option value="商业承兑汇票">商业承兑汇票</option>
+                        <option value="电子银行承兑汇票">电子银行承兑汇票</option>
+                        <option value="电子商业承兑汇票">电子商业承兑汇票</option>
+                        <option value="银行汇票">银行汇票</option>
+                    </select>
+                    <span class="errTip ng-hide"  ng-show="debitbillForm['ZPTYPE'+$index].$dirty && debitbillForm['ZPTYPE'+$index].$error.required">必填</span>
+
+                </td>
+                <td>
+                    <input  ng-model="list.ZPJDH"  type="text" value="" />
+                </td>
+                <td>
+                    <input  ng-model="list.NAME1" type="text"  value="" name="NAME1{{$index}}" required ng-readonly="true" ng-click="cusShow($index)"/>
+                    <span class="errTip ng-hide"  ng-show="debitbillForm['NAME1'+$index].$dirty && debitbillForm['NAME1'+$index].$error.required">必填</span>
+
+                </td>
+               <!-- <td>
+                    <input  ng-model="list.ZCPR"  name="ZCPR{{$index}}" required type="text" value=""/>
+                    <span class="errTip ng-hide"  ng-show="debitbillForm['ZCPR'+$index].$dirty && debitbillForm['ZCPR'+$index].$error.required">必填</span>
+
+                </td>
+                <td>
+                    <input  ng-model="list.ZFKYH" name="ZFKYH{{$index}}" required type="text" value=""/>
+                    <span class="errTip ng-hide"  ng-show="debitbillForm['ZFKYH'+$index].$dirty && debitbillForm['ZFKYH'+$index].$error.required">必填</span>
+
+                </td>-->
+                <td>
+                    <input  ng-model="list.ZAMOUNT"  name="ZAMOUNT{{$index}}" required type="number" value=""/>
+                    <span class="errTip ng-hide"  ng-show="debitbillForm['ZAMOUNT'+$index].$dirty && debitbillForm['ZAMOUNT'+$index].$error.required">必填</span>
+
+                </td>
+                <td>
+                    <input  class="Wdate" date-Picker ng-model="list.ZCPDAT" name="ZCPDAT{{$index}}" ng-required="list.ZPTYPE!='支票'" type="text" value=""/>
+                    <span class="errTip ng-hide"  ng-show="debitbillForm['ZCPDAT'+$index].$dirty && debitbillForm['ZCPDAT'+$index].$error.required">必填</span>
+
+                </td>
+                <td>
+                    <input  class="Wdate" date-Picker  name="ZDQDAT{{$index}}" required ng-model="list.ZDQDAT" type="text" value=""/>
+                    <span class="errTip ng-hide"  ng-show="debitbillForm['ZDQDAT'+$index].$dirty && debitbillForm['ZDQDAT'+$index].$error.required">必填</span>
+
+                </td>
+                <td>
+                    <input  class="Wdate" date-Picker  name="ZSPDAT{{$index}}" required ng-model="list.ZSPDAT" type="text" value=""/>
+                    <span class="errTip ng-hide"  ng-show="debitbillForm['ZSPDAT'+$index].$dirty && debitbillForm['ZSPDAT'+$index].$error.required">必填</span>
+
+                </td>
+                <td>
+                    <input  ng-model="list.ZBZ" name="ZBZ{{$index}}" maxlength="1300" type="text" value="" placeholder="最长1300字符"/>
+
+                </td>
+                <td><a href="javascript:;" ng-click="detDel($index)">删除</a></td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    </div>
+    <div class="gerSub">
+        <a href="index.html#/debitbillList">返回</a>
+        <button ng-click="addData( 'save')"  class="subSave" >保存</button>
+        <button ng-click="addData( 'apply')"  class="subApply" >提交</button>
+    </div>
+</form>
+<!--<pagination conf="paginationConf"></pagination>-->
+
+<div id="cusBox1" class="dialog cusBox" title="选择客户" ng-include="'template/income/cusBox.html'" ng-controller="cusCtrl"></div>
+<div id="approversDialog" class="dialog cusBox" title="选择下一审批人" ng-include="'template/common/approvers.html'" ></div>

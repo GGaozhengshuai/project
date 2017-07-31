@@ -1,0 +1,182 @@
+<!--
+<div class="genSearch">
+    <table>
+        <tr>
+            <td>
+                <a ng-if="opprev.deptlimit_add" class="searchbtn2 searchbtn2bot addBtn" href="javascript:;" ng-click="bmdbsfBox()">添加</a>
+                <a class="searchbtn2 searchbtn2bot" href="index.html#/deptassureOrder">返回</a>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="item">部门担保额度</div>
+<table class="orangestyle table">
+    <thead>
+    <tr>
+        <th>部门</th>
+        <th>部门担保额度</th>
+        <th>部门担保已使用额度</th>
+        <th>部门担保剩余额度</th>
+        <th>记录人</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in dataList">
+        <td>{{list.orgname}}</td>
+        <td ng-show="false">{{list.orgid}}</td>
+        <td>{{list.deptlimit| currency : '￥'}}</td>
+        <td>{{list.deptused| currency : '￥'}}</td>
+        <td>{{list.deptunused| currency : '￥'}}</td>
+        <td>{{list.username}}</td>
+        <td class="czBtn padL12">
+
+            <a ng-if="opprev.deptlimit_delete" class="handleBtn delBtn" href="javascript:;" ng-show="list.deptused=='0'" ng-click="bkDelet(list._id,$index)" title="删除"></a>
+
+            <a class="handleBtn delBtn disabled " ng-hide="list.deptused=='0'" href="javascript:;" title="删除"></a>
+            <a ng-if="opprev.deptlimit_change" class="handleBtn editBtn" ng-click="bkEdit(list._id,$index)" href="javascript:;" title="修改"></a>
+
+        </td>
+    </tr>
+    <tr class="tip"><td colspan="7">没有查到部门担保</td></tr>
+    </tbody>
+</table>
+<pagination conf="paginationConf"></pagination>
+<div id="bmdbsfBox" class="dialog cusBox" title="" ng-include="'template/deptassure/deptlimitBox.html'"></div>
+<div id="deptlimitEdit" class="dialog cusBox" title="" ng-include="'template/deptassure/deptlimitEdit.html'"></div>
+<div id="emBox" class="emBox" title="选择部门" style="display:none">
+    <div class="employeeTip">
+        <h5>
+            <span><a ng-click="getEmployee()" href="javascript:;">中建材信息技术</a>&gt</span>
+            <span ng-repeat="list in employeeNav"><a ng-click="getEmployee(list._id,list.orgname)" href="javascript:;">{{list.orgname}}</a>&gt</span>
+        </h5>
+        <ul>
+            <li ng-repeat="list in employeeList"><a  ng-click="getEmployee(list._id,list.orgname)" href="javascript:;">{{list.orgname}}（{{list.grandsoncount}}）</a></li>
+        </ul>
+    </div>
+</div>
+-->
+
+
+
+
+<h3 class="genTitle genTitleBot"><em></em><span>部门担保额度设置</span></h3>
+<div id="tabs">
+    <ul class="generNav" ng-init="ht.activeTab = 1">
+        <li ng-class="{active:ht.activeTab == 1}"><a href="javascript:;" ng-mousedown='htTab(1)'>一级部门额度管理</a></li>
+        <li ng-class="{active:ht.activeTab == 2}"><a href="javascript:;" ng-mousedown='htTab(2)'>子部门额度管理</a></li>
+    </ul>
+    <div class="cusCont tab_cont">
+        <div  ng-show="ht.activeTab == 1">
+            <div class="genSearch">
+                <table>
+                    <tr>
+                        <td>
+                            <a ng-if="opprev.deptlimit_add" class="searchbtn2 searchbtn2bot addBtn" href="javascript:;" ng-click="bmdbsfBox()">添加</a>
+                            <a class="searchbtn2 searchbtn2bot" href="index.html#/deptassureOrder">返回</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="item">部门担保额度</div>
+            <table class="orangestyle table">
+                <thead>
+                <tr>
+                    <th>部门</th>
+                    <th>部门担保额度</th>
+                    <th>部门担保已使用额度</th>
+                    <th>部门担保剩余额度</th>
+                    <th>记录人</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody ng-class="dataList1.length > 0 ? 'meg' : 'noMegTip'">
+                <tr ng-repeat="list in dataList1">
+                    <td>{{list.orgname}}</td>
+                    <td ng-show="false">{{list.orgid}}</td>
+                    <td>{{list.deptlimit| currency : '￥'}}</td>
+                    <td>{{list.deptused| currency : '￥'}}</td>
+                    <td>{{list.deptunused| currency : '￥'}}</td>
+                    <td>{{list.username}}</td>
+                    <td class="czBtn padL12">
+
+                        <a ng-if="opprev.deptlimit_delete" class="handleBtn delBtn" href="javascript:;" ng-show="list.deptused=='0'" ng-click="bkDelet(list._id,$index)" title="删除"></a>
+
+                        <a class="handleBtn delBtn disabled " ng-hide="list.deptused=='0'" href="javascript:;" title="删除"></a>
+                        <a ng-if="opprev.deptlimit_change" class="handleBtn editBtn" ng-click="bkEdit(list._id,$index)" href="javascript:;" title="修改"></a>
+
+                    </td>
+                </tr>
+                <tr class="tip"><td colspan="7">没有查到部门担保</td></tr>
+                </tbody>
+            </table>
+            <pagination conf="paginationConf" ng-if="ht.activeTab == 1"></pagination>
+
+
+        </div>
+        <div class="ng-hide" ng-show="ht.activeTab == 2">
+            <div class="genSearch">
+                <table>
+                    <tr>
+                        <td>
+                            <a ng-if="opprev.deptlimit_add" class="searchbtn2 searchbtn2bot addBtn" href="javascript:;" ng-click="bmdbsfBox()">添加</a>
+                            <a class="searchbtn2 searchbtn2bot" href="index.html#/deptassureOrder">返回</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="item">部门担保额度</div>
+            <table class="orangestyle table">
+                <thead>
+                <tr>
+                    <th>部门</th>
+                    <th>部门担保额度</th>
+                    <th>部门担保已使用额度</th>
+                    <th>部门担保剩余额度</th>
+                    <th>记录人</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody ng-class="dataList2.length > 0 ? 'meg' : 'noMegTip'">
+                <tr ng-repeat="list in dataList2">
+                    <td>{{list.orgname}}</td>
+                    <td ng-show="false">{{list.orgid}}</td>
+                    <td>{{list.deptlimit| currency : '￥'}}</td>
+                    <td>{{list.deptused| currency : '￥'}}</td>
+                    <td>{{list.deptunused| currency : '￥'}}</td>
+                    <td>{{list.username}}</td>
+                    <td class="czBtn padL12">
+
+                        <a ng-if="opprev.deptlimit_delete" class="handleBtn delBtn" href="javascript:;" ng-show="list.deptused=='0'" ng-click="bkDelet(list._id,$index)" title="删除"></a>
+
+                        <a class="handleBtn delBtn disabled " ng-hide="list.deptused=='0'" href="javascript:;" title="删除"></a>
+                        <a ng-if="opprev.deptlimit_change" class="handleBtn editBtn" ng-click="bkEdit(list._id,$index)" href="javascript:;" title="修改"></a>
+
+                    </td>
+                </tr>
+                <tr class="tip"><td colspan="7">没有查到部门担保</td></tr>
+                </tbody>
+            </table>
+            <pagination conf="paginationConf" ng-if="ht.activeTab == 2"></pagination>
+        </div>
+
+    </div>
+</div>
+<div id="emBox" class="emBox" title="选择部门" style="display:none">
+    <div class="employeeTip">
+        <h5>
+            <span><a ng-click="getEmployee()" href="javascript:;">中建材信息技术</a>&gt</span>
+            <span ng-repeat="list in employeeNav"><a ng-click="getEmployee(list._id,list.orgname,list.level,list.pid)" href="javascript:;">{{list.orgname}}</a>&gt</span>
+        </h5>
+        <ul>
+            <li ng-repeat="list in employeeList">
+                <a ng-hide="list.level==0&&level==1&&list._id!='5742a607779ec2cb740517f7'" ng-click="getEmployee(list._id,list.orgname,list.level,list.pid)" href="javascript:;">{{list.orgname}}（{{list.grandsoncount}}）</a>
+                <a  ng-show="list.level==0&&level==1&&list._id!='5742a607779ec2cb740517f7'" ng-disabled="true" href="javascript:;">{{list.orgname}}（{{list.grandsoncount}}）</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div id="bmdbsfBox" class="dialog cusBox" title="" ng-include="'template/deptassure/deptlimitBox.html'"></div>
+<div id="bmdbsfBox2" class="dialog cusBox" title="" ng-include="'template/deptassure/deptlimitBox2.html'"></div>
+<div id="deptlimitEdit" class="dialog cusBox" title="" ng-include="'template/deptassure/deptlimitEdit.html'"></div>

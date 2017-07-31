@@ -1,0 +1,183 @@
+<h3 class="genTitle genTitleBot"><em></em><span>放货申请单</span></h3>
+<ul class="generNav" ng-init="ht.activeTab = 1">
+    <li ng-class="{active:ht.activeTab == 1}"><a href="javascript:;" ng-mousedown="ht.activeTab = 1">放货申请单</a></li>
+    <li ng-class="{active:ht.activeTab == 2}" ng-hide="loading" ng-init="loading=false"><a href="javascript:;" ng-mousedown="ht.activeTab = 2">客户信用情况</a></li>
+</ul>
+<div class=" ng-scope ng-hide" ng-show="ht.activeTab == 1">
+<div class="cusCont">
+    <div class="viewTable ng-scope">
+        <div class="genTitle2">
+            <div>
+                <strong>基本信息</strong>
+            </div>
+        </div>
+        <form novalidate name="invoiceForm">
+            <ul>
+                <li class="tli"><strong>放货单编号：</strong><span>{{ADD_DATA.code}}</span></li>
+                <li class="tli"><strong>单据编号：</strong><span>{{ADD_DATA.contract.code}}</span></li>
+                <li class="tli"><strong>申请部门：</strong><span>{{ADD_DATA.contract.department}}</span></li>
+                <li class="tli"><strong>销售订单号：</strong><span>{{ADD_DATA.contract.ordercode}}</span></li>
+                <li class="tli"><strong>销售人员姓名：</strong><span>{{ADD_DATA.contract.sale}}</span></li>
+                <li class="tli"><strong>客户名称：</strong><span>{{ADD_DATA.contract.client}}</span></li>
+                <li class="tli"><strong>要求签收方式：</strong><span>{{ADD_DATA.dest.sign}}</span></li>
+                <li class="tli"><strong>运输方式：</strong><span>{{enumTransType[ADD_DATA.dest.transtype]}}</span></li>
+                <li class="tli"><strong>放货总金额：</strong><span>{{ADD_DATA.money}}</span></li>
+                <li class="tli"><strong>库房名称：</strong><span>{{kufang}}</span></li>
+                <li class="tli"><strong>要求到货日期：</strong><span>{{ADD_DATA.deliverydate| date: 'yyyy-MM-dd'}}</span></li>
+                <li class="tli"><strong>邮箱：</strong><span>{{ADD_DATA.licenceemail}}</span></li>
+                <li class="tli"><strong>交货单号：</strong><span>{{ADD_DATA.sapcode}}</span></li>
+                <li class="tli"><strong>出库方式：</strong><span>{{cargooutType[ADD_DATA.dest.cargoouttype]}}</span></li>
+                <li class="clear"></li>
+                <li class="list_con"><strong>签收单备注：</strong><span>{{ADD_DATA.note}}</span></li>
+                <div class="genTitle2">
+                    <div>
+                        <strong>物流信息</strong>
+                    </div>
+                </div>
+                <li class="tli">
+                    <strong><font ng-if="btLable">*</font>物流运输方式：</strong>
+                    <select ng-options="m as n for (m , n) in enumTransType" ng-disabled="qxxgDate" ng-model="ADD_DATA.logistics.transtype" ng-required="required">
+                        <option value="">请选择</option>
+                    </select>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.transtype.$dirty && invoiceForm.transtype.$error.required">必填</span>
+                </li>
+                <li class="tli">
+                    <strong><font ng-if="btLable">*</font>物流预计到货日期：</strong>
+                    <input type="text" class="Wdate" placeholder="" class="" date-Picker ng-disabled="qxxgDate" ng-model="ADD_DATA.logistics.expectdate" ng-required="required">
+                    <span class="errTip ng-hide" ng-show="invoiceForm.expectdate.$dirty && invoiceForm.expectdate.$error.required">必填</span>
+                </li>
+                <li class="tli">
+                    <strong><font ng-if="btLable">*</font>承运商：</strong>
+                    <select ng-model="ADD_DATA.logistics.carrier" ng-disabled="qxxgDate" ng-options="m as n for (m , n) in enumCarrier" ng-required="required">
+                        <option value="">请选择</option>
+                    </select>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.carrier.$dirty && invoiceForm.carrier.$error.required">必填</span>
+                </li>
+                <li class="tli">
+                    <strong>省份：</strong>
+                    <input type="text" placeholder="" class="" ng-disabled="true" ng-disabled="true" value="{{ADD_DATA.logistics.province  | province:countryData}}">
+                </li>
+                <div class="clear"></div>
+                <li >
+                    <a style="float: left" target="_blank" href="/index.html#/bmdbList?cusName={{ADD_DATA.contract.client}}" class="searchbtn2 searchbtn2bot addBtn">部门担保情况</a>
+                </li>
+            </ul>
+            <div class="addTable">
+                <div class="genTitle2">
+                    <div>
+                        <strong>送货地址信息</strong>
+                    </div>
+                </div>
+                <table class="tab_data">
+                    <thead class="tab_header">
+                    <tr>
+                        <th>站点</th>
+                        <th>省</th>
+                        <th>市</th>
+                        <th>收货人姓名</th>
+                        <th>固定电话</th>
+                        <th>手机号码</th>
+                        <th>详细地址</th>
+                        <th>邮编</th>
+                    </thead>
+                    <tbody class="tab_body">
+                    <tr ng-repeat="list in glCgList">
+                        <td>{{list.station}}</td>
+                        <td>{{list.province | province:countryData}}</td>
+                        <td>{{list.city | province:countryData}}</td>
+                        <td>{{list.contact}}</td>
+                        <td>{{list.phone}}</td>
+                        <td>{{list.mobile}}</td>
+                        <td>{{list.address}}</td>
+                        <td>{{list.postcode}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="clear"></div>
+            <div class="addTable">
+                <div class="genTitle2">
+                    <div>
+                        <strong>送货清单信息</strong>
+                    </div>
+                </div>
+                <div style=" overflow-y: scroll; width: 100%;height: 300px">
+                <table class="tab_data" ng-show="materialAdd">
+                    <thead class="tab_header">
+                    <tr>
+                        <th>行项目号</th>
+                        <th>内部物料编码</th>
+                        <th>原厂物料编码</th>
+                        <th>型号</th>
+                        <th>描述</th>
+                        <th>放货数量</th>
+                        <th>原单价</th>
+                        <th>放货单价</th>
+                        <th>放货小计</th>
+                        <th>库房名称</th>
+                    </tr>
+                    </thead>
+                    <tbody class="tab_body">
+                    <tr ng-repeat="list in addCgList">
+                        <td>{{list.posnr}}</td>
+                        <td>{{list.code}}</td>
+                        <td>{{list.oemcode}}</td>
+                        <td>{{list.model}}</td>
+                        <td title="{{list.note}}">{{list.note | cutfield:true:10:'...'}}</td>
+                        <td>{{list.sum}}</td>
+                        <td>{{list.price}}</td>
+                        <td>{{list.zprice}}</td>
+                        <td>{{list.amount.toFixed(2)}}</td>
+                        <td>{{siteDepot[list.lgort]}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <table class="tab_data" ng-show="materialChange">
+                    <thead class="tab_header">
+                    <tr>
+                        <th>行项目号</th>
+                        <th>内部物料编码</th>
+                        <th>原厂物料编码</th>
+                        <th>型号</th>
+                        <th>描述</th>
+                        <th>放货数量</th>
+                        <th>原单价</th>
+                        <th>放货单价</th>
+                        <th>放货小计</th>
+                        <th>库房名称</th>
+                        <th>修改数量</th>
+                    </tr>
+                    </thead>
+                    <tbody class="tab_body">
+                    <tr ng-repeat="list in addCgList">
+                        <td>{{list.posnr}}</td>
+                        <td>{{list.code}}</td>
+                        <td>{{list.oemcode}}</td>
+                        <td>{{list.model}}</td>
+                        <td title="{{list.note}}">{{list.note | cutfield:true:10:'...'}}</td>
+                        <td>{{list.sum}}</td>
+                        <td>{{list.price}}</td>
+                        <td>{{list.zprice}}</td>
+                        <td>{{list.amount.toFixed(2)}}</td>
+                        <td>{{siteDepot[list.lgort]}}</td>
+                        <td><input style="width:80px;" type="text" ng-model="list.newsum" ng-disabled="true" ng-change="changeData($index,list.sum,list.newsum)"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="clear"></div>
+<div class="gerSub">
+   <!-- <button class="subSave" ng-click="applyDelete(applyObj)" ng-if="deleteBtn">删除</button>-->
+    <a class="subSave" href="index.html#/productoutEdit?processId={{processId}}&nodeId={{nodeId}}&ordercode={{ADD_DATA.contract.ordercode}}" ng-if="editBtn">编辑</a>
+</div>
+    <div class="apCot" ng-if="apCot" >
+        <div ng-include="'template/common/apply.html'"></div>
+    </div>
+</div>
+
+<div class="viewTable ng-scope ng-hide" ng-show="ht.activeTab == 2" ng-include="'template/credit/creditTab.html'" ng-controller="creditTabCtrl"></div>
+<div id="approversDialog" class="dialog cusBox" title="选择下一审批人" ng-include="'template/common/approvers.html'" ></div>

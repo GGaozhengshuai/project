@@ -1,0 +1,142 @@
+<h3 class="genTitle genTitleBot"><em></em>
+  <span>放货申请单</span>
+  <span ng-if="activeTab == 2">审批详情</span>
+</h3>
+<ul class="generNav">
+  <li ng-class="{active:activeTab == 1}"><a href="javascript:void(0);" ng-mousedown='htTab(1)'>放货申请单查看</a></li>
+  <li ng-class="{active:activeTab == 2}"><a href="javascript:void(0);" ng-mousedown='htTab(2)'>审批详情</a></li>
+</ul>
+<div class="cusCont">
+    <div class="viewTable ng-scope">
+      <div ng-if="activeTab == 1">
+        <div class="genTitle2">
+            <div>
+                <strong>基本信息</strong>
+            </div>
+        </div>
+        <form novalidate name="invoiceForm">
+            <ul>
+                <li class="tli"><strong>放货单编号：</strong><span>{{cargo_DATA.code}}</span></li>
+                <li class="tli"><strong>单据编号：</strong><span>{{cargo_DATA.contract.code}}</span></li>
+                <li class="tli"><strong>申请部门：</strong><span>{{cargo_DATA.contract.department}}</span></li>
+                <li class="tli"><strong>销售订单号：</strong><span>{{cargo_DATA.contract.ordercode}}</span></li>
+                <li class="tli"><strong>销售人员姓名：</strong><span>{{cargo_DATA.contract.sale}}</span></li>
+                <li class="tli"><strong>客户名称：</strong><span>{{cargo_DATA.contract.client}}</span></li>
+                <li class="tli"><strong>要求签收方式：</strong><span>{{cargo_DATA.dest.sign}}</span></li>
+                <li class="tli"><strong>运输方式：</strong><span>{{signWay[cargo_DATA.dest.transtype]}}</span></li>
+               <!-- <li class="tli"><strong>预计到货天数：</strong><span>{{}}</span></li>-->
+                <li class="tli"><strong>库房名称：</strong><span>{{kufang}}</span></li>
+                <li class="tli"><strong>要求到货日期：</strong><span>{{cargo_DATA.deliverydate | date: 'yyyy-MM-dd'}}</span></li>
+                <li class="tli"><strong>邮箱：</strong><span>{{cargo_DATA.licenceemail}}</span></li>
+                <li class="tli"><strong>交货单号：</strong><span>{{cargo_DATA.sapcode}}</span></li>
+                <li class="tli"><strong>出库方式：</strong><span>{{cargooutType[cargo_DATA.dest.cargoouttype]}}</span></li>
+                <li class="tli"><strong>放货总金额：</strong><span>{{cargo_DATA.money | currency : '￥'}}</span></li>
+                <li class="clear"></li>
+                <li class="list_con"><strong>签收单备注：</strong><span>{{cargo_DATA.note}}</span></li>
+                <div class="genTitle2">
+                    <div>
+                        <strong>物流信息</strong>
+                    </div>
+                </div>
+                <li class="tli"><strong>物流运输方式：</strong><span>{{signWay[cargo_DATA.logistics.transtype]}}</span></li>
+                <li class="tli"><strong>物流预计到货日期：</strong><span>{{cargo_DATA.logistics.expectdate | date: 'yyyy-MM-dd'}}</span></li>
+                <li class="tli"><strong>承运商：</strong><span>{{enumCarrier[cargo_DATA.logistics.carrier]}}</span></li>
+                <li class="tli"><strong>省份：</strong><span>{{cargo_DATA.logistics.province | province:countryData}}</span></li>
+            </ul>
+            <div class="addTable">
+                <div class="genTitle2">
+                    <div>
+                        <strong>送货地址信息</strong>
+                    </div>
+                </div>
+                <table class="tab_data">
+                    <thead class="tab_header">
+                    <tr>
+                        <th>站点</th>
+                        <th>省</th>
+                        <th>市</th>
+                        <th>收货人姓名</th>
+                        <th>固定电话</th>
+                        <th>手机号码</th>
+                        <th>详细地址</th>
+                        <th>邮编</th>
+                    </thead>
+                    <tbody class="tab_body">
+                    <tr ng-repeat="list in viewList">
+                        <td>{{list.station}}</td>
+                        <td>{{list.province | province:countryData}}</td>
+                        <td>{{list.city | province:countryData}}</td>
+                        <td>{{list.contact}}</td>
+                        <td>{{list.phone}}</td>
+                        <td>{{list.mobile}}</td>
+                        <td>{{list.address}}</td>
+                        <td>{{list.postcode}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="clear"></div>
+            <div class="addTable">
+                <div class="genTitle2">
+                    <div>
+                        <strong>送货清单信息</strong>
+                    </div>
+                </div>
+                <div style=" overflow-y: scroll; width: 100%;height: 300px">
+                <table class="tab_data">
+                    <thead class="tab_header">
+                    <tr>
+                        <th>行项目号</th>
+                        <th>内部物料编码</th>
+                        <th>原厂物料编码</th>
+                        <th>型号</th>
+                        <th>描述</th>
+                        <th>放货数量</th>
+                        <th>原单价</th>
+                        <th>放货小计</th>
+                        <th>库房名称</th>
+                    </tr>
+                    </thead>
+                    <tbody class="tab_body">
+                    <tr ng-repeat="list in invoiceCgList">
+                        <td>{{list.posnr}}</td>
+                        <td>{{list.code}}</td>
+                        <td>{{list.oemcode}}</td>
+                        <td>{{list.model}}</td>
+                        <td title="{{list.note}}">{{list.note | cutfield:true:10:'...'}}</td>
+                        <td>{{list.sum}}</td>
+                        <td>{{list.zprice}}</td>
+                        <td>{{list.amount.toFixed(2)}}</td>
+                        <td>{{siteDepot[list.lgort]}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        </form>
+      </div>
+      <div class="applyLog" ng-if="activeTab == 2">
+        <table>
+          <thead>
+          <tr>
+            <th class="th1">审批人</th>
+            <th class="th2">审批时间</th>
+            <th class="th3">审批状态</th>
+            <th class="th4">审批意见</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="list in processlog">
+            <td>{{list.sender.name}}</td>
+            <td>{{list.createDate | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td>{{list.operation}}</td>
+            <td>{{list.content.comment}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+</div>
+<div class="gerSub">
+    <a class="subSave changqdBtn" href="" ng-if="opprev.productoutOrder_change1" ng-click="ViewChange(cargo_DATA._id,cargo_DATA.xtph)">变更</a>
+</div>

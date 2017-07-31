@@ -1,0 +1,67 @@
+<h3 class="genTitle genTitleBot"><em></em><span>新增签报</span></h3>
+<div class="cusCont">
+    <div class="generForm">
+        <form novalidate name="myForm">
+            <ul>
+                <!--<li class="tli">
+                    <strong>签报单号：</strong>
+                    <input type="text" ng-disabled="true" placeholder="系统自动生成"/>
+                </li>-->
+                <li class="tli">
+                    <strong><font>*</font>签报人：</strong>
+                    <input ng-required="true" ui-autocomplete="userOption" ng-model="ORDER_DATA.signpeople" ng-Focus name="signpeople" type="text" placeholder="请输入姓名" />
+                    <input ng-model="ORDER_DATA.signpeopleid" type="hidden" placeholder=""/>
+                    <input ng-model="ORDER_DATA.creator" type="hidden" placeholder=""/>
+                    <span class="errTip ng-hide" ng-show="myForm.signpeople.$dirty && myForm.signpeople.$error.required && !myForm.signpeople.$focused">必填</span>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>签报类型：</strong>
+                    <select ng-model="ORDER_DATA.signtype" ng-required="true" name="signtype">
+                        <option value="">请选择</option>
+                        <option value="提前交货">提前交货</option>
+                        <option value="投标">投标</option>
+                        <option value="诉讼">诉讼</option>
+                        <option value="办公费用">办公费用</option>
+                        <option value="市场活动">市场活动</option>
+                        <option value="其他">其他</option>
+                    </select>
+                  <span class="errTip ng-hide" ng-show="myForm.signtype.$dirty && myForm.signtype.$error.required && !myForm.signtype.$focused">必填</span>
+                </li>
+                <li class="tli">
+                    <strong>签报部门：</strong>
+                    <input ng-disabled="true" ng-model="ORDER_DATA.signdept" type="text"/>
+                    <input type="hidden" value="" ng-model="ORDER_DATA.department.id"/>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>金额：</strong>
+                    <input  ng-required="true" ng-model="ORDER_DATA.money" name="money" type="text" ng-Focus numtwo-Validation placeholder="保留两位小数"/>
+                    <span class="errTip ng-hide" ng-show="myForm.money.$dirty && myForm.money.$error.numtwo && !myForm.money.$focused">小数点后保留两位</span>
+                    <span class="errTip ng-hide" ng-show="myForm.money.$dirty && myForm.money.$error.required && !myForm.money.$focused">必填</span>
+                </li>
+                <li class="clear"></li>
+                <li>
+                    <strong><font>*</font>会签单位：</strong>
+                    <!--<input type="text" ng-model="ORDER_DATA.signunit" name="signunit" ng-Focus ng-required="true">-->
+                    <textarea style="height: 30px" ng-model="ORDER_DATA.signunit" name="signunit" ng-Focus ng-required="true" ></textarea>
+                    <span class="errTip ng-hide" ng-show="myForm.signunit.$dirty && myForm.signunit.$error.required && !myForm.signunit.$focused">必填</span>
+                </li>
+                <li>
+                    <strong>签报标题：</strong>
+                    <textarea style="height: 90px" ng-model="ORDER_DATA.signtitle" ></textarea>
+                </li>
+                <li>
+                    <strong><font>*</font>签报内容：</strong>
+                    <textarea style="height: 280px" ng-model="ORDER_DATA.signcontent" name="signcontent" ng-Focus  ng-required="true" ></textarea>
+                    <span class="errTip ng-hide" ng-show="myForm.signcontent.$dirty && myForm.signcontent.$error.required && !myForm.signcontent.$focused">必填</span>
+                </li>
+            </ul>
+            <div class="gerSub">
+                <a href="index.html#/signOrder">返回</a>
+                <!--<button ng-click="addData(ORDER_DATA, 'save')"  ng-class="myForm.$invalid == true ? 'displaySub' : 'subSave'" ng-disabled="incomeForm.$invalid || invoRready">保存</button>
+                <button ng-click="addData(ORDER_DATA, 'apply')"  ng-class="myForm.$invalid == true ? 'displaySub' : 'subApply'" ng-disabled="incomeForm.$invalid || invoRready">保存并提交</button>-->
+                <button ng-click="addData(ORDER_DATA, 'save')" class="subSave" >保存</button>
+                <button ng-click="addData(ORDER_DATA, 'apply')" class="subApply" >保存并提交</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,85 @@
+<h3 class="genTitle genTitleBot"><em></em><span>还款</span></h3>
+<div class="cusCont">
+    <div class="generForm">
+        <form novalidate name="myForm">
+            <ul>
+                <li>
+                    <strong><font>*</font>借款人：</strong>
+                    <input type="text" ng-model="username" ng-required="true">
+                    <input style="width: 80px; margin: 0 0 10px 10px; line-height: 30px;" type="button" value="查询" class="searchbtn2 searchbtn2bot" ng-click="search()">
+                </li>
+            </ul>
+            <div class="addTable">
+                <table>
+                    <tr>
+                        <th>借款单编号</th>
+                        <th>借款人</th>
+                        <th>借款部门</th>
+                        <th class="right">借款金额</th>
+                        <th class="right">本单未还金额</th>
+                        <th>借款凭证号</th>
+                        <th>借款日期</th>
+                        <th class="right">该单本次还款金额</th>
+                    </tr>
+                    <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+                    <tr ng-repeat="list in dataList">
+                        <td>{{list.info.code}}</td>
+                        <td>{{list.info.user.name}}</td>
+                        <td>{{list.info.department.name}}</td>
+                        <td class="right">{{list.info.brw_amount | currency : '￥'}}</td>
+                        <td class="right">{{list.info.cur_brw | currency : '￥'}}</td>
+                        <td>{{list.info.brw_sapsn}}</td>
+                        <td>{{list.info.brw_date | date: 'yyyy-MM-dd'}}</td>
+                        <td class="right">{{list.info.rep_amount}}</td>
+
+                    </tr>
+                    <tr class="tip">
+                        <td colspan="8" style="text-align: left;"><span>没有查到借款单</span></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <!--<pagination conf="paginationConf"></pagination>-->
+            </div>
+            <p style="padding: 20px 20px 0 20px;" ng-hide="!dataList.length">个人未还金额合计：{{amountTotal | currency : '￥' }}</p>
+            <ul class="ng-hide" ng-show="dataList.length">
+                <li class="tli">
+                    <strong><font>*</font>本次还款金额：</strong>
+                    <input type="text" ng-Focus numtwo-Validation name="reptotal" ng-blur="repTotalsplit()" ng-required="true" ng-model="ORDER_DATA.certdate.rep_total">
+                  <span class="errTip ng-hide" ng-show="myForm.reptotal.$dirty && myForm.reptotal.$error.numtwo && !myForm.reptotal.$focused">小数点后保留两位</span>
+                  <span class="errTip ng-hide" ng-show="myForm.reptotal.$dirty && myForm.reptotal.$error.required && !myForm.reptotal.$focused">必填</span></li>
+                <li class="tli">
+                    <strong>还款日期：</strong>
+                    <input class="text" type="text" ng-model="ORDER_DATA.certdate.rep_date" ng-disabled="true">
+                </li>
+
+                <li class="tli">
+                    <strong><font>*</font>还款方式：</strong>
+                    <select ng-model="ORDER_DATA.certdate.rep_type" ng-init="ORDER_DATA.certdate.rep_type='02'" ng-change="changeFKType(ORDER_DATA.certdate.rep_type)" name="returnfin" ng-required="true">
+                        <option value="02">非现金</option>
+                        <option value="01">现金</option>
+                    </select>
+                    <span class="errTip ng-hide" ng-show="myForm.returnfin.$dirty && userForm.returnfin.$error.required">必填</span>
+                </li>
+                <li class="tli" ng-class="ORDER_DATA.certdate.rep_type=='02' ? '' : 'visibhidden'">
+                    <strong><font>*</font>还款银行：</strong>
+                    <select ng-required="ORDER_DATA.certdate.rep_type=='02'" ng-model="ORDER_DATA.certdate.rep_bank" name="fkBank">
+                        <option value="">请选择</option>
+                        <option ng-repeat="(a,b) in payBankList" value="{{a}}">{{b}}</option>
+
+                    </select>
+                    <span class="errTip ng-hide" ng-show="myForm.fkBank.$dirty && myForm.fkBank .$error.required">必填</span>
+                </li>
+                <li class="tli">
+                    <strong>财务执行人员：</strong>
+                    <input class="text" type="text" ng-model="ORDER_DATA.certdate.rep_user.name" ng-disabled="true">
+                    <input type="hidden" ng-model="ORDER_DATA.certdate.rep_user._id">
+                    <input type="hidden" ng-model="ORDER_DATA.certdate.rep_user.login">
+                </li>
+            </ul>
+        </form>
+        <div class="gerSub">
+            <a href="index.html#/loanManageOrder">取消</a>
+            <button ng-click="returnoff(ORDER_DATA)"  class="subSave">还款</button>
+        </div>
+    </div>
+</div>

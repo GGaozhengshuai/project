@@ -1,0 +1,132 @@
+<h3 class="genTitle"><em></em><span>采购申请</span></h3>
+<ul class="generNav" ng-init="ht.activeTab = 1">
+    <li ng-class="{active:ht.activeTab == 1}"><a href="javascript:;" ng-mousedown="ht.activeTab = 1">采购申请单</a></li>
+    <li ng-class="{active:ht.activeTab == 2}" ng-hide="loading" ng-init="loading=false"><a href="javascript:;" ng-mousedown="htTab(purchaseList.BANFN,2)">查看审批记录</a></li>
+    <li ng-class="{active:ht.activeTab == 3}" ng-hide="loading" ng-init="loading=false"><a href="javascript:;" ng-mousedown="htTab(purchaseList.BANFN,3)">引用查询记录</a></li>
+</ul>
+<div class="czAddBtn">
+
+    <div  class="czAddBtn">
+        <a href="" class="downloadmb" ng-click="downLoad()">下载清单</a>
+        <a target="_blank" href="/print/printest.html?uri=/purchase/printview&BANFN={{purchaseList.BANFN}}" class="viewBtn">打印</a></div>
+
+</div>
+<div class=" ng-scope ng-hide" ng-show="ht.activeTab == 1">
+    <div id="mainView">
+        <div class="viewTable ng-scope">
+            <ul>
+                <li><strong>采购申请号：</strong><span>{{purchaseList.BANFN}}</span></li>
+                <li><strong>凭证日期：</strong><span>{{purchaseList.ERDAT}}</span></li>
+                <li><strong>供应商订单号：</strong><span>{{purchaseList.ZZPO}}</span></li>
+                <li><strong>采购申请凭证类型：</strong><span>{{enumObj.BSART[purchaseList.BSART]}}</span></li>
+                <li><strong>供应商名称：</strong><span>{{purchaseList.ZZQY}}</span></li>
+                <li><strong>产品线：</strong><span>{{enumObj.ZZCP[purchaseList.ZZCP]}}</span></li>
+                <li><strong>项目名称：</strong><span>{{purchaseList.ZZXM}}</span></li>
+                <li><strong>销售员：</strong><span>{{purchaseList.ZSQRID && purchaseList.ZZSQR}}</span></li>
+                <li><strong>二级经销商名称：</strong><span>{{purchaseList.ZZEJ}}</span></li>
+                <!--<li><strong>预计销售利润(%)：</strong><span>{{purchaseList.ZZXS}}</span></li>-->
+                <li><strong>最终客户名称：</strong><span>{{purchaseList.ZZKH}}</span></li>
+                <li><strong>预计交货日期：</strong><span>{{purchaseList.ZZJH}}</span></li>
+                <li><strong>运输方式：</strong><span>{{enumObj.ZZYS[purchaseList.ZZYS] || purchaseList.ZZYS}}</span></li>
+                <li><strong>付款方式：</strong><span>{{purchaseList.ZZFK}}</span></li>
+                <!--<li><strong>贸易条款：</strong><span>{{purchaseList.ZZMY}}</span></li>-->
+                <li><strong>价格条款附加信息：</strong><span>{{purchaseList.ZZFJ}}</span></li>
+                <li><strong>进货总金额：</strong><span>{{purchaseList.ZZZJY | number : 2}}</span></li>
+                <li><strong>进货设备金额：</strong><span>{{purchaseList.ZZSBK | number : 2}}</span></li>
+                <li><strong>进货服务金额：</strong><span>{{purchaseList.ZZFWK | number : 2}}</span></li>
+                <li><strong>币别：</strong><span>{{enumObj.WAERS[purchaseList.WAERS]}}</span></li>
+                <li><strong>采购组：</strong><span>{{enumObj.EKGRP[purchaseList.EKGRP]}}</span></li>
+                <li><strong>申请人：</strong><span>{{purchaseList.ERNAM}}</span></li>
+                <li class="list_con"><strong>项目说明：</strong><span>{{purchaseList.note}}</span></li>
+                <li class="list_con"><strong>备注：</strong><span>{{purchaseList.comment}}</span></li>
+                <!--<li class="list_con"><strong>采购申请清单</strong></li>-->
+            </ul>
+            <div class="addTable">
+                <h5>采购申请清单</h5>
+                <div class="czAddBtn">
+                    <a href="javascript:;" ng-if="purchaseList.ZFLAG_RL == 'X' && !purchaseList.ZSQRID && opprev.purchaseList_claim1" ng-click="claim()">认领</a>
+                </div>
+            <table class="tab_data">
+                <thead class="tab_header">
+                <tr>
+                    <th>行项目</th>
+                    <th>物料类型</th>
+                    <th>物料组</th>
+                    <th>物料编码</th>
+                    <th>物料描述</th>
+                    <th>数量</th>
+                    <th>单位</th>
+                    <th>税率</th>
+                    <th>估价</th>
+                </tr>
+                </thead>
+                <tbody class="tab_body">
+                <tr ng-repeat="list in dataList">
+                    <td>{{list.BNFPO}}</td>
+                    <td>{{enumObj.MTART[list.MTART]}}</td>
+                    <td>{{enumObj.MATKL[list.MATKL]}}</td>
+                    <td>{{list.MATNR}}</td>
+                    <td>{{list.TXZ01}}</td>
+                    <td>{{list.MENGE}}</td>
+                    <td>{{enumObj.MEINS[list.MEINS]}}</td>
+                    <td>{{enumObj.ZMWSKZ[list.ZMWSKZ]}}</td>
+                    <td>{{list.PREIS | number : 2}}</td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+        </div>
+        <pagination conf="paginationConf"></pagination>
+
+    </div>
+</div>
+<div class="ng-hide" ng-show="ht.activeTab == 2">
+    <div class="applyLog">
+        <table>
+            <thead>
+            <tr>
+                <th class="th1">审批人</th>
+                <th class="th2">审批时间</th>
+                <th class="th3">审批状态</th>
+                <th class="th4">审批意见</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="list in processlog">
+                <td>{{list.sender.name}}</td>
+                <td>{{list.createDate | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td>{{list.operation}}</td>
+                <td>{{list.content.comment}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="ng-hide" ng-show="ht.activeTab == 3">
+    <div class="applyLog">
+        <table>
+            <thead>
+            <tr>
+                <th>行项目</th>
+                <th>内部物料编码</th>
+                <th>采购数量</th>
+                <th>引用数量</th>
+                <th>销售合同号</th>
+                <th>引用人</th>
+                <th>引用时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="list in quoteList">
+                <td>{{list.BNFPO}}</td>
+                <td>{{list.MATNR}}</td>
+                <td>{{list.MENGE}}</td>
+                <td>{{list.ZZQTY}}</td>
+                <td>{{list.BSTKD}}</td>
+                <td>{{list.ZUNAME}}</td>
+                <td>{{list.ZCRDAT}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

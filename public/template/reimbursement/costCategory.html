@@ -1,0 +1,33 @@
+<form novalidate name="selForm" class="generForm">
+    <ul class="ct">
+        <li class="ct_strip">
+            <strong ><font>*</font>费用种类：</strong>
+            <select ng-model="selectType.category" ng-change="selectType.costtype=''" name="category" ng-required="true">
+                <option value="">--请选择--</option>
+                <option ng-repeat="(x,y) in selectType.categorySel" value="{{x}}-{{y.text}}">{{y.text}}</option>
+            </select>
+            <span class="errTip ng-hide" ng-show="selForm.category.$dirty && selForm.category.$error.required">必填</span>
+        </li>
+        <!--<li class="ct_strip" ng-class="!selectType.categorySel[selectType.category].sub ? 'visibhidden' : ''">-->
+        <li class="ct_strip">
+            <strong><font>*</font>费用种类详情：</strong>
+            <select ng-model="selectType.costtype" ng-required="true" name="costtype" size="7" style="height: 120px;">
+                <option value="">--请选择--</option>
+                <option ng-if="y.status != 'x'" ng-repeat=" (x,y) in selectType.categorySel[selectType.category.split('-')[0]].sub" value="{{x}}-{{y.text}}">{{y.text}}</option>
+            </select>
+            <!--<span class="errTip ng-hide" ng-show="selForm.costtype.$dirty && selForm.costtype.$error.required">必填</span>-->
+        </li>
+        <!--<li class="ct_strip" ng-class="!categorySel[selectType.category].sub[selectType.costtype].sub ? 'visibhidden' : ''">
+            <strong><font>*</font>费用种类详情：</strong>
+            <select ng-model="selectType.typestr" ng-change="" ng-required="true" name="typestr" >
+                <option value="">&#45;&#45;请选择&#45;&#45;</option>
+                <option ng-repeat=" (x,y) in categorySel[selectType.category].sub[selectType.costtype].sub" value="{{x}}-{{y.text}}">{{y.text}}</option>
+            </select>
+            <span class="errTip ng-hide" ng-show="selForm.typestr.$dirty && selForm.typestr.$error.required">必填</span>
+        </li>-->
+        <li class="gerSub">
+            <button ng-click="selectTypeFn(selectType)" class="subSave">确定</button>
+        </li>
+
+    </ul>
+</form>

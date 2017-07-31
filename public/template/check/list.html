@@ -1,0 +1,59 @@
+<div class="item">盘点报告查询</div>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>盘点报告号</strong>
+                    <input class="text" type="text" placeholder="请输入盘点报告号" ng-model="RPNUM" ng-init="RPNUM=''" name="RPNUM">
+                </td>
+                <td>
+                    <strong>盘点仓库号</strong>
+                    <input class="text"  type="text"  placeholder="请输入盘点仓库号" name="LGNUM" ng-init="LGNUM=''" ng-model="LGNUM">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>盘点日期</strong>
+                    <input class="text Wdate"  date-Picker ng-readonly="true" type="text"  placeholder="请输入日期" name="RPDATE" ng-init="RPDATE=''" ng-model="RPDATE">
+                </td>
+                <td>
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+                </td>
+            </tr>
+
+        </table>
+    </div>
+</form>
+
+
+<div class="item">查询结果</div>
+<table class="orangestyle table">
+    <thead>
+    <tr>
+        <th>盘点报告号</th>
+        <th>盘点类型</th>
+        <th>盘点条件</th>
+        <th>盘点日期</th>
+        <th>盘点仓库号</th>
+        <th>差异金额合计</th>
+        <th style="width: 70px;">操作</th>
+    </tr>
+    </thead>
+    <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in dataList">
+        <td><a class="underline" target="_blank" href="index.html#/checkView/{{list.RPNUM}}">{{list.RPNUM}}</a></td>
+        <td>{{RPTYPE[list.RPTYPE]}}</td>
+        <td>{{RPCON[list.RPCON]}}</td>
+        <td>{{list.RPDATE | date: 'yyyy-MM-dd'}}</td>
+        <td>{{list.LGNUM}}</td>
+        <td>{{list.PDZJE | currency : '￥'}}</td>
+        <td class="czBtn">
+            <a class="handleBtn printBtn" href="/print/printest.html?uri=/inv/printview&RPNUM={{list.RPNUM}}" target="_blank" title="打印"></a>
+            <a class="handleBtn detailBtn" target="_blank" href="index.html#/checkView/{{list.RPNUM}}" title="详情"></a>
+        </td>
+    </tr>
+    <tr class="tip"><td colspan="10">没有查到盘点报告</td></tr>
+    </tbody>
+</table>
+<pagination conf="paginationConf"></pagination>

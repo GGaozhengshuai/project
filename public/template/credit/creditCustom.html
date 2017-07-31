@@ -1,0 +1,324 @@
+<h3 class="genTitle" style="margin-bottom:0;"><em></em><span>客户信用维护</span></h3>
+<div class="generForm">
+    <form novalidate name="myForm">
+        <ul>
+            <li class="tli">
+                <strong style="width: auto; padding-left: 20px;">客户名称：</strong><span>{{ORDER_DATA.cusname}}</span>
+            </li>
+            <li class="tli">
+                <strong style="width: auto; padding-left: 20px;">客户编码：</strong><span>{{ORDER_DATA.cuscode}}</span>
+            </li>
+        </ul>
+        <div class="addTable viewTable2">
+            <h5>风控现场考察报告</h5>
+            <div style="width: 100%; overflow: hidden; overflow-x: scroll; height: 100%;">
+                <table class="tab_data" style="width: 180%">
+                    <thead class="tab_header">
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th colspan="3">应收及交易状况</th>
+                        <th colspan="2">办公环境</th>
+                        <th colspan="4">股东情况</th>
+                        <th colspan="5">经营状况</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th>创建者</th>
+                        <th width="110">现场考<br>察时间</th>
+                        <th>客户<br>名称</th>
+                        <th>应收<br>金额</th>
+                        <th>呆账<br>金额</th>
+                        <th>历史2年<br>交易金额</th>
+                        <th>办公面积/<br>办公环境</th>
+                        <th>库存<br>状况</th>
+                        <th>财务是<br>否规范</th>
+                        <th>公司股<br>东构成</th>
+                        <th>大股东是否<br>关注生意</th>
+                        <th>股东对公司<br>的实际投入</th>
+                        <th>主营<br>业务</th>
+                        <th>主要<br>供应商</th>
+                        <th>现场考核其近<br>期的财务报告</th>
+                        <th>取得的<br>资质奖励</th>
+                        <th>行业口碑(其他<br>客户的评价)</th>
+                        <th>区域风控评价<br>及授信建议</th>
+                        <th><a href="javascript:;" ng-click="userAdd('fkxcreport')" title="添加" class="btnAdd"></a></th>
+                    </tr>
+                    </thead>
+                    <tbody class="tab_body">
+                    <tr ng-repeat="list in ORDER_DATA_USER.fkxcreport">
+                        <td><input type="text" ng-model="list.createname" value="" ng-disabled="true"></td>
+                        <td><input type="text" class="text Wdate" date-Picker ng-readonly="true" ng-model="list.xckcsj"
+                                   placeholder="请选择日期"></td>
+                        <td><input type="text" ng-model="list.cusname" value="" ng-disabled="true"></td>
+                        <td ng-class="myForm['ysjeUser'+$index].$dirty && myForm['ysjeUser'+$index].$error.numtwo ? 'hasErrTip' : ''">
+                            <input ng-Focus numtwo-Validation name="ysjeUser{{$index}}" type="text" ng-model="list.ysje" placeholder="">
+                            <span class="errTip" ng-if="myForm['ysjeUser'+$index].$dirty && myForm['ysjeUser'+$index].$error.numtwo && !myForm['ysjeUser'+$index].$focused">小数点后保留两位</span>
+                        </td>
+                        <td ng-class="myForm['dzjeUser'+$index].$dirty && myForm['dzjeUser'+$index].$error.numtwo ? 'hasErrTip' : ''">
+                            <input ng-Focus numtwo-Validation name="dzjeUser{{$index}}" type="text" ng-model="list.dzje" placeholder="">
+                            <span class="errTip" ng-if="myForm['dzjeUser'+$index].$dirty && myForm['dzjeUser'+$index].$error.numtwo && !myForm['dzjeUser'+$index].$focused">小数点后保留两位</span>
+                        </td>
+
+                        <td ng-class="myForm['lslnjyjeUser'+$index].$dirty && myForm['lslnjyjeUser'+$index].$error.numtwo ? 'hasErrTip' : ''">
+                            <input ng-Focus numtwo-Validation name="lslnjyjeUser{{$index}}" type="text" ng-model="list.lslnjyje" placeholder="">
+                            <span class="errTip" ng-if="myForm['lslnjyjeUser'+$index].$dirty && myForm['lslnjyjeUser'+$index].$error.numtwo && !myForm['lslnjyjeUser'+$index].$focused">小数点后保留两位</span>
+                        </td>
+                        <td><input type="text" ng-model="list.bgmjorbghj" value="" maxlength="5000"></td>
+                        <td><input type="text" ng-model="list.kczk" value="" maxlength="5000"></td>
+                        <td>
+                            <input type="text" ng-model="list.cwsfgf" value="" maxlength="5000">
+                           <!-- <select ng-model="list.cwsfgf">
+                                <option value="">请选择</option>
+                                <option value="是">是</option>
+                                <option value="否">否</option>
+                            </select>-->
+                        </td>
+                        <td><input type="text" ng-model="list.gsgdgc" value="" maxlength="5000"></td>
+                        <td>
+                            <input type="text" ng-model="list.dgdsfgzsy" value="" maxlength="5000">
+                           <!-- <select ng-model="list.dgdsfgzsy">
+                                <option value="">请选择</option>
+                                <option value="是">是</option>
+                                <option value="否">否</option>
+                            </select>-->
+                        </td>
+                        <td><input type="text" ng-model="list.gddgsdsjtr" value="" maxlength="5000"></td>
+                        <td><input type="text" ng-model="list.zyyw" value="" maxlength="5000"></td>
+                        <td><input type="text" ng-model="list.zygys" value="" maxlength="5000"></td>
+                        <td><input type="text" ng-model="list.xckhqjqdcwbg" value="" maxlength="5000"></td>
+                        <td><input type="text" ng-model="list.qddzzjl" value="" maxlength="5000"></td>
+                        <td><input type="text" ng-model="list.hykbqtkhpj" value="" maxlength="5000"></td>
+                        <td><input type="text" ng-model="list.qyfkpjjsxjy" value=""></td>
+                        <td><a href="javascript:;" ng-click="userDel($index,'fkxcreport')">删除</a></td>
+                    </tr>
+                    <tr ng-repeat="list in ORDER_DATA.fkxcreport">
+                        <td><input type="text" ng-model="list.createname" value="" ng-disabled="true"></td>
+                        <td><input type="text" class="text Wdate" date-Picker ng-readonly="true" ng-model="list.xckcsj"
+                                   placeholder="请选择日期"></td>
+                        <td><input type="text" ng-model="list.cusname" value="" ng-disabled="true"></td>
+                        <td ng-class="myForm['ysje'+$index].$dirty && myForm['ysje'+$index].$error.numtwo ? 'hasErrTip' : ''">
+                            <input ng-Focus numtwo-Validation name="ysje{{$index}}" type="text" ng-model="list.ysje" placeholder="">
+                            <span class="errTip" ng-if="myForm['ysje'+$index].$dirty && myForm['ysje'+$index].$error.numtwo && !myForm['ysje'+$index].$focused">小数点后保留两位</span>
+                        </td>
+                        <td ng-class="myForm['dzje'+$index].$dirty && myForm['dzje'+$index].$error.numtwo ? 'hasErrTip' : ''">
+                            <input ng-Focus numtwo-Validation name="dzje{{$index}}" type="text" ng-model="list.dzje" placeholder="">
+                            <span class="errTip" ng-if="myForm['dzje'+$index].$dirty && myForm['dzje'+$index].$error.numtwo && !myForm['dzje'+$index].$focused">小数点后保留两位</span>
+                        </td>
+
+                        <td ng-class="myForm['lslnjyje'+$index].$dirty && myForm['lslnjyje'+$index].$error.numtwo ? 'hasErrTip' : ''">
+                            <input ng-Focus numtwo-Validation name="lslnjyje{{$index}}" type="text" ng-model="list.lslnjyje" placeholder="">
+                            <span class="errTip" ng-if="myForm['lslnjyje'+$index].$dirty && myForm['lslnjyje'+$index].$error.numtwo && !myForm['lslnjyje'+$index].$focused">小数点后保留两位</span>
+                        </td>
+                        <td><input type="text" ng-model="list.bgmjorbghj" value="" maxlength="5000"></td>
+                        <td><input type="text" ng-model="list.kczk" value="" maxlength="5000"></td>
+                        <td>
+                            <input type="text" ng-model="list.cwsfgf" value="" maxlength="5000">
+                            <!--<select ng-model="list.cwsfgf">
+                                <option value="">请选择</option>
+                                <option value="是">是</option>
+                                <option value="否">否</option>
+                            </select>-->
+                        </td>
+                        <td><input type="text" ng-model="list.gsgdgc" value="" maxlength="5000"></td>
+                        <td>
+                            <input type="text" ng-model="list.dgdsfgzsy" value="" maxlength="5000">
+                            <!-- <select ng-model="list.dgdsfgzsy">
+                                                            <option value="">请选择</option>
+                                                            <option value="是">是</option>
+                                                            <option value="否">否</option>
+                                                        </select>-->
+                        </td>
+                        <td><input type="text" ng-model="list.gddgsdsjtr" value="" maxlength="5000"></td>
+                        <td><input type="text" ng-model="list.zyyw" value="" maxlength="5000"></td>
+                        <td><input type="text" ng-model="list.zygys" value="" maxlength="5000"></td>
+                        <td><input type="text" ng-model="list.xckhqjqdcwbg" value="" maxlength="5000"></td>
+                        <td><input type="text" ng-model="list.qddzzjl" value="" maxlength="5000"></td>
+                        <td><input type="text" ng-model="list.hykbqtkhpj" value="" maxlength="5000"></td>
+                        <td><input type="text" ng-model="list.qyfkpjjsxjy" value=""></td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="addTable">
+            <h5>催款函信息</h5>
+            <table class="tab_data">
+                <thead class="tab_header">
+                <tr>
+                    <th>发送时间</th>
+                    <th>合同类型</th>
+                    <th>合同号</th>
+                    <th>违约金额</th>
+                    <th>跟踪情况</th>
+                    <th>最后更新人</th>
+                    <th>最后更新时间</th>
+                    <th><a href="javascript:;" ng-click="userAdd('callletter')" title="添加" class="btnAdd"></a></th>
+                </tr>
+                </thead>
+                <tbody class="tab_body">
+                <tr ng-repeat="list in ORDER_DATA_USER.callletter">
+                    <td><input type="text" class="text Wdate" date-Picker ng-readonly="true" ng-model="list.sendtime"
+                               placeholder="请选择日期"></td>
+                    <td><input type="text" ng-disabled="true" ng-model="list.contracttype" value="" placeholder="由合同号带出"></td>
+                    <td><input type="text" title="{{list.contractno}}" ng-required="true" ng-readonly="true" ng-model="list.contractno" ng-click="conBox($index, 'callletter_user')" placeholder="请输入合同编号"></td>
+                    <!--<td><input type="text" ng-model="list.defaultvalue" value=""></td>-->
+                    <td ng-class="myForm['defaultvalue1'+$index].$dirty && myForm['defaultvalue1'+$index].$error.numtwo ? 'hasErrTip' : ''">
+                        <input type="text" ng-Focus numtwo-Validation name="defaultvalue1{{$index}}" ng-model="list.defaultvalue" value="">
+                        <span class="errTip ng-hide" ng-show="myForm['defaultvalue1'+$index].$dirty && myForm['defaultvalue1'+$index].$error.numtwo && !myForm['defaultvalue1'+$index].$focused">小数点后保留两位</span>
+                    </td>
+                    <td><input type="text" ng-model="list.trackinfo" value="" maxlength="2000"></td>
+                    <td><input type="text" ng-model="list.updatename" value="" ng-disabled="true"></td>
+                    <td><input type="text" ng-model="list.updatedate" ng-disabled="true" placeholder="当前日期"></td>
+                    <td><a href="javascript:;" ng-click="userDel($index,'callletter')">删除</a></td>
+                </tr>
+                <tr ng-repeat="list in ORDER_DATA.callletter">
+                    <td><input type="text" class="text Wdate" date-Picker ng-readonly="true" ng-model="list.sendtime"
+                               placeholder="请选择日期"></td>
+                    <td><input type="text" ng-disabled="true" ng-model="list.contracttype" value="" placeholder="由合同号带出"></td>
+                    <td><input type="text" title="{{list.contractno}}" ng-required="true" ng-readonly="true" ng-model="list.contractno" ng-click="conBox($index, 'callletter')" placeholder="请输入合同编号"></td>
+                    <!--<td><input type="text" ng-model="list.defaultvalue" value=""></td>-->
+                    <td ng-class="myForm['defaultvalue'+$index].$dirty && myForm['defaultvalue'+$index].$error.numtwo ? 'hasErrTip' : ''">
+                        <input type="text" ng-Focus numtwo-Validation name="defaultvalue{{$index}}" ng-model="list.defaultvalue" value="">
+                        <span class="errTip ng-hide" ng-show="myForm['defaultvalue'+$index].$dirty && myForm['defaultvalue'+$index].$error.numtwo && !myForm['defaultvalue'+$index].$focused">小数点后保留两位</span>
+                    </td>
+                    <td><input type="text" ng-model="list.trackinfo" value="" maxlength="5000"></td>
+                    <td><input type="text" ng-model="list.updatename" value="" ng-disabled="true"></td>
+                    <td><input type="text" ng-model="list.updatedate" ng-disabled="true" placeholder="当前日期"></td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="addTable">
+            <h5>律师函信息</h5>
+            <table class="tab_data">
+                <thead class="tab_header">
+                <tr>
+                    <th>发送时间</th>
+                    <th>合同类型</th>
+                    <th>合同号</th>
+                    <th>违约金额</th>
+                    <th>跟踪情况</th>
+                    <th>最后更新人</th>
+                    <th>最后更新时间</th>
+                    <th><a href="javascript:;" ng-click="userAdd('lawyerletter')" title="添加" class="btnAdd"></a></th>
+                </tr>
+                </thead>
+                <tbody class="tab_body">
+                <tr ng-repeat="list in ORDER_DATA_USER.lawyerletter">
+                    <td><input type="text" class="text Wdate" date-Picker ng-readonly="true" ng-model="list.sendtime"
+                               placeholder="请选择日期"></td>
+                    <td><input type="text" ng-disabled="true" ng-model="list.contracttype" value="" placeholder="由合同号带出"></td>
+                    <td><input type="text" title="{{list.contractno}}" ng-required="true" ng-readonly="true" ng-model="list.contractno" ng-click="conBox($index, 'lawyerletter_user')" placeholder="请输入合同编号"></td>
+                    <!--<td><input type="text" ng-model="list.defaultvalue" value=""></td>-->
+                    <td ng-class="myForm['defaultvalue'+$index].$dirty && myForm['defaultvalue'+$index].$error.numtwo ? 'hasErrTip' : ''">
+                        <input type="text" ng-Focus numtwo-Validation name="defaultvalue{{$index}}" ng-model="list.defaultvalue" value="">
+                        <span class="errTip ng-hide" ng-show="myForm['defaultvalue'+$index].$dirty && myForm['defaultvalue'+$index].$error.numtwo && !myForm['defaultvalue'+$index].$focused">小数点后保留两位</span>
+                    </td>
+                    <td><input type="text" ng-model="list.trackinfo" value="" maxlength="5000"></td>
+                    <td><input type="text" ng-model="list.updatename" value="" ng-disabled="true"></td>
+                    <td><input type="text" ng-model="list.updatedate" ng-disabled="true" placeholder="当前日期"></td>
+                    <td><a href="javascript:;" ng-click="userDel($index,'lawyerletter')">删除</a></td>
+                </tr>
+                <tr ng-repeat="list in ORDER_DATA.lawyerletter">
+                    <td><input type="text" class="text Wdate" date-Picker ng-readonly="true" ng-model="list.sendtime"
+                               placeholder="请选择日期"></td>
+                    <td><input type="text" ng-disabled="true" ng-model="list.contracttype" value="" placeholder="由合同号带出"></td>
+                    <td><input type="text" title="{{list.contractno}}" ng-required="true" ng-readonly="true" ng-model="list.contractno" ng-click="conBox($index, 'lawyerletter')" placeholder="请输入合同编号"></td>
+                    <!--<td><input type="text" ng-model="list.defaultvalue" value=""></td>-->
+                    <td ng-class="myForm['defaultvalue'+$index].$dirty && myForm['defaultvalue'+$index].$error.numtwo ? 'hasErrTip' : ''">
+                        <input type="text" ng-Focus numtwo-Validation name="defaultvalue{{$index}}" ng-model="list.defaultvalue" value="">
+                        <span class="errTip ng-hide" ng-show="myForm['defaultvalue'+$index].$dirty && myForm['defaultvalue'+$index].$error.numtwo && !myForm['defaultvalue'+$index].$focused">小数点后保留两位</span>
+                    </td>
+                    <td><input type="text" ng-model="list.trackinfo" value="" maxlength="5000"></td>
+                    <td><input type="text" ng-model="list.updatename" value="" ng-disabled="true"></td>
+                    <td><input type="text" ng-model="list.updatedate" ng-disabled="true" placeholder="当前日期"></td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="addTable">
+            <h5>诉讼信息</h5>
+            <div style="width: 100%; overflow: hidden; overflow-x: scroll; height: 100%;">
+                <table class="tab_data" style="width: 150%">
+                    <thead class="tab_header">
+                    <tr>
+                        <th>销售人员</th>
+                        <th>所属业务部门</th>
+                        <th>合同类型</th>
+                        <th>合同号</th>
+                        <th>仲裁/诉讼机构</th>
+                        <th>律师费用</th>
+                        <th>仲裁/诉讼费用</th>
+                        <th>诉讼标的</th>
+                        <th>案由简述</th>
+                        <th>案件处理</th>
+                        <th>最后更新人</th>
+                        <th>最后更新时间</th>
+                        <th><a href="javascript:;" ng-click="userAdd('lawsuitinfo')" title="添加" class="btnAdd"></a></th>
+                    </tr>
+                    </thead>
+                    <tbody class="tab_body">
+                    <tr ng-repeat="list in ORDER_DATA_USER.lawsuitinfo">
+                        <td><input type="text" ng-disabled="true" ng-model="list.saler" value=""placeholder="由合同号带出"></td>
+                        <td><input type="text" ng-disabled="true" ng-model="list.deptment" value=""placeholder="由合同号带出"></td>
+                        <td><input type="text" ng-disabled="true" ng-model="list.contracttype" value="" placeholder="由合同号带出"></td>
+                        <td><input type="text" title="{{list.contractno}}" ng-required="true" ng-readonly="true" ng-model="list.contractno" ng-click="conBox($index, 'lawsuitinfo_user')" placeholder="请输入合同编号"></td>
+                        <td><input type="text" ng-model="list.zcssjg" maxlength="5000" value=""></td>
+                        <td ng-class="myForm['layermon'+$index].$dirty && myForm['layermon'+$index].$error.numtwo ? 'hasErrTip' : ''">
+                            <input type="text" ng-Focus numtwo-Validation ng-model="list.layermon" name="layermon{{$index}}" value="">
+                            <span class="errTip ng-hide" ng-show="myForm['layermon'+$index].$dirty && myForm['layermon'+$index].$error.numtwo && !myForm['layermon'+$index].$focused">小数点后保留两位</span>
+                        </td>
+                        <td ng-class="myForm['zcssfy'+$index].$dirty && myForm['zcssfy'+$index].$error.numtwo ? 'hasErrTip' : ''">
+                            <input type="text" ng-Focus numtwo-Validation name="zcssfy{{$index}}" ng-model="list.zcssfy" value="">
+                            <span class="errTip ng-hide" ng-show="myForm['zcssfy'+$index].$dirty && myForm['zcssfy'+$index].$error.numtwo && !myForm['zcssfy'+$index].$focused">小数点后保留两位</span>
+                        </td>
+                        <td><input type="text" ng-model="list.ssbd" value="" maxlength="5000"></td>
+                        <td><input type="text" ng-model="list.ayjs" value="" maxlength="5000"></td>
+                        <td><input type="text" ng-model="list.ajcl" value="" maxlength="5000"></td>
+                        <td><input type="text" ng-model="list.updatename" value="" ng-disabled="true"></td>
+                        <td><input type="text" ng-model="list.updatedate" ng-disabled="true" placeholder="当前日期"></td>
+                        <td><a href="javascript:;" ng-click="userDel($index,'lawsuitinfo')">删除</a></td>
+                    </tr>
+                    <tr ng-repeat="list in ORDER_DATA.lawsuitinfo">
+                        <td><input type="text" ng-disabled="true" ng-model="list.saler" value=""placeholder="由合同号带出"></td>
+                        <td><input type="text" ng-disabled="true" ng-model="list.deptment" value=""placeholder="由合同号带出"></td>
+                        <td><input type="text" ng-disabled="true" ng-model="list.contracttype" value="" placeholder="由合同号带出"></td>
+                        <td><input type="text" title="{{list.contractno}}" ng-required="true" ng-readonly="true" ng-model="list.contractno" ng-click="conBox($index, 'lawsuitinfo')" placeholder="请输入合同编号"></td>
+                        <td><input type="text" ng-model="list.zcssjg" maxlength="5000" value=""></td>
+                        <td ng-class="myForm['layermon'+$index].$dirty && myForm['layermon'+$index].$error.numtwo ? 'hasErrTip' : ''">
+                            <input type="text" ng-Focus numtwo-Validation ng-model="list.layermon" name="layermon{{$index}}" value="">
+                            <span class="errTip ng-hide" ng-show="myForm['layermon'+$index].$dirty && myForm['layermon'+$index].$error.numtwo && !myForm['layermon'+$index].$focused">小数点后保留两位</span>
+                        </td>
+                        <td ng-class="myForm['zcssfy'+$index].$dirty && myForm['zcssfy'+$index].$error.numtwo ? 'hasErrTip' : ''">
+                            <input type="text" ng-Focus numtwo-Validation name="zcssfy{{$index}}" ng-model="list.zcssfy" value="">
+                            <span class="errTip ng-hide" ng-show="myForm['zcssfy'+$index].$dirty && myForm['zcssfy'+$index].$error.numtwo && !myForm['zcssfy'+$index].$focused">小数点后保留两位</span>
+                        </td>
+                        <td><input type="text" ng-model="list.ssbd" value="" maxlength="5000"></td>
+                        <td><input type="text" ng-model="list.ayjs" value="" maxlength="5000"></td>
+                        <td><input type="text" ng-model="list.ajcl" value="" maxlength="5000"></td>
+                        <td><input type="text" ng-model="list.updatename" value="" ng-disabled="true"></td>
+                        <td><input type="text" ng-model="list.updatedate" ng-disabled="true" placeholder="当前日期"></td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="gerSub">
+            <a href="index.html#/creditmaintenance">返回</a>
+            <button ng-click="addData(ORDER_DATA, ORDER_DATA_USER, 'save')" class="subSave">保存
+            </button>
+            <!--<button ng-click="addData(ORDER_DATA, 'apply')" class="subSave">保存并提交-->
+            <!--</button>-->
+        </div>
+    </form>
+</div>
+<div id="conBox" class="dialog cusBox" title="选择合同" ng-include="'template/credit/contractList.html'"
+     ng-controller="contractCtrl"></div>

@@ -1,0 +1,349 @@
+<div class="viewTable">
+    <ul>
+        <li><strong>客户名称：</strong><span>{{ORDER_DATA_Tab.cusName}}</span></li>
+        <li><strong>信用等级：</strong><span>{{ORDER_DATA_Tab.GRUPP}}</span></li>
+        <li><strong>信用额度：</strong><span>{{(ORDER_DATA_Tab.KLIMK || 0) | number:2}}</span></li>
+        <li><strong>可用额度：</strong><span>{{(ORDER_DATA_Tab.ZKYED || 0) | number:2}}</span></li>
+        <li><strong>是否收取延支：</strong><span>{{ORDER_DATA_Tab.KDGRP}}</span></li>
+        <li><strong>客户信用预警：</strong><span>{{ORDER_DATA_Tab.khxyyj}}</span></li>
+        <div class="clear"></div>
+        <li ><strong>信用天数：</strong><span>{{ORDER_DATA_Tab.DBPAY}}</span></li>
+        <li><strong>信用状况：</strong><span>{{ORDER_DATA_Tab.creditmoneyinfo[ORDER_DATA_Tab.creditmoneyinfo.length-1].xyzk}}</span></li>
+        <li><strong style="width: 140px;">到期应收 (1&lt;超期天数&lt;=7)：</strong><span>{{(ORDER_DATA_Tab.ZDQYS || 0) | number:2}}</span></li>
+        <li><strong style="width: 140px;">超期应收 (7&lt;超期天数&lt;=30)：</strong><span>{{(ORDER_DATA_Tab.ZCQJE || 0) | number:2}}</span></li>
+        <li><strong style="width: 140px;">严重超期 （30&lt;超期天数&lt;=60）：</strong><span>{{(ORDER_DATA_Tab.ZYZCQ || 0) | number:2}}</span></li>
+        <li><strong style="width: 140px;">呆账金额 (超期61天以上)：</strong><span>{{(ORDER_DATA_Tab.ZDZJE || 0) | number:2}}</span></li>
+        <li><strong>应收金额：</strong><span>{{(ORDER_DATA_Tab.ZYSJE || 0)| number:2}}</span></li>
+        <li><strong>交货单占用总额：</strong><span>{{(ORDER_DATA_Tab.ZWGZJE||0)| number:2}}</span></li>
+
+    </ul>
+</div>
+<dl class="openCloseBtn" ng-init="xy.activeTab = 1">
+    <dd ng-class="{active:xy.activeTab == 1}"><a href="javascript:;" ng-mousedown="xy.activeTab = 1">应收列表</a></dd>
+    <dd ng-class="{active:xy.activeTab == 7}"><a href="javascript:;" ng-mousedown="xy.activeTab = 7">交货单占用列表</a></dd>
+    <dd ng-class="{active:xy.activeTab == 2}"><a href="javascript:;" ng-mousedown="xy.activeTab = 2">未使用返点记录</a></dd>
+    <dd ng-class="{active:xy.activeTab == 8}"><a href="javascript:;" ng-mousedown="xy.activeTab = 8">付款记录</a></dd>
+    <dd ng-class="{active:xy.activeTab == 3}"><a href="javascript:;" ng-mousedown="xy.activeTab = 3">风控现场考察报告</a></dd>
+    <dd ng-class="{active:xy.activeTab == 4}"><a href="javascript:;" ng-mousedown="xy.activeTab = 4">催款函信息</a></dd>
+    <dd ng-class="{active:xy.activeTab == 5}"><a href="javascript:;" ng-mousedown="xy.activeTab = 5">律师函信息</a></dd>
+    <dd ng-class="{active:xy.activeTab == 6}"><a href="javascript:;" ng-mousedown="xy.activeTab = 6">诉讼信息</a></dd>
+    <dd ng-class="{active:xy.activeTab == 9}"><a href="javascript:;" ng-mousedown="xy.activeTab = 9">收票信息</a></dd>
+</dl>
+
+<!--<div class="openCloseBtn"><button type="button" id="openCloseBtnys" ng-click="zkList('ys')">展开应收列表∨</button></div>-->
+<div class="tablexyWrap">
+<div class="ng-hide" ng-show="xy.activeTab == 1">
+    <!--<h5>应收列表</h5>-->
+    <table class="tab_data">
+        <thead class="tab_header">
+        <tr>
+            <th>客户编号</th>
+            <th>名称</th>
+            <th>申请人</th>
+            <th>销售订单号</th>
+            <th>业务应收编号</th>
+            <th>应收金额</th>
+            <th>未核销<br/>金额</th>
+            <th>账龄起始日期</th>
+            <th>账龄<br>(天)</th>
+            <th>已计划<br>金额</th>
+            <th>业务应收<br>创建方式</th>
+            <th>应收来源</th>
+            <th>超期<br>天数</th>
+        </tr>
+        </thead>
+        <tbody class="tab_body">
+        <tr ng-repeat="list in ysList" ng-if="list.WHXJE!=0" ng-class="list.ZCQTS ? 'redColor' : ''">
+            <td>{{list.KUNNR}}</td>
+            <td>{{list.NAME1}}</td>
+            <td>{{list.ZPERNR_NAME}}</td>
+            <td>{{list.VBELN}}</td>
+            <td>{{list.ZYWYS}}</td>
+            <td>{{list.ZYSJE | number:2}}</td>
+            <td>{{list.WHXJE | number:2}}</td>
+            <td>{{list.ZQSRQ}}</td>
+            <td>{{list.ZZL}}</td>
+            <td>{{list.ZJHJE}}</td>
+            <td>{{list.ZYSMS}}</td>
+            <td>{{list.ZYSLY}}</td>
+            <td>{{list.ZCQTS}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<!--<div class="openCloseBtn"><button type="button" id="openCloseBtnwsyfd" ng-click="zkList('wsyfd')">展开未使用返点记录∨</button></div>-->
+<div class="ng-hide" ng-show="xy.activeTab == 2">
+    <!--<h5>未使用返点记录</h5>-->
+    <table class="tab_data">
+        <thead class="tab_header">
+        <tr>
+            <th>返点编号</th>
+            <th>返点供应商</th>
+            <th>事业部</th>
+            <th>返点所属<br>客户名称</th>
+            <th>返点使用<br>客户名称</th>
+            <th>返点类型</th>
+            <th>返点来源</th>
+            <th>生效日期</th>
+            <th>返点金额</th>
+            <th>可用金额</th>
+        </tr>
+        </thead>
+        <tbody class="tab_body">
+        <tr ng-repeat="list in wsyfdList | filter:fun">
+            <td>{{list.code}}</td>
+            <td>{{list.provider}}</td>
+            <td>{{list.department.name}}</td>
+            <td class="pre" title="{{list.client.name}}">{{list.client.name | cutfield:true:10:'...'}}</td>
+            <td class="pre" title="{{list.user.name}}">{{list.user.name | cutfield:true:10:'...'}}</td>
+            <td>{{list.bonusbase.type}}</td>
+            <td>{{list.bonusbase.source}}</td>
+            <td>{{list.bonusinfo.start | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td>{{list.bonusmoney.total}}</td>
+            <td>{{list.bonusmoney.total-list.bonusmoney.freeze-list.bonusmoney.used}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<!--<div class="openCloseBtn"><button type="button" id="openCloseBtnfkxc" ng-click="zkList('fkxc')">展开风控现场考察报告∨</button></div>-->
+<div class="viewTable2 ng-hide" ng-show="xy.activeTab == 3">
+    <!--<h5>风控现场考察报告</h5>-->
+    <div style="width: 100%; overflow: hidden; overflow-x: scroll; height: 100%;">
+        <table class="tab_data" style="width: 130%">
+            <thead class="tab_header">
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th colspan="3">应收及交易状况</th>
+                <th colspan="2">办公环境</th>
+                <th colspan="4">股东情况</th>
+                <th colspan="4">经营状况</th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <th>创建者</th>
+                <th>现场考<br>察时间</th>
+                <th>客户<br>名称</th>
+                <th>应收<br>金额</th>
+                <th>呆账<br>金额</th>
+                <th>历史2年<br>交易金额</th>
+                <th>办公面积/<br>办公环境</th>
+                <th>库存<br>状况</th>
+                <th>财务是<br>否规范</th>
+                <th>公司股<br>东构成</th>
+                <th>大股东是否<br>关注生意</th>
+                <th>股东对公司<br>的实际投入</th>
+                <th>主营<br>业务</th>
+                <th>主要<br>供应商</th>
+                <th>现场考核其近<br>期的财务报告</th>
+                <th>取得的<br>资质奖励</th>
+                <th>行业口碑(其他<br>客户的评价)</th>
+                <th>区域风控评价<br>及授信建议</th>
+                <!--<th><a href="javascript:;" ng-click="userAdd('fkxcreport')">添加</a></th>-->
+            </tr>
+            </thead>
+            <tbody class="tab_body">
+            <tr ng-repeat="list in ORDER_DATA_Tab.fkxcreport">
+                <td>{{list.createname}}</td>
+                <td>{{list.xckcsj}}</td>
+                <td>{{list.cusname}}</td>
+                <td>{{list.ysje}}</td>
+                <td>{{list.dzje}}</td>
+                <td>{{list.lslnjyje}}</td>
+                <td>{{list.bgmjorbghj}}</td>
+                <td>{{list.kczk}}</td>
+                <td>{{list.cwsfgf}}</td>
+                <td>{{list.gsgdgc}}</td>
+                <td>{{list.dgdsfgzsy}}</td>
+                <td>{{list.gddgsdsjtr}}</td>
+                <td>{{list.zyyw}}</td>
+                <td>{{list.zygys}}</td>
+                <td>{{list.xckhqjqdcwbg}}</td>
+                <td>{{list.qddzzjl}}</td>
+                <td>{{list.hykbqtkhpj}}</td>
+                <td>{{list.qyfkpjjsxjy}}</td>
+                <!--<td><a href="javascript:;" ng-click="userDel($index,'fkxcreport')">删除</a></td>-->
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--<div class="openCloseBtn"><button type="button" id="openCloseBtnckh" ng-click="zkList('ckh')">展开催款函信息∨</button></div>-->
+<div class="ng-hide" ng-show="xy.activeTab == 4">
+    <!--<h5>催款函信息</h5>-->
+    <table class="tab_data">
+        <thead class="tab_header">
+        <tr>
+            <th>发送时间</th>
+            <th>合同类型</th>
+            <th>合同号</th>
+            <th>违约金额</th>
+            <th>跟踪情况</th>
+            <th>最后更新人</th>
+            <th>最后更新时间</th>
+            <!--<th><a href="javascript:;" ng-click="userAdd('callletter')">添加</a></th>-->
+        </tr>
+        </thead>
+        <tbody class="tab_body">
+        <tr ng-repeat="list in ORDER_DATA_Tab.callletter">
+            <td>{{list.sendtime | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td>{{list.contracttype}}</td>
+            <td>{{list.contractno}}</td>
+            <td>{{list.defaultvalue}}</td>
+            <td>{{list.trackinfo}}</td>
+            <td>{{list.updatename}}</td>
+            <td>{{list.updatedate | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+            <!--<td><a href="javascript:;" ng-click="userDel($index,'callletter')">删除</a></td>-->
+        </tr>
+        </tbody>
+    </table>
+</div>
+<!--<div class="openCloseBtn"><button type="button" id="openCloseBtnlsh" ng-click="zkList('lsh')">展开律师函信息∨</button></div>-->
+<div class="ng-hide" ng-show="xy.activeTab == 5">
+    <!--<h5>律师函信息</h5>-->
+    <table class="tab_data">
+        <thead class="tab_header">
+        <tr>
+            <th>发送时间</th>
+            <th>合同类型</th>
+            <th>合同号</th>
+            <th>违约金额</th>
+            <th>跟踪情况</th>
+            <th>最后更新人</th>
+            <th>最后更新时间</th>
+            <!--<th><a href="javascript:;" ng-click="userAdd('lawyerletter')">添加</a></th>-->
+        </tr>
+        </thead>
+        <tbody class="tab_body">
+        <tr ng-repeat="list in ORDER_DATA_Tab.lawyerletter">
+            <td>{{list.sendtime | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td>{{list.contracttype}}</td>
+            <td>{{list.contractno}}</td>
+            <td>{{list.defaultvalue}}</td>
+            <td>{{list.trackinfo}}</td>
+            <td>{{list.updatename}}</td>
+            <td>{{list.updatedate | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+            <!--<td><a href="javascript:;" ng-click="userDel($index,'lawyerletter')">删除</a></td>-->
+        </tr>
+        </tbody>
+    </table>
+</div>
+<!--<div class="openCloseBtn"><button type="button" id="openCloseBtnssxx" ng-click="zkList('ssxx')">展开诉讼信息∨</button></div>-->
+<div class="ng-hide" ng-show="xy.activeTab == 6">
+    <!--<h5>诉讼信息</h5>-->
+    <div style="width: 100%; overflow: hidden; overflow-x: scroll; height: 100%;">
+        <table class="tab_data" style="width: 150%">
+            <thead class="tab_header">
+            <tr>
+                <th>销售人员</th>
+                <th>所属业务部门</th>
+                <th>合同类型</th>
+                <th>合同号</th>
+                <th>仲裁/诉讼机构</th>
+                <th>律师费用</th>
+                <th>仲裁/诉讼费用</th>
+                <th>诉讼标的</th>
+                <th>案由简述</th>
+                <th>案件处理</th>
+                <th>最后更新人</th>
+                <th>最后更新时间</th>
+                <!--<th><a href="javascript:;" ng-click="userAdd('lawsuitinfo')">添加</a></th>-->
+            </tr>
+            </thead>
+            <tbody class="tab_body">
+            <tr ng-repeat="list in ORDER_DATA_Tab.lawsuitinfo">
+                <td>{{list.saler}}</td>
+                <td>{{list.deptment}}</td>
+                <td>{{list.contracttype}}</td>
+                <td>{{list.contractno}}</td>
+                <td>{{list.zcssjg}}</td>
+                <td>{{list.layermon}}</td>
+                <td>{{list.zcssfy}}</td>
+                <td>{{list.ssbd}}</td>
+                <td>{{list.ayjs}}</td>
+                <td>{{list.ajcl}}</td>
+                <td>{{list.updatename}}</td>
+                <td>{{list.updatedate | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+                <!--<td><a href="javascript:;" ng-click="userDel($index,'lawsuitinfo')">删除</a></td>-->
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="ng-hide" ng-show="xy.activeTab == 7">
+        <!--<h5>交货单占用列表</h5>-->
+        <table class="tab_data">
+            <thead class="tab_header">
+            <tr>
+                <th>销售合同号</th>
+                <th>放货单号</th>
+                <th>交货单号</th>
+                <th>占用金额</th>
+            </tr>
+            </thead>
+            <tbody class="tab_body">
+            <tr ng-repeat="list in jhdList">
+                <td>{{list.BSTNK}}</td>
+                <td>{{list.ZCNEE_FHSQ}}</td>
+                <td>{{list.VBELN_DN}}</td>
+                <td>{{list.ZDNZYJE}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+  <div class="ng-hide" ng-show="xy.activeTab == 8">
+    <!--<h5>付款记录</h5>-->
+    <table class="tab_data">
+      <thead class="tab_header">
+      <tr>
+        <th>周期</th>
+        <th>交易业绩</th>
+        <th>超期付款金额合计</th>
+        <th>超期付款平均天数</th>
+        <th>超期付款最长天数</th>
+      </tr>
+      </thead>
+      <tbody class="tab_body">
+      <tr ng-repeat="list in fkjlList">
+        <td>{{list.ZZQMS}}</td>
+        <td>{{list.ZJYYJ | number:2}}</td>
+        <td>{{list.ZCQHJ | number:2}}</td>
+        <td>{{list.ZDAYS_CQ}}</td>
+        <td>{{list.ZDAYS_MAX}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="ng-hide" ng-show="xy.activeTab == 9">
+    <table class="tab_data">
+      <thead class="tab_header">
+      <tr>
+        <th>票据单号</th>
+        <th>票据种类</th>
+        <th>客户名称</th>
+        <th>票据金额</th>
+        <th>到期日期</th>
+        <th>收票日期</th>
+        <th>备注</th>
+        <th>收票商务</th>
+        <th>票据状态</th>
+      </tr>
+      </thead>
+      <tbody class="tab_body">
+      <tr ng-repeat="list in spxxList">
+        <td>{{list.ZPJDH}}</td>
+        <td>{{list.ZPTYPE}}</td>
+        <td>{{list.NAME1}}</td>
+        <td>{{list.ZAMOUNT | currency: '￥'}}</td>
+        <td>{{list.ZDQDAT | date:'yyyy-MM-dd'}}</td>
+        <td>{{list.ZSPDAT | date:'yyyy-MM-dd'}}</td>
+        <td title="{{list.ZBZ}}"><p style="width: 147px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{list.ZBZ}}</p></td>
+        <td>{{list.ZSPSW}}</td>
+        <td>{{list.ZPJZT}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

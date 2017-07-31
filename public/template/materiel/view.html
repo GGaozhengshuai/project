@@ -1,0 +1,137 @@
+<h3 class="genTitle"><em></em>
+    <span>物料主数据</span>
+    <span ng-if="activeTab == 2">审批详情</span>
+</h3>
+<ul class="generNav">
+    <li ng-class="{active:activeTab == 1}"><a href="javascript:void(0);" ng-mousedown='htTab(1)'>物料主数据查看</a></li>
+    <li ng-class="{active:activeTab == 2}"><a href="javascript:void(0);" ng-mousedown='htTab(2)'>审批详情</a></li>
+</ul>
+<div id="mainView">
+    <div ng-if="activeTab == 1">
+        <div class="viewTable ng-scope">
+            <div class="addTable" style=" overflow: auto;padding: 0px 0px">
+                <h4 class="genH4"></h4>
+                <table class="tab_data" style="width: 200%;">
+                    <thead class="tab_header">
+                    <tr>
+                        <th><font>*</font>物料类型</th>
+                        <th><font>*</font>销售组织</th>
+                        <th><font>*</font>物料编码</th>
+                        <th><font>*</font>物料描述</th>
+                        <th width="2%"><font>*</font>基本单位</th>
+                        <th><font>*</font>原厂物料编号</th>
+                        <th><font>*</font>产品组（物料组）</th>
+                        <th>产品类别</th>
+                        <th><font>*</font>规格型号</th>
+                        <th><font>*</font>原厂物料描述</th>
+                        <th>原厂产品名称</th>
+                        <th><font>*</font>版本号</th>
+                        <th><font>*</font>开票描述</th>
+                        <th>采购税码</th>
+                        <th><font>*</font>利润中心</th>
+                        <th>采购组</th>
+                        <th>收货处理时间</th>
+                        <th>物料长文本</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="list in fileData" class="list">
+                        <td title="{{{ZCP1:'ZCP1-产品',ZCP2:'ZCP2-礼品',ZCP3:'ZCP3-包装材料',ZCP4:'ZCP4-辅料',ZCP5:'ZCP5- 产品服务',ZCP6:'ZCP6- 服务'}[list.MTART]}}">
+                            {{{ZCP1:'ZCP1-产品',ZCP2:'ZCP2-礼品',ZCP3:'ZCP3-包装材料',ZCP4:'ZCP4-辅料',ZCP5:'ZCP5- 产品服务',ZCP6:'ZCP6- 服务'}[list.MTART]}}
+                        </td>
+                        <td title="{{{1000:'信息产品事业群',2000:'合作业务部',3000:'医疗产品部'}[list.VKORG]}}">
+                            {{{1000:'信息产品事业群',2000:'合作业务部',3000:'医疗产品部'}[list.VKORG]}}
+                        </td>
+                        <td title="{{list.MATNR}}">
+                            {{list.MATNR}}
+                        </td>
+                        <td title="{{list.MAKTX}}">
+
+                            {{list.MAKTX}}
+                        </td>
+                        <td style="width: 2%" title="{{list.MEINS}}">
+
+                            {{list.MEINS}}
+                        </td>
+                        <td title="{{list.BISMT}}">
+
+                            {{list.BISMT}}
+                        </td>
+                        <td title="{{ZZCP[list.MATKL]}}">
+
+                            {{ZZCP[list.MATKL]}}
+                        </td>
+                        <td title="{{list.ZCPLB}}">
+
+                            {{list.ZCPLB}}
+                        </td>
+                        <td title="{{list.ZZGKXH}}">
+
+                            {{list.ZZGKXH}}
+                        </td>
+                        <td title="{{list.ZZMAKTX}}">
+
+                            {{list.ZZMAKTX}}
+                        </td>
+                        <td title="{{list.ZZCPMC}}">
+
+                            {{list.ZZCPMC}}
+
+                        </td>
+                        <td title="{{list.ZVERSIONID}}">
+
+                            {{list.ZVERSIONID}}
+                        </td>
+                        <td title="{{list.ZZKPMS}}">
+
+                            {{list.ZZKPMS}}
+                        </td>
+
+                        <td title="{{list.ZZMWSKZ}}">
+
+                            {{list.ZZMWSKZ}}
+                        </td>
+                        <td title="{{list.PRCTR}}">
+
+                            {{list.PRCTR}}
+                        </td>
+                        <td title="{{list.EKGRP}}">
+                            {{list.EKGRP}}
+
+                        </td>
+                        <td title="{{list.WEBAZ}}">
+                            {{list.WEBAZ}}
+
+                        </td>
+                        <td title="{{list.ZCWB}}">
+                            {{list.ZCWB}}
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+    <div class="applyLog" ng-if="activeTab == 2">
+        <table>
+            <thead>
+            <tr>
+                <th class="th1">审批人</th>
+                <th class="th2">审批时间</th>
+                <th class="th3">审批状态</th>
+                <th class="th4">审批意见</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="list in processlog">
+                <td>{{list.sender.name}}</td>
+                <td>{{list.createDate | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td>{{list.operation}}</td>
+                <td>{{list.content.comment}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

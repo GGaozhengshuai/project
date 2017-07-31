@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="口碑街，互联网推广，kbstreet，口碑，社交网络推广">
+    <meta name="description" content="口碑街，用大众的口碑推动好产品。共享经济模式的自媒体广告平台，让商家直达用户。">
+    <title>Title</title>
+
+</head>
+<body>
+<div class="imgUpload">
+    <form id="uploadForm" enctype="multipart/form-data">
+        <span id="upButton"><input id="input_id" type="file" name="file"/></span>
+    </form>
+    <progress></progress>
+</div>
+
+<script src="js/lib/jquery/jquery-1.11.3.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $("#input_id").on('change',function(e){
+            var formData = new FormData();
+            formData.append( 'file', $('#input_id')[0].files[0] );
+            console.log($('#input_id')[0].files[0]);
+            console.log(formData);
+            $.ajax({
+                url: ' /resource/uploadfile',  //Server script to process data
+                type: 'POST',
+                enctype: 'multipart/form-data',
+                xhr: function() {  // Custom XMLHttpRequest
+                    var myXhr = $.ajaxSettings.xhr();
+                    if(myXhr.upload){ // Check if upload property exists
+                        myXhr.upload.addEventListener('progress',progressHandlingFunction, false); // For handling the progress of the upload
+                    }
+                    return myXhr;
+                },
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(data){
+                    console.log(data);
+                },
+                error: function(XMLHttpRequest ){
+                    console.log(XMLHttpRequest);
+                }
+            });
+        });
+
+    });
+</script>
+</body>
+</html>

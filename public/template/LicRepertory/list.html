@@ -1,0 +1,111 @@
+<div class="item">LIC库存查询</div>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>供应商订单号</strong>
+                    <input class="text" type="text" name="sorder"  ng-init="sorder=''" ng-model="sorder" placeholder="请输入供应商订单号"/>
+                </td>
+                <td>
+                    <strong>原厂物料编码</strong>
+                    <input class="text" type="text" name="mcode"  ng-init="mcode=''" ng-model="mcode" placeholder="请输入物料编码"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>销售合同号</strong>
+                    <input class="text" ng-model="contractno" type="text" placeholder="请输入销售合同号"/>
+                </td>
+                <td>
+                    <strong>交货单号</strong>
+                    <input class="text" type="text" name="delivery"  ng-init="delivery=''" ng-model="delivery" placeholder="请输入交货单号"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>状态</strong>
+                    <select ng-model="status" ng-init="status=''">
+                        <option value="">请选择</option>
+                        <option value="neo">未出库</option>
+                        <option value="matched">待出库</option>
+                        <option value="used">已出库</option>
+                    </select>
+                </td>
+                <td colspan="2">
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+                    <a class="searchbtn2 searchbtn2bot addBtn" ng-click="" ng-href="/index.html#/add">新建</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<div id="mainView">
+    <div class="czAddBtn" style="float: left;">
+        <a class="downloadmb" href="javascript:;" ng-click="exportexcelall($event)">&#12288;全部导出&#12288;</a>
+        <a class="searchbtn2 exportBtn" href="javascript:;" ng-click="exportexcel()" style="font-size:12px; margin:0 0 0 20px;">&#12288;&#12288;导出&#12288;&#12288;</a>
+        <a class="distractBtn" href="javascript:;" ng-click="deleteData()" style="margin-left:0;">&#12288;&#12288;删除&#12288;&#12288;</a>
+        <!--<a class="changInfoBtn" target="_blank" ng-click="edit($event)" ng-href="index.html#/edit?ids=" title="编辑">&#12288;&#12288;编辑&#12288;&#12288;</a>-->
+    </div>
+    <div class="tableWrap" style="float: left;">
+        <div class="tableLeft" style="margin-right: 125px; margin:0;">
+            <table class="orangestyle table" style="width:140%;">
+                <thead>
+                <tr>
+                    <th width="1%"><span><input type="checkbox" ng-model="checkAll" id="allcheck" ng-click="allCheck($event)"></span></th>
+                    <th width="6%"><span>原厂物料编码</span></th>
+                    <th width="4%"><span>库存数量</span></th>
+                    <th width="7%"><span>激活码</span></th>
+                    <th width="8%"><span>供应商订单号</span></th>
+                    <th width="12%"><span>华为分批次号</span></th>
+                    <th width="4%"><span>匹配数量</span></th>
+                    <th width="8%"><span>销售合同号</span></th>
+                    <th width="10%"><span>交货单号</span></th>
+                    <th width="5%"><span>交货单数量</span></th>
+                    <th width="11%"><span>邮箱</span></th>
+                    <th width="7%"><span>状态</span></th>
+                    <th width="21%"><span>最后更新时间</span></th>
+                </tr>
+                </thead>
+                <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+                <tr ng-repeat="list in dataList">
+                    <td><span><input ng-click="updateSelection($event,list._id,$index)" class="checkBox" type="checkbox" ng-checked="checkAll"/></span></td>
+                    <td><span>{{list.mcode}}</span></td>
+                    <td><span>{{list.stocknum}}</span></td>
+                    <td><span>{{list.lickey}}</span></td>
+                    <td><span>{{list.sorder}}</span></td>
+                    <td><span>{{list.batchnum}}</span></td>
+                    <td><span>{{list.matchnum}}</span></td>
+                    <td><span>{{list.contractno}}</span></td>
+                    <td><span>{{list.delivery}}</span></td>
+                    <td><span>{{list.deliverynum}}</span></td>
+                    <td><span>{{list.email}}</span></td>
+                    <td><span>{{{'neo':'未出库','matching':'未出库' ,'matched':'待出库' ,'used':'已出库' ,'del':'作废'}[list.status]}}</span></td>
+                    <td><span>{{list.editdate | date: 'yyyy-MM-dd HH:mm:ss'}}</span></td>
+                </tr>
+                <tr class="tip"><td colspan="13"><span>没有查到LIC库存</span></td></tr>
+                </tbody>
+            </table>
+            <div class="tableHandler" style="width: 50px;">
+                <table class="orangestyle table">
+                    <thead>
+                    <tr>
+                        <th><span>操作</span></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="list in dataList">
+                        <td>
+                            <div class="handlerBox">
+                                <a ng-if="opprev.customer_change" class="handleBtn editBtn" target="_blank" ng-click="edit($event)" ng-href="index.html#/edit?ids={{list._id}}" title="修改"></a>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <pagination conf="paginationConf" manual="true" style="float: right;"></pagination>
+        </div>
+    </div>
+</div>

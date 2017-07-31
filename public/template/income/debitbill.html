@@ -1,0 +1,63 @@
+<div class="item">票据台账</div>
+<h4 class="genH4">票据信息</h4>
+<div style="overflow-y:hidden;overflow-x:auto; width: 100%;height: 100%">
+
+<table class="orangestyle table" style="width: 150%">
+    <thead>
+    <tr>
+        <th>票据编号</th>
+        <th>票据种类</th>
+        <th>票据单号</th>
+        <th>客户名称</th>
+
+        <th>客户编码</th>
+       <!-- <th>出票人全称</th>
+        <th>付款银行</th>-->
+        <th>票据金额</th>
+        <!--<th>贴息金额</th>
+        <th>背书次数</th>-->
+        <th>出票日期</th>
+        <th>到期日期</th>
+        <th>收票日期</th>
+        <th>备注</th>
+        <th>收票商务</th>
+        <th>预计托收日期</th>
+        <th>票据状态</th>
+    </tr>
+    </thead>
+    <tbody ng-class="debitList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in debitList">
+        <td>
+            {{$index+1}}
+        </td>
+        <td>
+            {{list.ZPTYPE}}
+        </td>
+        <td>{{list.ZPJDH}}</td>
+        <td>{{list.NAME1}}</td>
+        <td>{{list.KUNNR}}</td>
+       <!-- <td>{{list.ZCPR}}</td>
+        <td>{{list.ZFKYH}}</td>-->
+        <td>{{list.ZAMOUNT | currency : '￥'}}</td>
+       <!-- <td>{{list.ZTXJE}}</td>
+        <td>{{list.ZBSCS}}</td>-->
+        <td>{{list.ZCPDAT}}</td>
+        <td>{{list.ZDQDAT}}</td>
+        <td>{{list.ZSPDAT}}</td>
+        <td title="{{list.ZBZ}}">{{list.ZBZ | cutfield:true:10:'...'}}</td>
+        <td>{{list.ZSPSW}}</td>
+        <td>{{list.ZTSDAT}}</td>
+        <td>{{list.ZPJZT}}</td>
+    </tr>
+    </tbody>
+</table>
+</div>
+    <div class="clear"></div>
+    <div class="gerSub">
+        <a class="subSave" href="index.html#/debitbillOrderEdit?processId={{processId}}&nodeId={{nodeId}}" ng-if="editBtn">编辑</a>        </div>
+    <div class="apCot" ng-if="apCot" >
+        <div ng-include="'template/common/apply.html'"></div>
+    </div>
+
+</div>
+

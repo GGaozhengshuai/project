@@ -1,0 +1,51 @@
+<h3 class="genTitle genTitleBot"><em></em><span>变更产品占用</span></h3>
+<div class="cusCont">
+    <div class="generForm">
+        <form novalidate name="invoiceForm">
+            <ul>
+                <li class="tli">
+                    <strong>申请流水号：</strong>
+                    <input ng-model="ORDER_DATA.SQDH" type="text" ng-disabled="true" placeholder=""/>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>物料编码：</strong>
+                    <input ng-disabled="true" ng-model="ORDER_DATA.MATNR" type="text"/>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>占用数量：</strong>
+                    <input integer-Validation ng-Change required ng-model="ORDER_DATA.ZMOUNT" name="ZMOUNT" type="text" ng-change="zyNum(ORDER_DATA.ZMOUNT)"/>
+                    <span class="errTip" ng-show="showNum">占用数量不能为0</span>
+                    <span class="errTip" ng-show="showNum1">不能大于库存数量{{ZKZYSL+yshistoryNum}}</span>
+                    <span class="errTip" ng-show="showNum2">不能小于已释放数量{{ORDER_DATA.ZSFSL + ORDER_DATA.ZSFS2 + ORDER_DATA.ZSFS3}}</span>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.ZMOUNT.$dirty && invoiceForm.ZMOUNT.$error.integer && !invoiceForm.ZMOUNT.$focused">请输入正整数</span>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>占用人：</strong>
+                    <input ng-model="ORDER_DATA.ZZYR" ng-disabled="true" type="text"/>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>客户编码：</strong>
+                    <input ng-disabled="true" ng-readonly="true" ng-model="ORDER_DATA.KUNNR" type="text"/>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>客户名称：</strong>
+                    <input ng-model="ORDER_DATA.NAME1" ng-disabled="true" type="text"/>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>库存地点：</strong>
+                    <input required ng-disabled="true" ng-model="LGORT" type="text"/>
+                </li>
+                <li class="clear"></li>
+                <li>
+                    <strong>申请原因：</strong>
+                    <textarea ng-model="ORDER_DATA.SQYY"></textarea>
+                </li>
+            </ul>
+            <div class="gerSub">
+                <a href="index.html#/occupyOrder">返回</a>
+                <button ng-click="update(ORDER_DATA)"  ng-class="invoiceForm.$invalid == true ? 'displaySub' : 'subSave'" ng-disabled="invoiceForm.$invalid || invoRready">提交</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div id="cusBox" class="dialog cusBox" title="选择客户" ng-include="'template/occupy/cusBox.html'" ng-controller="cusBoxCtrl"></div>

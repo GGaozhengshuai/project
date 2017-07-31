@@ -1,0 +1,33 @@
+<h3 class="genTitle"><em></em><span>采购返点</span></h3>
+<ul class="generNav">
+    <li class="active"><a href="javascript:;">采购返点详情</a></li>
+</ul>
+
+<div id="mainView">
+    <div class="viewTable ng-scope">
+        <ul>
+            <li><strong>订单号：</strong><span>{{purchaseList.ZMFDXH}}</span></li>
+            <li><strong>证书编号：</strong><span>{{purchaseList.ZMZSBH}}</span></li>
+            <li><strong>操作标示：</strong><span>{{ZOPERATION}}</span></li>
+            <li><strong>返点类型：</strong><span>{{purchaseList.ZMFDLX}}</span></li>
+            <li><strong>返点供应商名称：</strong><span>{{purchaseList.ZMVKNO}}</span></li>
+            <li><strong>事业部：</strong><span>{{purchaseList.ZMPART}}</span></li>
+            <li><strong>返点描述：</strong><span>{{purchaseList.ZMTEXT}}</span></li>
+            <li><strong>返点所属代理商：</strong><span>{{purchaseList.ZMDL}}</span></li>
+            <li><strong>激励受益类型：</strong><span>{{purchaseList.ZMJLLX}}</span></li>
+            <li><strong>返点金额：</strong><span>{{purchaseList.ZMFDJE.toFixed(2)}}</span></li>
+            <li><strong>已使用金额：</strong><span>{{purchaseList.ZMFDYE}}</span></li>
+            <li><strong>可用金额：</strong><span>{{purchaseList.ZMFDKE.toFixed(2)}}</span></li>
+            <li><strong>委托日期：</strong><span>{{purchaseList.ZMWTRQ}}</span></li>
+            <li><strong>发放日期：</strong><span>{{purchaseList.ZMFFRQ}}</span></li>
+            <li><strong>失效日期：</strong><span>{{purchaseList.ZMSXRQ}}</span></li>
+            <li><strong>申请人：</strong><span>{{purchaseList.ERNAM}}</span></li>
+            <li><strong>申请人名称：</strong><span>{{purchaseList.ZSQTXT}}</span></li>
+            <li><strong>申请部门：</strong><span>{{purchaseList.ZSQBMID}}</span></li>
+        </ul>
+    </div>
+
+        <div class="apCot" ng-if="apCot" >
+            <div ng-include="'template/common/apply.html'"></div>
+        </div>
+    </div>

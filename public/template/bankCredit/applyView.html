@@ -1,0 +1,79 @@
+<h3 class="genTitle"><em></em><span>银行授信</span><span ng-if="bankzf">-作废</span></h3>
+<ul class="generNav">
+    <li class="active"><a href="javascript:;">银行授信</a></li>
+</ul>
+
+<div id="mainView">
+    <div class="viewTable ng-scope">
+        <div class="czAddBtn">
+            <a target="_blank" href="/print/printest.html?uri=/bankcredit/printview&processId={{$stateParams.processId}}&code={{ORDER_DATA.code}}&credittype={{ORDER_DATA.credittype}}" ng-if="$stateParams.myflag == 'mydoing'|| $stateParams.myflag == 'myapply'" class="viewBtn">打印</a>
+        </div>
+        <ul>
+            <li><strong>银行授信流水号：</strong><span>{{ORDER_DATA.code}}</span></li>
+            <li><strong>授信品种：</strong><span>{{ORDER_DATA.credittype}}</span></li>
+            <li><strong>申请主体：</strong><span>{{{1000:"中建材信息技术股份有限公司",9000:"中建材集团进出口公司",9001:"中国建材（香港）有限公司"}[ORDER_DATA.creditbody]}}</span></li>
+            <li><strong>授信金额：</strong><span>{{ORDER_DATA.creditmoney | currency : '￥'}}</span></li>
+            <li><strong>业务员：</strong><span>{{ORDER_DATA.username}}</span></li>
+            <li><strong>业务部门：</strong><span>{{ORDER_DATA.orgname}}</span></li>
+            <li><strong>货币种类：</strong><span>{{moneycountry[ORDER_DATA.moneycountry]}}</span></li>
+            <li><strong>应交银行保证金：</strong><span>{{ORDER_DATA.margin}}</span></li>
+            <li><strong>申请日期：</strong><span>{{ORDER_DATA.timestamp | date: 'yyyy-MM-dd HH:mm:ss'}}</span></li>
+            <li><strong>资金占用部门：</strong><span>{{{'1000':'信息产品事业群','2000':'合作业务部','3000':'医疗产品部','9900':'综合'}[ORDER_DATA.ZBM]}}</span></li>
+            <li ng-if="ifBhBot"><strong>合同项目名称：</strong><span>{{ORDER_DATA.project}}</span></li>
+            <li ng-if="ifBh"><strong>供应商名称：</strong><span title="{{ORDER_DATA.ZSKDW}}">{{ORDER_DATA.ZSKDW}}</span></li>
+            <li ng-if="ifBhBot"><strong>客户名称：</strong><span>{{ORDER_DATA.stomer}}</span></li>
+            <li ng-if="ifBhBot"><strong>保函类型：</strong><span>{{ORDER_DATA.loitype}}</span></li>
+            <li ng-if="ifBhBot"><strong>销售合同号：</strong><span>{{ORDER_DATA.contractno}}</span></li>
+            <li ng-if="ifBhBot"><strong>销售合同金额：</strong><span>{{ORDER_DATA.contractmoney | currency : '￥'}}</span></li>
+            <li><strong>授信业务期限(天)：</strong><span>{{ORDER_DATA.limitdays}}</span></li>
+            <li><strong>授信业务办理银行：</strong><span>{{ORDER_DATA.bank.name}}</span></li>
+            <li><strong>上传附件：</strong><span><a href="{{ORDER_DATA.attachment}}" style="text-decoration:underline">{{ORDER_DATA.bankfj}}</a></span></li>
+            <li class="clear"></li>
+            <li class="list_con"><strong>备注：</strong><span>{{ORDER_DATA.remark}}</span></li>
+        </ul>
+        <div class="addTable" ng-if="ifBh">
+            <h5>付款单</h5>
+            <table class="tab_data">
+                <thead class="tab_header">
+                <tr>
+                    <th>付款申请号</th>
+                    <th>供应商名称</th>
+                    <th>付款方式</th>
+                    <th>实际付款金额</th>
+                    <th>资金占用部门</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody class="tab_body">
+                <tr ng-repeat="list in bankFkList">
+                    <td>{{list.ZSQNO}}</td>
+                    <td>{{list.ZSKDW}}</td>
+                    <td>{{list.ZFKFS}}</td>
+                    <td>{{list.ZSJFKJE | currency : '￥'}}</td>
+                    <td>{{{'1000':'信息产品事业群','2000':'合作业务部','3000':'医疗产品部','9900':'综合'}[list.ZBM]}}</td>
+                    <td>
+                        <a target="_blank" href="index.html#/paymentOrderView/{{list.ZSQNO}}">详细</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <ul>
+            <li><strong style="width:200px;">部门已使用银行授信额度：</strong><span>{{ORDER_DATA.deptused | currency : '￥'}}</span></li>
+            <li><strong style="width:200px;">部门可用银行授信额度：</strong><span>{{ORDER_DATA.deptunused | currency : '￥'}}</span></li>
+            <li><strong style="width:200px;">银行已使用人民币授信额度：</strong><span>{{ORDER_DATA.usedrmb | currency : '￥'}}</span></li>
+            <li><strong style="width:200px;">银行可用人民币授信额度：</strong><span>{{ORDER_DATA.unusedrmb | currency : '￥'}}</span></li>
+            <li><strong>开立日：</strong><span>{{ORDER_DATA.opendate | date: 'yyyy-MM-dd HH:mm:ss'}}</span></li>
+            <li><strong>到期日：</strong><span>{{ORDER_DATA.duedate | date: 'yyyy-MM-dd HH:mm:ss'}}</span></li>
+            <li><strong>额度转回日期：</strong><span>{{ORDER_DATA.moneybackdate | date: 'yyyy-MM-dd HH:mm:ss'}}</span></li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+    <div class="gerSub">
+        <a class="subSave" href="index.html#/bankCreditOrderEdit?processId={{processId}}&nodeId={{nodeId}}" ng-if="editBtn">编辑</a>
+    </div>
+    <div class="apCot" ng-if="apCot" >
+        <div ng-include="'template/common/apply.html'"></div>
+    </div>
+</div>
+<div id="approversDialog" class="dialog cusBox" title="选择下一审批人" ng-include="'template/common/approvers.html'" ></div>

@@ -1,0 +1,163 @@
+*{margin:0 auto;font-weight: normal;}
+strong{font-weight: normal;}
+.header{width:800px;height:auto;}
+.header .header_left{float: left;width:50px;margin-left:40px;}
+.header .header_right{width:700px;height:auto;text-align: center;margin-top:20px;font-size:18px;}
+.tiTle{width:800px;height:auto;text-align: center;margin-top: 20px;}
+.tiTle h2 span{position:absolute;text-align: right;left:65%;}
+.tiTle h2 span p{font-size:10px;text-align: center}
+.tiTle h2 font{color: red}
+.content{width:800px;height: auto;margin-top:20px;}
+.content ul{list-style: none;}
+.content ul li{line-height:30px; float:left; width:50%;margin-top: 10px;font-size: 16px;text-align: left;}
+.content ul li strong{float: left;font-weight: normal;}
+.content ul li textarea{float:left; min-height:80px; width:580px; padding:5px;overflow:scroll;border:none;overflow-y:hidden;overflow-x:hidden}
+.content ul li span{float:left;width:230px;height:30px;}
+.content ul .tli{width:100%;}
+.content ul .tex{width:100%;height:auto;}
+.content ul .tex table{width:80%;height:auto;border-collapse:collapse;border:1px solid #000;text-align: center;}
+.content ul .tex table th{border-collapse:collapse;border:1px solid #000;}
+.content ul .tex table td{border-collapse:collapse;border:1px solid #000;}
+.content ul .foot{margin-top: 40px;}
+.content ul .foot span{border:none;}
+.signStatus{width:800px;height: auto;margin-top:20px;}
+.signStatus table{width:90%;}
+
+.title_head{width:1200px;height: auto;margin-top:20px;}
+.title_head ul{list-style: none;}
+.title_head ul li{float: left;width:25%;}
+
+.bankTable{height: auto;}
+.bankTable table{width:90%;border-collapse:collapse;border:1px solid #000;}
+.bankTable table tr{border-collapse:collapse;border:1px solid #000;}
+.bankTable table tr .bm{width:215px;border-collapse:collapse;border:1px solid #000;}
+.bankTable table tr .bh{width:120px;border-collapse:collapse;border:1px solid #000;}
+.bankTable table tr .bm_text{width:215px;height:80px;}
+.bankTable table tr td{ border-collapse:collapse;border:1px solid #000;}
+
+
+/*������������*/
+.bhbank{height: auto;}
+.bhbank table{width:90%;border-collapse:collapse;border:1px solid #000;}
+.bhbank table tr{border-collapse:collapse;border:1px solid #000;}
+.bhbank table tr td{width:120px;border-collapse:collapse;border:1px solid #000;}
+.bhbank table tr .bh_text{width:215px;height:80px;}
+
+.line{clear:both;margin-top:20px;width:800px;height:50px;border-bottom:1px solid #000;}
+.footer{width:800px;height:auto;}
+.footer ul{list-style: none;}
+.footer ul li strong{font-weight: normal;}
+.footer ul .fotr{width:100%;}
+.footer ul li{width:30%;float:left;font-size: 16px;}
+
+.footer table{width:100%;}
+
+.tab{clear:both;margin-top:50px;}
+.tab table{width:100%;height:auto;border-collapse:collapse;border:1px solid #000;text-align: center;margin-bottom: 20px;}
+.tab table th{border-collapse:collapse;border:1px solid #000;}
+.tab table td{border-collapse:collapse;border:1px solid #000;}
+
+/*��ӡ*/
+iframe{margin:0 auto;width:900px;min-height:100px;border:none;}
+
+button{display:inline-block; height:32px; padding:0 20px; line-height:32px; font-size:14px; color:#fff; border:none; background: #BF2A2A;cursor: pointer;}
+#printbtn{margin:50px auto 0; text-align: right; }
+#printbtn span { padding: 0 20px;}
+
+
+/*部门担保*/
+.bmdbTitle{letter-spacing: 50px;width:800px;height:auto;text-align: center;margin-top: 20px;}
+.bmdbContent{width:700px;height: auto;margin-top:50px;}
+.bmdbContent p{text-indent: 2em;font-size: 20px;line-height: 40px;font-weight: bold;}
+.bmdbContent p span{border-bottom: 1px solid #000;}
+.bmdbContent p .span1{border-bottom: 1px solid #000;width:450px;display: inline-block;}
+.bmdbFoot{width:700px;margin-top: 50px;}
+.bmdbFoot .bmdbFoot_left{width:500px;float: left;height:200px;}
+.bmdbFoot .bmdbFoot_right{width:200px;float: right;height:200px;}
+.bmdbFoot .bmdbFoot_right p{font-size: 20px;font-weight: bold;margin-top: 5px;}
+
+/*��ͬ*/
+.watermarkImg{width:800px;background: url('../print/shuiyin.png') repeat-y center;}
+.contract{width:800px;height: auto;margin-top:20px;}
+.contract .pService{text-align: right;font-weight: bold;}
+.contract ul{list-style: none;}
+.contract ul li{line-height:16px; float:left; width:50%;margin-top: 5px;font-size: 16px;}
+.contract ul li strong{float: left;width:100px;font-weight: normal;}
+.contract ul li a{float:left;width:200px;text-align: center;}
+.contract ul .uLfoot{margin-top:30px; }
+.contract ul .textMsg{width:150%;margin:10px 0;}
+.contract ul .uLfootMar{margin-top:20px;}
+.contract ul .text{width:100%;margin-top:10px;}
+.contract ul .text strong{width:40px;}
+.contract ul .text p{width:90%;word-spacing:1px;letter-spacing: 3px;line-height: 20px;}
+.contract ul .text p span{display:inline-block;width:200px;height:16px;border-bottom: 1px solid #000;text-align: center;}
+.contract ul .text .pContent{text-indent: 2em;}
+.contract ul .text  i{float:left;font-style: normal;}
+.contract ul .text  em{float:left;display:inline-block;width:90%;font-style: normal;}
+.contract ul .confoot{margin-top:50px;}
+.contract ul .text table{border-collapse: collapse;width: 70%;}
+.contract ul .text table tr{border-collapse: collapse;}
+.contract ul .text table tr td{border-collapse: collapse;}
+.contract ul .text .fontWeight i{font-weight: bold;}
+.contract ul .text .fontWeight em{font-weight: bold;}
+.contract .the2p{text-indent: 2em;line-height: 20px;}
+.contract .the3p{text-indent: 2em;line-height: 30px;}
+.contract .the3p span{display:inline-block;border-bottom: 1px solid #000;width:250px;}
+.contract .ending{text-align: center;}
+.contract .seal{text-align: center;text-indent: 10em;}
+.clear{clear: both;}
+.btMargin{margin-top:100px;}
+.listTable{width:800px;}
+.listTable p{width: 80%;}
+.listTable table{width:80%;border-collapse: collapse;border:1px solid #000}
+.listTable table tr{border-collapse: collapse;border:1px solid #000}
+.listTable table tr td{border-collapse: collapse; border:1px solid #000;text-align: center;}
+
+
+/*���������*/
+.tabHead{}
+.tabHead h4{text-indent: 10em;}
+.tabHead p{display: inline-block;}
+.tabHead p span{font-size:12px;}
+.tabHead p span i{font-style: normal;}
+.tabHead p .tabhaed_Margin{margin-left: 100px;}
+.productMsg{border:2px solid #000;}
+.productMsg .msgBorder{border-bottom:1px solid #000;}
+.productMsg p .msgMargin{margin-left: 80px;}
+.productMsg p span {font-size: 12px;}
+.productMsg p span i{font-style: normal;}
+.productMsg .msgBorder .projectName strong{display: inline-block;}
+.productMsg .msgBorder .projectName i{display: inline-block;width:200px;}
+.productMsg .msgBorder .projectName .fpwidth{display: inline-block;width:600px;}
+.productMsg table{font-size:12px;width:100%;border-collapse: collapse;}
+.productMsg table tr{border-collapse: collapse;border:1px solid #000;}
+.productMsg table td{border-collapse: collapse;border:1px solid #000;text-align: center;}
+.productMsg table .serTd{border-collapse: collapse;border:1px solid #000;text-align: left;}
+.lable{font-size:12px;}
+.productMsg .twoTable{border-collapse: collapse;border:1px solid #000;}
+.productMsg .twoTable tr{border-collapse: collapse;border:1px solid #000;}
+.productMsg .twoTable tr .dbtable{width:70%;}
+.productMsg .twoTable tr .noteTd{width:30%;text-align: left;}
+.productMsg .twoTable tr .dbtable table{width:90%;border-collapse: collapse;border:1px solid #000;}
+.productMsg .twoTable tr .dbtable table tr{border-collapse: collapse;border:1px solid #000;}
+.productMsg .twoTable tr .dbtable table tr td{border-collapse: collapse;border:1px solid #000;}
+
+.footSign{border:2px solid #000;height:90px;}
+.footSign ul{list-style: none;}
+.footSign ul li{width:50%;font-size:12px;line-height:16px;float: left;display: inline-block;}
+
+
+/* 2016-7-18 loupei */
+.hasMoreIframe .header { width: auto;}
+.hasMoreIframe .header .header_right { width:auto; margin-left:100px;}
+.hasMoreIframe .tiTle {width:auto;}
+.hasMoreIframe .content { width: auto;}
+.hasMoreIframe .content ul li strong{width:41%; max-width:150px;}
+.hasMoreIframe .content ul li span { width: 59%;}
+.hasMoreIframe .content ul .tex strong { width: 17%;}
+.hasMoreIframe .content ul .tex textarea { width: 80%;}
+.hasMoreIframe .signStatus {width: 100%;}
+#printbtn { margin-bottom: 50px;}
+.hasMoreIframe .footer { width: auto;}
+
+

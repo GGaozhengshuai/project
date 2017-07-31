@@ -1,0 +1,144 @@
+<div class="item">报销单</div>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>报销人</strong>
+                    <input class="text" type="text" placeholder="" ng-model="username" ng-init="username=''" name="username">
+                </td>
+                <td>
+                    <strong>流水号</strong>
+                    <input class="text" type="text" placeholder="" ng-model="code" ng-init="code=''" name="code">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>会计凭证号</strong>
+                    <input class="text" type="text" placeholder="" ng-model="certcode" ng-init="certcode=''" name="certcode">
+                </td>
+                <td>
+                    <strong>状态</strong>
+                    <select ng-model="status" ng-init="status='valid'">
+                        <option value="">请选择</option>
+                        <option value="valid">有效</option>
+                        <option value="invalid">作废</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>费用种类</strong>
+                    <input class="text" type="text" placeholder="" ng-model="costtype" ng-init="costtype=''" name="costtype">
+                </td>
+                <td>
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+                    <!--<input type="button" value="冲销" class="searchbtn2 searchbtn2bot distractBtn" ng-click="chargeoffFn()">-->
+                    <a class="searchbtn2 searchbtn2bot addBtn" href="/index.html#/reimbursementAdd" ng-if="opprev.reimbursementOrder_add">新建报销单</a>
+                    <a class="searchbtn2 searchbtn2bot addBtn" href="" ng-click="printFn($event)" target="_blank" >打印</a>
+                    <a class="searchbtn2 searchbtn2bot addBtn" href="javascript:;" ng-click="exportexcel()" ng-if="opprev.reimbursementOrder_export">导出</a>
+                    <a class="searchbtn2 searchbtn2bot addBtn" href="javascript:;" ng-click="exportexcelgz()" ng-if="opprev.reimbursementOrder_exportcompany">导出（工资用）</a>
+                    <!--<a class="searchbtn2 searchbtn2bot addBtn" target="_blank" href="/index.html#/accountsStaff">人员额度管理</a>-->
+                    <!--<a class="searchbtn2 searchbtn2bot addBtn" target="_blank" href="/index.html#/accountsDepartment">部门额度管理</a>-->
+                    <!--<a class="searchbtn2 searchbtn2bot addBtn" target="_blank" href="/index.html#/accountsCompany">公司额度管理</a>-->
+                    <!--<a class="searchbtn2 searchbtn2bot addBtn" target="_blank" href="/index.html#/financialMark">业务/财务标记</a>-->
+                </td>
+            </tr>
+
+        </table>
+    </div>
+</form>
+
+<div class="item">查询结果</div>
+<!--<div class="tableWrap">
+    <div class="tableLeft">
+        <table class="orangestyle table" style="width: 165%;">
+            <thead>
+            <tr>
+                <th><span><input type="checkbox" ng-model="checkAll" id="allcheck" ng-click="allCheck($event)"></span></th>
+                &lt;!&ndash;<th>传送<br>状态</th>&ndash;&gt;
+                <th><span>流水号</span></th>
+                <th><span>报销人</span></th>
+                <th><span>报销部门</span></th>
+                <th><span>报销申请日期</span></th>
+                <th><span>附件张数</span></th>
+                <th><span>费用种类</span></th>
+                <th><span>费用期间-起始月份</span></th>
+                <th><span>截止月份</span></th>
+                <th class="right"><span>报销金额汇总</span></th>
+                <th class="right"><span>实际财务应付金额</span></th>
+                <th><span>财务标记时间</span></th>
+                <th><span>业务标记时间</span></th>
+                <th><span>会计凭证号</span></th>
+                <th><span>状态</span></th>
+                &lt;!&ndash;<th>操作</th>&ndash;&gt;
+                &lt;!&ndash;<th>制单人</th>&ndash;&gt;
+            </tr>
+            </thead>
+            <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+            <tr ng-repeat="list in dataList">
+
+                <td><span><input ng-click="updateSelection($event, list._id,list.code,list.info.status)" class="checkBox" name="checkbox{{$index}}" type="checkbox" ng-checked="checkAll"/></span></td>
+                <td><span><a class="underline" target="_blank" href="index.html#/reimbursementView/{{list.code}}">{{list.code}}</a></span>
+                </td>
+                <td><span>{{list.user.name}}</span></td>
+                <td><span>{{list.department.name}}</span></td>
+                <td><span>{{list.applydate | date: 'yyyy-MM-dd'}}</span></td>
+                <td><span>{{list.cost.attanum}}</span></td>
+                <td><span>{{list.cost.typestr}}</span></td>
+                <td><span>{{list.cost.fromdate}}</span></td>
+                <td><span>{{list.cost.enddate}}</span></td>
+                <td class="right"><span title="{{list.cost.amount | currency : '￥'}}">{{list.cost.amount | currency : '￥' | cutfield:true:13:'...'}}</span></td>
+                <td class="right"><span title="{{list.finance.due | currency : '￥'}}">{{list.finance.due | currency : '￥' | cutfield:true:13:'...'}}</span></td>
+                <td><span>{{list.finance.financedate | date: 'yyyy-MM-dd HH:mm:ss'}}</span></td>
+                <td><span>{{list.finance.businessdate | date: 'yyyy-MM-dd HH:mm:ss'}}</span></td>
+                <td><span>{{list.finance.certcode}}</span></td>
+                <td><span>{{{valid:'有效', invalid:'作废'}[list.info.status]}}</span></td>
+                &lt;!&ndash; <td class="czBtn">
+                     &lt;!&ndash;<a target="_blank" href="index.html#/reimbursementView/{{list.code}}">查看</a>&ndash;&gt;
+                     <a class="handleBtn invalidBtn" title="作废" target="_blank" ng-hide="list.info.status=='invalid'" ng-click="nullifyFn($index)"></a>
+                     &lt;!&ndash;<a href="/print/printest.html?uri=/reimburselimit/printview&code={{list.code}}" target="_blank">打印</a>&ndash;&gt;
+                 </td><td>{{list.zdr}}</td>&ndash;&gt;
+            </tr>
+            <tr class="tip">
+                <td colspan="17"><span>没有查到报销单</span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="tableHandler">
+        <table class="orangestyle table">
+            <thead>
+            <tr>
+                <th><span>操作</span>&lt;!&ndash;<span style="visibility: hidden">占位</span>&ndash;&gt;</th>
+                &lt;!&ndash;<th>制单人</th>&ndash;&gt;
+            </tr>
+            </thead>
+            <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+            <tr ng-repeat="list in dataList">
+
+                <td class="czBtn">
+                    <div class="handlerBox">
+                    <a class="handleBtn invalidBtn"  ng-class="!opprev.reimbursementOrder_cancal && opprev.reimbursementOrder_cancal !== undefined ? 'visibhidden' : list.info.status=='invalid' || list.finance.financedate ? 'disabled' : ''" title="{{list.info.status=='invalid'?'已作废': list.finance.financedate ? '财务已标记' : '作废'}}" target="_blank"
+                        ng-click="list.info.status=='invalid' || list.finance.financedate ? '' : nullifyFn($index)"></a>
+                        <a target="_blank" class="handleBtn detailBtn" href="index.html#/reimbursementView/{{list.code}}" title="详情"></a>
+                    </div>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>-->
+
+<div ng-if="!table" class="loading-text grid">
+    <span ng-if="loadData">数据载入中...</span>
+    <span ng-if="!loadData">查询不到数据</span>
+</div>
+<div ng-if="table" ui-grid="table" ui-grid-selection ui-grid-resize-columns ui-grid-pinning ui-grid-auto-resize class="grid"></div>
+<script type="text/ng-template" id="reimbursementAction.html">
+    <div class="actionBtnGroup">
+        <a class="handleBtn invalidBtn"  ng-class="!opprev.reimbursementOrder_cancal && opprev.reimbursementOrder_cancal !== undefined ? 'visibhidden' : row.entity.info.status=='invalid' || row.entity.finance.financedate ? 'disabled' : ''" title="{{row.entity.info.status=='invalid'?'已作废': row.entity.finance.financedate ? '财务已标记' : '作废'}}" target="_blank"
+           ng-click="row.entity.info.status=='invalid' || row.entity.finance.financedate ? '' : grid.appScope.nullifyFn(row.entity)"></a>
+        <a target="_blank" class="handleBtn detailBtn" href="index.html#/reimbursementView/{{row.entity.code}}" title="详情"></a>
+    </div>
+</script>
+<pagination conf="paginationConf"></pagination>

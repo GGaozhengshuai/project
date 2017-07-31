@@ -1,0 +1,143 @@
+<!--<h3 class="genTitle genTitleBot"><em></em><span>部门额度管理</span></h3>-->
+<div class="cusCont departmentwrap">
+    <div class="generForm">
+        <form novalidate name="myForm">
+            <ul style="margin-bottom: 15px;">
+                <li class="tli">
+                    <strong>年度：</strong>
+                    <input class="text Wdate"  type="text" ng-readonly="true" date-Picker dateParam='{"dateFmt":"yyyy",minDate: "{%y-1}",maxDate: "{%y+4}"}' ng-model="$parent.ORDER_DATA.year" get-upload-callback="dateCallback(callbackDate)" ng-init="ORDER_DATA.year=today" placeholder="请选择日期">
+                </li>
+                <li class="tli">
+                    <strong>部门间接费用额度：</strong>
+                    <input type="text" ng-value="ORDER_DATA.current.yearlimit.monthcount | number:2" ng-disabled="true">
+                </li>
+            </ul>
+
+            <div style=" overflow: hidden">
+                <div style="padding-right: 10px;" class="czAddBtn">
+                    <!--<a href="" ng-click="comeAdd()" class="addBtn">添加</a>-->
+                </div>
+                <div class="addTable tableFir" style='float: left; padding: 0; width: 40%;'>
+                    <table>
+                        <tr class="float_header">
+                            <!--<th style="width: 40px;">&nbsp;</th>-->
+                            <th style="width: 100px;">所属部门</th>
+                            <th>部门分配额度</th>
+                            <th>已分配额度</th>
+                            <th>部门已使用额度累计</th>
+                        </tr>
+
+                        <tbody ng-hide="amountis0">
+                        <tr ng-repeat="list in ORDER_DATA.dataList" class="list">
+                            <!--<td><a href="javascript:;" ng-click="comedit($index, 'dataList')">编辑</a></td>-->
+                            <td>
+                                <input type="text" ng-model="list.org.orgname" ng-disabled="true">
+                                <input type="hidden" ng-model="list.org._id" ng-readonly="true">
+                                <input type="hidden" ng-model="list.org.level" ng-readonly="true">
+                                <input type="hidden" ng-model="list.org.pid" ng-readonly="true">
+                            </td>
+                            <td>
+                                <input type="text" ng-model="list.yearlimit.amount" name="amountd{{$index}}"   model-format="floatminus">
+                                <span class="errTip ng-hide" ng-show="myForm['amountd'+$index].$dirty && myForm['amountd'+$index].$error.numtwo && !myForm['amountd'+$index].$focused">小数点后保留两位</span>
+                            </td>
+                            <td><input type="text" ng-value="list.yearlimit.monthcount| number:2" ng-disabled="true" ></td>
+                            <!--<td><input type="text" ng-model="list.yearlimit.used" ng-disabled="true"></td>-->
+                            <td><input type="text" ng-value="list.yearlimit.used | number:2" ng-disabled="true"></td>
+
+                        </tr>
+                        <tr class="list">
+                            <!--<td></td>-->
+                            <td><span>本部门人员</span></td>
+                            <td><!--<span>{{ORDER_DATA.current.yearlimit.amount}}</span>--></td>
+                            <td><!--<span>{{ORDER_DATA.current.yearlimit.monthcount}}</span>--></td>
+                            <td><!--<span>{{ORDER_DATA.current.yearlimit.used}}--></span></td>
+                        </tr>
+                        <tr class="list">
+                            <!--<td></td>-->
+                            <td>
+                                <span>{{ORDER_DATA.current.org.orgname}}</span>
+                                <span class="ng-hide">{{ORDER_DATA.current.org._id}}</span>
+                                <span class="ng-hide">{{ORDER_DATA.current.org.level}}</span>
+                                <span class="ng-hide">{{ORDER_DATA.current.org.pid}}</span>
+                            </td>
+                            <td><span><!--{{ORDER_DATA.current.yearlimit.amount | number:2}}--></span></td>
+                            <td><span>{{ORDER_DATA.current.yearlimit.monthcount | number:2}}</span></td>
+                            <td><span>{{ORDER_DATA.current.yearlimit.used | number:2}}</span></td>
+                        </tr>
+                        <tr class="list">
+                            <!--<td></td>-->
+                            <td><span>上月结余</span></td>
+                            <td><!--<span>{{ORDER_DATA.current.yearlimit.amount}}</span>--></td>
+                            <td><span>{{ORDER_DATA.current.yearlimit.balance | number:2}}</span></td>
+                            <td><!--<span>{{ORDER_DATA.current.yearlimit.usercount}}--></span></td>
+                        </tr>
+                        </tbody>
+                        <tr class="tip" ng-hide="!amountis0">
+                            <td colspan="5">该部门还未分配额度</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="addTable tableSec" style="overflow-x: auto; padding: 0; float:left; width: 60%;">
+                    <table style="width: 130%;">
+                        <tr class="float_header">
+                            <th>1月</th>
+                            <th>2月</th>
+                            <th>3月</th>
+                            <th>4月</th>
+                            <th>5月</th>
+                            <th>6月</th>
+                            <th>7月</th>
+                            <th>8月</th>
+                            <th>9月</th>
+                            <th>10月</th>
+                            <th>11月</th>
+                            <th>12月</th>
+                            <!--<th width="50">操作</th>-->
+                            <!--<th width="50"><a href="" ng-click="comeAdd()">添加</a></th>-->
+                        </tr>
+                        <!--<tr ng-repeat="list in ORDER_DATA.userList" class="list">
+                            <td ng-repeat="item in list.monthlimit">
+                                <input type="text" ng-Focus numtwo-Validation ng-blur="sumFn($parent.$index,0)" name="item{{$index}}" ng-model="item.amount">
+                                <span class="errTip ng-hide" ng-show="myForm['item'+$index].$dirty && myForm['item'+$index].$error.numtwo && !myForm['item'+$index].$focused">小数点后保留两位</span>
+                            </td>
+
+                            <td>
+                                <a href="javascript:;" ng-click="comeDel($index, 'userList')">删除</a>
+                            </td>
+                        </tr>-->
+
+                        <tbody ng-hide="amountis0">
+                        <tr ng-repeat="list in ORDER_DATA.dataList" class="list">
+                            <td ng-repeat="item in list.monthlimit">
+                                <!--<input type="text" numtwo-Validation ng-blur="sumFn($parent.$index,$index)" name="itemd{{$parent.$index}}{{$index}}" ng-model="item.amount" ng-disabled="!list.edit || $index<maxMonth">-->
+                                <!--2016-10-21 经测试提议，放开操作限制-->
+                                <input type="text"  model-format="floatminus" ng-blur="sumFn($parent.$index,$index)" name="itemd{{$parent.$index}}{{$index}}" ng-model="item.amount" ng-disabled="$index<maxMonth || $index>preMonth-1">
+                                <span class="errTip ng-hide" ng-show="myForm['itemd'+$parent.$index+$index].$dirty && myForm['itemd'+$parent.$index+$index].$error.numtwo && !myForm['itemd'+$parent.$index+$index].$focused">小数点后保留两位</span>
+                                <!--<span class="errTip ng-hide" ng-show="myForm['itemd'+$parent.$index+$index].$dirty && !myForm['itemd'+$parent.$index+$index].$error.numtwo && !myForm['itemd'+$parent.$index+$index].$focused && item.amount-item.used-item.usercount<0">不能小于已使用值</span>-->
+                            </td>
+                        </tr>
+                        <tr class="list">
+                            <td ng-repeat="item in ORDER_DATA.current.monthlimit"><span>{{(item.usercount||0) | number:2}}</span></td>
+                            <td></td>
+                        </tr>
+                        <tr class="list">
+                            <td ng-repeat="item in ORDER_DATA.current.monthlimit"><span>{{item.amount | number:2}}</span></td>
+                            <td></td>
+                        </tr>
+                        <tr class="list">
+                            <td ng-repeat="item in ORDER_DATA.current.monthlimit"><span>{{item.balance | number:2}}</span></td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="gerSub">
+                <a href="index.html#/reimbursementOrder">返回</a>
+                <button ng-click="addData(ORDER_DATA)" class="subSave">保存
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

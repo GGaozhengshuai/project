@@ -1,0 +1,229 @@
+<h3 class="genTitle"><em></em><span>报销单</span></h3>
+<ul class="generNav" ng-init="ht.activeTab = 1">
+    <li class="active"><a href="javascript:;">报销单</a></li>
+</ul>
+
+<div id="mainView">
+    <div class="viewTable ng-scope">
+        <ul>
+            <li><strong>流水号：</strong><span>{{ORDER_DATA.code}}</span></li>
+            <li><strong>报销申请日期：</strong><span>{{ORDER_DATA.applydate | date: 'yyyy-MM-dd'}}</span></li>
+            <li><strong>报销人：</strong><span>{{ORDER_DATA.user.name}}</span></li>
+            <li><strong>报销部门：</strong><span>{{ORDER_DATA.department.name}}</span></li>
+            <!--<li><strong>费用归属部门：</strong><span>{{ORDER_DATA.finance.belong}}</span></li>-->
+            <li class="list_con"><strong>是否关联费用申请单：</strong><span>{{ORDER_DATA.hasfysqd == '1' ? '是' : '否'}}</span></li>
+            <li><strong>费用种类详情：</strong><span>{{ORDER_DATA.cost.typestr}}</span></li>
+            <li><strong>成本中心：</strong><span>{{ORDER_DATA.finance.costcenter | getName:costcenterSel :'text':'code'}}</span></li>
+            <li class="list_con"><strong>票据类型：</strong><span>{{ORDER_DATA.cost.invoicetypestr}}</span></li>
+            <!--<li><strong>费用种类：</strong><span>{{ORDER_DATA.ZRZFS}}</span></li>-->
+            <li><strong>费用期间-起始月份：</strong><span>{{ORDER_DATA.cost.fromdate}}</span></li>
+            <li><strong>费用期间-截止月份：</strong><span>{{ORDER_DATA.cost.enddate}}</span></li>
+            <!--<li><strong>未使用额度：</strong><span>{{ORDER_DATA.ZRZFS}}</span></li>-->
+            <!--<li><strong>附件张数：</strong><span>{{ORDER_DATA.cost.attanum}}</span></li>-->
+            <li class="list_con"><strong>备注/出差事由：</strong><span>{{ORDER_DATA.extra.note}}</span></li>
+            <li class="list_con"><strong>打印备注：</strong><span>{{ORDER_DATA.extra.printnote}}</span></li>
+
+            <li class="list_con">
+                <strong>附件：</strong>
+                <span><a ng-repeat="list in ORDER_DATA.extra.fj" style="padding-right: 15px;" class="underLine" href="{{list.filePath}}">{{list.fileName}}</a></span>
+            </li>
+            <li><strong>状态：</strong><span ng-class="prostatus=='done'&&ORDER_DATA.info.status=='invalid' ? 'redColor' : ''">{{prostatus=='done' ? {valid:'有效', invalid:'已作废'}[ORDER_DATA.info.status] : ''}}</span></li>
+        </ul>
+    </div>
+    <div class="fysqdTable ng-hide" ng-show="ORDER_DATA.hasfysqd == '1'">
+        <div class="genTitle2">
+            <div>
+                <strong>费用申请单信息</strong>
+            </div>
+        </div>
+        <div class="addTable">
+            <table class="tab_data">
+                <tr>
+                    <th>费用申请单号</th>
+                    <th>申请流水号</th>
+                    <th>申请标题</th>
+                    <th>类型</th>
+                    <th>成本中心</th>
+                    <!--<th>未使用金额</th>-->
+                    <th>本次使用金额</th>
+                </tr>
+                <tr ng-repeat="list in ORDER_DATA.fysqd" class="list">
+                    <td>{{list.AUFNR}}</td>
+                    <td>{{list.ZINORD}}</td>
+                    <td>{{list.ZSQNR}}</td>
+                    <td>{{list.ZFYLXTxt}}</td>
+                    <td>{{ORDER_DATA.finance.costcenter | getName:costcenterSel :'text':'code'}}</td>
+                    <!--<td>{{list.wsyje}}</td>-->
+                    <td>{{list.ZBXJE | number:2}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="ng-hide" ng-show="ORDER_DATA.cost.invoicetype.indexOf('025') == -1">
+        <div class="genTitle2">
+            <div>
+                <strong>日常报销</strong>
+            </div>
+        </div>
+        <div class="viewTable ng-scope">
+            <ul>
+                <!--<li><strong>票据类型：</strong><span>{{ORDER_DATA.cost.invoicetypestr}}</span></li>-->
+                <li><strong>报销金额：</strong><span>{{ORDER_DATA.cost.amount | number:2}}</span></li>
+                <li><strong>附件张数：</strong><span>{{ORDER_DATA.cost.attanum}}</span></li>
+                <li><strong style="width: 160px;">是否有增值税专用发票：</strong><span>{{ORDER_DATA.cost.haszzs}}</span></li>
+                <li><strong>发票税额：</strong><span>{{ORDER_DATA.cost.tax | number:2}}</span></li>
+            </ul>
+        </div>
+    </div>
+    <div class="ng-hide" ng-show="ORDER_DATA.cost.invoicetype.indexOf('025') !== -1">
+        <div class="genTitle2">
+            <div>
+                <strong>差旅报销</strong>
+            </div>
+        </div>
+        <div class="addTable">
+            <table class="tab_data">
+                <tr>
+                    <th>出差开始时间</th>
+                    <th>出差起始地点</th>
+                    <th>出差截止时间</th>
+                    <th>出差终止地点</th>
+                    <th>交通工具</th>
+                    <th>远途交通报销金额</th>
+                    <th>备注</th>
+                </tr>
+                <tr ng-repeat="list in ORDER_DATA.cost.tripcost" class="list">
+                    <td>{{list.startdate | date : 'yyyy-MM-dd'}}</td>
+                    <td>{{list.origin}}</td>
+                    <td>{{list.enddate | date : 'yyyy-MM-dd'}}</td>
+                    <td>{{list.dest}}</td>
+                    <td>{{list.trans}}</td>
+                    <td>{{list.money|number:2}}</td>
+                    <td>{{list.note}}</td>
+                </tr>
+                <tr>
+                    <td colspan="4"></td>
+                    <td class="tab_data_th">远途交通报销金额汇总</td>
+                    <td>{{ORDER_DATA.cost.jtjehz | number:2}}</td>
+                    <td colspan="2"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="viewTable ng-scope">
+            <ul>
+                <li><strong>市内交通费：</strong><span>{{ORDER_DATA.cost.citytranscost | number:2}}</span></li>
+                <li><strong>住宿费：</strong><span>{{ORDER_DATA.cost.accomcost | number:2}}</span></li>
+                <li><strong>其他费用：</strong><span>{{ORDER_DATA.cost.othercost | number:2}}</span></li>
+                <li><strong>报销金额汇总：</strong><span>{{(ORDER_DATA.cost.citytranscost*1 + ORDER_DATA.cost.accomcost*1 + ORDER_DATA.cost.othercost*1+ORDER_DATA.cost.jtjehz*1) | number:2}}</span></li>
+                <li><strong>附件张数：</strong><span>{{ORDER_DATA.cost.attanum}}</span></li>
+                <li><strong style="width: 160px;">是否有增值税专用发票：</strong><span>{{ORDER_DATA.cost.haszzs}}</span></li>
+                <li><strong>发票税额：</strong><span>{{ORDER_DATA.cost.tax | number:2}}</span></li>
+            </ul>
+        </div>
+    </div>
+    <div>
+        <div class="genTitle2">
+            <div>
+                <strong>财务信息</strong>
+            </div>
+        </div>
+        <div class="viewTable ng-scope">
+            <ul>
+                <li><strong>本次报销金额：</strong><span>{{ORDER_DATA.cost.amount | currency : '￥'}}</span></li>
+                <li><strong>借款未还金额：</strong><span>{{ORDER_DATA.finance.loan | currency : '￥'}}</span></li>
+                <li><strong>本次还款金额：</strong><span>{{ORDER_DATA.finance.returnmoney | currency : '￥'}}</span></li>
+                <li><strong>实际财务应付金额：</strong><span>{{ORDER_DATA.finance.due | currency : '￥'}}</span></li>
+                <!-- <li><strong>会计凭证号：</strong><span>{{ORDER_DATA.finance.certcode}}</span></li>
+                <li><strong>执行业务人员：</strong><span>{{ORDER_DATA.finance.businessor.name}}</span></li>
+                 <li><strong>业务标记时间：</strong><span>{{ORDER_DATA.finance.businessdate | date : 'yyyy-MM-dd'}}</span></li>
+                 <li><strong>执行财务人员：</strong><span>{{ORDER_DATA.finance.financer.name}}</span></li>
+                 <li><strong>财务标记时间：</strong><span>{{ORDER_DATA.finance.financedate | date : 'yyyy-MM-dd'}}</span></li>
+                 <li><strong>凭证生成时间：</strong><span>{{ORDER_DATA.finance.certdate | date : 'yyyy-MM-dd'}}</span></li>
+                 <li><strong>会计年度：</strong><span>{{ORDER_DATA.finance.certyear}}</span></li>
+             <!--<li><strong>执行总经办人员：</strong><span>{{ORDER_DATA.finance}}</span></li>
+                 <li><strong>总经办标记时间：</strong><span>{{ORDER_DATA.finance}}</span></li>
+                 <li><strong>总经理审核标记时间：</strong><span>{{ORDER_DATA.finance}}</span></li>-->
+                <li class="list_con"><strong>财务备注信息：</strong><span>{{ORDER_DATA.finance.note}}</span></li>
+            </ul>
+        </div>
+    </div>
+    <div>
+        <div class="genTitle2">
+            <div>
+                <strong>本人当期报销信息</strong>
+            </div>
+        </div>
+        <div class="addTable">
+            <div class="maxline3">
+                <table class="tab_data">
+                    <tr>
+                        <th><span ng-if="ORDER_DATA.cost.category == '13'">季度</span><span ng-if="ORDER_DATA.cost.category == '14'">年份</span><span ng-if="['13', '14'].indexOf(ORDER_DATA.cost.category) == -1">月份</span></th>
+                        <!--<th>月份</th>-->
+                        <th>已分配额度</th>
+                        <th>已消耗额度</th>
+                        <th>本单使用额度</th>
+                    </tr>
+                    <tr ng-repeat="list in ORDER_DATA.limit" class="list">
+                        <td>{{list.year}}{{list.year ? '年' :''}}{{list.month ? ORDER_DATA.cost.category == '13' ? '第'+list.month+'季度' : list.month+'月': ''}}</td>
+                        <!--<td>{{list.month}}</td>-->
+                        <td>{{list.amount | number:2}}</td>
+                        <td>{{list.used | number:2}}</td>
+                        <td>{{list.using | number:2}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="genTitle2">
+            <div>
+                <strong>本人当年报销信息</strong>
+            </div>
+        </div>
+        <div class="addTable">
+            <table class="tab_data">
+                <tr>
+                    <th>本科目当前有效额度</th>
+                    <th>本科目当前总额度</th>
+                    <th>本科目已使用额度</th>
+                </tr>
+                <tr ng-repeat="list in reimlimityearData" class="list">
+                    <td>{{list.free | number:2}}</td>
+                    <td>{{list.amount | number:2}}</td>
+                    <td>{{list.used | number:2}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div ng-show="showbmqn">
+        <div class="genTitle2">
+            <div>
+                <strong>部门全年报销汇总信息</strong>
+            </div>
+        </div>
+        <div class="addTable">
+            <table class="tab_data">
+                <tr>
+                    <th>申请人所在部门</th>
+                    <th>间接费用-本年累计已分配额度</th>
+                    <th>间接费用-本年累计已审核额度</th>
+                </tr>
+                <tr ng-repeat="list in bmqnbxhzxx" class="list" ng-class="list.monthcount-list.used<0 ? 'red' : ''">
+                    <td>{{list.orgname}}</td>
+                    <td>{{list.monthcount | number:2}}</td>
+                    <td>{{list.used | number:2}}</td>
+                    <!--<td>{{list.used-list.using | number:2}}</td>-->
+            </table>
+        </div>
+    </div>
+    <div class="clear"></div>
+
+
+    <div class="gerSub">
+        <a class="subSave" href="index.html#/reimbursementEdit?processId={{processId}}&nodeId={{nodeId}}" ng-if="editBtn">编辑</a>
+    </div>
+    <div class="apCot" ng-if="apCot">
+        <div ng-include="'template/common/apply.html'"></div>
+    </div>
+
+</div>

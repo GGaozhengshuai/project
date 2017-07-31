@@ -1,0 +1,127 @@
+<div class="item">LIC库存匹配</div>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>交货单号</strong>
+                    <input class="text" type="text" name="delivery"  ng-init="delivery=''" ng-model="delivery" placeholder="请输入交货单号"/>
+                    <!--<iframe id="iframe123" frameborder="0" width="400" height="500"></iframe>-->
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search()" style="margin-top: 0;">
+                </td>
+                <td colspan="2">
+                </td>
+            </tr>
+            <tr>
+            </tr>
+        </table>
+    </div>
+</form>
+<div id="mainView">
+    <div class="czAddBtn" style="float: left;">
+        <a class="changqdBtn" href="javascript:;" ng-click="downloadLic()">&#12288;生成Lic&#12288;</a>
+        <a class="changInfoBtn" ng-click="match()" href="javascript:;" style="margin-left:0;">&#12288;&#12288;匹配&#12288;&#12288;</a>
+    </div>
+    <div class="tableWrap" style="float: left;">
+
+            <div class="addTable" style="padding-left: 0;">
+                <div class="tableLeft" style="margin-right: 125px; margin:0;">
+                    <table class="orangestyle table" style="width:120%;">
+                        <thead>
+                        <tr>
+                            <th width="8%"><span>交货单号</span></th>
+                            <th width="8%"><span>原厂物料编码</span></th>
+                            <th width="8%"><span>供应商订单号</span></th>
+                            <th width="8%"><span>交货单数量</span></th>
+                            <th width="8%"><span>邮箱</span></th>
+                            <th width="8%"><span>激活码</span></th>
+                            <th width="8%"><span>库存数量</span></th>
+                            <th width="6%"><span>匹配数量</span></th>
+                            <th width="12%"><span>华为分批次号</span></th>
+                            <th width="8%"><span>状态</span></th>
+                        </tr>
+                        </thead>
+                        <tbody ng-class="LicList1.length > 0 || LicList.length > 0? 'meg' : 'noMegTip'">
+                        <!--nomatch-->
+                        <tr ng-repeat="list in LicList" ng-show="LicList.length!==0" ng-class="list.matchcount !== list.deliverynum ? 'errTip' : ''" class="list">
+                            <td><span>{{list.delivery}}</span></td>
+                            <td><span>{{list.mcode}}</span></td>
+                            <td><span>{{list.sorder}}</span></td>
+                            <td><span>{{list.deliverynum}}</span></td>
+                            <td><span>{{list.email}}</span></td>
+                            <td><span>{{list.lickey}}</span></td>
+                            <td><span>{{list.stocknum}}</span></td>
+                            <td><span>{{list.matchnum}}</span></td>
+                            <td><span>{{list.batchnum}}</span></td>
+                            <td><span>{{{'neo':'未出库','matching':'未出库' ,'matched':'待出库' ,'used':'已出库' ,'del':'作废'}[list.status]}}</span></td>
+                        </tr>
+                        <tr ng-repeat="list in LicList1" ng-show="LicList1.length!==0" ng-class="list.matchcount !== list.deliverynum ? 'errTip' : ''"   class="list">
+                            <td><span>{{list.delivery}}</span></td>
+                            <td><span>{{list.mcode}}</span></td>
+                            <td><span>{{list.sorder}}</span></td>
+                            <td><span>{{list.deliverynum}}</span></td>
+                            <td><span>{{list.email}}</span></td>
+                            <td><span>{{list.lickey}}</span></td>
+                            <td><span>{{list.stocknum}}</span></td>
+                            <td><span>{{list.matchnum}}</span></td>
+                            <td><span>{{list.batchnum}}</span></td>
+                            <td><span>{{{'neo':'未出库','matching':'未出库' ,'matched':'待出库' ,'used':'已出库' ,'del':'作废'}[list.status]}}</span></td>
+                        </tr>
+                        <tr class="tip"><td colspan="10"><span>没有查到库存匹配</span></td></tr>
+                        </tbody>
+                    </table>
+            <!--<table class="orangestyle table" style="width:120%;">-->
+                <!--<thead>-->
+                <!--<tr>-->
+                    <!--<th width="8%"><span>原厂物料编码</span></th>-->
+                    <!--<th width="8%"><span>库存数量</span></th>-->
+                    <!--<th width="8%"><span>激活码</span></th>-->
+                    <!--<th width="8%"><span>供应商订单号</span></th>-->
+                    <!--<th width="12%"><span>华为分批次号</span></th>-->
+                    <!--<th width="6%"><span>匹配数量</span></th>-->
+                    <!--<th width="8%"><span>交货单号</span></th>-->
+                    <!--<th width="8%"><span>交货单数量</span></th>-->
+                    <!--<th width="8%"><span>邮箱</span></th>-->
+                    <!--<th width="8%"><span>状态</span></th>-->
+                <!--</tr>-->
+                <!--</thead>-->
+                <!--<tbody ng-class="LicList1.length > 0 || LicList.length > 0? 'meg' : 'noMegTip'">-->
+                <!--&lt;!&ndash;nomatch&ndash;&gt;-->
+                <!--<tr ng-repeat="list in LicList" ng-show="LicList.length!==0" ng-class="list.stocknum !== list.matchnum ? 'errTip' : ''" class="list">-->
+                    <!--<td><span>{{list.mcode}}</span></td>-->
+                    <!--<td><span>{{list.stocknum}}</span></td>-->
+                    <!--<td><span>{{list.lickey}}</span></td>-->
+                    <!--<td><span>{{list.sorder}}</span></td>-->
+                    <!--<td><span>{{list.batchnum}}</span></td>-->
+                    <!--<td><span>{{list.matchnum}}</span></td>-->
+                    <!--<td><span>{{list.delivery}}</span></td>-->
+                    <!--<td><span>{{list.deliverynum}}</span></td>-->
+                    <!--<td><span>{{list.email}}</span></td>-->
+                    <!--<td><span>{{{'neo':'未出库','matching':'部分匹配' ,'matched':'待出库' ,'used':'已出库' ,'del':'作废'}[list.status]}}</span></td>-->
+                <!--</tr>-->
+                <!--<tr ng-repeat="list in LicList1" ng-show="LicList1.length!==0" ng-class="list.stocknum !== list.matchnum ||list.status == 'matching'? 'errTip' : ''"   class="list">-->
+                    <!--<td><span>{{list.mcode}}</span></td>-->
+                    <!--<td><span>{{list.stocknum}}</span></td>-->
+                    <!--<td><span>{{list.lickey}}</span></td>-->
+                    <!--<td><span>{{list.sorder}}</span></td>-->
+                    <!--<td><span>{{list.batchnum}}</span></td>-->
+                    <!--<td><span>{{list.matchnum}}</span></td>-->
+                    <!--<td><span>{{list.delivery}}</span></td>-->
+                    <!--<td><span>{{list.deliverynum}}</span></td>-->
+                    <!--<td><span>{{list.email}}</span></td>-->
+                    <!--<td><span>{{{'neo':'未出库','matching':'部分匹配' ,'matched':'待出库' ,'used':'已出库' ,'del':'作废'}[list.status]}}</span></td>-->
+                <!--</tr>-->
+                <!--<tr class="tip"><td colspan="10"><span>没有查到库存匹配</span></td></tr>-->
+                <!--</tbody>-->
+            <!--</table>-->
+        </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+

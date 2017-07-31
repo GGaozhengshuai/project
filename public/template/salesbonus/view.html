@@ -1,0 +1,61 @@
+<h3 class="genTitle">
+    <em></em>
+    <span>销售返点</span>
+    <span ng-if="activeTab == 2">审批详情</span>
+</h3>
+<ul class="generNav">
+    <li ng-class="{active:activeTab == 1}"><a href="javascript:void(0)" ng-mousedown='htTab(1)'>销售返点查看</a></li>
+    <li ng-class="{active:activeTab == 2}"><a href="javascript:void(0);" ng-mousedown='htTab(2)'>审批详情</a></li>
+</ul>
+
+<div id="mainView">
+    <div ng-if="activeTab == 1">
+        <div class="viewTable ng-scope">
+            <ul>
+                <li><strong>返点供应商：</strong><span>{{ORDER_DATA.provider || ''}}</span></li>
+                <li><strong>事业部：</strong><span>{{ORDER_DATA.department.name}}</span></li>
+                <!--<li><strong>产品线：</strong><span>{{ORDER_DATA.secondary || ''}}</span></li>-->
+                <li><strong>返点所属客户名称：</strong><span>{{ORDER_DATA.client.name}}</span></li>
+                <li><strong>返点使用客户名称：</strong><span>{{ORDER_DATA.user.name || ''}}</span></li>
+                <li><strong>返点来源：</strong><span>{{ORDER_DATA.bonusbase.source || ''}}</span></li>
+                <li><strong>返点类型：</strong><span>{{ORDER_DATA.bonusbase.type}}</span></li>
+                <li><strong>返点编号：</strong><span>{{ORDER_DATA.code || ''}}</span></li>
+                <li><strong>激励受益类型：</strong><span>{{ORDER_DATA.bonusbase.benefit || ''}}</span></li>
+                <li><strong>生效日期：</strong><span>{{ORDER_DATA.bonusinfo.start | date: 'yyyy-MM-dd HH:mm:ss' || ''}}</span></li>
+                <li><strong>失效日期：</strong><span>{{ORDER_DATA.bonusinfo.end | date: 'yyyy-MM-dd HH:mm:ss' || ''}}</span></li>
+                <li><strong>返点金额：</strong><span>{{ORDER_DATA.bonusmoney.total | currency : '￥' || ''}}</span></li>
+                <li><strong>可用金额：</strong><span>{{ORDER_DATA.bonusinfo.status == 'invalid' ? 0 : (ORDER_DATA.bonusmoney.total-ORDER_DATA.bonusmoney.freeze-ORDER_DATA.bonusmoney.used) | currency : '￥' || ''}}</span></li>
+                <li><strong>已用金额：</strong><span>{{ORDER_DATA.bonusmoney.used | currency : '￥'}}</span></li>
+                <li><strong>冻结金额：</strong><span>{{ORDER_DATA.bonusmoney.freeze | currency : '￥'}}</span></li>
+                <li><strong>状态：</strong><span>{{status[ORDER_DATA.bonusinfo.status]}}</span></li>
+                <li><strong>申请人：</strong><span>{{ORDER_DATA.creator.name}}</span></li>
+                <li><strong>申请部门：</strong><span>{{ORDER_DATA.creator.orgname}}</span></li>
+                <li class="list_con"><strong>备注：</strong><span>{{ORDER_DATA.bonusbase.note || ''}}</span></li>
+            </ul>
+        </div>
+    </div>
+    <div class="applyLog" ng-if="activeTab == 2">
+        <table>
+            <thead>
+            <tr>
+                <th class="th1">审批人</th>
+                <th class="th2">审批时间</th>
+                <th class="th3">审批状态</th>
+                <th class="th4">审批意见</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="list in processlog">
+                <td>{{list.sender.name}}</td>
+                <td>{{list.createDate | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td>{{list.operation}}</td>
+                <td>{{list.content.comment}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+<div class="gerSub">
+    <a class="subSave changqdBtn" ng-if="opprev.salesbonusOrder_change1" target="_blank" href="index.html#/salesbonusChange/{{ORDER_DATA._id}}" ng-class="ORDER_DATA.bonusinfo.status != 'invalid' ? '' : 'ng-hide'">变更</a>
+</div>

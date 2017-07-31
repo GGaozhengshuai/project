@@ -1,0 +1,45 @@
+<div class="item">进销项发票</div>
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong>选择日期(年)</strong>
+                    <input type="text" class="text Wdate" ng-model="year"  date-Picker dateParam="{dateFmt: 'yyyy', readOnly: true}" placeholder="请选择日期" ng-init="findDate=''" ng-model="findDate"/>
+                </td>
+                <td>
+                    <strong>选择日期(月)</strong>
+                    <input type="text" class="text Wdate" ng-model="month"  date-Picker dateParam="{dateFmt: 'MM', readOnly: true}" placeholder="请选择日期" ng-init="findDate=''" ng-model="findDate"/>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<div class="item">查询结果</div>
+<table class="orangestyle table">
+    <thead>
+    <tr>
+        <th>名称</th>
+        <th>操作时间</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in dataList">
+        <td>{{(list.editdate | date:'yyyy-MM-dd').substr(0,4)}}年{{(list.editdate | date:'yyyy-MM-dd').substr(5,2)}}月进销项发票统计</td>
+        <td>{{list.editdate | date:'yyyy-MM-dd'}}</td>
+        <td class="czBtn">
+            <a class="handleBtn editBtn" target="_blank" ng-hide="lssdatapower || sydatapower" href="index.html#/outPutChnage?year={{list.year}}&month={{list.month}}"  title="变更"></a>
+            <a class="handleBtn editBtn disabled" ng-show="lssdatapower || sydatapower" target="_blank" href="javascript:;"  title="不允许变更"></a>
+            <a class="handleBtn detailBtn" target="_blank" href="index.html#/outPutView?year={{list.year}}&month={{list.month}}" title="详情"></a>
+        </td>
+    </tr>
+    <tr class="tip"><td colspan="3">没有查到结果</td></tr>
+    </tbody>
+</table>

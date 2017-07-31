@@ -1,0 +1,107 @@
+<h3 class="genTitle"><em></em><span>开证付汇</span></h3>
+<ul class="generNav">
+    <li class="active"><a href="javascript:;">开证付汇单</a></li>
+</ul>
+
+<div id="mainView">
+    <div class="viewTable ng-scope">
+        <form novalidate name="invoiceForm">
+            <div class="genTitle2">
+                <div>
+                    <strong>基本信息</strong>
+                </div>
+            </div>
+            <ul>
+                <li><strong>开证付汇申请号：</strong><span>{{ORDER_DATA.ZKZFH}}</span></li>
+                <li><strong>申请日期：</strong><span>{{ORDER_DATA.ZSQRQ}}</span></li>
+                <li><strong>申请人：</strong><span>{{ORDER_DATA.ZZDR}}</span></li>
+                <li><strong>付款类型：</strong><span>{{ORDER_DATA.ZFKLX}}</span></li>
+                <li><strong>付款主体：</strong><span>{{ORDER_DATA.ZFKZT}}</span></li>
+                <li><strong>币种：</strong><span>{{ZBB}}</span></li>
+                <li><strong>付汇汇率：</strong><span>{{ORDER_DATA.ZFHHL}}</span></li>
+                <li><strong>供应商名称：</strong><span>{{ORDER_DATA.NAME1 + ORDER_DATA.NAME2}}</span></li>
+                <li><strong>供应商编号：</strong><span>{{ORDER_DATA.LIFNR}}</span></li>
+                <li><strong>开证付汇金额：</strong><span>{{ORDER_DATA.ZKZFHJE | number : 2}}</span></li>
+                <li><strong>付款方式：</strong><span>{{ORDER_DATA.ZFKFS}}</span></li>
+                <li><font ng-if="kzfhBank">*</font><strong>开证付汇银行：</strong>
+                    <select ng-model="ORDER_DATA.ZKZBANK" name="ZKZBANK" ng-required="kzfhBank" ng-disabled="kzfhBankdisabled">
+                        <option value="">请选择</option>
+                        <option value="中国银行">中国银行</option>
+                        <option value="工商银行">工商银行</option>
+                        <option value="招商银行">招商银行</option>
+                        <option value="平安银行">平安银行</option>
+                        <option value="北京银行">北京银行</option>
+                        <option value="汇丰银行">汇丰银行</option>
+                        <option value="交通银行">交通银行</option>
+                        <option value="建设银行">建设银行</option>
+                        <option value="农业银行">农业银行</option>
+                        <option value="宁波银行">宁波银行</option>
+                        <option value="澳新银行">澳新银行</option>
+                        <option value="渤海银行">渤海银行</option>
+                        <option value="浙商银行">浙商银行</option>
+                        <option value="江苏银行">江苏银行</option>
+                    </select>
+                </li>
+                <li class="list_con"><strong>收款情况：</strong><span>{{ORDER_DATA.ZSKQK}}</span></li>
+                <li class="list_con"><strong>备注：</strong><span>{{ORDER_DATA.ZBZ}}</span></li>
+
+            </ul>
+            <div class="genTitle2">
+                <div>
+                    <strong>开证付汇财务信息</strong>
+                </div>
+            </div>
+            <ul>
+                <li><strong>公司名称（英文）：</strong><span>{{ORDER_DATA.ZGSMC}}</span></li>
+                <li><strong>银行名称（英文）：</strong><span>{{ORDER_DATA.ZYHMC}}</span></li>
+                <li><strong>银行地址（英文）：</strong><span>{{ORDER_DATA.ZYHDZ}}</span></li>
+                <li><strong>银行账号：</strong><span>{{ORDER_DATA.ZYHZH}}</span></li>
+                <li><strong>SWIFT CODE：</strong><span>{{ORDER_DATA.ZSWIFTCODE}}</span></li>
+                <li class="list_con"><strong>财务其他信息：</strong><span>{{ORDER_DATA.ZQTXX}}</span></li>
+            </ul>
+            <div class="addTable">
+                <div class="genTitle2">
+                    <div>
+                        <strong>关联的采购订单信息</strong>
+                    </div>
+                </div>
+                <table class="tab_data">
+                    <thead class="tab_header">
+                    <tr>
+                        <th>采购订单号<br>(境外供应商)</th>
+                        <th>销售订单号<br>(最终客户)</th>
+                        <th>最终客户名称</th>
+                        <th>采购订单号<br>(双主体之间)</th>
+                        <th>销售订单号<br>(双主体之间)</th>
+                        <th>订单总金额</th>
+                        <th>已开证付汇金额</th>
+                        <th>本次开证付汇金额</th>
+                        <th ng-if="changeJE">修改开证付汇金额</th>
+                    </tr>
+                    </thead>
+                    <tbody class="tab_body">
+                    <tr ng-repeat="list in glCgList">
+                        <td>{{list.EBELN}}</td>
+                        <td>{{list.VBELN}}</td>
+                        <td>{{list.ZHKMC}}</td>
+                        <td>{{list.ZEBELN}}</td>
+                        <td>{{list.ZVBELN}}</td>
+                        <td>{{list.ZDDZJE}}</td>
+                        <td>{{list.ZYKZFHJE}}</td>
+                        <td>{{list.ZKZFHJE}}</td>
+                        <td ng-if="changeJE">{{list.bgje}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </form>
+    </div>
+    <div class="clear"></div>
+    <div class="gerSub">
+        <a class="subSave" href="index.html#/issueOrderEdit?processId={{processId}}&nodeId={{nodeId}}" ng-if="editBtn">编辑</a>
+    </div>
+    <div class="apCot" ng-if="apCot" >
+        <div ng-include="'template/common/apply.html'"></div>
+    </div>
+</div>
+<div id="approversDialog" class="dialog cusBox" title="选择下一审批人" ng-include="'template/common/approvers.html'" ></div>

@@ -1,0 +1,73 @@
+<h3 class="genTitle"><em></em><span>盘点报告</span></h3>
+
+<div id="mainView">
+    <div class="viewTableWid">
+        <ul>
+            <li><strong>盘点报告号：</strong><span>{{purchaseList.RPNUM}}</span></li>
+            <li><strong>盘点类型：</strong><span>{{enumobj.RPTYPE[purchaseList.RPTYPE]}}</span></li>
+            <li><strong>盘点条件：</strong><span>{{enumobj.RPCON[purchaseList.RPCON]}}</span></li>
+            <li><strong>盘点日期：</strong><span>{{purchaseList.RPDATE}}</span></li>
+            <li><strong>盘点仓库号：</strong><span>{{purchaseList.LGNUM}}</span></li>
+            <li><strong>仓库类型描述：</strong><span>{{purchaseList.LTYPT}}</span></li>
+            <li><strong>差异金额合计：</strong><span>{{purchaseList.PDZJE}}</span></li>
+        </ul>
+        <div style="overflow-y: hidden; overflow:scroll; width: 100%;height: 100%">
+        <table class="tab_data" style="width:200%">
+            <thead class="tab_header">
+            <tr>
+                <th>盘点报告项目号</th>
+                <th>系统盘点记录号</th>
+                <th>库存地点</th>
+                <th>物料号</th>
+                <th>厂商物料号</th>
+                <th>物料组描述</th>
+                <th>采购订单号</th>
+                <th>采购组织</th>
+                <th>批次</th>
+                <th>入库日期</th>
+                <th>库龄</th>
+                <th>数量</th>
+                <th>单价</th>
+                <th>盘点数量</th>
+                <th>数量差异</th>
+                <th>差异金额</th>
+                <th>盘点人</th>
+                <th>成本中心</th>
+                <th>利润中心</th>
+                <th>差异原因</th>
+                <th>处理方案</th>
+            </tr>
+            </thead>
+            <tbody class="tab_body">
+            <tr ng-repeat="list in dataList">
+                <td>{{list.RPPOS}}</td>
+                <td>{{list.CTNUM}}</td>
+                <td>{{list.LGOBE}}</td>
+                <td>{{list.MATNR}}</td>
+                <td>{{list.BISMT}}</td>
+                <td>{{list.WGBEZ}}</td>
+                <td>{{list.EBELN}}</td>
+                <td>{{enumobj.EKORG[list.EKORG]}}</td>
+                <td>{{list.CHARG}}</td>
+                <td>{{list.LWEDT}}</td>
+                <td>{{list.ZDAYS}}</td>
+                <td>{{list.VERME}}</td>
+                <td>{{list.VERPR | currency : '￥'}}</td>
+                <td>{{list.MENGA}}</td>
+                <td>{{list.ABWEI}}</td>
+                <td>{{list.DWERT | currency : '￥'}}</td>
+                <td>{{list.CNAME}}</td>
+                <td>{{enumobj.KOSTL[list.KOSTL]}}</td>
+                <td>{{enumobj.PRCTR[list.PRCTR]}}</td>
+                <td>{{list.ZREASON}}</td>
+                <td>{{list.ZSOLUTION}}</td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+    <pagination conf="paginationConf"></pagination>
+    <div class="apCot" ng-if="apCot" >
+        <div ng-include="'template/common/apply.html'"></div>
+    </div>
+</div>

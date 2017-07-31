@@ -1,0 +1,93 @@
+<div class="homeMain">
+    <div class="generTitle"><h3>我的单据</h3></div>
+    <div class="tableHome" id="tableWrap">
+        <div class="fixTableBox" id="fixTableBox">
+        <table class="table3 tableHome fixtableHead">
+            <tr>
+                <th width="20%">单据类型</th>
+                <th width="16%">待办</th>
+                <th width="16%">已办</th>
+                <th width="16%">订阅</th>
+                <th width="16%">我的申请</th>
+                <th width="16%">草稿</th>
+            </tr>
+        </table>
+        </div>
+    <div class="tableBox" id="tableBox">
+        <table class="table3 tableHome">
+            <thead>
+            <th width="20%">单据类型</th>
+            <th width="16%">待办</th>
+            <th width="16%">已办</th>
+            <th width="16%">订阅</th>
+            <th width="16%">我的申请</th>
+            <th width="16%">草稿</th>
+            </thead>
+            <!--<col width="20%">
+            <col width="16%">
+            <col width="16%">
+            <col width="16%">
+            <col width="16%">
+            <col width="16%">-->
+            <tbody ng-if="!isAdmin" ng-class="(dataList | filter: filterFn).length > 0 ? 'meg' : 'noMegTip'">
+            <tr ng-repeat="list in dataList | filter: filterFn">
+                <!--<td style="text-align: left;">{{list.prctypecode | getName: typeObj : 'name' : 'code'}}</td>-->
+                <td style="text-align: left;">{{list.prctypename}}</td>
+                <td><a target="_blank"
+                       href="/index.html#/typeList?myflag=mydoings&controllerName={{list.prctypename}}&&controllercode={{list.prctypecode.join(',') || list.prctypecode}}"
+                       ng-if="list.mydoings" class="hasLink"><i>{{list.mydoings}}</i>条</a><span
+                        ng-if="!list.mydoings"><i>{{list.mydoings}}</i>条</span></td>
+                <td><a target="_blank"
+                       href="/index.html#/typeList?myflag=mydones&controllerName={{list.prctypename}}&&controllercode={{list.prctypecode.join(',') || list.prctypecode}}"
+                       ng-if="list.mydones" class="hasLink"><i>{{list.mydones}}</i>条</a><span ng-if="!list.mydones"><i>{{list.mydones}}</i>条</span>
+                </td>
+                <td><a target="_blank"
+                       href="/index.html#/typeList?myflag=mysubscribers&controllerName={{list.prctypename}}&&controllercode={{list.prctypecode.join(',') || list.prctypecode}}"
+                       ng-if="list.mysubscribers" class="hasLink"><i>{{list.mysubscribers}}</i>条</a><span
+                        ng-if="!list.mysubscribers"><i>{{list.mysubscribers}}</i>条</span></td>
+                <td><a target="_blank"
+                       href="/index.html#/typeList?myflag=myapplys&controllerName={{list.prctypename}}&&controllercode={{list.prctypecode.join(',') || list.prctypecode}}"
+                       ng-if="list.myapplys" class="hasLink"><i>{{list.myapplys}}</i>条</a><span
+                        ng-if="!list.myapplys"><i>{{list.myapplys}}</i>条</span></td>
+                <td><a target="_blank"
+                       href="/index.html#/typeList?myflag=mybegins&controllerName={{list.prctypename}}&&controllercode={{list.prctypecode.join(',') || list.prctypecode}}"
+                       ng-if="list.mybegins" class="hasLink"><i>{{list.mybegins}}</i>条</a><span
+                        ng-if="!list.mybegins"><i>{{list.mybegins}}</i>条</span></td>
+            </tr>
+            <tr class="tip">
+                <td colspan="6">没有单据内容</td>
+            </tr>
+            </tbody>
+            <tbody ng-if="isAdmin" ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+            <tr ng-repeat="list in dataList">
+                <!--<td style="text-align: left;">{{list.prctypecode | getName: typeObj : 'name' : 'code'}}</td>-->
+                <td style="text-align: left;">{{list.prctypename}}</td>
+                <td><a target="_blank"
+                       href="/index.html#/typeList?myflag=mydoings&controllerName={{list.prctypename}}&&controllercode={{list.prctypecode.join(',') || list.prctypecode}}"
+                       ng-if="list.mydoings" class="hasLink"><i>{{list.mydoings}}</i>条</a><span
+                        ng-if="!list.mydoings"><i>{{list.mydoings}}</i>条</span></td>
+                <td><a target="_blank"
+                       href="/index.html#/typeList?myflag=mydones&controllerName={{list.prctypename}}&&controllercode={{list.prctypecode.join(',') || list.prctypecode}}"
+                       ng-if="list.mydones" class="hasLink"><i>{{list.mydones}}</i>条</a><span ng-if="!list.mydones"><i>{{list.mydones}}</i>条</span>
+                </td>
+                <td><a target="_blank"
+                       href="/index.html#/typeList?myflag=mysubscribers&controllerName={{list.prctypename}}&&controllercode={{list.prctypecode.join(',') || list.prctypecode}}"
+                       class="hasLink"><i>{{list.mysubscribers}}</i>条</a></td>
+                <td><a target="_blank"
+                       href="/index.html#/typeList?myflag=myapplys&controllerName={{list.prctypename}}&&controllercode={{list.prctypecode.join(',') || list.prctypecode}}"
+                       ng-if="list.myapplys" class="hasLink"><i>{{list.myapplys}}</i>条</a><span
+                        ng-if="!list.myapplys"><i>{{list.myapplys}}</i>条</span></td>
+                <td><a target="_blank"
+                       href="/index.html#/typeList?myflag=mybegins&controllerName={{list.prctypename}}&&controllercode={{list.prctypecode.join(',') || list.prctypecode}}"
+                       ng-if="list.mybegins" class="hasLink"><i>{{list.mybegins}}</i>条</a><span
+                        ng-if="!list.mybegins"><i>{{list.mybegins}}</i>条</span></td>
+            </tr>
+            <tr class="tip">
+                <td colspan="6">没有单据内容</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <br /><br />
+</div>
+</div>

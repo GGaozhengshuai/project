@@ -1,0 +1,306 @@
+<h3 class="genTitle genTitleBot"><em></em><span>客户信用申请</span></h3>
+<div class="cusCont">
+    <div class="generForm">
+        <form novalidate name="myForm">
+            <ul>
+                <li class="tli">
+                    <strong><font>*</font>客户名称：</strong>
+                    <input ng-required="true" ng-readonly="true" name="cusname" ng-model="ORDER_DATA.cusname" ng-click="cusBox()"
+                           type="text" placeholder="请选择客户"/>
+                    <input ng-model="ORDER_DATA.cuscode" type="hidden" placeholder=""/>
+                    <span class="errTip ng-hide" ng-show="myForm.cusname.$dirty && myForm.cusname.$error.required">必填</span>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>客户编号：</strong>
+                    <input type="text" ng-required="true" ng-readonly="true" ng-model="ORDER_DATA.cuscode" name="cuscode" placeholder="请输入客户编号">
+                    <span class="errTip ng-hide" ng-show="myForm.cuscode.$dirty && myForm.cuscode.$error.required">必填</span>
+                </li>
+               <li class="tli">
+                    <strong><font>*</font>客户类型：</strong>
+                    <select ng-model="ORDER_DATA.custype" ng-required="true" name="custype">
+                        <option value="">请选择</option>
+                        <option value="分销商">分销商</option>
+                        <option value="最终客户">最终客户</option>
+                    </select>
+                   <span class="errTip ng-hide" ng-show="myForm.custype.$dirty && myForm.custype.$error.required">必填</span>
+               </li>
+                <li class="tli">
+                    <strong><font>*</font>业务类型：</strong>
+                    <select ng-model="ORDER_DATA.type" ng-required="true" name="type">
+                        <option value="">请选择</option>
+                        <option value="项目">项目</option>
+                        <option value="分销">分销</option>
+                        <option value="项目及分销">项目及分销</option>
+                        <option value="其他">其他</option>
+                    </select>
+                    <span class="errTip ng-hide" ng-show="myForm.type.$dirty && myForm.type.$error.required">必填</span>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>建议信用额度：</strong>
+                    <!--<input ng-model="ORDER_DATA.advicecredit" name="advicecredit" ng-Focus numtwo-Validation ng-required="true" type="text" placeholder="请输入建议信用额度"/>-->
+                    <input model-format="floatminus" ng-model="ORDER_DATA.advicecredit" name="advicecredit" ng-Focus numtwo-Validation ng-required="true" type="text" placeholder="请输入建议信用额度"/>
+                    <span class="errTip ng-hide" ng-show="myForm.advicecredit.$dirty && myForm.advicecredit.$error.numtwo && !myForm.advicecredit.$focused">小数点后保留两位</span>
+                    <span class="errTip ng-hide" ng-show="myForm.advicecredit.$dirty && myForm.advicecredit.$error.required && !myForm.advicecredit.$focused">必填</span>
+                </li>
+                <li class="tli">
+                    <strong>建议首付款比例(%)：</strong>
+                    <input ng-model="ORDER_DATA.jysfkbl" ng-Focus num100-Validation type="text"  name="jysfkbl" placeholder="请输入建议首付款比例"/>
+                    <span class="errTip ng-hide" ng-show="myForm.jysfkbl.$dirty && myForm.jysfkbl.$error.num100 && !myForm.jysfkbl.$focused">请输入0-100之间的数字</span>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>建议账期：</strong>
+                    <input ng-model="ORDER_DATA.suggestpayday" ng-required="true" ng-Focus numtwo-Validation name="suggestpayday" type="text" placeholder="请输入建议账期"/>
+                    <span class="errTip ng-hide" ng-show="myForm.suggestpayday.$dirty && myForm.suggestpayday.$error.numtwo && !myForm.suggestpayday.$focused">小数点后保留两位</span>
+                    <span class="errTip ng-hide" ng-show="myForm.suggestpayday.$dirty && myForm.suggestpayday.$error.required && !myForm.suggestpayday.$focused">必填</span>
+                </li>
+                <li class="tli">
+                    <strong>第三方资信调查：</strong>
+                    <select ng-model="ORDER_DATA.dsfzxdc">
+                        <option value="">请选择</option>
+                        <option value="是">是</option>
+                        <option value="否">否</option>
+                    </select>
+                </li>
+                <li class="clear"></li>
+                <li>
+                    <strong><font>*</font>授信申请理由及客户说明：</strong>
+                    <textarea ng-model="ORDER_DATA.reasonandcusint" name="reasonandcusint" ng-Focus ng-required="true" maxlength="500"></textarea>
+                    <span class="errTip ng-hide" ng-show="myForm.reasonandcusint.$dirty && myForm.reasonandcusint.$error.required && !myForm.reasonandcusint.$focused">必填</span>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>评分汇总：</strong>
+                    <input type="text" ng-disabled="true" value="{{ORDER_DATA.khjydxdjxz*1 + (+ORDER_DATA.cussource) + (+ORDER_DATA.ydfgcsfss*2) + (+ORDER_DATA.yqnjyed) + (+ORDER_DATA.industryreputation) + (+ORDER_DATA.premises) + (+ORDER_DATA.companysize)}}">
+                </li>
+                <li class="clear"></li>
+                <!--<li class="formUpStyle">
+                    <strong><font>*</font>财务资料：</strong>
+                    <input url="/resource/uploadfile" fileName="cwzl" uploadify-All btnname="上传附件" type="file"  ng-model="ORDER_DATA.cwzl" placeholder="">
+                    <a target="_blank" class="link" href="{{ORDER_DATA.cwzl}}">{{cwzl}}</a>
+                </li>-->
+                <li class="formUpStyle cwzlBox" id="cwzlBox">
+                    <strong><font>*</font>财务资料：</strong>
+                    <input uploadify-More btnname="上传附件" fileName="cwzl" ng-model="cwzl" />
+                    <span style="padding-left: 10px;">(可上传多个)</span>
+                    <div>
+                        <div class='showImg' ng-repeat="list in cwzl"><a target='_blank' href='{{list.filePath}}'>{{list.fileName}}</a><span ng-click="delupload($index, 'cwzl')" style='margin-left: 5px;cursor: pointer;'>删除</span></div>
+                    </div>
+                </li>
+                <li class="formUpStyle cwzlBox">
+                    <strong>资质证明：</strong>
+                    <input uploadify-More btnname="上传附件" fileName="zzzm" ng-model="zzzm" />
+                    <span style="padding-left: 10px;">(可上传多个)</span>
+                    <div>
+                        <div class='showImg' ng-repeat="list in zzzm"><a target='_blank' href='{{list.filePath}}'>{{list.fileName}}</a><span ng-click="delupload($index, 'zzzm')" style='margin-left: 5px;cursor: pointer;'>删除</span></div>
+                    </div>
+                </li>
+                <li class="formUpStyle cwzlBox">
+                    <strong>担保资料：</strong>
+                    <input uploadify-More btnname="上传附件" fileName="dbzl" ng-model="dbzl" />
+                    <span style="padding-left: 10px;">(可上传多个)</span>
+                    <div>
+                        <div class='showImg' ng-repeat="list in dbzl"><a target='_blank' href='{{list.filePath}}'>{{list.fileName}}</a><span ng-click="delupload($index, 'dbzl')" style='margin-left: 5px;cursor: pointer;'>删除</span></div>
+                    </div>
+                </li>
+                <li class="formUpStyle cwzlBox">
+                    <strong>其它资料：</strong>
+                    <input uploadify-More btnname="上传附件" fileName="qtzl" ng-model="qtzl" />
+                    <span style="padding-left: 10px;">(可上传多个)</span>
+                    <div>
+                        <div class='showImg' ng-repeat="list in qtzl"><a target='_blank' href='{{list.filePath}}'>{{list.fileName}}</a><span ng-click="delupload($index, 'qtzl')" style='margin-left: 5px;cursor: pointer;'>删除</span></div>
+                    </div>
+                </li>
+                <li class="clear"></li>
+            </ul>
+            <div class="addTable creditpfTable">
+                <table>
+                    <tr>
+                        <th>序号</th>
+                        <th>评价指标名称</th>
+                        <th>细分值</th>
+                        <th>评分值</th>
+                        <th>评价标准</th>
+                        <th>评分</th>
+                    </tr>
+                    <tbody class="tbd_1">
+                    <tr>
+                        <td rowspan="4">1</td>
+                        <td rowspan="4">客户交易对象等级性质</td>
+                        <td rowspan="4">6分</td>
+                        <td>6分（100%）</td>
+                        <td>交易对象或最终客户含有国际国内知名企业，且实际交易总金额≥1000万元</td>
+                        <td>
+                            <input name="khjydxdjxz" ng-model="ORDER_DATA.khjydxdjxz" class="radio" type="radio" value="6"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4.8分（80%）</td>
+                        <td>交易对象或最终客户含有国际国内知名企业或其分支机构及子公司，且实际交易总金额≥500万元</td>
+                        <td>
+                            <input name="khjydxdjxz" ng-model="ORDER_DATA.khjydxdjxz" class="radio" type="radio" value="4.8"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3.6分（60%）</td>
+                        <td>与国际国内知名企业或其分支机构及子公司有成功交易记录</td>
+                        <td>
+                            <input name="khjydxdjxz" ng-model="ORDER_DATA.khjydxdjxz" class="radio" type="radio" value="3.6"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>1.8分（30%）</td>
+                        <td>与其他企业有过成功交易记录</td>
+                        <td>
+                            <input name="khjydxdjxz" ng-model="ORDER_DATA.khjydxdjxz" class="radio" type="radio" value="1.8"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tbody  class="tbd_2">
+                    <tr>
+                        <td rowspan="3">2</td>
+                        <td rowspan="3">客户来源</td>
+                        <td rowspan="3">3分</td>
+                        <td>3分（100%）</td>
+                        <td>中标、生产厂商介绍、长期合作伙伴介绍等</td>
+                        <td>
+                            <input name="cussource" ng-model="ORDER_DATA.cussource" class="radio" type="radio" value="3"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2分（66%）</td>
+                        <td>普通合作伙伴介绍等</td>
+                        <td>
+                            <input name="cussource" ng-model="ORDER_DATA.cussource" class="radio" type="radio" value="2"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>1分（33%）</td>
+                        <td>陌生客户</td>
+                        <td>
+                            <input name="cussource" ng-model="ORDER_DATA.cussource" class="radio" type="radio" value="1"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tbody  class="tbd_3">
+                    <tr>
+                        <td>3</td>
+                        <td>与对方高层是否熟识</td>
+                        <td>2分</td>
+                        <td>2分（100%）</td>
+                        <td>很熟悉，与对方交往密切，有私人友谊。有则加分，无则零分</td>
+                        <td>
+                            <input name="ydfgcsfss" ng-model="ORDER_DATA.ydfgcsfss" class="radio" type="checkbox" value="2"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tbody class="tbd_4">
+                    <tr>
+                        <td rowspan="2">4</td>
+                        <td rowspan="2">预期年交易额度</td>
+                        <td rowspan="2">2分</td>
+                        <td>2分（100%）</td>
+                        <td>500万≤预期年交易额度</td>
+                        <td>
+                            <input name="yqnjyed" ng-model="ORDER_DATA.yqnjyed" class="radio" type="radio" value="2"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>1分（50%）</td>
+                        <td>预期年交易额度＜500万</td>
+                        <td>
+                            <input name="yqnjyed" ng-model="ORDER_DATA.yqnjyed" class="radio" type="radio" value="1"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tbody class="tbd_5">
+                    <tr>
+                        <td rowspan="3">5</td>
+                        <td rowspan="3">行业口碑</td>
+                        <td rowspan="3">3分</td>
+                        <td>3分（100%）</td>
+                        <td>业内众所周知，行业口碑及履约情况非常好</td>
+                        <td>
+                            <input name="industryreputation" ng-model="ORDER_DATA.industryreputation" class="radio" type="radio" value="3"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2分（66%）</td>
+                        <td>经熟悉客户介绍得知，行业口碑及履约情况比较较好</td>
+                        <td>
+                            <input name="industryreputation" ng-model="ORDER_DATA.industryreputation" class="radio" type="radio" value="2"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>1分（33%）</td>
+                        <td>不知道对方的行业口碑或者行业口碑及履约情况一般</td>
+                        <td>
+                            <input name="industryreputation" ng-model="ORDER_DATA.industryreputation" class="radio" type="radio" value="1"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tbody class="tbd_6">
+                    <tr>
+                        <td rowspan="3">6</td>
+                        <td rowspan="3">经营场所</td>
+                        <td rowspan="3">6分</td>
+                        <td>6分（100%）</td>
+                        <td>高档写字楼</td>
+                        <td>
+                            <input name="premises" ng-model="ORDER_DATA.premises" type="radio" class="radio" value="6"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4分（66%）</td>
+                        <td>自有资产</td>
+                        <td>
+                            <input name="premises" ng-model="ORDER_DATA.premises" type="radio" class="radio" value="4"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2分（33%）</td>
+                        <td>其他办公条件</td>
+                        <td>
+                            <input name="premises" ng-model="ORDER_DATA.premises" type="radio" class="radio" value="2"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tbody class="tbd_7">
+                    <tr>
+                        <td rowspan="3">7</td>
+                        <td rowspan="3">公司规模</td>
+                        <td rowspan="3">6分</td>
+                        <td>6分（100%）</td>
+                        <td>50人以上</td>
+                        <td>
+                            <input name="companysize" ng-model="ORDER_DATA.companysize" type="radio" class="radio" value="6"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4分（66%）</td>
+                        <td>30~50人</td>
+                        <td>
+                            <input name="companysize" ng-model="ORDER_DATA.companysize" type="radio" class="radio" value="4"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2分（33%）</td>
+                        <td>30人以下</td>
+                        <td>
+                            <input name="companysize" ng-model="ORDER_DATA.companysize" type="radio" class="radio" value="2"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="gerSub">
+                <a href="index.html#/creditOrder">返回</a>
+                <button ng-click="addData(ORDER_DATA, 'save')" class="subSave">保存
+                </button>
+                <button ng-click="addData(ORDER_DATA, 'apply')" class="subApply">保存并提交
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<div id="cusBox" class="dialog cusBox" title="选择客户" ng-include="'template/contract/cusBox.html'"
+     ng-controller="cusCusBoxCtrl"></div>

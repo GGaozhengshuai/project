@@ -1,0 +1,155 @@
+<h3 class="genTitle genTitleBot"><em></em><span>新增收款计划单</span></h3>
+<div class="cusCont">
+    <div class="generForm">
+        <form novalidate name="incomeForm">
+            <h4 class="genH4">基本信息</h4>
+            <ul>
+                <li class="tli">
+                    <strong>收款计划单号：</strong>
+                    <input ng-model="ORDER_DATA.ZJHDBHK" type="text" ng-disabled="true" placeholder="系统自动生成"/>
+                </li>
+                <li class="tli">
+                    <strong>申请日期：</strong>
+                    <input  ng-model="ORDER_DATA.ZCRDAT" ng-readonly="true" type="text" value=""/>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>收款主体：</strong>
+                    <select ng-model="ORDER_DATA.BUKRS" name="BUKRS" ng-required="true">
+                        <option value="">请选择</option>
+                        <option value="1000">中建材信息技术股份有限公司</option>
+                        <option value="9000">中建材集团进出口公司</option>
+                        <option value="9001">中国建材（香港）有限公司</option>
+                    </select>
+                    <span class="errTip ng-hide" ng-show="incomeForm.BUKRS.$dirty && incomeForm.BUKRS.$error.required">必填</span>
+
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>货币类别：</strong>
+                    <select ng-model="ORDER_DATA.WAERS" required name="WAERS">
+                        <option value="">请选择</option>
+                        <option value="CNY">人民币</option>
+                        <option value="EUR">欧元</option>
+                        <option value="USD">美元</option>
+                        <option value="CHF">瑞士法郎</option>
+                        <option value="HKD">港币</option>
+                        <option value="JPY">日元</option>
+                    </select>
+                    <span class="errTip ng-hide" ng-show="incomeForm.WAERS.$dirty && incomeForm.WAERS.$error.required">必填</span>
+                </li>
+                <li class="tli"><strong><font>*</font>客户名称：</strong>
+                    <input ng-readonly="true" ng-click="customerBox()" ng-disabled="cusEdit" required ng-model="ORDER_DATA.NAME1" name="NAME1" type="text" placeholder="请选择客户名称"/>
+                    <span class="errTip ng-hide" ng-show="incomeForm.NAME1.$dirty && incomeForm.NAME1.$error.required">必填</span>
+
+                </li>
+                <li class="tli"><strong>客户编号：</strong><input ng-disabled="true"  ng-model="ORDER_DATA.KUNNR" type="text" placeholder=""/></li>
+
+            </ul>
+
+            <div class="addTable">
+                <h5>收款计划明细</h5>
+                <div class="hGener">
+                 <a class="dwonTem" href="" style="width:50px;" ng-click="comeDel()" >删除</a>
+                    <a class="dwonTem" href="" style="width:50px;" ng-click="comeAdd()">添加</a>
+                </div>
+                <br/>
+                <div style="overflow-y:hidden;overflow-x:auto; width: 100%;height: 100%">
+                <table id="itemTable" style="width: 150%">
+                    <tr>
+                        <th ng-hide="cusEdit"><input type="checkbox" ng-model="all" ng-click="addNumber(all)"/></th>
+                        <th>序号</th>
+                        <!--<th>SAP计划单号</th>-->
+                        <th><font>*</font>收款种类</th>
+                        <th>销售合同号</th>
+                        <th>销售订单号</th>
+                        <th>销售部门</th>
+                        <th>销售员</th>
+                        <th>项目名称</th>
+                        <th>销售订单金额</th>
+                        <th>订单已计划金额</th>
+                        <th>业务应收编号</th>
+                        <th>未核销金额</th>
+                        <th><font>*</font>本次计划金额</th>
+                        <th><font>*</font>收款计划日期</th>
+                        <th>说明</th>
+                       <!-- <th><a href="javascript:;" ng-click="comeAdd()">添加</a></th>-->
+                    </tr>
+                    <tr class="list" ng-repeat="list in comeList">
+                        <td ng-hide="cusEdit"><input type="checkbox" ng-click="checkDel($index)" name="checkbox"  ng-checked="all"/></td>
+
+                        <td><input type="text" ng-model="list.ZHXM" placeholder="自动生成" ng-readonly="true" /></td>
+<!--
+                        <td><input type="text" ng-model="list.ZJHDBH" placeholder="自动生成" ng-readonly="true" /></td>
+-->
+                        <td>
+                            <select ng-model="list.ZSKZL" required ng-change="billChange(list.ZSKZL,$index)" name="ZSKZL{{$index}}" ng-disabled="cusEdit">
+                                <option value="">请选择收款种类</option>
+                                <option value="货款">货款</option>
+                                <option value="往来款">往来款</option>
+                                <option value="其它">其它</option>
+                            </select>
+                            <span class="errTip ng-hide"  ng-show="incomeForm['ZSKZL'+$index].$dirty && incomeForm['ZSKZL'+$index].$error.required">必填</span>
+                        </td>
+                        <td title="{{list.ZBSTKD}}">
+                            <input ng-readonly="true"  ng-disabled="list.ZSKZL!='货款'" ng-model="list.ZBSTKD" type="text" value="" ng-click="xshthBox($index)"/>
+                        </td>
+                        <td title="{{list.VBELN}}">
+                            <input ng-disabled="true"     ng-model="list.VBELN" type="text" value="" />
+                        </td>
+
+                        <td>
+                            <input ng-disabled="true"  ng-model="list.ZCREATE_ORG" type="text" value="" />
+                        </td>
+                        <td>
+                            <input ng-disabled="true"  ng-model="list.ZPERNR_NAME" type="text" value="" />
+                        </td>
+                        <td>
+                            <input ng-disabled="true"  ng-model="list.ZPRJ_NAME" type="text" value="" />
+                        </td>
+                        <td>
+                            <input ng-disabled="true"  ng-model="list.KZWI1" type="text" value="" />
+                        </td>
+                        <td>
+                            <input ng-model="list.ZJHJE" disabled type="text" value=""/>
+                        </td>
+                        <td title="{{list.ZYWYSBH}}">
+                            <input ng-readonly="true" ng-disabled="list.ZSKZL!='货款'"  ng-model="list.ZYWYSBH" type="text" value="" ng-click="ywbmBox($index)"/>
+                        </td>
+                        <td>
+                            <input disabled ng-model="list.ZYSWS" type="text" value=""/>
+                        </td>
+                        <td>
+                            <input ng-model="list.ZJE" type="number" required value="" name="ZJE{{$index}}" ng-Focus keepnumber-Validation ng-blur="countRange(list.ZBSTKD,list.KZWI1,list.ZJHJE,list.ZJE,$index)"/>
+                            <span class="errTip ng-hide"  ng-show="incomeForm['ZJE'+$index].$dirty && incomeForm['ZJE'+$index].$error.required">必填</span>
+                            <p class="errTip" ng-if="incomeForm['ZJE'+$index].$dirty && incomeForm['ZJE'+$index].$error.keepnum&&!incomeForm['ZJE'+$index].$focused">最多两位小数的非负数</p>
+
+                        </td>
+                        <td>
+                            <input class="text Wdate" type="text"  required  date-Picker ng-readonly="true"  name="ZJHRQ{{$index}}" ng-model="list.ZJHRQ" placeholder="" >
+                            <span class="errTip ng-hide"  ng-show="incomeForm['ZJHRQ'+$index].$dirty && incomeForm['ZJHRQ'+$index].$error.required">必填</span>
+
+                        </td>
+                        <td>
+                            <input ng-model="list.ZXSBZ" maxlength="50" type="text" value="" placeholder="最多50个字符"/>
+                        </td>
+                       <!-- <td><a href="javascript:;" ng-click="comeDel($index)">删除</a></td>-->
+                    </tr>
+                </table>
+            </div>
+                </div>
+            <ul>
+                <li><strong>备注：</strong><textarea maxlength="200" placeholder="最多200个字符" ng-model="ORDER_DATA.ZSWBZ"></textarea></li>
+            </ul>
+            <div class="gerSub">
+                <a href="index.html#/incomeOrder">返回</a>
+                <button ng-click="addData(ORDER_DATA, 'save')"  class= 'subSave'>保存</button>
+<!--
+                <button ng-click="addData(ORDER_DATA, 'apply')"  ng-class="incomeForm.$invalid == true ? 'displaySub' : 'subApply'" ng-disabled="incomeForm.$invalid || invoRready">保存并提交</button>
+-->
+                </div>
+        </form>
+    </div>
+</div>
+
+<div id="cusBox" class="dialog cusBox" title="选择客户" ng-include="'template/income/cusBox.html'" ng-controller="cusCtrl"></div>
+<div id="xshthBox" class="dialog cusBox" title="选择销售订单号" ng-include="'template/income/xshthBox.html'" ng-controller="xshthBoxCtrl"></div>
+<div id="ywbmBox" class="dialog cusBox" title="选择应收业务编号" ng-include="'template/income/ywbmBox.html'"></div>

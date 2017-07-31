@@ -1,0 +1,75 @@
+<h3 class="genTitle"><em></em><span>框架合同</span></h3>
+<ul class="generNav">
+    <li ng-class="{active:activeTab == 1}"><a href="javascript:;" ng-mousedown='htTab(1)'>框架合同详情</a></li>
+    <li ng-class="{active:activeTab == 2}"><a href="javascript:;" ng-mousedown='htTab(2)'>审批详情</a></li>
+</ul>
+
+<div id="mainView">
+    <div class="viewTable">
+        <ul>
+            <!--<li><strong>公司代码：</strong><span>{{purchaseList.BUKRS}}</span></li>-->
+            <li><strong>框架合同号：</strong><span>{{purchaseList.EBELN}}</span></li>
+            <li><strong>采购凭证日期：</strong><span>{{purchaseList.BEDAT}}</span></li>
+            <li><strong>供应商编号：</strong><span>{{purchaseList.LIFNR}}</span></li>
+            <li><strong>供应商名称：</strong><span>{{purchaseList.NAME1 + purchaseList.NAME2}}</span></li>
+            <li class="list_con"><strong>框架合同类型：</strong><span>{{purchaseList.BSART | getName: enumObj : 'name' : 'code'}}</span></li>
+            <li><strong>有效起始日期：</strong><span>{{purchaseList.KDATB}}</span></li>
+            <li><strong>有效截至日期：</strong><span>{{purchaseList.KDATE}}</span></li>
+            <!--<li class="list_con"><strong>付款条款：</strong><span>{{purchaseList.ZTERM}}</span></li>-->
+            <li><strong>货币：</strong><span>{{purchaseList.WAERS | getName: enumObj : 'name' : 'code'}}</span></li>
+            <li><strong>框架总金额：</strong><span>{{purchaseList.KTWRT | number : 2}}</span></li>
+            <li><strong>采购组织：</strong><span>{{purchaseList.EKORG | getName: enumObj : 'name' : 'code'}}</span></li>
+            <li><strong>采购组：</strong><span>{{purchaseList.EKGRP | getName: enumObj : 'name' : 'code'}}</span></li>
+        </ul>
+        <table class="tab_data">
+            <thead class="tab_header">
+            <tr>
+                <th>行项目</th>
+                <th>物料编码</th>
+                <th>物料组</th>
+                <th>物料描述</th>
+                <th>数量</th>
+                <th>单位</th>
+                <th>单价（未税）</th>
+                <th>库存地点</th>
+                <!--<th>工厂</th>-->
+            </tr>
+            </thead>
+            <tbody class="tab_body">
+            <tr ng-repeat="list in dataList">
+                <td>{{list.EBELP}}</td>
+                <td>{{list.MATNR}}</td>
+                <td>{{list.MATKL | getName:enumObj:'name':'code'}}</td>
+                <td>{{list.TXZ01}}</td>
+                <td>{{list.MENGE}}</td>
+                <td>{{list.MEINS | number : 2}}</td>
+                <td>{{list.NETPR | number : 2}}</td>
+                <td>{{list.LGORT| getName:enumObj:'name':'code'}}</td>
+                <!--<td>{{list.WERKS}}</td>-->
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <pagination conf="paginationConf"></pagination>
+</div>
+
+<div class="applyLog" ng-if="activeTab == 2">
+    <table>
+        <thead>
+        <tr>
+            <th class="th1">审批人</th>
+            <th class="th2">审批时间</th>
+            <th class="th3">审批状态</th>
+            <th class="th4">审批意见</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="list in processlog">
+            <td>{{list.sender.name}}</td>
+            <td>{{list.createDate | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td>{{list.operation}}</td>
+            <td>{{list.content.comment}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

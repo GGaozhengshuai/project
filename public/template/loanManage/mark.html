@@ -1,0 +1,86 @@
+<h3 class="genTitle genTitleBot"><em></em><span>借款标记</span></h3>
+<div class="cusCont">
+    <div class="generForm">
+        <form novalidate name="myForm">
+            <ul>
+                <li class="tli">
+                    <strong>借款人：</strong>
+                    <input type="text" ng-model="ORDER_DATA.user.name" ng-disabled="true">
+                    <input type="hidden" ng-model="ORDER_DATA.user._id">
+                    <input type="hidden" ng-model="ORDER_DATA.user.login">
+                </li>
+                <li class="tli">
+                    <strong>借款部门：</strong>
+                    <input type="text" ng-model="ORDER_DATA.department.name" ng-disabled="true">
+                    <input type="hidden" value="" ng-model="ORDER_DATA.department._id"/>
+                </li>
+                <li class="tli">
+                    <strong>资金性质：</strong>
+                    <input type="text" ng-model="ORDER_DATA.fin.name" ng-disabled="true">
+                </li>
+                <li class="tli">
+                    <strong>借款金额：</strong>
+                    <input type="text" ng-model="ORDER_DATA.brw_amount" ng-disabled="true">
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>付款类型：</strong>
+                    <select ng-required="true" ng-init="ORDER_DATA.pay_type=''" ng-model="ORDER_DATA.pay_type" name="pay_type" ng-change="changeFKType(ORDER_DATA.pay_type)">
+                        <option value="">请选择</option>
+                        <option value="01">库存现金</option>
+                        <option value="02">银行存款</option>
+                    </select>
+                    <span class="errTip ng-hide" ng-show="myForm.pay_type.$dirty && myForm.pay_type .$error.required">必填</span>
+                </li>
+                <li class="tli" ng-class="ORDER_DATA.pay_type=='02' ? '' : 'visibhidden'">
+                    <strong><font>*</font>付款银行：</strong>
+                    <select ng-required="ORDER_DATA.pay_type=='02'" ng-model="ORDER_DATA.pay_bank" name="fkBank">
+                        <option value="">请选择</option>
+                        <option ng-repeat="(a,b) in payBankList" value="{{a}}">{{b}}</option>
+                       <!-- <option value="10020020">渤海银行北京分行</option>
+                        <option value="10020027">澳新银行广州分行</option>
+                        <option value="10020025">中国银行杭州星光大道支行定期存款</option>
+                        <option value="10020007">民生银行西坝河支行</option>
+                        <option value="10020005">北京银行景山支行</option>
+                        <option value="10020002">招行北京分行营业部</option>
+                        <option value="10020012">工行北京市分行营业部</option>
+                        <option value="10020029">北京农商银行四季青支行</option>
+                        <option value="10020017">工行上海丽园路支行（上海分公司）</option>
+                        <option value="10020015">建行月坛南街支行</option>
+                        <option value="10020011">建行首体南路支行</option>
+                        <option value="10020013">交通银行北京西三环支行</option>
+                        <option value="10020009">深圳发展银行北京建国门支行</option>
+                        <option value="10020006">(招行北京分行7天通知存款)</option>
+                        <option value="10020021">澳新银行北京分行</option>
+                        <option value="10020001">北京银行车公庄支行</option>
+                        <option value="10020016">中行车公庄西路支行</option>
+                        <option value="10020022">兴业银行安华支行</option>
+                        <option value="10020023">中国银行杭州星光大道支行</option>
+                        <option value="10020026">中国银行杭州沁园支行定期存款</option>
+                        <option value="10020024">中国银行杭州沁园支行</option>
+                        <option value="10020008">华夏银行车公庄支行</option>
+                        <option value="10020004">招商银行上海天山支行</option>
+                        <option value="10020018">中信银行总行营业部</option>
+                        <option value="10020019">光大天宁寺支行</option>
+                        <option value="10020028">兴业银行安华支行定期存款</option>-->
+                    </select>
+                    <span class="errTip ng-hide" ng-show="myForm.fkBank.$dirty && myForm.fkBank .$error.required">必填</span>
+                </li>
+                <li class="tli">
+                    <strong>财务标记日期：</strong>
+                    <input type="text" ng-model="ORDER_DATA.fin_date" ng-disabled="true">
+                </li>
+                <li class="tli">
+                    <strong>财务执行人员：</strong>
+                    <input class="text" type="text" ng-model="ORDER_DATA.fin_user.name" ng-disabled="true">
+                    <input type="hidden" ng-model="ORDER_DATA.fin_user._id">
+                    <input type="hidden" ng-model="ORDER_DATA.fin_user.login">
+                </li>
+            </ul>
+
+            <div class="gerSub">
+                <a href="index.html#/loanManageOrder">取消</a>
+                <button ng-click="sendFn(ORDER_DATA)"  class="subSave">标记</button>
+            </div>
+        </form>
+    </div>
+</div>

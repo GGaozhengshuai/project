@@ -1,0 +1,132 @@
+<h3 class="genTitle"><em></em>
+  <span>借出单</span>
+  <span ng-if="activeTab == 2">审批详情</span>
+</h3>
+
+<ul class="generNav">
+    <li ng-class="{active:activeTab == 1}"><a href="javascript:void(0);" ng-mousedown='htTab(1)'>借出单</a></li>
+    <li ng-class="{active:activeTab == 2}"><a href="javascript:void(0);" ng-mousedown='htTab(2)'>审批详情</a></li>
+</ul>
+
+<div id="mainView">
+    <div class="czAddBtn">
+        <a ng-if="opprev.productoutOrder_new" target="_blank" href="index.html#/productoutAdd?ordercode={{ORDER_DATA.ZJCDH}}&orderno={{ORDER_DATA.code}}">放货单申请</a>
+    </div>
+    <div class="viewTable">
+      <div ng-if="activeTab == 1">
+        <ul>
+            <li><strong>借出单号：</strong><span>{{ORDER_DATA.code}}</span></li>
+            <li><strong>销售订单编号：</strong><span>{{ORDER_DATA.ZJCDH}}</span></li>
+            <li><strong>借货人：</strong><span>{{ORDER_DATA.user.name}}</span></li>
+            <!--<li><strong>申请日期：</strong><span>{{ORDER_DATA.lendbase.start}}</span></li>-->
+            <li><strong>申请日期：</strong><span>{{ORDER_DATA.timestamp | date:'yyyy-MM-dd'}}</span></li>
+            <li><strong>部门：</strong><span>{{ORDER_DATA.department.name}}</span></li>
+            <li><strong>事业部：</strong><span>{{ORDER_DATA.department.name2}}</span></li>
+            <li><strong>借出类型：</strong><span>{{{'ZA1':'厂商借用','ZA2':'代理商借用','ZA3':'内部借用','ZA4':'借货转销售'}[ORDER_DATA.lendbase.lendtype] || ORDER_DATA.lendbase.lendtype}}</span></li>
+            <!--<li><strong>借出类型：</strong><span>{{ORDER_DATA.lendbase.lendtype}}</span></li>-->
+            <li><strong>产品线：</strong><span>{{ORDER_DATA.lendbase.productline}}</span></li>
+            <li><strong>是否有借货合同：</strong><span>{{ORDER_DATA.lendbase.hascontract ? "是" : '否'}}</span></li>
+            <li><strong>商务人员：</strong><span>{{ORDER_DATA.tradername}}</span></li>
+            <li><strong>借出客户名称：</strong><span>{{ORDER_DATA.client.name}}</span></li>
+            <li><strong>实际借出客户：</strong><span>{{ORDER_DATA.client.realname}}</span></li>
+            <li><strong>借出起始日期：</strong><span>{{ORDER_DATA.lendbase.start}}</span></li>
+            <li><strong>借货天数：</strong><span>{{ORDER_DATA.lendbase.days}}</span></li>
+            <li><strong>预计归还日期：</strong><span>{{ORDER_DATA.lendbase.end}}</span></li>
+            <li><strong>借出金额：</strong><span>{{ORDER_DATA.lendbase.sum| number:2}}</span></li>
+            <li><strong>运输方式：</strong><span>{{transferway}}</span></li>
+            <!--<li><strong>借货天数：</strong><span>{{ORDER_DATA.ZFKFS}}</span></li>-->
+            <li class="list_con"><strong>附件：</strong><span><a href="{{ORDER_DATA.attachment}}">{{ORDER_DATA.docName}}</a></span></li>
+            <li class="list_con"><strong>借货说明：</strong><span>{{ORDER_DATA.lendbase.des}}</span></li>
+        </ul>
+        <div class="addTable">
+            <h5>交货地点和联系人</h5>
+            <table class="tab_data">
+                <thead class="tab_header">
+                <tr>
+                    <th>收货人姓名</th>
+                    <th>手机号</th>
+                    <th>固定电话</th>
+                    <th>省</th>
+                    <th>市</th>
+                    <th>详细地址</th>
+                    <th>邮编</th>
+                </tr>
+                </thead>
+                <tbody class="tab_body">
+                <tr ng-repeat="list in ORDER_DATA.receivers">
+                    <td>{{list.name}}</td>
+                    <td>{{list.phone}}</td>
+                    <td>{{list.tel}}</td>
+                    <!--<td>{{list.province ? getField(countryData, 'CODE',list.province).TITLE : list.province}}</td>-->
+                    <!--<td>{{list.city ? getField(countryData, 'CODE',list.city).TITLE : list.city}}</td>-->
+                    <td>{{list.province | province:countryData}}</td>
+                    <td>{{list.city | province:countryData}}</td>
+                    <td>{{list.address}}</td>
+                    <td>{{list.zipcode}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="addTable">
+            <h5>借出产品信息</h5>
+            <table class="tab_data">
+                <thead class="tab_header">
+                <tr>
+                    <th>内部物料编码</th>
+                    <th>原厂物料编码</th>
+                    <th>型号</th>
+                    <th>描述</th>
+                    <th>借货数量</th>
+                    <!--<th>进库交易批次</th>-->
+                </tr>
+                </thead>
+                <tbody class="tab_body">
+                <tr ng-if="list.outnum>0" ng-repeat="list in ORDER_DATA.products">
+                    <td>{{list.code}}</td>
+                    <td>{{list.productcode}}</td>
+                    <td>{{list.productnumber}}</td>
+                    <td>{{list.des}}</td>
+                    <td>{{list.outnum}}</td>
+                    <!--<td>{{list.batchid}}</td>-->
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!--<div class="gerSub" ng-if="ifChangeBill">-->
+        <div class="gerSub" ng-if="showChangeBtn">
+          <a ng-if="opprev.loanBillOrder_change" class="subSave" ng-click="changeBillFn($event)" href=''>变更借出单</a>
+        </div>
+      </div>
+      <div class="applyLog" ng-if="activeTab == 2">
+        <table>
+          <thead>
+          <tr>
+            <th class="th1">审批人</th>
+            <th class="th2">审批时间</th>
+            <th class="th3">审批状态</th>
+            <th class="th4">审批意见</th>
+          </tr>
+          </thead>
+          <!--<tbody>
+          <tr ng-repeat="list in processlog">
+            <td>{{list.sender.name}}</td>
+            <td>{{list.createDate | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td>{{list.operation}}</td>
+            <td>{{list.content.comment}}</td>
+          </tr>
+          </tbody>-->
+            <tbody ng-repeat="list in processlog">
+            <tr  ng-show="$index==(processlog.length-1)"><td ng-class="$index%2?'blueBack':'orgBack'" colspan="4">新建审批流</td></tr>
+            <tr ng-show="$index!=(processlog.length-1)"><td ng-class="$index%2?'blueBack':'orgBack'" colspan="4">第{{processlog.length-1-$index}}次变更审批流</td></tr>
+            <tr ng-repeat="item in list.processlog">
+                <td>{{item.sender.name}}</td>
+                <td>{{item.createDate | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td>{{item.operation}}</td>
+                <td>{{item.content.comment}}</td>
+            </tr>
+            </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="clear"></div>
+</div>

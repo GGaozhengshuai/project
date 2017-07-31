@@ -1,0 +1,119 @@
+<!--<div class="mainright">-->
+<div class="item">付款申请</div>
+<form>
+  <div class="genSearch">
+    <table>
+      <tr>
+        <td>
+          <strong>付款申请单号</strong>
+          <input class="text" type="text" name="ZSQNO" ng-init="ZSQNO=''" ng-model="ZSQNO" placeholder="请输入申请单号">
+        </td>
+        <td>
+          <strong>付款主体</strong>
+          <select ng-model="ZFKZT" ng-init="ZFKZT=''">
+            <option value="">请选择</option>
+            <option value="1000">中建材信息技术股份有限公司</option>
+            <option value="9000">中建材集团进出口公司</option>
+            <option value="9001">中国建材（香港）有限公司</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>付款种类</strong>
+          <select ng-model="ZFKZL" name="ZFKZL" ng-init="ZFKZL=''">
+            <option value="">--请选择--</option>
+            <option ng-repeat="p in payData" value="{{p.BU1.CODE1}}">{{p.BU1.TITLE}}</option>
+          </select>
+        </td>
+        <td>
+          <strong>供应商名称</strong>
+          <input class="text" type="text" name="ZSKDW" ng-init="ZSKDW=''" ng-model="ZSKDW" placeholder="请输入收款单位名称">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>实际付款时间</strong>
+          <input class="text Wdate" type="text" name="ZSJDAT" ng-init="ZSJDAT=''" date-Picker ng-readonly="true"
+                 ng-model="ZSJDAT" placeholder="请选择日期">
+        </td>
+        <td>
+          <strong>申请人</strong>
+          <input class="text" type="text" name="AUFUSER0" ng-init="AUFUSER0=''" ng-model="AUFUSER0"
+                 placeholder="请填写申请人">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>付款状态</strong>
+          <select ng-model="ZFKSTA" ng-init="ZFKSTA=''">
+            <option value="">请选择</option>
+            <option value="未付款">未付款</option>
+            <option value="已付款">已付款</option>
+          </select>
+        </td>
+        <td>
+          <strong>是否已合并</strong>
+          <select ng-model="HAS_HB" ng-init="HAS_HB=''">
+            <option value="">请选择</option>
+            <option value="N">待合并</option>
+            <option value="Y">已合并</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>商务人员</strong>
+          <select ng-model="ZCGSW" name="ZCGSW" ng-init="ZCGSW=''">
+            <option value="">--请选择--</option>
+            <option ng-repeat="list in cusData" value="{{list.name}}">{{list.name}}</option>
+          </select>
+        </td>
+        <td>
+          <strong>采购订单号</strong>
+          <input class="text" type="text" name="EBELN" ng-init="EBELN=''" ng-model="EBELN" placeholder="">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>是否作废</strong>
+          <select ng-model="LOEVM" ng-init="LOEVM=''">
+            <option value="">否</option>
+            <option value="X">是</option>
+          </select>
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+        </td>
+        <td>
+
+          <a class="searchbtn2 viewBtn" href="" ng-click="printFn($event)" target="_blank">打印</a>
+          <input type="button" value="查询" class="searchbtn2 searchbtn2bot" ng-click="search()">
+          <a class="searchbtn2 searchbtn2bot addBtn" href="/index.html#/paymentOrderAdd"
+             ng-if="opprev.paymentOrder_add">新建付款申请</a>
+          <a class="searchbtn2 searchbtn2bot addBtn" href="" ng-click="colPay()"
+             ng-show="cusShow && opprev.paymentOrder_merge" target="_blank">合并付款</a>
+
+        </td>
+      </tr>
+    </table>
+  </div>
+</form>
+<div class="item">查询结果</div>
+<div ng-if="!table" class="loading-text grid">
+  <span ng-if="loadData">数据载入中...</span>
+  <span ng-if="!loadData">查询不到数据</span>
+</div>
+<div ng-if="table" ui-grid="table" ui-grid-selection ui-grid-resize-columns ui-grid-pinning ui-grid-auto-resize class="grid"></div>
+<script type="text/ng-template" id="paymentAction.html">
+  <div class="actionBtnGroup">
+    <a class="handleBtn editBtn" target="_blank" href="javascript:void(0);" ng-click="grid.appScope.payChge(row.entity.ZSQNO)" ng-if="grid.appScope.opprev.paymentOrder_change" ng-show="row.entity.ZHBFK=='X'&&row.entity.ZFKSTA=='未付款'" title="变更"></a>
+    <span class="handleBtn editBtn disabled ng-hide" ng-hide="row.entity.ZHBFK=='X'&&row.entity.ZFKSTA=='未付款'" ng-if="grid.appScope.opprev.paymentOrder_change" title="变更"></span>
+    <a class="handleBtn invalidBtn" target="_blank" href="javascript:void(0);" ng-click="grid.appScope.destroy(row.entity.ZSQNO)" ng-show="row.entity.ZFKSTA=='未付款'&&row.entity.LOEVM=='否'" ng-if="grid.appScope.opprev.paymentOrder_cancle" title="作废"></a>
+    <span class="handleBtn invalidBtn disabled ng-hide" ng-hide="row.entity.ZFKSTA=='未付款'&&row.entity.LOEVM=='否'" ng-if="grid.appScope.opprev.paymentOrder_cancle" title="作废"></span>
+    <a target="_blank" href="index.html#/paymentOrderView/{{row.entity.ZSQNO}}" class="handleBtn detailBtn" title="详情"></a>
+  </div>
+</script>
+<pagination conf="paginationConf"></pagination>

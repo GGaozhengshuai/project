@@ -1,0 +1,113 @@
+<h3 class="genTitle genTitleBot"><em></em><span>请休假编辑</span></h3>
+<div class="cusCont">
+    <div class="generForm">
+        <form novalidate name="leaveForm">
+            <div class="genTitle2">
+                <div>
+                    <strong>请假信息</strong>
+                </div>
+            </div>
+            <ul class="noMargin">
+                <li class="tli">
+                    <strong><font>*</font>申请人姓名：</strong>
+                    <input class="text" required  type="text" name="name" ng-model="sdef.user.name"  placeholder="" ng-click="userBox('salsUser')" ng-readonly="true">
+                    <span class="errTip ng-hide" ng-show="leaveForm.name.$dirty && leaveForm.name.$error.required">必填</span>
+
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>申请人部门：</strong>
+                    <input class="text" required type="text" ng-disabled="true"  name="department" ng-model="sdef.department.name" placeholder="" >
+                    <span class="errTip ng-hide" ng-show="leaveForm.department.$dirty && leaveForm.department.$error.required">必填</span>
+
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>请假类型：</strong>
+                    <select required  ng-model="sdef.off_type"  name="off_type" ng-change="sdef.end_date=''">
+                        <option value="">--请选择--</option>
+                        <option ng-repeat=" p in holidayData" value="{{p.code}}">{{p.name}}</option>
+                    </select>
+                    <span class="errTip ng-hide" ng-show="leaveForm.off_type.$dirty && leaveForm.off_type.$error.required">必填</span>
+                </li>
+                <li class="clear"></li>
+                <li class="tli">
+                    <strong><font>*</font>请假开始日期：</strong>
+                    <input class="text Wdate" type="text" required name="begin_date" ng-init="begin_date=''" date-Picker ng-readonly="true"   ng-model="sdef.begin_date" placeholder="请选择日期" ng-blur="totalDay(sdef.begin_date,sdef.begin_time,sdef.end_date,sdef.end_time,sdef.off_type)">
+                    <span class="errTip ng-hide" ng-show="leaveForm.begin_date.$dirty && leaveForm.begin_date.$error.required">必填</span>
+
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>上午/下午：</strong>
+                    <select required  ng-model="sdef.begin_time" ng-init="sdef.begin_time='AM'"  name="begin_time" ng-blur="totalDay(sdef.begin_date,sdef.begin_time,sdef.end_date,sdef.end_time,sdef.off_type)">
+                        <option value="AM">AM</option>
+                        <option value="PM">PM</option>
+                    </select>
+                    <span class="errTip ng-hide" ng-show="leaveForm.begin_time.$dirty && leaveForm.begin_time.$error.required">必填</span>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>请假结束日期：</strong>
+                    <input class="text Wdate" type="text" required name="end_date"  date-Picker ng-readonly="true"   ng-model="sdef.end_date" placeholder="请选择日期" ng-blur="totalDay(sdef.begin_date,sdef.begin_time,sdef.end_date,sdef.end_time,sdef.off_type)">
+                    <span class="errTip ng-hide" ng-show="leaveForm.end_date.$dirty && leaveForm.end_date.$error.required">必填</span>
+
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>上午/下午：</strong>
+                    <select required  ng-model="sdef.end_time"  name="end_time" ng-init="sdef.end_time='PM'" ng-blur="totalDay(sdef.begin_date,sdef.begin_time,sdef.end_date,sdef.end_time,sdef.off_type)">
+                        <option value="AM">AM</option>
+                        <option value="PM">PM</option>
+                    </select>
+                    <span class="errTip ng-hide" ng-show="leaveForm.end_time.$dirty && leaveForm.end_time.$error.required">必填</span>
+                </li>
+                <li class="tli">
+                    <strong>合计天数：</strong>
+                    <input class="text" type="text" ng-disabled="true"  name="off_days" ng-model="sdef.off_days" placeholder="" >
+                </li>
+                <li class="clear"></li>
+                <li>
+                    <strong>工作安排：</strong>
+                    <textarea maxlength="200"  ng-model="sdef.reason" name="reason" placeholder="200个字符" ></textarea>
+                </li>
+            </ul>
+            <div class="viewTable ng-scope">
+                <div class="genTitle2">
+                    <div>
+                        <strong>统计信息</strong>
+                    </div>
+                </div>
+                <ul>
+                    <li><strong style="text-align: right;font-weight:bold;font-size:14px">已休天数</strong></li>
+                    <li><strong style="text-align: right;font-weight:bold;font-size:14px">剩余天数</strong></li>
+                    <li><strong>年假：</strong><span>{{totalObj["年假"]}}</span></li>
+                    <li><strong>年假：</strong><span>{{leftObj["年假"]}}</span></li>
+                    <li><strong>调休：</strong><span>{{totalObj["调休"]}}</span></li>
+                    <li><strong>调休：</strong><span>{{leftObj["调休"]}}</span></li>
+                    <li><strong>带薪病假：</strong><span>{{totalObj["带薪病假"]}}</span></li>
+                    <li><strong>带薪病假：</strong><span>{{leftObj["带薪病假"]}}</span></li>
+                    <li><strong>不带薪病假：</strong><span>{{totalObj["不带薪病假"]}}</span></li>
+                    <div class="clear"></div>
+                    <li><strong>事假：</strong><span>{{totalObj["事假"]}}</span></li>
+                    <div class="clear"></div>
+                    <li><strong>丧假：</strong><span>{{totalObj["丧假"]}}</span></li>
+                    <li><strong>丧假：</strong><span>{{leftObj["丧假"]}}</span></li>
+                    <li><strong>产检假：</strong><span>{{totalObj["产检假"]}}</span></li>
+                    <li><strong>产检假：</strong><span>{{leftObj["产检假"]}}</span></li>
+                    <li><strong>产假：</strong><span>{{totalObj["产假"]}}</span></li>
+                    <li><strong>产假：</strong><span>{{leftObj["产假"]}}</span></li>
+                    <li><strong>医疗期：</strong><span>{{totalObj["医疗期"]}}</span></li>
+                    <li><strong>医疗期：</strong><span>{{leftObj["医疗期"]}}</span></li>
+                    <li><strong>探亲假：</strong><span>{{totalObj["探亲假"]}}</span></li>
+                    <li><strong>探亲假：</strong><span>{{leftObj["探亲假"]}}</span></li>
+                    <li><strong>婚假：</strong><span>{{totalObj["婚假"]}}</span></li>
+                    <li><strong>婚假：</strong><span>{{leftObj["婚假"]}}</span></li>
+                    <li><strong>照顾母婴假：</strong><span>{{totalObj["照顾母婴假"]}}</span></li>
+                    <li><strong>照顾母婴假：</strong><span>{{leftObj["照顾母婴假"]}}</span></li>
+                </ul>
+            </div>
+            <div class="gerSub">
+                <a href="index.html#/holidayOrder" >返回</a>
+                <button ng-click="addData(sdef,'save')" class="subSave" >保存</button>
+                <button ng-click="addData(sdef,'apply')" class="subApply" >保存并提交</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div  id="userBox" class="dialog cusBox" title="选择人员" ng-include="'template/holiday/userBox.html'" ng-controller="nameCtrl"></div>

@@ -1,0 +1,67 @@
+<h3 class="genTitle"><em></em><span>返点冲抵应收</span></h3>
+<ul class="generNav">
+    <li class="active"><a href="javascript:;">返点冲抵应收</a></li>
+</ul>
+
+<div id="mainView">
+    <div class="viewTable">
+        <ul>
+            <li><strong>返点冲抵应收号：</strong><span>{{ORDER_DATA.No}}</span></li>
+            <li><strong>创建日期：</strong><span>{{ORDER_DATA.createdate | date: 'yyyy-MM-dd HH:mm:ss'}}</span></li>
+            <li><strong>申请人：</strong><span>{{ORDER_DATA.requestor}}</span></li>
+            <li><strong>申请部门：</strong><span>{{ORDER_DATA.department}}</span></li>
+            <li><strong>关联销售合同号：</strong><span>{{ORDER_DATA.contractNo}}</span></li>
+            <li><strong>销售人员姓名：</strong><span>{{ORDER_DATA.salesname}}</span></li>
+            <li><strong>销售人员部门：</strong><span>{{ORDER_DATA.salesorgnanme}}</span></li>
+            <li><strong>事业部：</strong><span>{{ORDER_DATA.salesorgnanme2}}</span></li>
+            <li><strong>客户编号：</strong><span>{{ORDER_DATA.customerId}}</span></li>
+            <li><strong>客户名称：</strong><span>{{ORDER_DATA.customer}}</span></li>
+            <li><strong>开票税率：</strong><span>{{ORDER_DATA.tax}}</span></li>
+            <li><strong>合同金额：</strong><span>{{ORDER_DATA.contractMoney}}</span></li>
+            <li><strong>合同已用返点金额：</strong><span>{{ORDER_DATA.rebatemoney}}</span></li>
+        </ul>
+        <div class="genTitle2">
+            <div>
+                <strong>本单销售返点</strong>
+            </div>
+        </div>
+        <ul>
+            <li><strong>返点冲抵应收金额：</strong><span>{{ORDER_DATA.thisMoney}}</span></li>
+        </ul>
+        <div class="addTable">
+            <table class="tab_data">
+                <thead class="tab_header">
+                <tr>
+                    <th>返点编号</th>
+                    <th>生效日期</th>
+                    <th>返点名称</th>
+                    <th>返点金额</th>
+                    <th>可用余额</th>
+                    <th>使用返点金额</th>
+                </tr>
+                </thead>
+                <tbody class="tab_body">
+                <tr ng-repeat="list in ORDER_DATA.rebateitem">
+                    <td>{{list.NO}}</td>
+                    <td>{{list.effectdate | date: 'yyyy-MM-dd'}}</td>
+                    <td>{{list.title}}</td>
+                    <td>{{list.money}}</td>
+                    <td>{{list.remainder}}</td>
+                    <td>{{list.amount}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <ul>
+            <li class="list_con"><strong>备注：</strong><span>{{ORDER_DATA.remark}}</span></li>
+            <li><strong>创建人：</strong><span>{{ORDER_DATA.creator}}</span></li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+    <div class="gerSub">
+        <a class="subSave" href="index.html#/{{editTem}}?processId={{processId}}&nodeId={{nodeId}}" ng-if="editBtn">编辑</a>
+    </div>
+    <div class="apCot" ng-if="apCot" >
+        <div ng-include="'template/common/apply.html'"></div>
+    </div>
+</div>

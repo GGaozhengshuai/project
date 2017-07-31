@@ -1,0 +1,55 @@
+<form>
+    <div class="genSearch">
+        <table>
+            <tr>
+                <td>
+                    <strong style="width:111px;">采购订单号</strong>
+                    <input style="width:215px;" class="text" type="text" name="EBELN"  ng-init="EBELN=''" ng-model="$parent.EBELN" placeholder="请输入名称">
+                </td>
+                <td>
+                    <input type="button" value="查询" class="searchbtn2" ng-click="search()">
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<table class="orangestyle table">
+    <thead>
+    <tr>
+        <th><input type="checkbox" id="allCheck" ng-model="all" ng-click="allCheck1($event,dataList,all)"/></th>
+        <th>采购订单号</th>
+        <th>供应商订单号</th>
+        <th>产品线</th>
+        <th>交货日期</th>
+        <th>采购商务</th>
+        <th>订单金额</th>
+        <th>应付编号</th>
+        <th>应付金额</th>
+
+
+    </tr>
+    </thead>
+    <tbody ng-class="dataList.length > 0 ? 'meg' : 'noMegTip'">
+    <tr ng-repeat="list in dataList">
+        <td><input ng-click="updateSelection1($event,dataList,$index)" class="checkBox" name="checkbox" type="checkbox"  ng-checked="all" /></td>
+        <td>{{list.EBELN}}</td>
+        <td>{{list.ZZPO}}</td>
+        <td>{{enumObj.ZZCP[list.ZZCP]}}</td>
+        <td>{{list.ZZJHRQ}}</td>
+        <td>{{list.ZSWRY}}</td>
+        <td>{{list.NETPR.toFixed(2)}}</td>
+        <td>{{list.ZYWYF}}</td>
+        <td>{{list.ZYFJE.toFixed(2)}}</td>
+
+      <!--  <td>
+            <a href="javascript:;" ng-click="cusSelect(list.EBELN,list.ZZPO,list.ZZCP,list.EKORG,list.BSART,list.ZZYS,list.ZZJHRQ,list.ZSWRY,list.ZYWYF,list.ZYFJE.toFixed(2),list.ZZSDPO,list.NETPR.toFixed(2))">选择</a>
+        </td>-->
+    </tr>
+    <tr class="tip"><td colspan="9">未查到相应业务应付</td></tr>
+    </tbody>
+</table>
+<pagination conf="paginationConf"></pagination>
+<div class="gerSub">
+    <a href="javascript:;" ng-click="$parent.ccCancle()">关闭</a>
+    <button  class="subSave" ng-click="$parent.ccSelect()">确定</button>
+</div>

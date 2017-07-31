@@ -1,0 +1,95 @@
+<h3 class="genTitle">
+    <em></em><span>维修采购</span>
+    <span ng-if="activeTab == 2">审批详情</span>
+</h3>
+<ul class="generNav">
+    <li ng-class="{active:activeTab == 1}"><a href="javascript:void(0);" ng-mousedown='htTab(1)'>维修采购详情</a></li>
+    <li ng-class="{active:activeTab == 2}"><a href="javascript:void(0);" ng-mousedown='htTab(2)'>审批详情</a></li>
+</ul>
+
+<div id="mainView">
+    <div class="czAddBtn">
+        <a href="javascript:;" ng-click="viewPurchase()" class="changhtBtn">查看采购申请</a>
+        <a target="_blank" href="/index.html#/docManage?code={{purchaseList.EBELN}}" class="addContractbtn">查看电子文档</a>
+    </div>
+    <div class="viewTable ng-scope" ng-if="activeTab == 1">
+        <ul>
+            <li><strong>采购订单号：</strong><span>{{purchaseList.EBELN}}</span></li>
+            <li><strong>采购凭证日期：</strong><span>{{purchaseList.BEDAT}}</span></li>
+            <li><strong>操作标识：</strong><span>{{{'I':'新增','U':'修改','D':'作废'}[purchaseList.ZOPERATION] || purchaseList.ZOPERATION}}</span></li>
+            <li><strong>采购订单凭证类型：</strong><span>{{BSART}}</span></li>
+            <li><strong>供应商订单号：</strong><span>{{purchaseList.ZZPO}}</span></li>
+            <li><strong>供应商名称：</strong><span>{{purchaseList.NAME1 + purchaseList.NAME2}}</span></li>
+            <li><strong>产品线：</strong><span>{{ZZCP}}</span></li>
+            <li><strong>项目名称：</strong><span>{{purchaseList.ZZXM}}</span></li>
+            <li><strong>二级经销商名称：</strong><span>{{purchaseList.ZZEJ}}</span></li>
+            <li><strong>最终客户名称：</strong><span>{{purchaseList.ZZKH}}</span></li>
+            <li><strong>运输方式：</strong><span>{{purchaseList.ZZYS}}</span></li>
+            <li><strong>付款方式：</strong><span>{{purchaseList.ZZFK}}</span></li>
+            <!--<li><strong>贸易条款：</strong><span>{{purchaseList.ZZMY}}</span></li>-->
+            <li><strong>付款条款：</strong><span>{{purchaseList.ZTERM}}</span></li>
+            <li><strong>公司代码：</strong><span>{{BUKRS}}</span></li>
+            <li><strong>采购组织：</strong><span>{{EKORG}}</span></li>
+            <li><strong>采购组：</strong><span>{{EKGRP}}</span></li>
+            <li><strong>供应商编号：</strong><span>{{purchaseList.LIFNR}}</span></li>
+            <!--<li><strong>交货口岸：</strong><span>{{purchaseList.ZZFJ}}</span></li>-->
+            <li class="list_con"><strong>合同原金额：</strong><span>{{purchaseList.ZZZJY | number : 2}}</span></li>
+            <li class="list_con"><strong>合同总金额：</strong><span>{{purchaseList.ZZZJY - purchaseList.ZZSBFD + purchaseList.ZZFWFD | number : 2}}</span></li>
+            <li class="list_con"><strong>设备使用返点金额：</strong><span>{{purchaseList.ZZSBFD | number : 2}}</span></li>
+            <li class="list_con"><strong>服务使用返点金额：</strong><span>{{purchaseList.ZZFWFD | number : 2}}</span></li>
+            <li><strong>币别：</strong><span>{{WAERS}}</span></li>
+            <li class="list_con"><strong>创建者：</strong><span>{{purchaseList.ERNAM}}</span></li>
+            <li class="list_con"><strong>采购订单清单：</strong><span style="text-decoration: underline;cursor: pointer" ng-click="show()">展开详细采购清单∨</span></li>
+        </ul>
+        <table class="tab_data" ng-show="emerge">
+            <thead class="tab_header">
+            <tr>
+                <th>行项目</th>
+                <th>物料编码</th>
+                <th>物料描述</th>
+                <th>维修数量</th>
+                <th>单位</th>
+                <th>成本单价</th>
+                <th>批次号</th>
+                <th>发货日期</th>
+                <th>库存地点</th>
+            </tr>
+            </thead>
+            <tbody class="tab_body">
+            <tr ng-repeat="list in dataList">
+                <td>{{list.EBELP}}</td>
+                <td>{{list.MATNR}}</td>
+                <td>{{list.MAKTX}}</td>
+                <td>{{list.ERFMG}}</td>
+                <td>{{list.ERFME}}</td>
+                <td>{{list.VERPR | number : 2}}</td>
+                <td>{{list.CHARG}}</td>
+                <td>{{list.BDTER}}</td>
+                <td>{{list.LGORT | getName:enumobj:'name':'code'}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <pagination conf="paginationConf" ng-if="activeTab == 1"></pagination>
+</div>
+<div class="applyLog" ng-if="activeTab == 2">
+    <table>
+        <thead>
+        <tr>
+            <th class="th1">审批人</th>
+            <th class="th2">审批时间</th>
+            <th class="th3">审批状态</th>
+            <th class="th4">审批意见</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="list in processlog">
+            <td>{{list.sender.name}}</td>
+            <td>{{list.createDate | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td>{{list.operation}}</td>
+            <td>{{list.content.comment}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div id="chsBox" class="dialog cusBox" title="查看采购申请" ng-include="'template/purchase/OpurchaseList.html'"></div>

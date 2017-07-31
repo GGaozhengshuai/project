@@ -1,0 +1,564 @@
+<h3 class="genTitle"><em></em><span>销售合同审批</span></h3>
+
+<ul class="generNav" ng-init="ht.activeTab = 1">
+    <li ng-class="{active:ht.activeTab == 1}"><a href="javascript:;" ng-mousedown="ht.activeTab = 1">销售合同</a></li>
+    <li ng-class="{active:ht.activeTab == 2}"><a href="javascript:;" ng-mousedown="ht.activeTab = 2">产品清单</a></li>
+    <li ng-if="xsCbfx && opprev.contractOrder_costanalysis" ng-class="{active:ht.activeTab == 3}"><a href="javascript:;" ng-mousedown="ht.activeTab = 3" >成本分析</a></li>
+    <li ng-class="{active:ht.activeTab == 4}" ng-hide="loading" ng-init="loading=true"><a href="javascript:;" ng-mousedown="ht.activeTab = 4">客户信用情况</a></li>
+</ul>
+<div id="mainView">
+    <div class="ng-hide" ng-show="ht.activeTab == 1">
+        <ul class="btnwrap">
+            <!--<li class="btnList">
+                <a class="moreBtn">关联单据查询 <i class="triangle"></i></a>
+                <ul class="subBtnlist subBtn">
+                    <li><a ng-click="viewCGDD('{{ORDER_DATA.contractbase.groupno}}','{{ORDER_DATA.contractbase.salesorderid[0].orderid}}')" href="javascript:;">查看采购订单</a></li>
+                </ul>
+            </li>-->
+
+            <li class="btnList" ng-if="ifGulianBtn"><a class="defenseBtn" target="_blank" href="index.html#/contractOrderView?relationId={{relationId}}&myflag={{myflag}}">查看关联合同</a></li>
+            <li class="btnList ng-hide" ng-show="business"><a target="_blank" href="/print/printlandscape.html?uri=/contract/printview&contractno={{ORDER_DATA.contractbase.contractno}}&type=c1&processId={{processId}}&nodeId={{nodeId}}" ng-show="business" class="defenseBtn">申请表打印</a></li>
+            <li class="btnList" ng-if="['华为硬件标准合同','华为服务标准合同','自有服务标准合同'].indexOf(ORDER_DATA.contractbase.contracttemplate) != -1">
+                <a target="_blank" href="/print/printht.html?uri=/contract/printview&contractno={{ORDER_DATA.contractbase.contractno}}&type=c2&processId={{processId}}&nodeId={{nodeId}}" ng-if="ORDER_DATA.contractbase.contracttemplate == '华为硬件标准合同'" class="defenseBtn">合同打印</a>
+                <a target="_blank" href="/print/printht.html?uri=/contract/printview&contractno={{ORDER_DATA.contractbase.contractno}}&type=c3&processId={{processId}}&nodeId={{nodeId}}" ng-if="ORDER_DATA.contractbase.contracttemplate == '华为服务标准合同'" class="defenseBtn">合同打印</a>
+                <a target="_blank" href="/print/printht.html?uri=/contract/printview&contractno={{ORDER_DATA.contractbase.contractno}}&type=c4&processId={{processId}}&nodeId={{nodeId}}" ng-if="ORDER_DATA.contractbase.contracttemplate == '自有服务标准合同'" class="defenseBtn">合同打印</a>
+            </li>
+        </ul>
+        <div class="viewTable">
+            <!--<div class="czAddBtn" style="margin-top:10px;" >
+                <a ng-if="ifGulianBtn" class="viewBtn" target="_blank" href="index.html#/contractOrderView?relationId={{relationId}}&myflag={{myflag}}">查看关联合同</a>
+                <a target="_blank" href="/print/printlandscape.html?uri=/contract/printview&contractno={{ORDER_DATA.contractbase.contractno}}&type=c1&processId={{processId}}&nodeId={{nodeId}}" ng-show="business" class="addBtn ng-hide">申请表打印</a>
+                <a target="_blank" href="/print/printht.html?uri=/contract/printview&contractno={{ORDER_DATA.contractbase.contractno}}&type=c2&processId={{processId}}&nodeId={{nodeId}}" ng-if="ORDER_DATA.contractbase.contracttemplate == '华为硬件标准合同'" class="distractBtn">合同打印</a>
+                <a target="_blank" href="/print/printht.html?uri=/contract/printview&contractno={{ORDER_DATA.contractbase.contractno}}&type=c3&processId={{processId}}&nodeId={{nodeId}}" ng-if="ORDER_DATA.contractbase.contracttemplate == '华为服务标准合同'" class="distractBtn">合同打印</a>
+                <a target="_blank" href="/print/printht.html?uri=/contract/printview&contractno={{ORDER_DATA.contractbase.contractno}}&type=c4&processId={{processId}}&nodeId={{nodeId}}" ng-if="ORDER_DATA.contractbase.contracttemplate == '自有服务标准合同'" class="distractBtn">合同打印</a>
+            </div>-->
+            <div class="genTitle2">
+                <div>
+                    <strong>基本信息</strong>
+                </div>
+            </div>
+            <ul>
+                <li><strong>销售主体：</strong><span>{{ORDER_DATA.contractbase.escompany}}</span></li>
+                <li><strong>是否双主体：</strong><span>{{ORDER_DATA.contractbase.is2body}}</span></li>
+                <li><strong>合同编号：</strong><span>{{ORDER_DATA.contractbase.contractno}}</span></li>
+                <li><strong>需方合同编号：</strong><span>{{ORDER_DATA.contractbase.customercontractno}}</span></li>
+                <li><strong>订单编号：</strong><span>{{ORDER_DATA.contractbase.salesorderid[0].orderid}}</span></li>
+                <li><strong>销售人员姓名：</strong><span>{{ORDER_DATA.contractbase.salesname}}</span></li>
+                <li><strong>申请部门：</strong><span>{{ORDER_DATA.contractbase.salesorgnanme}}</span></li>
+                <li><strong>事业部：</strong><span>{{ORDER_DATA.contractbase.salesorgnanme2}}</span></li>
+                <li><strong>商务人员：</strong><span>{{ORDER_DATA.contractbase.tradername}}</span></li>
+                <li><strong>合同类型：</strong><span>{{ORDER_DATA.contractbase.contracttype}}</span></li>
+                <li ng-if="matingContract != undefined ? true : false"><strong>关联合同编号：</strong><span><a style="text-decoration: underline; color:#4687b5" href="/index.html#/contractOrderView?id={{matingContractId}}" target="_blank">{{matingContract}}</a></span></li>
+                <li ng-if="ORDER_DATA.contractbase.servicemethod != '' ? true : false"><strong>服务方式：</strong><span>{{ORDER_DATA.contractbase.servicemethod}}</span></li>
+                <li><strong>开票税率：</strong><span>{{ORDER_DATA.contractbase.receipttype}}</span></li>
+                <li><strong>产品线：</strong><span>{{ORDER_DATA.contractbase.product}}</span></li>
+                <li><strong>项目名称：</strong><span>{{ORDER_DATA.contractbase.project}}</span></li>
+                <li><strong>客户名称：</strong><span>{{ORDER_DATA.contractbase.stomer}}</span></li>
+                <li><strong>最终用户：</strong><span>{{ORDER_DATA.contractbase.finalconsumer}}</span></li>
+                <li><strong>开票客户：</strong><span>{{ORDER_DATA.contractbase.KPstomer}}</span></li>
+                <li><strong>合同金额：</strong><span>{{ORDER_DATA.contractbase.contractmoney | currency : '￥'}}</span></li>
+                <li ng-if="ifjck"><strong>内部结算合同金额：</strong><span>{{ORDER_DATA.contractbase.interiooney | currency : '￥'}}</span></li>
+                <li><strong>预估毛利率（%）：</strong><span>{{ORDER_DATA.contractbase.estimategrocssmargin}}</span></li>
+                <li ng-if="ywysPrevBot"><strong>业务应收创建方式：</strong><span>{{ORDER_DATA.contractbase.receivabletype}}</span></li>
+                <li ng-if="ywysPrevBot"><strong>签订日期：</strong><span>{{ORDER_DATA.contractbase.effectdate  | date: 'yyyy-MM-dd'}}</span></li>
+                <li ng-if="ywysPrev">
+                    <strong><font>*</font>业务应收创建方式：</strong>
+                    <select ng-disabled="ywDisable" ng-model="ORDER_DATA.contractbase.receivabletype">
+                        <option value="">请选择</option>
+                        <option value="固定模式">固定模式</option>
+                        <option value="修改模式">修改模式</option>
+                    </select>
+                </li>
+                <li ng-if="ywysPrev">
+                    <strong><font>*</font>签订日期：</strong>
+                    <input class="Wdate" date-Picker ng-readonly="true" ng-model="ORDER_DATA.contractbase.effectdate" type="text" placeholder="请点击选择日期"/>
+                </li>
+                <li class="list_con" ng-if="ORDER_DATA.contractbase.businessremarks != '' && contract_businessremarks == undefined">
+                    <strong>商务备注：</strong>
+                    <span>{{ORDER_DATA.contractbase.businessremarks}}</span>
+                </li>
+                <li class="list_con" ng-if="contract_businessremarks">
+                    <strong>商务备注：</strong>
+                    <textarea style="width:498px; height:60px;" ng-model="ORDER_DATA.contractbase.businessremarks"></textarea>
+                </li>
+                <li ng-if="ifGulian"><strong>是否关联合同：</strong><span>{{ORDER_DATA.contractbase.hasservicecontract}}</span></li>
+                <div class="clear"></div>
+                <li >
+                    <a style="float: left" target="_blank" href="/index.html#/bmdbList?cusName={{ORDER_DATA.contractbase.stomer}}" class="searchbtn2 searchbtn2bot viewBtn">部门担保情况</a>
+                </li>
+            </ul>
+            <div class="clear"></div>
+            <div class="genTitle2">
+                <div>
+                    <strong>需方商务联系人</strong>
+                </div>
+            </div>
+            <ul>
+                <li><strong>商务联系人姓名：</strong><span>{{ORDER_DATA.contractbase.contactname}}</span></li>
+                <li><strong>商务联系人电话：</strong><span>{{ORDER_DATA.contractbase.contactphone}}</span></li>
+                <li><strong>商务联系人邮箱：</strong><span>{{ORDER_DATA.contractbase.contactemail}}</span></li>
+                <li><strong>商务联系人职位：</strong><span>{{ORDER_DATA.contractbase.contacttitle}}</span></li>
+            </ul>
+            <div class="clear"></div>
+            <div class="genTitle2">
+                <div>
+                    <strong>本单销售返点</strong>
+                </div>
+            </div>
+            <ul>
+                <li><strong>返点使用金额：</strong><span>{{ORDER_DATA.contractbase.rebatemoney | currency : '￥'}}</span></li>
+                <li><strong>返点使用比例：</strong><span>{{ORDER_DATA.contractbase.rebatepercent | number:2}}%</span></li>
+            </ul>
+            <div class="addTable">
+                <table class="tab_data">
+                    <thead class="tab_header">
+                    <tr>
+                        <th>返点编号</th>
+                        <th>生效日期</th>
+                        <th>失效日期</th>
+                        <th>返点名称</th>
+                        <th>返点说明</th>
+                        <th>返点金额</th>
+                        <!--<th>可用余额</th>-->
+                        <th>使用返点金额</th>
+                    </tr>
+                    </thead>
+                    <tbody class="tab_body">
+                    <tr ng-repeat="list in ORDER_DATA.contractbase.rebateitem">
+                        <td>{{list.NO}}</td>
+                        <td>{{list.effectdate}}</td>
+                        <td>{{list.invaliddate}}</td>
+                        <td>{{list.title}}</td>
+                        <td>{{list.desc}}</td>
+                        <td>{{list.money | currency : '￥'}}</td>
+                        <!--<td>{{list.remainder}}</td>-->
+                        <td>{{list.amount | currency : '￥'}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="clear"></div>
+            <div class="genTitle2">
+                <div>
+                    <strong>合同条款</strong>
+                </div>
+            </div>
+            <ul>
+                <li><strong>合同模版：</strong><span>{{ORDER_DATA.contractbase.contracttemplate}}</span></li>
+                <li><strong>清单是否显示单价：</strong><span>{{ORDER_DATA.contractbase.isshowunitprice}}</span></li>
+                <li><strong>收款条件：</strong><span>{{ORDER_DATA.contractbase.sktj}}</span></li>
+            </ul>
+            <div class="clear"></div>
+            <div class="addTable">
+                <table class="tab_data">
+                    <thead class="tab_header">
+                    <tr>
+                        <th>收款类型</th>
+                        <th ng-if="ORDER_DATA.contractbase.sktj == '按比例'? true : false">收款比例（%）</th>
+                        <th ng-if="ORDER_DATA.contractbase.sktj == '按金额'? true : false">收款金额</th>
+                        <th>天数</th>
+                        <th>收款方式</th>
+                        <th>收款条件</th>
+                    </tr>
+                    </thead>
+                    <tbody class="tab_body">
+                    <tr ng-repeat="list in ORDER_DATA.contractbase.contactreceivablescondition">
+                        <td>{{list.thetype}}</td>
+                        <td ng-if="ORDER_DATA.contractbase.sktj == '按比例'? true : false">{{list.scale}}</td>
+                        <td ng-if="ORDER_DATA.contractbase.sktj == '按金额'? true : false">{{list.money | currency : '￥'}}</td>
+                        <td>{{list.days}}</td>
+                        <td>{{list.method}}</td>
+                        <td>{{list.cond}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <ul>
+                <li class="list_con"><strong>收款条款展示区：</strong><span>{{ORDER_DATA.contractbase.contactreceivablesconditionshowarea}}</span></li>
+            </ul>
+            <div class="clear"></div>
+            <div ng-if="fpkjDes">
+                <div class="genTitle2">
+                    <div>
+                        <strong>发票开具说明</strong>
+                    </div>
+                </div>
+                <ul>
+                    <li><strong>发票开具说明：</strong><span>{{ORDER_DATA.contractbase.receiptdesc}}</span></li>
+                    <li class="list_con"><strong>发票开具说明区域：</strong><span>{{ORDER_DATA.contractbase.receiptdescarea}}</span></li>
+                </ul>
+                <div class="clear"></div>
+            </div>
+            <div class="genTitle2">
+                <div>
+                    <strong>合同交货条款</strong>
+                </div>
+            </div>
+            <ul>
+                <li ng-if="httkIf"><strong>货期要求：</strong><span>{{ORDER_DATA.contractbase.paymentdate | date: 'yyyy-MM-dd'}}</span></li>
+                <li ng-if="httkIf"><strong>运输方式：</strong><span>{{transferway}}</span></li>
+                <li ng-if="jhfs2" class="list_con"><strong>交货方式：</strong>
+                    <span>
+                        {{ORDER_DATA.contractbase.deliverwaycheck.type1 == true ? '有形介质交付' : ''}}&nbsp;
+                        {{ORDER_DATA.contractbase.deliverwaycheck.type2 == true ? '电子邮件交付' : ''}}&nbsp;
+                        {{ORDER_DATA.contractbase.deliverwaycheck.type3 == true ? '买方自行网络下载' : ''}}
+                    </span>
+                </li>
+                <li ng-if="jhfs1"><strong>交货方式：</strong><span>{{ORDER_DATA.contractbase.deliverway}}</span></li>
+                <li ng-if="ORDER_DATA.contractbase.deliverwaycheck.type2 == true ? true : false"><strong>邮箱地址：</strong><span>{{ORDER_DATA.contractbase.deliveremail}}</span></li>
+                <li class="clear"></li>
+                <li class="list_con"  ng-if="jhtkXs"><strong>交货条款区域：</strong><span>{{ORDER_DATA.contractbase.deliverconditionarea}}</span></li>
+            </ul>
+            <div class="clear"></div>
+            <div ng-if="cpbxtkXs">
+                <div class="genTitle2">
+                    <div>
+                        <strong>产品保修</strong>
+                    </div>
+                </div>
+                <ul>
+                    <li><strong>产品保修条款区域：</strong><span>{{ORDER_DATA.contractbase.guarantyterm}}</span></li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+            <div class="genTitle2">
+                <div>
+                    <strong>项目工程服务方式</strong>
+                </div>
+            </div>
+            <ul>
+                <li class="list_con" ng-if="xmgcfwfXs"><strong>项目工程服务方：</strong><span>{{ORDER_DATA.contractbase.projectserviceterm}}</span></li>
+                <li class="list_con" ng-if="xmgcfuXs"><strong>条款区域：</strong><span>{{ORDER_DATA.contractbase.projectservicetermarea}}</span></li>
+            </ul>
+            <div class="clear"></div>
+            <div class="genTitle2">
+                <div>
+                    <strong>交货地点和联系人</strong>
+                </div>
+            </div>
+            <div class="addTable">
+                <table class="tab_data">
+                    <thead class="tab_header">
+                    <tr>
+                        <th>收货人姓名</th>
+                        <th>手机号</th>
+                        <th>固定电话</th>
+                        <th>省</th>
+                        <th>市</th>
+                        <th>详细地址</th>
+                        <th>邮编</th>
+                    </tr>
+                    </thead>
+                    <tbody class="tab_body">
+                    <tr ng-repeat="list in ORDER_DATA.contractbase.receiver">
+                        <td>{{list.name}}</td>
+                        <td>{{list.phone}}</td>
+                        <td>{{list.tel}}</td>
+                        <td>{{list.province | province:countryData}}</td>
+                        <td>{{list.city | province:countryData}}</td>
+                        <!--<td>{{list.province ? getField(countryData, 'CODE',list.province).TITLE : list.province}}</td>-->
+                        <!--<td>{{list.city ? getField(countryData, 'CODE',list.city).TITLE : list.city}}</td>-->
+                        <td>{{list.address}}</td>
+                        <td>{{list.zipcode}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="clear"></div>
+            <div class="genTitle2">
+                <div>
+                    <strong>合同附加信息</strong>
+                </div>
+            </div>
+            <ul>
+                <li><strong>配套服务：</strong><span>{{ORDER_DATA.contractbase.cp}}</span></li>
+                <li ng-if="uploadTrue"><strong>附件：</strong><span><a target="_blank" href="{{uploadFile}}">{{docName}}</a></span></li>
+                <li class="list_con"><strong>备注：</strong><span>{{ORDER_DATA.contractbase.remarks}}</span></li>
+                <li><strong>申请人：</strong><span>{{ORDER_DATA.contractbase.creatorname}}</span></li>
+                <li><strong>创建日期：</strong><span>{{ORDER_DATA.contractbase.createdate| date: 'yyyy-MM-dd HH:mm:ss'}}</span></li>
+            </ul>
+        </div>
+    </div>
+    <div class="ng-hide" ng-show="ht.activeTab == 2">
+        <div class="genTitle2">
+            <div>
+                <strong>清单物料</strong><a style="float:right; color:red;" target="_blank" href="/contract/exportitems?processId={{processId}}">下载清单</a>
+            </div>
+        </div>
+        <div class="addTable">
+            <table class="tab_data">
+                <thead class="tab_header">
+                <tr>
+                    <th>内部物料编码</th>
+                    <th>原厂物料编码</th>
+                    <th>型号</th>
+                    <th>描述</th>
+                    <th>数量</th>
+                    <th>单价</th>
+                    <th>小计</th>
+                </tr>
+                </thead>
+                <tbody class="tab_body">
+                <tr ng-repeat="list in lend">
+                    <td>{{list.goodscode}}</td>
+                    <td>{{list.sourcegoodscode}}</td>
+                    <td title="{{list.version}}">{{list.version | cutfield:true:15:'..'}}</td>
+                    <td title="{{list.sourcegoodsdesc}}">{{list.sourcegoodsdesc | cutfield:true:40:'..'}}</td>
+                    <td>{{list.count}}</td>
+                    <td>{{list.unitprice | number:2}}</td>
+                    <td>{{list.singTotal | number:2}}</td>
+                </tr>
+                <tr ng-repeat="list in purchase">
+                    <td>{{list.goodscode}}</td>
+                    <td>{{list.sourcegoodscode}}</td>
+                    <td title="{{list.version}}">{{list.version | cutfield:true:15:'..'}}</td>
+                    <td title="{{list.sourcegoodsdesc}}">{{list.sourcegoodsdesc | cutfield:true:40:'..'}}</td>
+                    <td>{{list.count}}</td>
+                    <td>{{list.unitprice | number:2}}</td>
+                    <td>{{list.singTotal | number:2}}</td>
+                </tr>
+                <tr ng-repeat="list in upload">
+                    <td>{{list.goodscode}}</td>
+                    <td>{{list.sourcegoodscode}}</td>
+                    <td title="{{list.version}}">{{list.version | cutfield:true:15:'..'}}</td>
+                    <td title="{{list.sourcegoodsdesc}}">{{list.sourcegoodsdesc | cutfield:true:40:'..'}}</td>
+                    <td>{{list.count}}</td>
+                    <td>{{list.unitprice | number:2}}</td>
+                    <td>{{list.singTotal | number:2}}</td>
+                </tr>
+                <tr ng-repeat="list in handwork">
+                    <td>{{list.goodscode}}</td>
+                    <td>{{list.sourcegoodscode}}</td>
+                    <td title="{{list.version}}">{{list.version | cutfield:true:15:'..'}}</td>
+                    <td title="{{list.sourcegoodsdesc}}">{{list.sourcegoodsdesc | cutfield:true:40:'..'}}</td>
+                    <td>{{list.count}}</td>
+                    <td>{{list.unitprice | number:2}}</td>
+                    <td>{{list.singTotal | number:2}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div ng-if="xsCbfx && opprev.contractOrder_costanalysis" class="ng-hide" ng-show="ht.activeTab == 3">
+        <div class="generForm">
+            <form novalidate name="$parent.cbfxForm">
+                <div class="genTitle2">
+                    <div>
+                        <strong>利润</strong>
+                    </div>
+                </div>
+                <div class="addTable">
+                    <table>
+                        <tr>
+                            <th></th>
+                            <th>毛利（含税)</th>
+                            <th>毛利（不含税)</th>
+                            <th>合约利润率</th>
+                        </tr>
+                        <tr>
+                            <td>公司利润</td>
+                            <td>{{maoliHan | number:2}}</td>
+                            <td>{{maoliBHan | number:2}}</td>
+                            <td>{{companygain }}%</td>
+                        <tr>
+                            <td>销售利润</td>
+                            <td>{{xMaoliHan | number:2}}</td>
+                            <td>{{xMaoliBHan | number:2}}</td>
+                            <td>{{salesgain}}%</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="genTitle2">
+                    <div>
+                        <strong>成本分析</strong>
+                    </div>
+                </div>
+                <div class="addTable">
+                    <div class="czAddBtn" ng-hide="ifcbfxCy">
+                        <a ng-click="piPeiBox('ref')" href="javascript:;" class="viewBtn">重新匹配</a>
+                        <a ng-click="piPeiBox('cyp')  " href="javascript:;" class="backupBtn">差异匹配</a>
+                    </div>
+                    <table>
+                        <tr>
+                            <th>税率</th>
+                            <th>合同金额<br>（含税）</th>
+                            <th>销售折抵<br>金额</th>
+                            <th>订货成本</th>
+                            <th>外采成本</th>
+                            <th>采购折抵<br>金额</th>
+                            <th>自提费用</th>
+                            <th>现金折扣</th>
+                            <th>其他费用</th>
+                            <!--<th>项目费用</th>-->
+                            <th>配套采购</th>
+                            <th>第三方服务</th>
+                        </tr>
+                        <tr ng-repeat="list in cbfxObj.t1" class="list">
+                            <td>{{list.thetype}}%
+                                <input ng-disabled="true" ng-model="list.thetype" type="hidden"/>
+                                <input ng-disabled="true" ng-model="list.contractId" type="hidden"/>
+                            </td>
+                            <td>
+                                <input ng-disabled="true" ng-model="list.money" type="text"/>
+                            </td>
+                            <td>
+                                <input ng-disabled="true" ng-model="list.salerebate" type="text"/>
+                            </td>
+                            <td>
+                                <input ng-Focus numtwo-Validation name="orderscost{{$index}}" ng-disabled="ifcbfxCy" ng-model="list.orderscost" type="text"/>
+                                <p class="errTip" ng-if="cbfxForm['orderscost'+$index].$dirty && cbfxForm['orderscost'+$index].$error.numtwo&&!cbfxForm['orderscost'+$index].$focused ">格式错误</p>
+                            </td>
+                            <td>
+                                <input ng-Focus numtwo-Validation name="outorderost{{$index}}" ng-disabled="ifcbfxCy"  ng-model="list.outorderost" type="text"/>
+                                <p class="errTip" ng-if="cbfxForm['outorderost'+$index].$dirty && cbfxForm['outorderost'+$index].$error.numtwo&&!cbfxForm['outorderost'+$index].$focused ">格式错误</p>
+                            </td>
+                            <td>
+                                <input ng-Focus numtwo-Validation name="purchaserebate{{$index}}" ng-disabled="ifcbfxCy" ng-model="list.purchaserebate" type="text"/>
+                                <p class="errTip" ng-if="cbfxForm['purchaserebate'+$index].$dirty && cbfxForm['purchaserebate'+$index].$error.numtwo&&!cbfxForm['purchaserebate'+$index].$focused ">格式错误</p>
+                            </td>
+                            <td>
+                                <input ng-Focus numtwo-Validation name="selfpickup{{$index}}" ng-disabled="ifcbfxCy" ng-model="list.selfpickup" type="text"/>
+                                <p class="errTip" ng-if="cbfxForm['selfpickup'+$index].$dirty && cbfxForm['selfpickup'+$index].$error.numtwo&&!cbfxForm['selfpickup'+$index].$focused ">格式错误</p>
+                            </td>
+                            <td>
+                                <input ng-Focus numtwo-Validation name="cashrebate{{$index}}" ng-disabled="ifcbfxCy" ng-model="list.cashrebate" type="text"/>
+                                <p class="errTip" ng-if="cbfxForm['cashrebate'+$index].$dirty && cbfxForm['cashrebate'+$index].$error.numtwo&&!cbfxForm['cashrebate'+$index].$focused ">格式错误</p>
+                            </td>
+                            <td>
+                                <input ng-disabled="true" ng-model="list.other" type="text"/>
+                            </td>
+                            <!--<td>
+                                <input id="projectMoney" ng-disabled="ifcbfxCy || ifCPfy"  ng-model="list.project" type="text"/>
+                            </td>-->
+                            <td>
+                                <input ng-required="true" numtwo-Validation name="mating{{$index}}" ng-disabled="ifcbfxCy || cpIf || zyfwIf" ng-model="list.mating" type="text"/>
+                                <p class="errTip" ng-if="cbfxForm['mating'+$index].$dirty && cbfxForm['mating'+$index].$error.numtwo && !cbfxForm['selfpickup'+$index].$focused">格式错误</p>
+                                <p class="errTip" ng-if="cbfxForm['mating'+$index].$dirty && cbfxForm['mating'+$index].$error.required && !cbfxForm['selfpickup'+$index].$focused">必填</p>
+                            </td>
+                            <td>
+                                <input ng-disabled="true" ng-init="list.third=0" ng-model="list.third" type="text"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div ng-if="cbfxObj.t2.length > 0 ? true : false">
+                    <div class="genTitle2">
+                        <div>
+                            <strong>采购申请信息</strong>
+                        </div>
+                    </div>
+                    <div class="addTable">
+                        <table>
+                            <tr>
+                                <th>采购申请单编号</th>
+                                <th>供应商订单号</th>
+                                <th>数量</th>
+                                <th>采购申请总额</th>
+                                <th>设备金额</th>
+                                <th>服务金额</th>
+                                <!--<th>自提费用</th>
+                                <th>现金返点</th>-->
+                                <th>是否完全匹配</th>
+                            </tr>
+                            <tr ng-repeat="list in cbfxObj.t2">
+                                <td>{{list.purchaseid}}</td>
+                                <td>{{list.supplierorderid}}</td>
+                                <td>{{list.purchasecount}}</td>
+                                <td>{{list.amountcost}}</td>
+                                <td>{{list.devicecost | currency : '￥'}}</td>
+                                <td>{{list.servicecost | currency : '￥'}}</td>
+                                <!--<td>{{list.selfpickupcost}}</td>
+                                <td>{{list.cashrebate}}</td>-->
+                                <td>{{list.perfectmatch}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <div class="genTitle2" ng-if="cbfxObj.t3.length> 0 || cbfxObj.t4.length  > 0 ? true : false">
+                        <div>
+                            <strong>差异</strong>
+                        </div>
+                    </div>
+                    <div class="addTable" ng-if="cbfxObj.t3.length > 0 ? true : false">
+                        <table>
+                            <tr>
+                                <th>内部物料编码</th>
+                                <th>原厂物料编码</th>
+                                <th>型号</th>
+                                <!--<th>采购申请单编号</th>-->
+                                <th>销售数量</th>
+                                <!--<th>数量（采购申请单）</th>-->
+                                <th>差异</th>
+                            </tr>
+                            <tr ng-repeat="list in cbfxObj.t3">
+                                <td>{{list.goodscode}}</td>
+                                <td>{{list.sourcegoodscode}}</td>
+                                <td>{{list.version}}</td>
+                                <!--<td>{{list.purchaseid}}</td>-->
+                                <td>{{list.count}}</td>
+                                <!--<td>{{list.purchaseused}}</td>-->
+                                <td>{{list.count*1 - list.purchaseused*1}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h4 class="genH4"></h4>
+                    <div class="addTable" ng-if="cbfxObj.t4.length > 0 ? true : false">
+                        <table>
+                            <tr>
+                                <th>内部物料编码</th>
+                                <th>原厂物料编码</th>
+                                <th>型号</th>
+                                <!--<th>采购申请单编号</th>-->
+                                <th>销售数量</th>
+                                <th>数量（采购申请单）</th>
+                            </tr>
+                            <tr ng-repeat="list in cbfxObj.t4">
+                                <td>{{list.goodscode}}</td>
+                                <td>{{list.sourcegoodscode}}</td>
+                                <td>{{list.version}}</td>
+                                <!--<td>{{list.purchaseid}}</td>-->
+                                <td>{{list.count}}</td>
+                                <td>{{list.purchaseused}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <!--<h4 class="genH4"></h4>
+                <div class="addTable" ng-if="cbfxObj.t5.length > 0 ? true : false">
+                    <table>
+                        <tr>
+                            <th>内部物料编码</th>
+                            <th>原厂物料编码</th>
+                            <th>型号</th>
+                            <th>采购申请单编号</th>
+                            <th>数量（销售清单）</th>
+                            <th>数量（采购申请单）</th>
+                            <th>数量之差</th>
+                        </tr>
+                        <tr ng-repeat="list in cbfxObj.t5" >
+                            <td>{{list.goodscode}}</td>
+                            <td>{{list.sourcegoodscode}}</td>
+                            <td>{{list.version}}</td>
+                            <td>{{list.purchaseorderid}}</td>
+                            <td>{{list.count}}</td>
+                            <td>{{list.purchaseused}}</td>
+                            <td>{{list.purchaseused*1 - list.count*1}}</td>
+                        </tr>
+                    </table>
+                </div>-->
+            </form>
+        </div>
+    </div>
+    <div class="viewTable ng-scope" ng-show="ht.activeTab == 4" ng-include="'template/credit/creditTab.html'" ng-controller="creditTabCtrl"></div>
+    <div class="clear"></div>
+    <div class="gerSub">
+        <a class="subSave" href="index.html#/contractOrderEdit?processId={{processId}}&nodeId={{nodeId}}&contractType={{cognatecontract}}" ng-if="editBtn">编辑</a>
+    </div>
+    <div class="apCot" ng-if="apCot" >
+        <div ng-include="'template/common/apply.html'"></div>
+    </div>
+</div>
+<div id="cgsqdBox2" class="dialog cusBox" title="选择采购申请单" ng-include="'template/contract/cgsqdBox2.html'"></div>
+<div id="approversDialog" class="dialog cusBox" title="选择下一审批人" ng-include="'template/common/approvers.html'" ></div>
+<div id="listPoheader" class="dialog cusBox" title="查看采购订单" ng-include="'template/contract/listPoheader.html'"></div>

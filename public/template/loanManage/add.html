@@ -1,0 +1,56 @@
+<h3 class="genTitle genTitleBot"><em></em><span>新增借款单</span></h3>
+<div class="cusCont">
+    <div class="generForm">
+        <form novalidate name="myForm">
+            <ul>
+                <li class="tli">
+                    <strong><font>*</font>借款人：</strong>
+                    <input ng-readonly="true" ng-click="userBox('salsUser')" ng-required="true" name="username" ng-model="ORDER_DATA.user.name" type="text" placeholder="请选择业务员"/>
+                    <input type="hidden" value="" ng-model="ORDER_DATA.user._id"/>
+                    <input type="hidden" value="" ng-model="ORDER_DATA.user.login"/>
+                    <span class="errTip ng-hide" ng-show="invoiceForm.username.$dirty && invoiceForm.username.$error.required">必填</span>
+                </li>
+                <li class="tli">
+                    <strong>借款部门：</strong>
+                    <input type="text" ng-required="true" ng-model="ORDER_DATA.department.name" ng-disabled="true">
+                    <input type="hidden" value="" ng-model="ORDER_DATA.department._id"/>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>资金性质：</strong>
+                    <select ng-required="true" ng-init="fincode=''" ng-model="fincode" name="fin">
+                        <option value="">请选择</option>
+                        <option value="1">现金</option>
+                        <option value="2">支票</option>
+                    </select>
+                    <span class="errTip ng-hide" ng-show="myForm.fin.$dirty && myForm.fin.$error.required">必填</span>
+                </li>
+                <li class="tli">
+                    <strong><font>*</font>借款日期：</strong>
+                    <input class="text Wdate" ng-required="true" type="text" date-Picker ng-readonly="true"  ng-model="ORDER_DATA.brw_date" name="brw_date" placeholder="请选择日期">
+                    <span class="errTip ng-hide" ng-show="myForm.brw_date.$dirty && myForm.brw_date.$error.required">必填</span>
+                </li>
+                <li class="clear"></li>
+                <li>
+                    <strong>借款事由：</strong>
+                    <textarea ng-model="ORDER_DATA.reason" maxlength="500" placeholder="不超过500字符"></textarea>
+                </li>
+                <li>
+                    <strong><font>*</font>借款金额：</strong>
+                    <input ng-Focus numtwo-Validation ng-model="ORDER_DATA.brw_amount" ng-required="true" name="amount">
+                    <span class="errTip ng-hide" ng-show="myForm.amount.$dirty && myForm.amount.$error.required">必填</span>
+                    <span class="errTip ng-hide" ng-show="myForm.amount.$dirty && myForm.amount.$error.numtwo && !myForm.amount.$focused">小数点后保留两位</span>
+                </li>
+            </ul>
+
+            <div class="gerSub">
+                <a href="index.html#/loanManageOrder">返回</a>
+                <button ng-click="addData(ORDER_DATA, 'save')"  class="subSave">保存</button>
+                <button ng-click="addData(ORDER_DATA, 'apply')"  class="subApply">保存并提交</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div  id="userBox" class="dialog cusBox" title="选择人员">
+    <div ng-if="openDialog"  ng-include="'template/contract/userBox.html'" ng-controller="userLoanBoxCtrl"></div>
+</div>

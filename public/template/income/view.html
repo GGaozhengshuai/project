@@ -1,0 +1,83 @@
+<h3 class="genTitle"><em></em><span>收款计划单</span></h3>
+<ul class="generNav">
+    <li class="active"><a href="javascript:;">收款计划单</a></li>
+</ul>
+<div id="mainView">
+    <div class="viewTable ng-scope">
+        <ul>
+            <li><strong>收款计划单号：</strong><span>{{ORDER_DATA.ZJHDBHK}}</span></li>
+            <li><strong>申请日期：</strong><span>{{ORDER_DATA.ZCRDAT}}</span></li>
+            <!--<li><strong>收款主体：</strong><span>{{ORDER_DATA.BUKRS}}</span></li>-->
+            <li><strong>收款主体：</strong><span>{{{1000:"中建材信息技术股份有限公司",9000:"中建材集团进出口公司",9001:"中国建材（香港）有限公司"}[ORDER_DATA.BUKRS]}}</span></li>
+            <li><strong>客户编号：</strong><span>{{ORDER_DATA.KUNNR}}</span></li>
+            <li><strong>客户名称：</strong><span>{{ORDER_DATA.NAME1}}</span></li>
+            <li><strong>货币类别：</strong><span>{{ORDER_DATA.WAERS}}</span></li>
+            <li><strong>计划收款金额：</strong><span>{{ORDER_DATA.ZSKJE}}</span></li>
+           </ul>
+        <div class="clear"></div>
+        <div class="addTable">
+            <h5>收款计划明细</h5>
+            <table class="tab_data">
+                <thead class="tab_header">
+                <tr>
+                    <th>序号</th>
+                   <!-- <th>SAP计划单号</th>-->
+                    <th>收款种类</th>
+                    <th>销售合同号</th>
+                    <th>销售订单号</th>
+
+                    <th>销售部门</th>
+                    <th>销售员</th>
+                    <th>项目名称</th>
+                    <th>销售订单金额</th>
+                    <th>订单已计划金额</th>
+                    <th>业务应收编号</th>
+                    <th>未核销金额</th>
+                    <th>核销状态</th>
+                    <th>本次计划金额</th>
+                    <th>收款计划日期</th>
+                    <th>说明</th>
+                </tr>
+                </thead>
+                <tbody class="tab_body">
+                <tr ng-repeat="list in comeList">
+                    <td>{{list.ZHXM}}</td>
+                   <!-- <td>{{list.ZJHDBH}}</td>-->
+                    <td>{{list.ZSKZL}}</td>
+                    <td>{{list.ZBSTKD}}</td>
+                    <td>{{list.VBELN}}</td>
+
+                    <td>{{list.ZCREATE_ORG}}</td>
+                    <td>{{list.ZPERNR_NAME}}</td>
+                    <td title="{{list.ZPRJ_NAME}}">{{list.ZPRJ_NAME| cutfield:true:5:'...'}}</td>
+                    <td ng-hide="list.ZSKZL=='货款'"></td>
+                    <td ng-show="list.ZSKZL=='货款'">{{list.KZWI1| number:2}}</td>
+                    <td ng-hide="list.ZSKZL=='货款'"></td>
+                    <td ng-show="list.ZSKZL=='货款'">{{list.ZJHJE| number:2}}</td>
+                    <td>{{list.ZYWYSBH}}</td>
+                    <td ng-hide="list.ZYSWS"></td>
+                    <td ng-show="list.ZYSWS">{{list.ZYSWS | number:2}}</td>
+                    <td>{{{1:'已提交',3:'已作废',9:'已匹配',4:'完全收款'}[list.ZHXZT]}}</td>
+                    <td>{{list.ZJE | number:2}}</td>
+                    <td>{{list.ZJHRQ}}</td>
+                    <td>{{list.ZXSBZ}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <ul>
+            <li class="list_con"><strong>备注：</strong><span>{{ORDER_DATA.ZSWBZ}}</span></li>
+            <li><strong>制单人：</strong><span>{{ORDER_DATA.ZCRNAM}}</span></li>
+            <li><strong>部门：</strong><span>{{ORDER_DATA.ZBM}}</span></li>
+        </ul>
+    </div>
+    <!--<pagination conf="paginationConf"></pagination>-->
+    <div class="clear"></div>
+    <div class="gerSub">
+        <a href="index.html#/incomeEdit?sapid={{ORDER_DATA.ZJHDBHK}}" ng-if="opprev.incomeOrder_change1" ng-show="incomeEdit">变更</a>
+    </div>
+</div>
+<!--
+<div class="applyOper">
+
+</div>-->

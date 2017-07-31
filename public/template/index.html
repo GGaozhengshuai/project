@@ -1,0 +1,103 @@
+<div class="indexMain">
+    <div class="indexMode">
+        <div class="generTitle"><h3>我的草稿({{draftTotal}})</h3><a href="/index.html#/myDraft">更多&gt&gt</a></div>
+        <table class="table3">
+            <tr>
+                <th>单据编号</th>
+                <th>类型</th>
+                <th>状态</th>
+                <th>创建时间</th>
+                <th>最后修改时间</th>
+                <th>操作</th>
+            </tr>
+            <tbody ng-class="draftList.length > 0 ? 'meg' : 'noMegTip'">
+            <tr ng-repeat="list in draftList">
+                <td>{{list.title}}</td>
+                <td>{{list.typename}}</td>
+                <td>草稿</td>
+                <td>{{list.property.createDate}}</td>
+                <td>{{list.property.finishDate}}</td>
+                <td>
+                    <a href="/index.html#/{{list.controller}}?myflag={{list.myflag}}&processId={{list.processId}}&nodeId={{list.node._id}}">查看</a>
+                    <a href="javascript:;" ng-click="deleteDraftBill(list.controller,list.processId,list.node._id,$index)">删除</a>
+                </td>
+            </tr>
+            <tr class="tip"><td colspan="5">没有草稿内容</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="indexMode">
+        <div class="generTitle"><h3>我的待办({{approvalTotal}})</h3><a href="/index.html#/myTodo">更多&gt&gt</a></div>
+        <table class="table3">
+            <tr>
+                <th>单据编号</th>
+                <th>类型</th>
+                <th>状态</th>
+                <th>申请人</th>
+                <th>申请时间</th>
+                <th>最后处理时间</th>
+                <th>操作</th>
+            </tr>
+            <tbody ng-class="approvalList.length > 0 ? 'meg' : 'noMegTip'">
+            <tr ng-repeat="list in approvalList">
+                <td>{{list.title}}</td>
+                <td>{{list.typename}}</td>
+                <td>{{list.property.status}}</td>
+                <td>{{list.owner.name}}</td>
+                <td>{{list.property.createDate}}</td>
+                <td>{{list.property.finishDate}}</td>
+                <td><a href="/index.html#/{{list.controller}}?myflag={{list.myflag}}&processId={{list.processId}}&nodeId={{list.node._id}}&nodeType={{list.node.property.type}}">查看</a></td>
+            </tr>
+            <tr class="tip"><td colspan="5">没有待办内容</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="indexMode">
+        <div class="generTitle"><h3>我的已办({{alApprovalTotal}})</h3><a href="/index.html#/alApply">更多&gt&gt</a></div>
+        <table class="table3">
+            <tr>
+                <th>单据编号</th>
+                <th>类型</th>
+                <th>状态</th>
+                <th>申请人</th>
+                <th>审批时间</th>
+                <th>操作</th>
+            </tr>
+            <tbody ng-class="alApprovalList.length > 0 ? 'meg' : 'noMegTip'">
+            <tr ng-repeat="list in alApprovalList">
+                <td>{{list.title}}</td>
+                <td>{{list.typename}}</td>
+                <td>{{list.property.status}}</td>
+                <td>{{list.owner.name}}</td>
+                <td>{{list.property.finishDate}}</td>
+                <td><a href="/index.html#/{{list.controller}}?myflag={{list.myflag}}&processId={{list.processId}}&nodeId={{list.node._id}}">查看</a></td>
+            </tr>
+            <tr class="tip"><td colspan="5">没有已办内容</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="indexMode">
+        <div class="generTitle"><h3>我的申请({{myApprovalTotal}})</h3><a href="/index.html#/myApply">更多&gt&gt</a></div>
+        <table class="table3">
+            <tr>
+                <th>单据编号</th>
+                <th>类型</th>
+                <th>状态</th>
+                <th>申请时间</th>
+                <th>最后处理时间</th>
+                <th>操作</th>
+            </tr>
+            <tbody ng-class="myApprovalList.length > 0 ? 'meg' : 'noMegTip'">
+            <tr ng-repeat="list in myApprovalList">
+                <td>{{list.title}}</td>
+                <td>{{list.typename}}</td>
+                <td>{{list.property.status}}</td>
+                <td>{{list.property.createDate}}</td>
+                <td>{{list.property.finishDate}}</td>
+                <td><a href="/index.html#/{{list.controller}}?myflag={{list.myflag}}&processId={{list.processId}}&nodeId={{list.node._id}}">查看</a></td>
+            </tr>
+            <tr class="tip"><td colspan="5">没有申请内容</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>

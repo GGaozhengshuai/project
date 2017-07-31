@@ -1,0 +1,34 @@
+<table class="orangestyle table">
+    <thead>
+    <tr>
+        <th>销售订单号</th>
+        <th>内部物料编码</th>
+        <th>原厂物料编码</th>
+        <th>型号</th>
+        <th>描述</th>
+        <th>销售数量</th>
+        <th>单价</th>
+        <th>本次放货数量</th>
+       <!-- <th>库存数量</th>-->
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="list in showList" class="list">
+        <td>{{list.posnr}}</td>
+        <td>{{list.code}}</td>
+        <td>{{list.oemcode}}</td>
+        <td>{{list.model}}</td>
+        <td class="pre" title="{{list.note}}">{{list.note | cutfield:true:10:'...'}}</td>
+        <td>{{list.total}}</td>
+        <td>{{list.price}}</td>
+        <td>{{list.sum}}</td>
+        <!--<td>{{}}</td>-->
+        <td><a href="" ng-click="comedel($index)">删除</a></td>
+    </tr>
+    </tbody>
+</table>
+<div class="gerSub">
+    <button  class="subSave" ng-click="saveView(ORDER_DARA)">确定</button>
+    <!--<span style="font-size:15px;">放货金额小计:{{Money}}</span>-->
+</div>

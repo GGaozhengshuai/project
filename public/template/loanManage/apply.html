@@ -1,0 +1,29 @@
+<h3 class="genTitle"><em></em><span>借款单</span></h3>
+<ul class="generNav">
+    <li class="active"><a href="javascript:;">借款单</a></li>
+</ul>
+
+<div id="mainView">
+    <div class="viewTable ng-scope">
+        <ul>
+            <li><strong>借款单号：</strong><span>{{ORDER_DATA.code}}</span></li>
+            <li><strong>借款日期：</strong><span>{{ORDER_DATA.brw_date | date: 'yyyy-MM-dd'}}</span></li>
+            <li><strong>借款人：</strong><span>{{ORDER_DATA.user.name}}</span></li>
+            <li><strong>借款部门：</strong><span>{{ORDER_DATA.department.name}}</span></li>
+            <li><strong>资金性质：</strong><span>{{ORDER_DATA.fin.name}}</span></li>
+            <li class="list_con"><strong>借款事由：</strong><span>{{ORDER_DATA.reason}}</span></li>
+            <li><strong>借款金额：</strong><span>{{ORDER_DATA.brw_amount | number:2}}</span></li>
+            <li><strong>申请人：</strong><span>{{ORDER_DATA.applicant.name}}</span></li>
+
+        </ul>
+    </div>
+    <div class="clear"></div>
+
+
+    <div class="gerSub">
+        <a class="subSave" href="index.html#/loanManageEdit?processId={{processId}}&nodeId={{nodeId}}" ng-if="editBtn">编辑</a>
+    </div>
+    <div class="apCot" ng-if="apCot">
+        <div ng-include="'template/common/apply.html'"></div>
+    </div>
+</div>
